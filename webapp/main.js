@@ -3,9 +3,9 @@
  */
 requirejs.config({
     paths: {
-        backbone : 'libs/backbone/backbone',
-        marionette : 'libs/backbone/backbone.marionette',
-        underscore : 'libs/underscore'
+        backbone: 'libs/backbone/backbone',
+        marionette: 'libs/backbone/backbone.marionette',
+        underscore: 'libs/underscore'
     },
     shim: {
         'underscore': {
@@ -14,6 +14,10 @@ requirejs.config({
         'backbone': {
             deps: ['jquery', 'underscore'],
             exports: 'Backbone'
+        },
+        marionette : {
+            deps : ['jquery', 'underscore', 'backbone'],
+            exports : 'Marionette'
         }
     }
 });

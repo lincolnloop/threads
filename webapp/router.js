@@ -14,7 +14,11 @@ define(['backbone'], function (Backbone) {
         },
 
         home: function () {
-            console.log('home');
+            // homeview
+            require(['apps/home/views/home'], function(page){
+                console.log('AppRouter.home');
+                new page();
+            });
         }
     });
 
