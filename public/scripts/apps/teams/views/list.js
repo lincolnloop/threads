@@ -6,7 +6,7 @@ define(['marionette', 'underscore',
             console.log('TeamView:single');
         },
         template: function(serializedModel) {
-            var html = '<h1><a href="/team/<%= team.slug %>"><%= team.name %></a></h1>',
+            var html = '<h1><a data-pushref="/team/<%= team.slug %>"><%= team.name %></a></h1>',
                 data = {
                     name: serializedModel.name,
                     slug: serializedModel.slug

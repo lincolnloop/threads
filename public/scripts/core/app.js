@@ -9,7 +9,7 @@ define(['backbone', 'marionette'], function (Backbone, Marionette) {
         mainRegion: "#main",
     });
 
-    $(document).on("click", "a[href]", function (event) {
+    $(document).on("click", "a[data-pushref]", function (event) {
         var url = $(event.currentTarget).attr('href');
 
         Backbone.history.navigate(url, {trigger: true});
