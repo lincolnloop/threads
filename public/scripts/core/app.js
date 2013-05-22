@@ -4,5 +4,11 @@ define(['marionette',], function (Marionette) {
     console.log('gingerApp:create');
     var gingerApp = new Marionette.Application();
 
+    gingerApp.addRegions({
+        navRegion: "#nav",
+        mainRegion: "#main",
+    });
+
+
     return gingerApp;
 });

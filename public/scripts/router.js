@@ -15,10 +15,6 @@ define(['backbone',
 
         initialize: function () {
             console.log('AppRouter:initialize');
-            gingerApp.addRegions({
-                  navRegion: "#nav",
-                  mainRegion: "#main",
-            });
 
             new AuthRouter();
             new TeamRouter();

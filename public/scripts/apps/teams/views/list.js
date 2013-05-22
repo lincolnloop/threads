@@ -1,4 +1,5 @@
-define(['marionette', 'underscore'], function (Marionette, _) {
+define(['marionette', 'underscore',
+        'apps/teams/collections/team'], function (Marionette, _, TeamCollection) {
     var TeamSingleView = Marionette.ItemView.extend({
         initialize: function (options) {
             console.log('TeamView:single');
@@ -13,6 +14,11 @@ define(['marionette', 'underscore'], function (Marionette, _) {
     var TeamListView = Marionette.CollectionView.extend({
         initialize: function (options) {
             console.log('TeamView:list');
+            this.collection = new TeamCollection();
+            this.collection.fetch({
+                // FIXME
+                headers: { Authorization: 'Token ' + localStorage.Authorization }
+            });
         },
         itemView: TeamSingleView
     });

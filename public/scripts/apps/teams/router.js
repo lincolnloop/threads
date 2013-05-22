@@ -1,8 +1,7 @@
 define(['backbone',
         'jquery',
-        'apps/teams/collections/team',
-        'apps/teams/views/list'], function (Backbone, $,
-                                            TeamCollection,
+        'core/app',
+        'apps/teams/views/list'], function (Backbone, $, gingerApp,
                                             TeamListView) {
     "use strict";
 
@@ -19,17 +18,7 @@ define(['backbone',
 
         index: function () {
             console.log('TeamRouter:index');
-            var teamCollection = new TeamCollection();
-            teamCollection.fetch({
-                // FIXME
-                headers: { Authorization: 'Token ' + localStorage.Authorization },
-                success: function (collection) {
-                    new TeamListView({
-                        el: $('body'),
-                        collection: collection
-                    }).render();
-                }
-            })
+            gingerApp.mainRegion.show(new TeamListView());
         },
 
         detail: function () {
