@@ -1,13 +1,17 @@
 define(['backbone',
-        'jquery'], function (Backbone, $, Todo) {
+        'jquery',
+        'ohrl'], function (Backbone, $, ohrl) {
     "use strict";
 
-    var TodoModel = Backbone.Model.extend({
-
+    var TeamModel = Backbone.Model.extend({
+        idAttribute: "url",
         initialize: function () {
-            console.log('TodoModel:initialize');
+            console.log('TeamModel:initialize');
+        },
+        url: function () {
+            return this.id || ohrl.get('api:team');
         }
     });
 
-    return TodoModel;
+    return TeamModel;
 });

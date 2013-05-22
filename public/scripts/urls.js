@@ -43,6 +43,6 @@ define(['ohrl',], function (ohrl) {
         //'team:detail:limit': '<slug>/<limit>/',
     });
 
-    return AppRouter;
+    return ohrl;
 
 });
