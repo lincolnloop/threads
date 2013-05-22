@@ -2,11 +2,13 @@ define(['backbone',
         'core/app',
         'apps/auth/router',
         'apps/teams/router',
-        'apps/discussions/router'], function (Backbone,
+        'apps/discussions/router',
+        'apps/auth/utils'], function (Backbone,
                                               gingerApp,
                                               AuthRouter,
                                               TeamRouter,
-                                              DiscussionRouter) {
+                                              DiscussionRouter,
+                                              authUtils) {
     "use strict";
 
     var AppRouter = Backbone.Router.extend({
@@ -25,6 +27,9 @@ define(['backbone',
             Backbone.history.start({
                 pushState: true
             });
+            if (!authUtils.isAuthenticated()) {
+                this.navigate('sign-in', {trigger: true});
+            }
         }
     });
 
