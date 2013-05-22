@@ -1,5 +1,5 @@
-define(['backbone', 'jquery', 'core/app', 'apps/teams/views/list',
-        'apps/teams/views/detail'], function (Backbone, $, gingerApp,
+define(['backbone', 'core/app', 'apps/teams/views/list',
+        'apps/teams/views/detail'], function (Backbone, gingerApp,
                                             TeamListView, TeamDetailView) {
     "use strict";
 
