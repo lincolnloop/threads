@@ -1,7 +1,9 @@
 define(['backbone',
+        'core/app',
         'apps/auth/router',
         'apps/teams/router',
         'apps/discussions/router'], function (Backbone,
+                                              gingerApp,
                                               AuthRouter,
                                               TeamRouter,
                                               DiscussionRouter) {
@@ -18,6 +20,11 @@ define(['backbone',
 
             Backbone.history.start({
                 pushState: true
+            });
+
+            gingerApp.addRegions({
+                  navRegion: "#nav",
+                  mainRegion: "#main",
             });
         }
     });
