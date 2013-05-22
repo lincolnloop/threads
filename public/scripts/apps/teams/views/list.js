@@ -1,5 +1,8 @@
-define(['marionette', 'underscore',
-        'apps/teams/collections/team'], function (Marionette, _, TeamCollection) {
+define(function (require) {
+    "use strict";
+    var Marionette = require('marionette'), 
+        _ = require('underscore'),
+        TeamCollection = require('apps/teams/collections/team');
 
     var TeamSingleView = Marionette.ItemView.extend({
         initialize: function (options) {
