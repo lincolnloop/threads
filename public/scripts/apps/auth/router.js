@@ -1,6 +1,6 @@
 define(['backbone',
         'jquery',
-        'apps/auth/models/user'], function (Backbone, $, User) {
+        'scripts/apps/auth/models/user'], function (Backbone, $, User) {
     "use strict";
 
     var AuthRouter = Backbone.Router.extend({
