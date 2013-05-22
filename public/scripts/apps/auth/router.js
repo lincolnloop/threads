@@ -18,8 +18,7 @@ define(['backbone',
 
         signIn: function () {
             console.log('AuthRouter:signIn');
-            var view = new SignInView();
-            gingerApp.mainRegion.show(view);
+            gingerApp.mainRegion.show(new SignInView());
         },
 
         signOut: function () {
