@@ -32,8 +32,8 @@
     /*
     * Initialize the main AppRouter
     */
-    require(['router'], function(appRouter){
+    require(['router'], function(AppRouter){
         console.log('main.js:router');
-        new appRouter();
+        new AppRouter();
     });
 })();

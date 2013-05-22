@@ -1,7 +1,7 @@
 define(['backbone',
-        'webapp/apps/auth/router.js',
-        'webapp/apps/teams/router.js',
-        'webapp/apps/discussions/router.js'], function (Backbone,
+        'apps/auth/router.js',
+        'apps/teams/router.js',
+        'apps/discussions/router.js'], function (Backbone,
                                                         AuthRouter,
                                                         TeamRouter,
                                                         DiscussionRouter) {
