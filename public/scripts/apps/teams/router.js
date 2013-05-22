@@ -1,15 +1,13 @@
-define(['backbone',
-        'jquery',
-        'core/app',
-        'apps/teams/views/list'], function (Backbone, $, gingerApp,
-                                            TeamListView) {
+define(['backbone', 'jquery', 'core/app', 'apps/teams/views/list',
+        'apps/teams/views/detail'], function (Backbone, $, gingerApp,
+                                            TeamListView, TeamDetailView) {
     "use strict";
 
     var TeamRouter = Backbone.Router.extend({
 
         routes: {
             "": 'index',
-            "/teams/:team": 'detail'
+            "team/:team": 'detail'
         },
 
         initialize: function () {
