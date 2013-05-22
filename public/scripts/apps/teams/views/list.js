@@ -1,16 +1,20 @@
 define(['marionette', 'underscore',
         'apps/teams/collections/team'], function (Marionette, _, TeamCollection) {
+
     var TeamSingleView = Marionette.ItemView.extend({
         initialize: function (options) {
             console.log('TeamView:single');
         },
-        template: function(serialized_model) {
-            var name = serialized_model.name;
-            return _.template('<h1><%= team.name %></h1>', {
-                name : name
-            }, {variable: 'team'});
+        template: function(serializedModel) {
+            var html = '<h1><a href="/team/<%= team.slug %>"><%= team.name %></a></h1>',
+                data = {
+                    name: serializedModel.name,
+                    slug: serializedModel.slug
+                }
+            return _.template(html, data, {variable: 'team'});
         }
     });
+
     var TeamListView = Marionette.CollectionView.extend({
         initialize: function (options) {
             console.log('TeamView:list');

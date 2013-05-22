@@ -1,4 +1,4 @@
-define(['marionette',], function (Marionette) {
+define(['backbone', 'marionette'], function (Backbone, Marionette) {
     "use strict";
 
     console.log('gingerApp:create');
@@ -9,6 +9,13 @@ define(['marionette',], function (Marionette) {
         mainRegion: "#main",
     });
 
+    $(document).on("click", "a[href]", function (event) {
+        var url = $(event.currentTarget).attr('href');
+
+        Backbone.history.navigate(url, {trigger: true});
+
+        event.preventDefault();
+    });
 
     return gingerApp;
 });
