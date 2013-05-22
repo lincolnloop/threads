@@ -6,10 +6,10 @@
     */
     requirejs.config({
         paths: {
-            backbone: 'vendor/backbone/backbone',
-            marionette: 'vendor/backbone/backbone.marionette',
-            ohrl: 'vendor/ohrl',
-            underscore: 'vendor/underscore'
+            backbone: '../vendor/backbone/backbone',
+            marionette: '../vendor/backbone/backbone.marionette',
+            ohrl: '../vendor/ohrl',
+            underscore: '../vendor/underscore'
         },
         shim: {
             'underscore': {
@@ -22,7 +22,7 @@
                 deps: ['jquery', 'underscore'],
                 exports: 'Backbone'
             },
-            marionette : {
+            'marionette' : {
                 deps : ['jquery', 'underscore', 'backbone'],
                 exports : 'Marionette'
             }

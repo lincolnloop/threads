@@ -11,6 +11,13 @@ module.exports = function(grunt) {
         dest: 'dist/<%= pkg.name %>.js'
       }
     },
+    connect: {
+      server: {
+        options: {
+          base: 'public'
+        }
+      }
+    },
     uglify: {
       options: {
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
@@ -25,7 +32,7 @@ module.exports = function(grunt) {
       files: ['test/**/*.html']
     },
     jshint: {
-      files: ['Gruntfile.js', 'webapp/**/*.js', 'test/**/*.js'],
+      files: ['Gruntfile.js', 'public/scripts/**/*.js'],
       options: {
         // options here to override JSHint defaults
         globals: {
@@ -52,5 +59,6 @@ module.exports = function(grunt) {
   grunt.registerTask('test', ['jshint', 'qunit']);
 
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.registerTask('serve', ['connect:server:keepalive']);
 
 };
