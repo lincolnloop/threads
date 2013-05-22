@@ -1,6 +1,8 @@
 define(['backbone',
-        'jquery',
-        'apps/auth/models/user'], function (Backbone, $, User) {
+        'core/app',
+        'apps/auth/views/sign-in'], function (Backbone,
+                                             gingerApp,
+                                             SignInView) {
     "use strict";
 
     var AuthRouter = Backbone.Router.extend({
@@ -16,6 +18,8 @@ define(['backbone',
 
         signIn: function () {
             console.log('AuthRouter:signIn');
+            var view = new SignInView();
+            gingerApp.mainRegion.show(view);
         },
 
         signOut: function () {
