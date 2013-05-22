@@ -1,4 +1,17 @@
 module.exports = function(grunt) {
+    var pushStateHook = function (url) {
+      // re-route paths back to index so Backbone can route
+      var path = require('path'),
+          request = require('request');
+      return function (req, res, next) {
+        var ext = path.extname(req.url);
+        if ((ext == "" || ext === ".html") && req.url != "/") {
+          req.pipe(request('http://' + req.headers.host)).pipe(res);
+        } else {
+          next();
+        }
+      };
+    };
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
@@ -14,7 +27,13 @@ module.exports = function(grunt) {
     connect: {
       server: {
         options: {
-          base: 'public'
+          base: 'public',
+          middleware: function (connect, options) {
+            return [
+                connect.static(options.base),
+                pushStateHook(),
+            ];
+          }
         }
       }
     },

@@ -1,10 +1,10 @@
 define(['backbone',
-        'apps/auth/router.js',
-        'apps/teams/router.js',
-        'apps/discussions/router.js'], function (Backbone,
-                                                        AuthRouter,
-                                                        TeamRouter,
-                                                        DiscussionRouter) {
+        'apps/auth/router',
+        'apps/teams/router',
+        'apps/discussions/router'], function (Backbone,
+                                              AuthRouter,
+                                              TeamRouter,
+                                              DiscussionRouter) {
     "use strict";
 
     var AppRouter = Backbone.Router.extend({
