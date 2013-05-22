@@ -22,10 +22,7 @@ define(function (require) {
         initialize: function (options) {
             console.log('TeamView:list');
             this.collection = new TeamCollection();
-            this.collection.fetch({
-                // FIXME
-                headers: { Authorization: 'Token ' + localStorage.Authorization }
-            });
+            this.collection.fetch();
         },
         itemView: TeamSingleView
     });
