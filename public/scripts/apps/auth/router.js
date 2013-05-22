@@ -15,11 +15,11 @@ define(['backbone',
         },
 
         signIn: function () {
-            console.log('AuthRouter:list');
+            console.log('AuthRouter:signIn');
         },
 
         signOut: function () {
-            console.log('AuthRouter:detail');
+            console.log('AuthRouter:signOut');
         }
     });
 

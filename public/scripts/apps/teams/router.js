@@ -6,7 +6,7 @@ define(['backbone',
 
         routes: {
             "": 'index',
-            ":team": 'detail'
+            "/teams/:team": 'detail'
         },
 
         initialize: function () {
