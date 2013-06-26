@@ -3,10 +3,10 @@ define([], function () {
     return {
         // check if user has authenticated
         isAuthenticated: function () {
-            return !!localStorage.Authentication;
+            return !!localStorage.Authorization;
         },
         logout: function () {
-            localStorage.removeItem('Authentication');
+            localStorage.removeItem('Authorization');
         }
     }
 });
