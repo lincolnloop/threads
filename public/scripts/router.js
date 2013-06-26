@@ -17,15 +17,13 @@ define(function (require) {
             new TeamRouter();
             new DiscussionRouter();
 
-            Backbone.on('route', function () {
-                if (!authUtils.isAuthenticated()) {
-                    this.navigate('sign-in', {trigger: true});
-                }
-            });
-
             Backbone.history.start({
                 pushState: true
             });
+
+            if (!authUtils.isAuthenticated()) {
+                this.navigate('sign-in', {trigger: true});
+            }
 
         }
     });
