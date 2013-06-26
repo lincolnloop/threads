@@ -27,4 +27,5 @@ Step 4. Run
 
     $ grunt serve
     $ open your browser on http://local.gingerhq.com:8000
+    $ Get your api key from https://gingerhq.com/accounts/api-access/
 
