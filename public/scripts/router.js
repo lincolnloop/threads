@@ -1,15 +1,12 @@
-define(['backbone',
-        'core/app',
-        'apps/auth/router',
-        'apps/teams/router',
-        'apps/discussions/router',
-        'apps/auth/utils'], function (Backbone,
-                                              gingerApp,
-                                              AuthRouter,
-                                              TeamRouter,
-                                              DiscussionRouter,
-                                              authUtils) {
+define(function (require) {
     "use strict";
+    var Backbone = require('backbone'),
+        gingerApp = require('core/app'),
+        AuthRouter = require('apps/auth/router'),
+        TeamRouter = require('apps/teams/router'),
+        DiscussionRouter = require('apps/discussions/router'),
+        authUtils = require('apps/auth/utils');
+
 
     var AppRouter = Backbone.Router.extend({
 
@@ -34,5 +31,4 @@ define(['backbone',
     });
 
     return AppRouter;
-
 });
