@@ -5,7 +5,7 @@ module.exports = function(grunt) {
           request = require('request');
       return function (req, res, next) {
         var ext = path.extname(req.url);
-        if ((ext == "" || ext === ".html") && req.url != "/") {
+        if ((ext === "" || ext === ".html") && req.url !== "/") {
           req.pipe(request('http://' + req.headers.host)).pipe(res);
         } else {
           next();
@@ -20,14 +20,15 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['webapp/**/*.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        src: ['public/build/*.js'],
+        dest: 'public/build/ginger.js'
       }
     },
     connect: {
       server: {
         options: {
           base: 'public',
+          port: 9001,
           middleware: function (connect, options) {
             return [
                 connect.static(options.base),
@@ -37,18 +38,22 @@ module.exports = function(grunt) {
         }
       }
     },
-    uglify: {
-      options: {
-        banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
-      },
-      dist: {
-        files: {
-          'dist/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+    browserify: {
+      ginger: {
+        src: ['public/scripts/main.js'],
+        dest: 'public/build/module.js',
+        options: {
+          debug: true,
+          alias: 'public/build/templates.js:templates'
         }
       }
     },
+    clean: ['public/build/*'],
     qunit: {
       files: ['test/**/*.html']
+    },
+    execute: {
+      templates: {src: ['compileTemplates.js']}
     },
     jshint: {
       files: ['Gruntfile.js', 'public/scripts/**/*.js'],
@@ -63,21 +68,25 @@ module.exports = function(grunt) {
       }
     },
     watch: {
-      files: ['<%= jshint.files %>'],
-      tasks: ['jshint', 'qunit']
+      js: {
+        files: ['package.json', '<%= jshint.files %>', 'public/templates/**/*.jade'],
+        tasks: ['clean', 'execute', 'browserify', 'concat', 'jshint']
+      }
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-execute');
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
+  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'browserify']);
   grunt.registerTask('serve', ['connect:server:keepalive']);
 
 };

@@ -1,27 +1,26 @@
-define(['backbone', 'jquery'], function (Backbone, $) {
-    "use strict";
+var Backbone = require('backbone'),
+    $ = require('jquery');
 
-    var DiscussionRouter = Backbone.Router.extend({
+var DiscussionRouter = Backbone.Router.extend({
 
-        routes: {
-            ":team/discussions": 'list',
-            ":team/discussions/:discussion:": 'detail'
-        },
+    routes: {
+        ":team/discussions": 'list',
+        ":team/discussions/:discussion:": 'detail'
+    },
 
-        initialize: function () {
-            console.log('DiscussionRouter:initialize');
-        },
+    initialize: function () {
+        console.log('DiscussionRouter:initialize');
+    },
 
-        list: function () {
-            console.log('DiscussionRouter:home');
-            $('#content h1').html('List');
-        },
+    list: function () {
+        console.log('DiscussionRouter:home');
+        $('#content h1').html('List');
+    },
 
-        detail: function () {
-            console.log('DiscussionRouter:about');
-            $('#content h1').html('Detail');
-        }
-    });
-
-    return DiscussionRouter;
+    detail: function () {
+        console.log('DiscussionRouter:about');
+        $('#content h1').html('Detail');
+    }
 });
+
+module.exports = DiscussionRouter;

@@ -1,38 +1,30 @@
-define(['backbone',
-        'core/app',
-        'apps/auth/router',
-        'apps/teams/router',
-        'apps/discussions/router',
-        'apps/auth/utils'], function (Backbone,
-                                              gingerApp,
-                                              AuthRouter,
-                                              TeamRouter,
-                                              DiscussionRouter,
-                                              authUtils) {
-    "use strict";
+var Backbone = require('backbone'),
+    gingerApp = require('./core/app'),
+    AuthRouter = require('./apps/auth/router'),
+    TeamRouter = require('./apps/teams/router'),
+    DiscussionRouter = require('./apps/discussions/router'),
+    authUtils = require('./apps/auth/utils');
 
-    var AppRouter = Backbone.Router.extend({
+var AppRouter = Backbone.Router.extend({
 
-        initialize: function () {
-            console.log('AppRouter:initialize');
+    initialize: function () {
+        console.log('AppRouter:initialize');
 
-            new AuthRouter();
-            new TeamRouter();
-            new DiscussionRouter();
+        new AuthRouter();
+        new TeamRouter();
+        new DiscussionRouter();
 
-            Backbone.on('route', function () {
-                if (!authUtils.isAuthenticated()) {
-                    this.navigate('sign-in', {trigger: true});
-                }
-            });
+        Backbone.on('route', function () {
+            if (!authUtils.isAuthenticated()) {
+                this.navigate('sign-in', {trigger: true});
+            }
+        });
 
-            Backbone.history.start({
-                pushState: true
-            });
+        Backbone.history.start({
+            pushState: true
+        });
 
-        }
-    });
-
-    return AppRouter;
-
+    }
 });
+
+module.exports = AppRouter;
