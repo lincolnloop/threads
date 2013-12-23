@@ -1,27 +1,32 @@
-var Backbone = require('backbone'),
+var React = require('react'),
+    Backbone = require('backbone'),
     gingerApp = require('../../core/app'),
-    TeamListView = require('./views/list'),
-    TeamDetailView = require('./views/detail');
+    TeamListView = require('./views/list.jsx'),
+    TeamDetailView = require('./views/detail.jsx');
 
 var TeamRouter = Backbone.Router.extend({
 
     routes: {
         "": 'index',
-        "team/:team": 'detail'
+        ":team/": 'detail'
     },
 
     initialize: function () {
         console.log('TeamRouter:initialize');
-        gingerApp.mainRegion.show(new TeamDetailView());
     },
 
     index: function () {
         console.log('TeamRouter:index');
-        gingerApp.mainRegion.show(new TeamListView());
+        React.renderComponent(TeamListView({teams: gingerApp.data.teams}),
+                              document.getElementById('main'));
     },
 
-    detail: function () {
+    detail: function (slug) {
         console.log('TeamRouter:detail');
+        var team = gingerApp.data.teams.findWhere({slug: slug});
+        React.renderComponent(TeamDetailView({
+            team: team
+        }), document.getElementById('main'));
     }
 });
 

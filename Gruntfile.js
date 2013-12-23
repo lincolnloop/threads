@@ -43,17 +43,13 @@ module.exports = function(grunt) {
         src: ['public/scripts/main.js'],
         dest: 'public/build/module.js',
         options: {
-          debug: true,
-          alias: 'public/build/templates.js:templates'
+          debug: true
         }
       }
     },
     clean: ['public/build/*'],
     qunit: {
       files: ['test/**/*.html']
-    },
-    execute: {
-      templates: {src: ['compileTemplates.js']}
     },
     jshint: {
       files: ['Gruntfile.js', 'public/scripts/**/*.js'],
@@ -69,8 +65,8 @@ module.exports = function(grunt) {
     },
     watch: {
       js: {
-        files: ['package.json', '<%= jshint.files %>', 'public/templates/**/*.jade'],
-        tasks: ['clean', 'execute', 'browserify', 'concat', 'jshint']
+        files: ['package.json', '<%= jshint.files %>', 'public/scripts/**/*.jsx'],
+        tasks: ['clean', 'browserify', 'concat', 'jshint']
       }
     }
   });

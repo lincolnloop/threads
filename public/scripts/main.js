@@ -1,7 +1,10 @@
-var AppRouter = require('./router');
+var gingerApp = require('./core/app'),
+    AppRouter = require('./router');
 /*
 * Initialize the main AppRouter
 */
-console.log('main.js:router');
-new AppRouter();
+gingerApp.on('ready', function () {
+    console.log('main.js:router');
+    new AppRouter();
+});
 

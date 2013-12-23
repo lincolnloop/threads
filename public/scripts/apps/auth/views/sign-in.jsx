@@ -1,10 +1,6 @@
-var Backbone = require('backbone'),
-    Marionette = require('backbone.marionette'),
-    templates = require('templates');
-
-var SignInView = Marionette.ItemView.extend({
-    template: templates.auth.signin,
-
+var React = require('react');
+var SignInView = {};
+/*
     events: {
         'submit #sign-in-form': 'submit'
     },
@@ -37,5 +33,16 @@ var SignInView = Marionette.ItemView.extend({
         event.preventDefault();
     }
 });
-
+*/
+var SignInView = React.createClass({
+    render: function() {
+        return (
+          <div className="commentBox">
+            <h1>Comments</h1>
+            <CommentList data={this.state.data} />
+            <CommentForm />
+          </div>
+        );
+    }
+});
 module.exports = SignInView;

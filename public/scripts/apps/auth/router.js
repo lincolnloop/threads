@@ -1,6 +1,7 @@
-var Backbone = require('backbone'),
+var React = require('react'),
+    Backbone = require('backbone'),
     gingerApp = require('../../core/app'),
-    SignInView = require('./views/sign-in');
+    SignInView = require('./views/sign-in.jsx');
 
 var AuthRouter = Backbone.Router.extend({
     // $.ajax({url: 'https://gingerhq.com/api/v2/discussion/?team__slug=lincoln-loop&limit=5', headers: {'Authorization': localStorage.Authorization,'content-type': 'application/json'}})
@@ -15,7 +16,8 @@ var AuthRouter = Backbone.Router.extend({
 
     signIn: function () {
         console.log('AuthRouter:signIn');
-        gingerApp.mainRegion.show(new SignInView());
+        React.renderComponent(SignIn({}),
+                              document.getElementById('main'));
     },
 
     signOut: function () {

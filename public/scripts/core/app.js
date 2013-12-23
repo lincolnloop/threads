@@ -1,26 +1,21 @@
 var _ = require('underscore'),
-    Backbone = require('backbone'),
-    Wreqr = require('backbone.wreqr'),
-    ChildViewContainer = require('backbone.babysitter'),
     $ = require('jquery'),
-    Marionette = require('backbone.marionette');
+    Backbone = require('backbone'),
+    TeamCollection = require('../apps/teams/collections/team');
 
-Marionette.$ = Backbone.$ = $;
-Backbone.Wreqr = Wreqr;
-Backbone.ChildViewContainer = ChildViewContainer;
+Backbone.$ = $;
 
-Backbone.Marionette.Renderer.render = function(template, data){
-  return template(data);
-};
-
-console.log('gingerApp:create');
-
-var gingerApp = new Marionette.Application();
-
-gingerApp.addRegions({
-    navRegion: "#nav",
-    mainRegion: "#main",
-});
+var app = _.extend({
+    data: {},
+    bootstrap: function () {
+        console.log('gingerApp:boostrap');
+        var self = this;
+        this.data.teams = new TeamCollection();
+        this.data.teams.fetch({success: function () {
+            self.trigger('ready');
+        }});
+    }
+}, Backbone.Events);
 
 Backbone.ajax = function() {
     // adds authorization header to every request
@@ -45,4 +40,7 @@ $(document).ajaxStart(function () {
     $('body').removeClass('loading');
 });
 
-module.exports = gingerApp;
+app.bootstrap();
+window.app = app;
+
+module.exports = app;
