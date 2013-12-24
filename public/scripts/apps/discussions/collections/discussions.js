@@ -24,6 +24,9 @@ var DiscussionCollection = Backbone.Collection.extend({
         // FIXME
         return 'http://localhost:8000' + path;
     },
+    comparator: function (discussion) {
+        return -discussion.getDateObj().getTime();
+    },
     parse: function (response) {
         this.meta = {
             'count': response.count,

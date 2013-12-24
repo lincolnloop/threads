@@ -1,6 +1,10 @@
 var _ = require('underscore'),
     $ = require('jquery'),
+    async = require('async'),
     Backbone = require('backbone'),
+    urls = require('../urls'),
+    User = require('../apps/auth/models/user'),
+    UserCollection = require('../apps/auth/collections/user'),
     TeamCollection = require('../apps/teams/collections/team');
 
 Backbone.$ = $;
@@ -11,9 +15,40 @@ var app = _.extend({
         console.log('gingerApp:boostrap');
         var self = this;
         this.data.teams = new TeamCollection();
-        this.data.teams.fetch({success: function () {
+        this.data.users = new UserCollection();
+        this.data.anonUser = new User({
+            email: 'nobody@gingerhq.com',
+            name: 'Deleted User',
+            online: false,
+            typing: false
+        });
+        async.parallel([
+            function (cb) {
+                self.data.teams.fetch({success: cb});
+            },
+            function (cb) {
+                self.data.users.fetch({success: cb});
+            },
+            function (cb) {
+                // TODO: more is needed here to plug in the tokens
+                //       this just fetchs the request users ID
+                var url = 'http://localhost:8000' + urls.get('api:refresh_tokens');
+                $.ajax({
+                    dataType: "json",
+                    url: url,
+                    headers: {
+                        Authorization: 'Token ' + localStorage.Authorization
+                    },
+                    success: function (data) {
+                        self.data.tokens = data;
+                        cb();
+                    }
+                });
+            }
+        ], function () {
+            self.data.requestUser = self.data.users.get(self.data.tokens.url);
             self.trigger('ready');
-        }});
+        });
     }
 }, Backbone.Events);
 

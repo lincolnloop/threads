@@ -12,6 +12,7 @@ ohrl.load({
     'api:message': '/api/v2/message/',
     'api:messageChange': '/api/v2/message/<message_id>/',
     'api:notification': '/api/v2/notifications/',
+    'api:user': '/api/v2/user/',
     'api:refresh_tokens': '/api/v2/user/refresh-tokens/',
     'api:lastread': '/api/v2/discussion/<discussion_id>/read/',
     'api:searchresult': '/api/v2/searchresult/',

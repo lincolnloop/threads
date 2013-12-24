@@ -12,6 +12,9 @@ var TeamDetailView = React.createClass({
         }
         this.updateState();
     },
+    shouldComponentUpdate: function(nextProps, nextState) {
+        return !_.isEqual(nextProps, this.props) || !_.isEqual(nextState, this.state);
+    },
     componentWillUnmount: function () {
         console.log('TeamDetailView:componentWillUnmount');
         this.props.team.off('change', _.bind(this.updateState, this));
