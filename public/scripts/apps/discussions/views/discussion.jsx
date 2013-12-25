@@ -1,6 +1,7 @@
 var _ = require('underscore'),
     React = require('react'),
-    EventsMixin = require('../../../core/eventsMixin');
+    EventsMixin = require('../../../core/eventsMixin'),
+    VotesView = require('./votes.jsx');
 
 var MessageTreeView = React.createClass({
     // FIXME: this could be much more efficient
@@ -34,6 +35,7 @@ var MessageDetailView = React.createClass({
                 <img src={this.props.data.user.gravatar} />{' '}
                 {this.props.data.user.name}<br />
                 {this.props.data.date_created}
+                <VotesView data={this.props.data.votes} messageUrl={this.props.data.url} onUserInput={this.props.onUserInput} />
                 <hr />
                 {this.props.children}
             </div>
@@ -45,7 +47,6 @@ var DiscussionDetailView = React.createClass({
     mixins: [EventsMixin],
     componentWillMount: function () {
         console.log('DiscussionDetailView:componentWillMount');
-        _.bindAll(this, 'updateState')
         var discussion = this.props.discussion;
         this.events.listenTo(discussion, 'sync change', this.updateState);
         this.events.listenTo(discussion.message, 'sync change', this.updateState);
@@ -56,6 +57,9 @@ var DiscussionDetailView = React.createClass({
     updateState: function () {
         console.log('DiscussionDetailView:updateState');
         this.setState({data: this.props.discussion.serialized()});
+    },
+    onUserInput: function () {
+        console.log(arguments);
     },
     render: function() {
         console.log('DiscussionDetailView:render');
@@ -72,7 +76,7 @@ var DiscussionDetailView = React.createClass({
         return (
             <div className="discussion-detail">
                 <h2>{this.state.data.title}</h2>
-                <MessageDetailView data={message} />
+                <MessageDetailView data={message} onUserInput={this.onUserInput} />
                 <hr />
                 <MessageTreeView data={children} parent={message.url} />
             </div>

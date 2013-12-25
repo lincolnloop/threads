@@ -38,6 +38,7 @@ var Message = Backbone.Model.extend({
         if (this.user) {
             data.user = this.user.serialized();
         }
+        data.votes = this.votes.invoke('serialized');
         return data;
     },
 

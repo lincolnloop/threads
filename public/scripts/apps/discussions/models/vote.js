@@ -11,8 +11,13 @@ module.exports = Backbone.Model.extend({
             this.user = window.app.data.requestUser;
         }
     },
+    serialized: function () {
+        var data = this.toJSON();
+        data.user = this.user.serialized();
+        return data;
+    },
 
     url: function () {
-        return this.id || this.get('message') + 'vote/';
+        return 'http://localhost:8000' + this.id || this.get('message') + 'vote/';
     }
 });

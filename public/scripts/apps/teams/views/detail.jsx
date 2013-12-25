@@ -7,7 +7,6 @@ var TeamDetailView = React.createClass({
     mixins: [EventsMixin],
     componentWillMount: function () {
         console.log('TeamDetailView:componentWillMount');
-        _.bindAll(this, 'updateState');
         var team = this.props.team;
         this.events.listenTo(team, 'change', this.updateState);
         this.events.listenTo(team.discussions, 'sync add remove change', this.updateState);

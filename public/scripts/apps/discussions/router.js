@@ -1,23 +1,17 @@
 var Backbone = require('backbone'),
     React = require('react'),
     Discussion = require('./models/discussion'),
-    DiscussionDetailView = require('./views/detail.jsx'),
+    DiscussionDetailView = require('./views/discussion.jsx'),
     urls = require('../../urls');
 
 var DiscussionRouter = Backbone.Router.extend({
 
     routes: {
-        ":teamSlug/discussions": 'list',
         ":teamSlug/:discussionId/:discussionSlug/": 'detail'
     },
 
     initialize: function () {
         console.log('DiscussionRouter:initialize');
-    },
-
-    list: function () {
-        console.log('DiscussionRouter:home');
-        $('#content h1').html('List');
     },
 
     detail: function (teamSlug, discussionId) {
