@@ -61,7 +61,7 @@ module.exports = Backbone.Model.extend({
         }
     },
 
-    serialize: function () {
+    serialized: function () {
         var data = this.toJSON();
         data.gravatar = this.getGravatar();
         return data;

@@ -24,12 +24,6 @@ var app = _.extend({
         });
         async.parallel([
             function (cb) {
-                self.data.teams.fetch({success: cb});
-            },
-            function (cb) {
-                self.data.users.fetch({success: cb});
-            },
-            function (cb) {
                 // TODO: more is needed here to plug in the tokens
                 //       this just fetchs the request users ID
                 var url = 'http://localhost:8000' + urls.get('api:refresh_tokens');
@@ -41,11 +35,17 @@ var app = _.extend({
                     },
                     success: function (data) {
                         self.data.tokens = data;
-                        cb();
+                        cb(false);
                     }
                 });
+            },
+            function (cb) {
+                self.data.teams.fetch({success: function () { cb(false); }});
+            },
+            function (cb) {
+                self.data.users.fetch({success: function () { cb(false); }});
             }
-        ], function () {
+        ], function (err, results) {
             self.data.requestUser = self.data.users.get(self.data.tokens.url);
             self.trigger('ready');
         });

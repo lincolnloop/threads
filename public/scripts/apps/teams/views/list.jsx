@@ -1,5 +1,6 @@
 var _ = require('underscore'),
-    React = require('react');
+    React = require('react'),
+    EventsMixin = require('../../../core/eventsMixin');
 
 var OrgTeamListView = React.createClass({
     render: function () {
@@ -25,9 +26,11 @@ var OrgTeamListView = React.createClass({
 
 
 var TeamListView = React.createClass({
+    mixins: [EventsMixin],
     componentWillMount: function () {
         console.log('TeamListView:componentWillMount');
-        this.props.teams.on('reset add remove change', _.bind(this.updateState, this));
+        _.bindAll(this, 'updateState');
+        this.events.listenTo(this.props.teams, 'sync add remove change', this.updateState);
         this.updateState();
     },
     updateState: function () {

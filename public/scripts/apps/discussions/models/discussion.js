@@ -10,7 +10,19 @@ var DiscussionModel = Backbone.Model.extend({
         this.message = new Message();
         this.messages = new MessageCollection();
         this.latestMessage = new Message();
+        this.hasSummary = false;
+        this.hasDetail = false;
+        this.on('sync', this.setRelationships);
         this.setRelationships();
+    },
+    setLatest: function () {
+        /*
+         * Updates latestMessage and the attribute 'date_latest_activity'
+         * Called when new messages are added to the
+         * `messages` collection, and when the `date_created` attribute changes.
+         */
+        this.latestMessage = this.messages.last();
+        this.set({date_latest_activity: this.latestMessage.get('date_created')});
     },
     setRelationships: function () {
         /*
@@ -48,8 +60,13 @@ var DiscussionModel = Backbone.Model.extend({
             date_latest_activity: this.latestMessage.get('date_created')
         });
     },
+    fetchAll: function (cb) {
+        if (!this.hasDetail) {
+            this.fetch({success: cb});
+        }
+    },
     url: function () {
-        return this.id || urls.get('api:discussion');
+        return 'http://localhost:8000' + this.id || urls.get('api:discussion');
     },
     getDateObj: function () {
         return new Date(this.get('date_latest_activity'));

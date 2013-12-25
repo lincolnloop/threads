@@ -36,7 +36,7 @@ var Message = Backbone.Model.extend({
     serialized: function () {
         var data = this.toJSON();
         if (this.user) {
-            data.user = this.user.toJSON();
+            data.user = this.user.serialized();
         }
         return data;
     },

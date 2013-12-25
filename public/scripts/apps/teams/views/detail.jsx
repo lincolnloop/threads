@@ -1,24 +1,23 @@
 var _ = require('underscore'),
-    React = require('react');
+    Backbone = require('backbone'),
+    React = require('react'),
+    EventsMixin = require('../../../core/eventsMixin');
 
 var TeamDetailView = React.createClass({
+    mixins: [EventsMixin],
     componentWillMount: function () {
         console.log('TeamDetailView:componentWillMount');
+        _.bindAll(this, 'updateState');
         var team = this.props.team;
-        team.on('change', _.bind(this.updateState, this));
-        team.discussions.on('reset add remove change', _.bind(this.updateState, this));
+        this.events.listenTo(team, 'change', this.updateState);
+        this.events.listenTo(team.discussions, 'sync add remove change', this.updateState);
         if (!team.discussions.fetched) {
             team.discussions.fetch();
         }
         this.updateState();
     },
-    shouldComponentUpdate: function(nextProps, nextState) {
-        return !_.isEqual(nextProps, this.props) || !_.isEqual(nextState, this.state);
-    },
     componentWillUnmount: function () {
         console.log('TeamDetailView:componentWillUnmount');
-        this.props.team.off('change', _.bind(this.updateState, this));
-        this.props.team.discussions.off(null, _.bind(this.updateState, this));
     },
     updateState: function () {
         console.log('TeamDetailView:updateState');

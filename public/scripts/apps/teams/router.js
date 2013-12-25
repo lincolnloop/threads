@@ -1,6 +1,5 @@
 var React = require('react'),
     Backbone = require('backbone'),
-    gingerApp = require('../../core/app'),
     TeamListView = require('./views/list.jsx'),
     TeamDetailView = require('./views/detail.jsx');
 
@@ -17,13 +16,13 @@ var TeamRouter = Backbone.Router.extend({
 
     index: function () {
         console.log('TeamRouter:index');
-        React.renderComponent(TeamListView({teams: gingerApp.data.teams}),
+        React.renderComponent(TeamListView({teams: window.app.data.teams}),
                               document.getElementById('main'));
     },
 
     detail: function (slug) {
         console.log('TeamRouter:detail');
-        var team = gingerApp.data.teams.findWhere({slug: slug});
+        var team = window.app.data.teams.findWhere({slug: slug});
         React.renderComponent(TeamDetailView({
             team: team
         }), document.getElementById('main'));
