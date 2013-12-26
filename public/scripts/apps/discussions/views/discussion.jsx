@@ -8,6 +8,7 @@ var MessageTreeView = React.createClass({
     render: function () {
         var children,
             others,
+            self = this,
             parentUrl = this.props.parent;
         function isChild(message) {
             return message.parent == parentUrl;
@@ -19,7 +20,8 @@ var MessageTreeView = React.createClass({
             return MessageDetailView({
                 key: message.url,
                 data: message,
-                children: MessageTreeView({data:others, parent:message.url})
+                children: MessageTreeView({data:others, parent:message.url}),
+                discussion: self.props.discussion
             });
         });
         return (<div className="message-children">{childTrees}</div>)
@@ -27,15 +29,23 @@ var MessageTreeView = React.createClass({
 });
 
 var MessageDetailView = React.createClass({
+    getInitialState: function () {
+        return {editing: false};
+    },
     render: function () {
         console.log('MessageDetailView:render');
+        if (this.state.editing) {
+            msgText = <textarea value={this.props.data.raw_body}></textarea>;
+        } else {
+            msgText = <div className="content"  dangerouslySetInnerHTML={{__html: this.props.data.body}}></div>;
+        }
         return (
             <div className="message-detail">
-                <div className="content"  dangerouslySetInnerHTML={{__html: this.props.data.body}}></div>
+                {msgText}
                 <img src={this.props.data.user.gravatar} />{' '}
                 {this.props.data.user.name}<br />
                 {this.props.data.date_created}
-                <VotesView data={this.props.data.votes} messageUrl={this.props.data.url} onUserInput={this.props.onUserInput} />
+                <VotesView data={this.props.data.votes} messageUrl={this.props.data.url} discussion={this.props.discussion} />
                 <hr />
                 {this.props.children}
             </div>
@@ -49,7 +59,7 @@ var DiscussionDetailView = React.createClass({
         console.log('DiscussionDetailView:componentWillMount');
         var discussion = this.props.discussion;
         this.events.listenTo(discussion, 'sync change', this.updateState);
-        this.events.listenTo(discussion.message, 'sync change', this.updateState);
+        this.events.listenTo(discussion.message, 'sync change stateChanged', this.updateState);
         this.events.listenTo(discussion.messages, 'reset add remove change', this.updateState);
         this.updateState();
         discussion.fetchAll();
@@ -76,9 +86,9 @@ var DiscussionDetailView = React.createClass({
         return (
             <div className="discussion-detail">
                 <h2>{this.state.data.title}</h2>
-                <MessageDetailView data={message} onUserInput={this.onUserInput} />
+                <MessageDetailView data={message} discussion={this.props.discussion} />
                 <hr />
-                <MessageTreeView data={children} parent={message.url} />
+                <MessageTreeView data={children} parent={message.url} discussion={this.props.discussion} />
             </div>
         );
     }

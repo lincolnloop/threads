@@ -7,7 +7,7 @@ var VoteListView = React.createClass({
         console.log('VoteListView:render');
         var voteNodes = this.props.data.map(function (vote) {
             return (
-                <li key={vote.url}>
+                <li key={vote.url || 'new'}>
                     {vote.user.name}
                 </li>
             );
@@ -22,10 +22,10 @@ var VoteListView = React.createClass({
 
 
 var VotesView = React.createClass({
-    buildButtonText: function (votes, userVote, value) {
+    buildButtonText: function (votes, value) {
         var text = '',
             count = votes.length
-        if (userVote === value) {
+        if (this.userVote.value === value) {
             text = 'You ';
             count -= 1;
             text += count > 0 ? '+' : '';
@@ -36,36 +36,57 @@ var VotesView = React.createClass({
         text += value === '+1' ? String.fromCharCode(8593) : String.fromCharCode(8595);
         return text;
     },
-    upvote: function () {
-        this.vote('+1');
-    },
-    downvote: function () {
-        this.vote('-1');
-    },
     vote: function (value) {
-        var vote = new Vote({
-                user: window.app.data.requestUser.url,
-                value: value,
-                message: this.props.messageUrl
-            });
-        vote.save();
-        this.props.onUserInput('vote', vote);
+        console.log('VoteView:vote:' + value);
+        if (!this.state.enabled) {
+            console.log('disabled');
+            return;
+        }
+        this.enable(false);
+        var message = this.props.discussion.getMessage(this.props.messageUrl),
+            vote = new Vote(this.userVote),
+            self = this,
+            reEnable = function () {
+                self.enable(true);
+            };
+        if (this.userVote.value === value) {
+            message.votes.remove(vote);
+            vote.destroy({success: reEnable});
+        } else {
+            vote.set('value', value);
+            message.votes.add(vote, {merge: true});
+            vote.save({}, {success: reEnable});
+        }
+    },
+    enable: function (enabled) {
+        console.log(enabled);
+        this.setState({enabled: enabled});
+    },
+    getInitialState: function () {
+        return {enabled: true};
     },
     render: function() {
         console.log('VotesView:render');
+        // get the users vote or create a placeholder for it
+        this.userVote = _.find(this.props.data, function (vote) {
+            return vote.user.url === window.app.data.requestUser.id;
+        }) || {
+            user: window.app.data.requestUser.id,
+            message: this.props.messageUrl
+        };
         var upvotes = _.where(this.props.data, {value: '+1'}),
             downvotes = _.where(this.props.data, {value: '-1'}),
-            userVote = _.find(this.props.data, function (vote) {
-                return vote.user.url === window.app.data.requestUser.url;
-            }),
-            upvoteText = this.buildButtonText(upvotes, userVote, '+1'),
-            downvoteText = this.buildButtonText(downvotes, userVote, '-1');
+            upvoteText = this.buildButtonText(upvotes, '+1'),
+            downvoteText = this.buildButtonText(downvotes, '-1'),
+            voteUp = _.partial(this.vote, '+1'),
+            voteDown = _.partial(this.vote, '-1');
+        
 
         return (
-          <div className="votes">
-            <a className="vote-button" onClick={this.upvote}>{upvoteText}</a>
+          <div className={this.state.disabled ? 'votes disabled' : 'votes'}>
+            <button className="vote-button" onClick={voteUp}>{upvoteText}</button>
             <VoteListView data={upvotes} value="+1" />
-            <a className="vote-button" onClick={this.downvote}>{downvoteText}</a>
+            <button className="vote-button" onClick={voteDown}>{downvoteText}</button>
             <VoteListView data={downvotes} value="-1" />
           </div>
         );

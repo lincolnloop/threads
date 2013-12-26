@@ -73,6 +73,9 @@ var DiscussionModel = Backbone.Model.extend({
     },
     serialized: function () {
         return this.toJSON();
+    },
+    getMessage: function (messageUrl) {
+        return this.message.id === messageUrl ? this.message : this.messages.get(messageUrl);
     }
 });
 

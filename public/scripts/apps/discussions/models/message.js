@@ -21,6 +21,10 @@ var Message = Backbone.Model.extend({
         }
         this.attachments = new AttachmentCollection(options.attachments);
         this.votes = new VoteCollection(options.votes);
+        var self = this;
+        this.votes.on('add remove destroy reset change', function () {
+            self.trigger('stateChanged');
+        });
         this.bind('change:votes', this.setVotes);
         this.bind('change:user', this.setUser);
         this.bind('change:attachments', this.setAttachments);
