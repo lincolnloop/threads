@@ -16,14 +16,12 @@ var Message = Backbone.Model.extend({
             options = {};
         }
 
-        if (this.get('user')) {
-            this.setUser();
-        }
+        this.setUser();
         this.attachments = new AttachmentCollection(options.attachments);
         this.votes = new VoteCollection(options.votes);
         var self = this;
         this.votes.on('add remove destroy reset change', function () {
-            self.trigger('stateChanged');
+            self.trigger('voteChanged');
         });
         this.bind('change:votes', this.setVotes);
         this.bind('change:user', this.setUser);
@@ -42,24 +40,26 @@ var Message = Backbone.Model.extend({
         if (this.user) {
             data.user = this.user.serialized();
         }
+        data.canEdit = this.isEditable();
         data.votes = this.votes.invoke('serialized');
         return data;
     },
 
     validate: function (attrs) {
         var errors = [];
-        if (!attrs.body && !this.attachments) {
+        if (!attrs.raw_body && !this.attachments) {
             errors.push('Message cannot be empty');
         }
         return errors.length ? errors : null;
     },
 
     url: function () {
-        return this.id || urls.get('api:message');
+        return 'http://localhost:8000' + (this.id || urls.get('api:message'));
     },
 
     setUser: function () {
-        this.user = window.app.data.users.get(this.get('user')) || window.app.data.anonUser;
+        var userId = this.get('user') || window.app.data.requestUser.id;
+        this.user = window.app.data.users.get(userId) || window.app.data.anonUser;
         // messages are never new to the user who wrote them
         if (this.user.id === window.app.data.requestUser.id) {
             this.set({read: true}, {silent: true});
@@ -154,6 +154,9 @@ var Message = Backbone.Model.extend({
     },
     isForked: function () {
         return this.get('discussion') && this.get('parent');
+    },
+    isEditable: function () {
+        return this.user.id === window.app.data.requestUser.id;
     },
     getOrFetchForkedDiscussion: function () {
         // return the forked discussion or fetch it
