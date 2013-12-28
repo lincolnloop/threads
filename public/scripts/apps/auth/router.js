@@ -1,6 +1,5 @@
 var React = require('react'),
     Backbone = require('backbone'),
-    gingerApp = require('../../core/app'),
     SignInView = require('./views/sign-in.jsx');
 
 var AuthRouter = Backbone.Router.extend({

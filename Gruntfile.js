@@ -40,7 +40,7 @@ module.exports = function(grunt) {
     },
     browserify: {
       ginger: {
-        src: ['public/scripts/main.js'],
+        src: ['public/scripts/app.js'],
         dest: 'public/build/module.js',
         options: {
           debug: true

@@ -1,6 +1,7 @@
 var _ = require('underscore'),
     Backbone = require('backbone'),
     React = require('react'),
+    urls = require('../../../urls'),
     EventsMixin = require('../../../core/eventsMixin');
 
 var TeamDetailView = React.createClass({
@@ -27,16 +28,20 @@ var TeamDetailView = React.createClass({
     },
     render: function() {
         console.log('TeamDetailView:render');
-        var discussionNodes = this.state.discussions.map(function (disc) {
-            return (
-                <li key={disc.url}>
-                    <a href={disc.message.permalink}>{disc.title}</a>
-                </li>
-            );
+        var createDiscussionUrl = '/' + urls.get('discussion:create:team', {
+                team_slug: this.state.team.slug 
+            });
+            discussionNodes = this.state.discussions.map(function (disc) {
+                return (
+                    <li key={disc.url}>
+                        <a href={disc.message.permalink}>{disc.title}</a>
+                    </li>
+                );
         });
         return (
           <div className="team-detail">
             <h2>{this.state.team.name}</h2>
+            <a className="button" href={createDiscussionUrl}>New Discussion</a>
             <ul>
                 {discussionNodes}
             </ul>

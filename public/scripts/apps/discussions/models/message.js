@@ -1,4 +1,5 @@
 var _ = require('underscore'),
+    $ = require('jquery'),
     Backbone = require('backbone'),
     AttachmentCollection = require('../collections/attachment'),
     VoteCollection = require('../collections/vote'),

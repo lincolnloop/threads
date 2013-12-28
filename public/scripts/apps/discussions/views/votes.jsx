@@ -59,7 +59,6 @@ var VotesView = React.createClass({
         }
     },
     enable: function (enabled) {
-        console.log(enabled);
         this.setState({enabled: enabled});
     },
     getInitialState: function () {

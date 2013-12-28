@@ -1,5 +1,4 @@
 var Backbone = require('backbone'),
-    gingerApp = require('./core/app'),
     AuthRouter = require('./apps/auth/router'),
     TeamRouter = require('./apps/teams/router'),
     DiscussionRouter = require('./apps/discussions/router'),

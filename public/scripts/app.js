@@ -2,17 +2,17 @@ var _ = require('underscore'),
     $ = require('jquery'),
     async = require('async'),
     Backbone = require('backbone'),
-    urls = require('../urls'),
-    User = require('../apps/auth/models/user'),
-    UserCollection = require('../apps/auth/collections/user'),
-    TeamCollection = require('../apps/teams/collections/team');
+    AppRouter = require('./router');
+    urls = require('./urls'),
+    User = require('./apps/auth/models/user'),
+    UserCollection = require('./apps/auth/collections/user'),
+    TeamCollection = require('./apps/teams/collections/team');
 
 Backbone.$ = $;
 
 var app = _.extend({
     data: {},
-    bootstrap: function () {
-        console.log('gingerApp:boostrap');
+    fetchData: function (fetchDataCallback) {
         var self = this;
         this.data.teams = new TeamCollection();
         this.data.users = new UserCollection();
@@ -47,8 +47,16 @@ var app = _.extend({
             }
         ], function (err, results) {
             self.data.requestUser = self.data.users.get(self.data.tokens.url);
-            self.trigger('ready');
+            fetchDataCallback();
         });
+    },
+    start: function () {
+        this.router = new AppRouter();
+        this.trigger('ready');
+    },
+    bootstrap: function () {
+        console.log('gingerApp:boostrap');
+        this.fetchData(_.bind(this.start, this));
     }
 }, Backbone.Events);
 
