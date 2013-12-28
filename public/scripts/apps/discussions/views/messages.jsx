@@ -9,40 +9,34 @@ var _ = require('underscore'),
 require('react/addons');
 
 var MessageTreeView = React.createClass({
-    // FIXME: this could be much more efficient
+    shouldComponentUpdate: function (nextProps, nextState) {
+        return !(_.isEqual(this.state, nextState) &&
+                 _.isEqual(this.props.data, nextProps.data));
+    },
     render: function () {
         console.log('MessageTreeView:render');
-        var children,
-            others,
-            self = this,
-            parentUrl = this.props.parent;
-        if (parentUrl) {
-            children = this.props.lookup[parentUrl] || [];
-            others = _.difference(this.props.data, children);
-        } else {
-            children = [_.first(this.props.data)];
-            others = _.rest(this.props.data);
-        }
-        childTrees = children.map(function (message) {
-            // recursively using JSX causes issues. Falling back to regular JS.
-            return MessageDetailView({
-                key: message.url || 'new',
-                data: message,
-                children: others,
-                childViews: MessageTreeView({
-                    data: others,
-                    lookup: self.props.lookup,
-                    parent: message.url,
+        var self = this,
+            childViews = this.props.data.children.map(function (message) {
+                // recursively using JSX causes issues. Falling back to regular JS.
+                return MessageTreeView({
+                    key: message.url,
+                    data: message,
                     discussion: self.props.discussion
-                }),
-                discussion: self.props.discussion
+                });
             });
-        });
-        return (<div className="message-children">{childTrees}</div>);
+        return (
+            <div className="message-children">
+                <MessageDetailView key={this.props.data.url} data={this.props.data} discussion={this.props.discussion} />
+                {childViews}
+            </div>
+        );
     }
 });
 
 var MessageContentView = React.createClass({
+    shouldComponentUpdate: function (nextProps, nextState) {
+        return this.props.data.body !== nextProps.data.body;
+    },
     render: function () {
         console.log('MessageContentView:render');
         return <div className="content"  dangerouslySetInnerHTML={{__html: this.props.data.body}}></div>;
@@ -55,6 +49,12 @@ var MessageDetailView = React.createClass({
             editing: false,
             replying: false
         };
+    },
+    shouldComponentUpdate: function (nextProps, nextState) {
+        return !(_.isEqual(this.state, nextState) &&
+                 this.props.data.url === nextProps.data.url &&
+                 this.props.data.body === nextProps.data.body &&
+                 _.isEqual(this.props.data.votes, nextProps.data.votes));
     },
     edit: function (event) {
         this.setState({editing: true});
@@ -88,7 +88,6 @@ var MessageDetailView = React.createClass({
                 <VotesView data={this.props.data.votes} messageUrl={this.props.data.url} discussion={this.props.discussion} />
                 <hr />
                 {this.state.replying ? <MessageEditView parent={this.props.data.url} discussion={this.props.discussion} done={doneReplying} /> : ''}
-                {this.props.childViews}
             </div>
         );
     }

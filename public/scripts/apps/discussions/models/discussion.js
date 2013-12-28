@@ -72,7 +72,10 @@ var DiscussionModel = Backbone.Model.extend({
         return new Date(this.get('date_latest_activity'));
     },
     serialized: function () {
-        return this.toJSON();
+        var data = this.toJSON();
+        data.message = this.message.serialized();
+        data.message.children = this.messages.serialized();
+        return data;
     },
     getMessage: function (messageUrl) {
         return this.message.id === messageUrl ? this.message : this.messages.get(messageUrl);

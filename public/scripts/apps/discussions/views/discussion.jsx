@@ -1,4 +1,5 @@
-var React = require('react'),
+var _ = require('underscore'),
+    React = require('react'),
     EventsMixin = require('../../../core/eventsMixin'),
     MessageTreeView = require('./messages.jsx');
 
@@ -12,10 +13,13 @@ var DiscussionDetailView = React.createClass({
         console.log('DiscussionDetailView:componentWillMount');
         var discussion = this.props.discussion;
         this.events.listenTo(discussion, 'change', this.updateState);
-        this.events.listenTo(discussion.message, 'change voteChanged', this.updateState);
-        this.events.listenTo(discussion.messages, 'change voteChanged', this.updateState);
+        this.events.listenTo(discussion.message, 'change reset voteChanged', this.updateState);
+        this.events.listenTo(discussion.messages, 'change reset voteChanged', this.updateState);
         this.updateState();
         discussion.fetchAll();
+    },
+    shouldComponentUpdate: function (nextProps, nextState) {
+        return !_.isEqual(this.state, nextState);
     },
     updateState: function (event) {
         console.log('DiscussionDetailView:updateState');
@@ -31,14 +35,10 @@ var DiscussionDetailView = React.createClass({
         return <div className="discussion-detail loading"></div>;
     },
     renderFull: function () {
-        var messageLookup = this.props.discussion.messages.serialized(),
-            messageList = this.props.discussion.messages.invoke('serialized');
-        // on first render add the discussion message into the message tree
-            messageList.unshift(this.props.discussion.message.serialized());
         return (
             <div className="discussion-detail">
                 <h2>{this.state.data.title}</h2>
-                <MessageTreeView data={messageList} lookup={messageLookup} discussion={this.props.discussion} />
+                <MessageTreeView data={this.state.data.message} discussion={this.props.discussion} />
             </div>
         );
     }

@@ -5,14 +5,24 @@ var _ = require('underscore'),
 var MessageCollection = Backbone.Collection.extend({
     model: Message,
     serialized: function () {
-        // Group by organization and serialize each team model
-        var data = this.groupBy(function (message) {
-            return message.get('parent');
+        // Create nested tree
+        if (this.length === 0) {
+            return [];
+        }
+        var lookup = {},
+            tree = [],
+            parentId = this.first().get('parent');
+        this.each(function (message) {
+            var msg = message.serialized();
+            msg.children = [];
+            lookup[msg.url] = msg;
+            if (msg.parent === parentId) {
+                tree.push(msg);
+            } else {
+                lookup[msg.parent].children.push(msg);
+            }
         });
-        _.each(data, function (messages, parent) {
-            data[parent] = _.invoke(messages, 'serialized');
-        });
-        return data;
+        return tree;
     }
 });
 
