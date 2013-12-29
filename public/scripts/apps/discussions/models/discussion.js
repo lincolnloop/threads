@@ -66,7 +66,7 @@ var DiscussionModel = Backbone.Model.extend({
         }
     },
     url: function () {
-        return 'http://localhost:8000' + (this.id || urls.get('api:discussion'));
+        return this.id || urls.get('api:discussion');
     },
     getDateObj: function () {
         return new Date(this.get('date_latest_activity'));

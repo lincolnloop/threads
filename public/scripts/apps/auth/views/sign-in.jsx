@@ -1,5 +1,4 @@
 var React = require('react');
-var SignInView = {};
 /*
     events: {
         'submit #sign-in-form': 'submit'

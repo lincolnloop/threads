@@ -5,6 +5,6 @@ var Backbone = require('backbone'),
 module.exports = Backbone.Collection.extend({
     model: User,
     url: function () {
-        return 'http://localhost:8000' + urls.get('api:user');
+        return urls.get('api:user');
     }
 });

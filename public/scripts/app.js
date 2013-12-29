@@ -2,7 +2,8 @@ var _ = require('underscore'),
     $ = require('jquery'),
     async = require('async'),
     Backbone = require('backbone'),
-    AppRouter = require('./router');
+    AppRouter = require('./router'),
+    config = require('clientconfig'),
     urls = require('./urls'),
     User = require('./apps/auth/models/user'),
     UserCollection = require('./apps/auth/collections/user'),
@@ -11,6 +12,7 @@ var _ = require('underscore'),
 Backbone.$ = $;
 
 var app = _.extend({
+    config: config,
     data: {},
     fetchData: function (fetchDataCallback) {
         var self = this;
@@ -26,10 +28,10 @@ var app = _.extend({
             function (cb) {
                 // TODO: more is needed here to plug in the tokens
                 //       this just fetchs the request users ID
-                var url = 'http://localhost:8000' + urls.get('api:refresh_tokens');
+                var url = urls.get('api:refresh_tokens');
                 $.ajax({
                     dataType: "json",
-                    url: url,
+                    url: app.config.apiUrl + url,
                     headers: {
                         Authorization: 'Token ' + localStorage.Authorization
                     },
@@ -60,11 +62,15 @@ var app = _.extend({
     }
 }, Backbone.Events);
 
-Backbone.ajax = function() {
+Backbone.ajax = function(request) {
     // adds authorization header to every request
-    arguments[0].headers = _.extend(arguments[0].headers || {}, {
+    request.headers = _.extend(request.headers || {}, {
         Authorization: 'Token ' + localStorage.Authorization
     });
+    // convert paths to full URLs
+    if (request.url.indexOf('/') === 0) {
+        request.url = app.config.apiUrl + request.url;
+    }
     return Backbone.$.ajax.apply(Backbone.$, arguments);
 };
 $('body').removeClass('loading');
@@ -83,7 +89,7 @@ $(document).ajaxStart(function () {
     $('body').removeClass('loading');
 });
 
-app.bootstrap();
 window.app = app;
+app.bootstrap();
 
 module.exports = app;

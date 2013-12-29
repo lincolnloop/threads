@@ -1,29 +1,9 @@
+var config = require('./config/' + (process.env.NODE_ENV || 'development')),
+    Cookies = require('cookies'),
+    pushState = require('grunt-connect-pushstate/lib/utils').pushState;
 module.exports = function(grunt) {
-    var pushStateHook = function (url) {
-      // re-route paths back to index so Backbone can route
-      var path = require('path'),
-          request = require('request');
-      return function (req, res, next) {
-        var ext = path.extname(req.url);
-        if ((ext === "" || ext === ".html") && req.url !== "/") {
-          req.pipe(request('http://' + req.headers.host)).pipe(res);
-        } else {
-          next();
-        }
-      };
-    };
-
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    concat: {
-      options: {
-        separator: ';'
-      },
-      dist: {
-        src: ['public/build/*.js'],
-        dest: 'public/build/ginger.js'
-      }
-    },
     connect: {
       server: {
         options: {
@@ -31,17 +11,22 @@ module.exports = function(grunt) {
           port: 9001,
           middleware: function (connect, options) {
             return [
-                connect.static(options.base),
-                pushStateHook(),
+                Cookies.express(),
+                function (req, res, next) {
+                  res.cookies.set('config', JSON.stringify(config), { httpOnly: false, overwrite: true });
+                  next();
+                },
+                pushState(),
+                connect.static(options.base)
             ];
           }
         }
       }
     },
-    browserify: {
+    watchify: {
       ginger: {
-        src: ['public/scripts/app.js'],
-        dest: 'public/build/module.js',
+        src: ['./public/scripts/app.js'],
+        dest: 'public/build/ginger.js',
         options: {
           debug: true
         }
@@ -66,12 +51,12 @@ module.exports = function(grunt) {
     watch: {
       js: {
         files: ['package.json', '<%= jshint.files %>', 'public/scripts/**/*.jsx'],
-        tasks: ['clean', 'browserify', 'concat', 'jshint']
+        tasks: ['clean', 'watchify', 'jshint']
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-browserify');
+  grunt.loadNpmTasks('grunt-watchify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -82,7 +67,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'browserify']);
+  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'watchify']);
   grunt.registerTask('serve', ['connect:server:keepalive']);
 
 };

@@ -40,7 +40,7 @@ var MessageEditView = React.createClass({
     loadPreview: function (rawBody, callback) {
         $.ajax({
             type: 'POST',
-            url: 'http://localhost:8000' + urls.get('api:message:preview'),
+            url: window.app.config.apiUrl + urls.get('api:message:preview'),
             contentType: 'application/json',
             data: JSON.stringify({'raw_body': rawBody}),
             headers: {

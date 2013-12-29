@@ -21,8 +21,7 @@ var DiscussionCollection = Backbone.Collection.extend({
         } else {
             path = urls.get('api:discussion');
         }
-        // FIXME
-        return 'http://localhost:8000' + path;
+        return path;
     },
     comparator: function (discussion) {
         return -discussion.getDateObj().getTime();

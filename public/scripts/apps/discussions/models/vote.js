@@ -18,6 +18,6 @@ module.exports = Backbone.Model.extend({
     },
 
     url: function () {
-        return 'http://localhost:8000' + (this.id || this.get('message') + 'vote/');
+        return this.id || (this.get('message') + 'vote/');
     }
 });

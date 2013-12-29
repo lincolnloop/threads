@@ -1,6 +1,7 @@
 var _ = require('underscore'),
 	Backbone = require('backbone'),
-    TeamModel = require('../models/team');
+    TeamModel = require('../models/team'),
+    urls = require('../../../urls');
 
 var TeamCollection = Backbone.Collection.extend({
     model: TeamModel,
@@ -12,8 +13,7 @@ var TeamCollection = Backbone.Collection.extend({
         return team.get('organization') + team.get('name');
     },
     url: function () {
-        // FIXME
-        return 'http://localhost:8000/api/v2/team/'; //ohrl.get('api:team');
+        return urls.get('api:team');
     },
     serialized: function () {
         // Group by organization and serialize each team model

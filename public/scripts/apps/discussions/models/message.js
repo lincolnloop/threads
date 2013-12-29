@@ -55,7 +55,7 @@ var Message = Backbone.Model.extend({
     },
 
     url: function () {
-        return 'http://localhost:8000' + (this.id || urls.get('api:message'));
+        return this.id || urls.get('api:message');
     },
 
     setUser: function () {
