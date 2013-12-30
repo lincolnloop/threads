@@ -44,7 +44,7 @@ var MessageEditView = React.createClass({
             contentType: 'application/json',
             data: JSON.stringify({'raw_body': rawBody}),
             headers: {
-                Authorization: 'Token ' + localStorage.Authorization
+                Authorization: 'Token ' + localStorage.apiKey
             },
             success: callback
         });

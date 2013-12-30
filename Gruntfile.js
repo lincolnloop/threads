@@ -23,9 +23,9 @@ module.exports = function(grunt) {
         }
       }
     },
-    watchify: {
+    browserify: {
       ginger: {
-        src: ['./public/scripts/app.js'],
+        src: ['public/scripts/app.js'],
         dest: 'public/build/ginger.js',
         options: {
           debug: true
@@ -51,12 +51,12 @@ module.exports = function(grunt) {
     watch: {
       js: {
         files: ['package.json', '<%= jshint.files %>', 'public/scripts/**/*.jsx'],
-        tasks: ['clean', 'watchify', 'jshint']
+        tasks: ['clean', 'browserify', 'jshint']
       }
     }
   });
 
-  grunt.loadNpmTasks('grunt-watchify');
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('test', ['jshint', 'qunit']);
 
-  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'watchify']);
+  grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'browserify']);
   grunt.registerTask('serve', ['connect:server:keepalive']);
 
 };

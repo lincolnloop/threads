@@ -1,9 +1,9 @@
 module.exports = {
     // check if user has authenticated
     isAuthenticated: function () {
-        return !!localStorage.Authentication;
+        return !!localStorage.apiKey;
     },
     logout: function () {
-        localStorage.removeItem('Authentication');
+        localStorage.removeItem('apiKey');
     }
 };

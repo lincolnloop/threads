@@ -1,20 +1,32 @@
 var _ = require('underscore'),
     $ = require('jquery'),
     async = require('async'),
+    React = require('react'),
     Backbone = require('backbone'),
     AppRouter = require('./router'),
     config = require('clientconfig'),
     urls = require('./urls'),
+    SignInView = require('./apps/auth/views/sign-in.jsx'),
+    authUtils = require('./apps/auth/utils'),
     User = require('./apps/auth/models/user'),
     UserCollection = require('./apps/auth/collections/user'),
     TeamCollection = require('./apps/teams/collections/team');
 
-Backbone.$ = $;
+require('./core/globalEvents');
+
+var defaultConfig = {
+    apiUrl: 'https://gingerhq.com'
+};
 
 var app = _.extend({
-    config: config,
+    config: config || defaultConfig,
     data: {},
-    fetchData: function (fetchDataCallback) {
+    forceSignIn: function () {
+        console.log('app:forceSignIn');
+        React.renderComponent(SignInView({}), 
+                              document.getElementById('main'));
+    },
+    fetchData: function () {
         var self = this;
         this.data.teams = new TeamCollection();
         this.data.users = new UserCollection();
@@ -33,61 +45,65 @@ var app = _.extend({
                     dataType: "json",
                     url: app.config.apiUrl + url,
                     headers: {
-                        Authorization: 'Token ' + localStorage.Authorization
+                        Authorization: 'Token ' + localStorage.apiKey
                     },
                     success: function (data) {
                         self.data.tokens = data;
-                        cb(false);
+                    },
+                    complete: function (response) {
+                        cb(response.status === 200 ? false : response.status);
                     }
                 });
             },
             function (cb) {
-                self.data.teams.fetch({success: function () { cb(false); }});
+                function statusCallback(model, response) {
+                    return cb(response.status === 200 ? false : response.status);
+                }
+                self.data.teams.fetch({
+                    success: statusCallback,
+                    error: statusCallback
+                });
             },
             function (cb) {
-                self.data.users.fetch({success: function () { cb(false); }});
+                function statusCallback(model, response) {
+                    return cb(response.status === 200 ? false : response.status);
+                }
+                self.data.users.fetch({
+                    success: statusCallback,
+                    error: statusCallback
+                });
             }
         ], function (err, results) {
-            self.data.requestUser = self.data.users.get(self.data.tokens.url);
-            fetchDataCallback();
+            if (err) {
+                console.log('Error fetching data', err);
+                if (err === 403) {
+                    app.forceSignIn();
+                    return;
+                }
+            } else {
+                self.data.requestUser = self.data.users.get(self.data.tokens.url);
+                self.start();
+            }
         });
     },
     start: function () {
-        this.router = new AppRouter();
+        console.log('app:start');
+        app.router = new AppRouter();
+        if (!authUtils.isAuthenticated()) {
+            app.forceSignIn();
+            return;
+        }
+        if (!Backbone.history.started) {
+            Backbone.history.start({pushState: true});
+        }
+        this.router.navigate(window.location.pathname, {trigger: true});
         this.trigger('ready');
     },
     bootstrap: function () {
-        console.log('gingerApp:boostrap');
-        this.fetchData(_.bind(this.start, this));
+        console.log('app:boostrap');
+        this.fetchData();
     }
 }, Backbone.Events);
-
-Backbone.ajax = function(request) {
-    // adds authorization header to every request
-    request.headers = _.extend(request.headers || {}, {
-        Authorization: 'Token ' + localStorage.Authorization
-    });
-    // convert paths to full URLs
-    if (request.url.indexOf('/') === 0) {
-        request.url = app.config.apiUrl + request.url;
-    }
-    return Backbone.$.ajax.apply(Backbone.$, arguments);
-};
-$('body').removeClass('loading');
-
-$(document).on("click", "a[href]", function (event) {
-    var url = $(event.currentTarget).attr('href');
-
-    Backbone.history.navigate(url, {trigger: true});
-
-    event.preventDefault();
-});
-
-$(document).ajaxStart(function () {
-    $('body').addClass('loading');
-}).ajaxStop(function () {
-    $('body').removeClass('loading');
-});
 
 window.app = app;
 app.bootstrap();
