@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>Ginger Mobile</title>
 
-    <link rel="stylesheet" href="/media/css/app.css" />
+    <link rel="stylesheet" href="<%= css %>" />
 
     <script src="/vendor/custom.modernizr.js"></script>
     <style type="text/css">
@@ -27,6 +27,6 @@
 	<div id="main">loading...</div>
 	
 
-    <script src="/build/ginger.js"></script>
+    <script src="<%= js %>"></script>
 </body>
 </html>

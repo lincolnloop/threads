@@ -14,12 +14,11 @@ var _ = require('underscore'),
 
 require('./core/globalEvents');
 
-var defaultConfig = {
-    apiUrl: 'https://gingerhq.com'
-};
-
 var app = _.extend({
-    config: config || defaultConfig,
+    // default config can be overridden/extended by config passed in by cookie
+    config: _.extend({
+            apiUrl: 'https://gingerhq.com'
+        }, config),
     data: {},
     forceSignIn: function () {
         console.log('app:forceSignIn');
