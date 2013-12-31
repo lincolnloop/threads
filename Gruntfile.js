@@ -88,6 +88,15 @@ module.exports = function(grunt) {
         }
       }
     },
+    hashres: {
+      options: {
+        fileNameFormat: '${name}.${hash}.${ext}'
+      },
+      production: {
+        src: ['dist/ginger.css', 'dist/ginger.min.js'],
+        dest: 'dist/index.html'
+      }
+    },
     qunit: {
       files: ['test/**/*.html']
     },
@@ -126,6 +135,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-sass');
+  grunt.loadNpmTasks('grunt-hashres');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-execute');
@@ -134,7 +144,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'browserify']);
   grunt.registerTask('build', ['clean:dev', 'browserify:dev', 'sass:dev', 'template:dev']);
-  grunt.registerTask('dist', ['clean:production', 'browserify:production', 'uglify', 'sass:production', 'template:production']);
+  grunt.registerTask('dist', ['clean:production', 'browserify:production', 'uglify', 'sass:production', 'template:production', 'hashres:production']);
   grunt.registerTask('serve', ['connect:server:keepalive']);
 
 };

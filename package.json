@@ -34,7 +34,8 @@
     "grunt-watchify": "~0.1.0",
     "cookies": "~0.3.8",
     "grunt-connect-pushstate": "~0.2.0",
-    "grunt-sass": "~0.9.0"
+    "grunt-sass": "~0.9.0",
+    "grunt-hashres": "~0.3.4"
   },
   "dependencies": {
     "underscore": "~1.5.2",
