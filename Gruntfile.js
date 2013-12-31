@@ -64,8 +64,8 @@ module.exports = function(grunt) {
         },
         options: {
           data: {
-            js: './<%= pkg.name %>.js',
-            css: './<%= pkg.name %>.css'
+            js: '/<%= pkg.name %>.js',
+            css: '/<%= pkg.name %>.css'
           }
         }
       },
@@ -75,8 +75,8 @@ module.exports = function(grunt) {
         },
         options: {
           data: {
-            js: './<%= pkg.name %>.min.js',
-            css: './<%= pkg.name %>.css'
+            js: '/<%= pkg.name %>.min.js',
+            css: '/<%= pkg.name %>.css'
           }
         }
       }
@@ -106,7 +106,7 @@ module.exports = function(grunt) {
     watch: {
       js: {
         files: ['package.json', '<%= jshint.src %>', 'src/scripts/**/*.jsx'],
-        tasks: ['browserify:dev', 'sass:dev', 'jshint']
+        tasks: ['browserify:dev', 'jshint']
       },
       html: {
         files: ['src/**/*.html.tpl'],
@@ -134,7 +134,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'browserify']);
   grunt.registerTask('build', ['clean:dev', 'browserify:dev', 'sass:dev', 'template:dev']);
-  grunt.registerTask('bundle', ['clean', 'browserify:production', 'uglify', 'template:production']);
+  grunt.registerTask('dist', ['clean:production', 'browserify:production', 'uglify', 'sass:production', 'template:production']);
   grunt.registerTask('serve', ['connect:server:keepalive']);
 
 };
