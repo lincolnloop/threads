@@ -15,18 +15,18 @@
 
 </head>
 <body>
+    <div class="row">
+        <div class="large-12 columns">
 
-	<div id="nav">
-		<div>
-			<h2>Welcome to Ginger</h2>
-			<p>This is the best discussion app ever built</p>
-			<hr />
-		</div>
-	</div>
+            <div id="nav">
+                <h2>Welcome to Ginger</h2>
+                <p>This is the best discussion app ever built</p>
+                <hr />
+            </div>
 
-	<div id="main">loading...</div>
-	
-
+           <div id="main">loading...</div>
+        </div>
+    </div>
     <script src="<%= js %>"></script>
 </body>
 </html>
