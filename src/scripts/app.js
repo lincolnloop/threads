@@ -95,8 +95,9 @@ var app = _.extend({
         if (!Backbone.history.started) {
             Backbone.history.start({pushState: true});
         }
-        this.router.navigate(window.location.pathname, {trigger: true});
-        this.trigger('ready');
+        // TODO: Seems like we can delete these?
+        //this.router.navigate(window.location.pathname, {trigger: true});
+        //this.trigger('ready');
     },
     bootstrap: function () {
         console.log('app:boostrap');
