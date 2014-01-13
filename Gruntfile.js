@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       server: {
         options: {
           base: 'build',
-          port: 9001,
+          port: 8000,
           middleware: function (connect, options) {
             return [
                 Cookies.express(),
