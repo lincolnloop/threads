@@ -19,7 +19,7 @@ var TeamRouter = Backbone.Router.extend({
     index: function () {
         console.log('TeamRouter:index');
         React.renderComponent(TeamListView({teams: window.app.data.teams}),
-                              document.getElementById('main'));
+                              window.app.mainEl);
     },
 
     detail: function (slug) {
@@ -27,7 +27,7 @@ var TeamRouter = Backbone.Router.extend({
         var team = window.app.data.teams.findWhere({slug: slug});
         React.renderComponent(TeamDetailView({
             team: team
-        }), document.getElementById('main'));
+        }), window.app.mainEl);
     }
 });
 

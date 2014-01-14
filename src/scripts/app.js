@@ -24,8 +24,7 @@ var app = _.extend({
     data: {},
     forceSignIn: function () {
         console.log('app:forceSignIn');
-        React.renderComponent(SignInView({}), 
-                              document.getElementById('main'));
+        React.renderComponent(SignInView({}), window.app.mainEl);
     },
     fetchData: function () {
         var self = this;
@@ -89,6 +88,7 @@ var app = _.extend({
     },
     start: function () {
         console.log('app:start');
+        app.mainEl = document.getElementById('content-main');
         app.router = new AppRouter();
         if (!authUtils.isAuthenticated()) {
             app.forceSignIn();
