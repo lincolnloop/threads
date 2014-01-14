@@ -1,3 +1,5 @@
+"use strict";
+
 var Backbone = require('backbone'),
     Message = require('./message'),
     MessageCollection = require('../collections/message'),

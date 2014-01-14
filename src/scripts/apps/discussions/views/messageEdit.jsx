@@ -1,3 +1,5 @@
+"use strict";
+
 var $ = require('jquery'),
     React = require('react'),
     Message = require('../models/message'),
@@ -73,7 +75,7 @@ var MessageEditView = React.createClass({
         return (
             <form onSubmit={this.submit}>
             <textarea className={textareaClass} defaultValue={defaultValue} placeholder="Comment..."></textarea>
-            <div className={previewClass} className="preview" dangerouslySetInnerHTML={{__html: this.state.preview}}></div>
+            <div className={previewClass} dangerouslySetInnerHTML={{__html: this.state.preview}}></div>
             <input type="submit" />{' '}
             <a onClick={this.preview}>{this.state.preview ? 'Back to Edit' : 'Preview' }</a>{' '}
             <a onClick={this.props.done}>cancel</a>

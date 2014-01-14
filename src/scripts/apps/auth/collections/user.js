@@ -1,3 +1,5 @@
+"use strict";
+
 var Backbone = require('backbone'),
     User = require('../models/user'),
     urls = require('../../../urls');

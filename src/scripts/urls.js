@@ -1,3 +1,5 @@
+"use strict";
+
 var ohrl = require('ohrl');
 
 ohrl.load({

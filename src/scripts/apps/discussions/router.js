@@ -1,3 +1,5 @@
+"use strict";
+
 var Backbone = require('backbone'),
     React = require('react'),
     Discussion = require('./models/discussion'),

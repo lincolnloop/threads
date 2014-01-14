@@ -1,3 +1,5 @@
+"use strict";
+
 var Backbone = require('backbone'),
     urls = require('../../../urls'),
     DiscussionCollection = require('../../discussions/collections/discussions');

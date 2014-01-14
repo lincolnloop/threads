@@ -1,3 +1,5 @@
+"use strict";
+
 module.exports = {
     // check if user has authenticated
     isAuthenticated: function () {

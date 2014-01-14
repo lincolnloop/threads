@@ -1,3 +1,5 @@
+"use strict";
+
 var _ = require('underscore'),
     React = require('react'),
     Vote = require('../models/vote');

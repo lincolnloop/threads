@@ -1,3 +1,5 @@
+"use strict";
+
 var _ = require('underscore'),
     React = require('react'),
     EventsMixin = require('../../../core/eventsMixin');

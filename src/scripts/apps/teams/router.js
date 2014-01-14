@@ -1,3 +1,5 @@
+"use strict";
+
 var React = require('react'),
     Backbone = require('backbone'),
     TeamListView = require('./views/list.jsx'),

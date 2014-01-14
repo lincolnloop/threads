@@ -1,3 +1,5 @@
+"use strict";
+
 var React = require('react'),
     Backbone = require('backbone'),
     SignInView = require('./views/sign-in.jsx');

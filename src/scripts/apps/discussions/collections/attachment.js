@@ -1,3 +1,5 @@
+"use strict";
+
 var Backbone = require('backbone'),
     Attachment = require('../models/attachment');
 

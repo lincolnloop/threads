@@ -1,3 +1,5 @@
+"use strict";
+
 var _ = require('underscore'),
     $ = require('jquery'),
     md5 = require('MD5'),

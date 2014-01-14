@@ -1,3 +1,5 @@
+"use strict";
+
 var Backbone = require('backbone'),
     AuthRouter = require('./apps/auth/router'),
     TeamRouter = require('./apps/teams/router'),
