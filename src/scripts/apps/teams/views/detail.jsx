@@ -30,16 +30,20 @@ var TeamDetailView = React.createClass({
     },
     render: function() {
         console.log('TeamDetailView:render');
-        var createDiscussionUrl = '/' + urls.get('discussion:create:team', {
+        var createDiscussionUrl,
+            discussionNodes;
+
+        createDiscussionUrl = '/' + urls.get('discussion:create:team', {
                 team_slug: this.state.team.slug 
             });
-            discussionNodes = this.state.discussions.map(function (disc) {
+        discussionNodes = this.state.discussions.map(function (disc) {
                 return (
                     <li key={disc.url}>
                         <a href={disc.message.permalink}>{disc.title}</a>
                     </li>
                 );
-        });
+            });
+        
         return (
           <div className="team-detail">
             <h2>{this.state.team.name}</h2>
