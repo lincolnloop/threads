@@ -10,12 +10,12 @@ var NavView = React.createClass({
 
         return (
             <div className="wrapper">
-                <span className="nav-action">
+                <span className="action">
                     <a className="expand">Expand</a>
                     <a className="back">Back</a>
                 </span>
-                <span className="nav-title">{this.props.title}</span>
-                <span className="search">Search</span>
+                <span className="title">{this.props.title}</span>
+                <a className="search">Search</a>
             </div>
         );
     }

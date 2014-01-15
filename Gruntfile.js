@@ -129,7 +129,7 @@ module.exports = function(grunt) {
         tasks: ['template:dev']
       },
       scss: {
-        files: ['src/sass/*.scss'],
+        files: ['src/sass/**/*.scss'],
         tasks: ['sass:dev']
       }
     }
