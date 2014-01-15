@@ -32,6 +32,7 @@ var TeamListView = React.createClass({
     componentWillMount: function () {
         console.log('TeamListView:componentWillMount');
         _.bindAll(this, 'updateState');
+        // TODO: add forces a render for every team that is added to a collection
         this.events.listenTo(this.props.teams, 'sync add remove change', this.updateState);
         this.updateState();
     },

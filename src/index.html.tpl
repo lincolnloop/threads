@@ -18,9 +18,12 @@
     <div class="row">
         <nav id="nav-main" class="large-12 columns"></nav>
     </div>
+    <div class"row">
+        <nav id="nav-teams" class="large-12 columns"></nav>
+    </div>
     <div class="row">
-        <div class="large-12 columns">
-            <div id="content-main">loading...</div>
+        <div id="content-main" class="large-12 columns">
+            <h3>loading...</h3>
         </div>
     </div>
     <script src="<%= js %>"></script>

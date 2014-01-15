@@ -12,6 +12,7 @@ var _ = require('underscore'),
     authUtils = require('./apps/auth/utils'),
     User = require('./apps/auth/models/user'),
     UserCollection = require('./apps/auth/collections/user'),
+    layoutManager = require('./core/layoutManager'),
     TeamCollection = require('./apps/teams/collections/team');
 
 require('./core/globalEvents');
@@ -28,14 +29,6 @@ var app = _.extend({
     },
     fetchData: function () {
         var self = this;
-        this.data.teams = new TeamCollection();
-        this.data.users = new UserCollection();
-        this.data.anonUser = new User({
-            email: 'nobody@gingerhq.com',
-            name: 'Deleted User',
-            online: false,
-            typing: false
-        });
         async.parallel([
             function (cb) {
                 // TODO: more is needed here to plug in the tokens
@@ -88,22 +81,45 @@ var app = _.extend({
     },
     start: function () {
         console.log('app:start');
-        app.mainEl = document.getElementById('content-main');
-        app.navMainEl = document.getElementById('nav-main');
-        app.router = new AppRouter();
-        if (!authUtils.isAuthenticated()) {
-            app.forceSignIn();
-            return;
-        }
+
         if (!Backbone.history.started) {
             Backbone.history.start({pushState: true});
         }
+        // app.mainEl = document.getElementById('content-main');
+        // app.navMainEl = document.getElementById('nav-main');
+        // app.teamNavEl = document.getElementById('nav-teams');
+        // app.router = new AppRouter();
+        // if (!authUtils.isAuthenticated()) {
+        //     app.forceSignIn();
+        //     return;
+        // }
+        // if (!Backbone.history.started) {
+        //     Backbone.history.start({pushState: true});
+        // }
         // TODO: Seems like we can delete these?
         //this.router.navigate(window.location.pathname, {trigger: true});
         //this.trigger('ready');
     },
     bootstrap: function () {
         console.log('app:boostrap');
+        // layoutManager
+        this.layoutManager = layoutManager.bootstrap();
+        // initial data 
+        this.data.teams = new TeamCollection();
+        this.data.users = new UserCollection();
+        this.data.anonUser = new User({
+            email: 'nobody@gingerhq.com',
+            name: 'Deleted User',
+            online: false,
+            typing: false
+        });
+        // routing
+        app.router = new AppRouter();
+        if (!authUtils.isAuthenticated()) {
+            app.forceSignIn();
+            return;
+        }
+        // ajax data fetch
         this.fetchData();
     }
 }, Backbone.Events);

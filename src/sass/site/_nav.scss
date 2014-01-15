@@ -1,3 +1,6 @@
+/*
+ * MAIN Navigation
+ */
 #nav-main {
     background: #EEE;
     border-bottom: 1px solid #999;
@@ -10,10 +13,52 @@
 
     .action {
         float: left;
+
+        .back {
+            display: none;
+        }
+        &.back {
+            .back {
+                display: inline-block;
+            }
+            .expand {
+                display: none;
+            }
+        }
     }
 
     .search {
         float: right;
 
+    }
+}
+
+/*
+ * TEAM Navigation
+ */
+#nav-teams {
+    display: none;
+    float: left;
+    background: #333;
+    padding: 0;
+
+    .org-group h3 {
+        padding: 0 1em;
+        color: #EEE;
+    }
+    ul {
+        padding: 0 0 1em 0;
+        margin: 0;
+    }
+    li {
+        list-style: none;
+        a {
+            display: block;
+            padding: 0.2em 0.2em 0.2em 1.8em;
+            border-bottom: 1px solid #444;
+        }
+        &:last-child a {
+            border-bottom: none;
+        }
     }
 }
