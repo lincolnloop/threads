@@ -3,7 +3,8 @@
 var React = require('react'),
     Backbone = require('backbone'),
     TeamListView = require('./views/list.jsx'),
-    TeamDetailView = require('./views/detail.jsx');
+    TeamDetailView = require('./views/detail.jsx'),
+    NavView = require('./views/nav.jsx');
 
 var TeamRouter = Backbone.Router.extend({
 
@@ -20,6 +21,9 @@ var TeamRouter = Backbone.Router.extend({
         console.log('TeamRouter:index');
         React.renderComponent(TeamListView({teams: window.app.data.teams}),
                               window.app.mainEl);
+        React.renderComponent(NavView({
+            title: 'Home/Unread messages'
+        }), window.app.navMainEl);
     },
 
     detail: function (slug) {
@@ -28,6 +32,10 @@ var TeamRouter = Backbone.Router.extend({
         React.renderComponent(TeamDetailView({
             team: team
         }), window.app.mainEl);
+        React.renderComponent(NavView({
+            title: team.get('name'),
+            team: team
+        }), window.app.navMainEl);
     }
 });
 

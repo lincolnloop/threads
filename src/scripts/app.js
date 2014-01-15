@@ -89,6 +89,7 @@ var app = _.extend({
     start: function () {
         console.log('app:start');
         app.mainEl = document.getElementById('content-main');
+        app.navMainEl = document.getElementById('nav-main');
         app.router = new AppRouter();
         if (!authUtils.isAuthenticated()) {
             app.forceSignIn();
