@@ -32,7 +32,6 @@ var TeamDetailView = React.createClass({
         console.log('TeamDetailView:render');
         var createDiscussionUrl,
             discussionNodes;
-
         createDiscussionUrl = '/' + urls.get('discussion:create:team', {
                 team_slug: this.state.team.slug 
             });

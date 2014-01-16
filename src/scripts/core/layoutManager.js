@@ -17,10 +17,11 @@ module.exports = _.extend({
         return this;
     },
     renderComponent: function (view, target) {
+        console.log('layoutManager:renderComponent');
         // make sure team nav is hidden
         $('body').removeClass('show-nav');
-        // render component
-        console.log('layoutManager:renderComponent', view, target);
+        // unmount existing component and mount new one
+        React.unmountComponentAtNode(this[target])
         React.renderComponent(view, this[target]);
     },
     toggleTeamNav: function () {
