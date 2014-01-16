@@ -29,13 +29,6 @@ module.exports = _.extend({
         this.listenTo(window.app, 'teams:toggle', this.toggleTeamNav);
         return this;
     },
-    animate: function (prevTarget, newTarget, callback) {
-        var animation = this.animations[prevTarget + ':' + newTarget];
-        if (animation) {
-
-            callback();
-        }
-    },
     renderComponent: function (view, target) {
         console.log('layoutManager:renderComponent');
         var callback,
@@ -48,13 +41,20 @@ module.exports = _.extend({
         if (target === prevTarget) {
             callback();
         }
-        React.renderComponent(view, this[target]);
+        React.renderComponent(view, this.regions[target]);
         this.animate(prevTarget, target, callback);
     },
     toggleTeamNav: function () {
         console.log('TeamListView:toggle');
         // TODO: Handle animations for the team list
         $('body').toggleClass('show-nav');
+    },
+    animate: function (prevTarget, newTarget, callback) {
+        var animation = this.animations[prevTarget + ':' + newTarget];
+        if (animation) {
+
+            callback();
+        }
     },
     setupAnimation: function (prevRegion, nextRegion) {
         var $prevRegion = $(prevRegion),
