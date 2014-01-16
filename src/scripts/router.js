@@ -38,7 +38,7 @@ var AppRouter = Backbone.Router.extend({
         // setUp Team nav, since it exists on all pages
         layoutManager.renderComponent(TeamListView({
             teams: window.app.data.teams
-        }), 'teamNav');
+        }), 'navTeams');
     }
 });
 
