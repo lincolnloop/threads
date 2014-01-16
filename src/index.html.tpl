@@ -23,7 +23,8 @@
     </div>
     <div class="row">
         <div id="content-main" class="large-12 columns">
-            <h3>loading...</h3>
+            <div class="container-a"></div>
+            <div class="container-b"></div>
         </div>
     </div>
     <script src="<%= js %>"></script>
