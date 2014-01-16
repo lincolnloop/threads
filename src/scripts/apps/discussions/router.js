@@ -2,6 +2,7 @@
 
 var Backbone = require('backbone'),
     React = require('react'),
+    layoutManager = require('../../core/layoutManager'),
     Discussion = require('./models/discussion'),
     DiscussionDetailView = require('./views/discussion.jsx'),
     DiscussionCreateView = require('./views/discussionCreate.jsx'),
@@ -21,10 +22,10 @@ var DiscussionRouter = Backbone.Router.extend({
     create: function (teamSlug) {
         console.log('DiscussionRouter:create');
         var team = window.app.data.teams.findWhere({slug: teamSlug});
-        React.renderComponent(DiscussionCreateView({
+        layoutManager.renderComponent(DiscussionCreateView({
             discussion: new Discussion({team: team.id}),
             team: team
-        }), window.app.layoutManager.mainEl);
+        }), 'contentDiscussion');
     },
 
     detail: function (teamSlug, discussionId) {
@@ -34,9 +35,9 @@ var DiscussionRouter = Backbone.Router.extend({
                     discussion_id: discussionId
                 }),
             discussion = team.discussions.get(discussionUrl) || new Discussion({url: discussionUrl});
-        React.renderComponent(DiscussionDetailView({
+        layoutManager.renderComponent(DiscussionDetailView({
             discussion: discussion
-        }), window.app.layoutManager.mainEl);
+        }), 'contentDiscussion');
     }
 });
 

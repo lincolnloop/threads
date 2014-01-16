@@ -16,7 +16,7 @@ var AuthRouter = Backbone.Router.extend({
 
     signIn: function () {
         console.log('AuthRouter:signIn');
-        React.renderComponent(SignInView({}), window.app.layoutManager.mainEl);
+        React.renderComponent(SignInView({}), 'contentHome');
     },
 
     signOut: function () {

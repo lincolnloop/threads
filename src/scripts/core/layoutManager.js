@@ -6,23 +6,50 @@ var React = require('react'),
     $ = require('jquery');
 
 module.exports = _.extend({
+    animations: {
+        'contentHome:contentTeam': 'swipeLeft',
+        'contentTeam:contentDiscusion': 'swipeLeft',
+        'contentDiscussion:contentTeam': 'swipeRight',
+        'contentTeam:contentHome': 'swipeRight',
+    },
+    regions: {
+        'contentHome': 'content-home',
+        'contentTeam': 'content-team',
+        'contentDiscussion': 'content-discussion',
+        'navMain': 'nav-main',
+        'navTeams': 'nav-teams'
+    },
     bootstrap: function () {
         console.log('LayoutManager');
         // layout regions
-        this.mainEl = document.getElementById('content-main');
-        this.navMainEl = document.getElementById('nav-main');
-        this.teamNavEl = document.getElementById('nav-teams');
+        _.each(this.regions, function (id, region) {
+            this[region] = document.getElementById(id);
+        }, this);
         // layout changing events
         this.listenTo(window.app, 'teams:toggle', this.toggleTeamNav);
         return this;
     },
+    animate: function (prevTarget, newTarget, callback) {
+        var animation = this.animations[prevTarget + ':' + newTarget];
+        if (animation) {
+
+            callback();
+        }
+    },
     renderComponent: function (view, target) {
         console.log('layoutManager:renderComponent');
+        var callback,
+            prevTarget = this.activeTarget;
         // make sure team nav is hidden
         $('body').removeClass('show-nav');
         // unmount existing component and mount new one
-        React.unmountComponentAtNode(this[target])
+        this.activeTarget = target;
+        callback = _.partial(React.unmountComponentAtNode, this[target]);
+        if (target === prevTarget) {
+            callback();
+        }
         React.renderComponent(view, this[target]);
+        this.animate(prevTarget, target, callback);
     },
     toggleTeamNav: function () {
         console.log('TeamListView:toggle');

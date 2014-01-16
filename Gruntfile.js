@@ -115,7 +115,8 @@ module.exports = function(grunt) {
           require: true,
           window: true,
           localStorage: true,
-          document: true
+          document: true,
+          process: true
         }
       }
     },

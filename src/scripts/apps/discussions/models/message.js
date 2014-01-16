@@ -165,7 +165,7 @@ var Message = Backbone.Model.extend({
         // return the forked discussion or fetch it
         var discussion,
             message = this,
-            team = gingerApp.data.teams.get(this.get('team')),
+            team = window.app.data.teams.get(this.get('team')),
             Discussion = require('./discussion');
         // check that we haven't already fetched the discussion
         // or a fetch is in progress

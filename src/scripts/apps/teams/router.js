@@ -14,11 +14,11 @@ var TeamRouter = Backbone.Router.extend({
         console.log('TeamRouter:detail');
         layoutManager.renderComponent(TeamDetailView({
             team: team
-        }), 'mainEl');
+        }), 'contentTeam');
         layoutManager.renderComponent(NavView({
             title: team.get('name'),
             team: team
-        }), 'navMainEl');
+        }), 'navMain');
     }
 });
 

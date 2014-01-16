@@ -34,11 +34,11 @@ var AppRouter = Backbone.Router.extend({
         // wait for initial data to have something up
         layoutManager.renderComponent(NavView({
             title: 'Home/Unread messages'
-        }), 'navMainEl');
+        }), 'navMain');
         // setUp Team nav, since it exists on all pages
         layoutManager.renderComponent(TeamListView({
             teams: window.app.data.teams
-        }), 'teamNavEl');
+        }), 'teamNav');
     }
 });
 
