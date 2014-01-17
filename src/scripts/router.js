@@ -23,11 +23,9 @@ var AppRouter = Backbone.Router.extend({
         new AuthRouter();
         new TeamRouter();
         new DiscussionRouter();
-
-        this.setUp();
     },
 
-    setUp: function () {
+    index: function () {
         console.log('AppRouter:index');
 
         // Show the default landing page so we don't have to
@@ -39,6 +37,9 @@ var AppRouter = Backbone.Router.extend({
         layoutManager.renderComponent(TeamListView({
             teams: window.app.data.teams
         }), 'navTeams');
+
+        // TODO: Load home/dashboard
+        $('#content-main').html('TODO:Load something here')
     }
 });
 

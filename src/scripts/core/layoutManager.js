@@ -13,24 +13,23 @@ module.exports = _.extend({
         'contentTeam:contentHome': 'swipeRight',
     },
     regions: {
-        'contentHome': 'content-home',
-        'contentTeam': 'content-team',
-        'contentDiscussion': 'content-discussion',
+        'contentMain': 'content-main',
         'navMain': 'nav-main',
         'navTeams': 'nav-teams'
     },
     bootstrap: function () {
-        console.log('LayoutManager');
+        console.log('LayoutManager:bootstrap');
         // layout regions
         _.each(this.regions, function (id, region) {
-            this[region] = document.getElementById(id);
+            this.regions[region] = document.getElementById(id);
+            console.log(region, this.regions[region]);
         }, this);
         // layout changing events
         this.listenTo(window.app, 'teams:toggle', this.toggleTeamNav);
         return this;
     },
     renderComponent: function (view, target) {
-        console.log('layoutManager:renderComponent');
+        console.log('layoutManager:renderComponent', view, target);
         var callback,
             prevTarget = this.activeTarget;
         // make sure team nav is hidden

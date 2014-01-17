@@ -16,7 +16,8 @@ var SignInView = React.createClass({
             this.setState({error: 'Invalid API Key'});
         } else {
             this.addKey(apiKey);
-            window.app.bootstrap();
+            // success callback
+            this.props.success();
         }
     },
     render: function() {

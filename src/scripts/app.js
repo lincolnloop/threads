@@ -9,6 +9,7 @@ var _ = require('underscore'),
     config = require('clientconfig'),
     urls = require('./urls'),
     SignInView = require('./apps/auth/views/sign-in.jsx'),
+    NavView = require('./core/views/nav.jsx'),
     authUtils = require('./apps/auth/utils'),
     User = require('./apps/auth/models/user'),
     UserCollection = require('./apps/auth/collections/user'),
@@ -23,10 +24,6 @@ var app = _.extend({
             apiUrl: 'https://gingerhq.com'
         }, config),
     data: {},
-    forceSignIn: function () {
-        console.log('app:forceSignIn');
-        React.renderComponent(SignInView({}), window.app.mainEl);
-    },
     fetchData: function () {
         var self = this;
         async.parallel([
@@ -79,26 +76,17 @@ var app = _.extend({
             }
         });
     },
-    start: function () {
-        console.log('app:start');
-
-        if (!Backbone.history.started) {
-            Backbone.history.start({pushState: true});
+    authenticate: function () {
+        if (!authUtils.isAuthenticated()) {
+            layoutManager.renderComponent(SignInView({
+                success: _.bind(this.fetchData, this)
+            }), 'contentMain');
+            layoutManager.renderComponent(NavView({
+                title: 'Sign In'
+            }), 'navMain');
+        } else {
+            this.fetchData();
         }
-        // app.mainEl = document.getElementById('content-main');
-        // app.navMainEl = document.getElementById('nav-main');
-        // app.teamNavEl = document.getElementById('nav-teams');
-        // app.router = new AppRouter();
-        // if (!authUtils.isAuthenticated()) {
-        //     app.forceSignIn();
-        //     return;
-        // }
-        // if (!Backbone.history.started) {
-        //     Backbone.history.start({pushState: true});
-        // }
-        // TODO: Seems like we can delete these?
-        //this.router.navigate(window.location.pathname, {trigger: true});
-        //this.trigger('ready');
     },
     bootstrap: function () {
         console.log('app:boostrap');
@@ -113,14 +101,16 @@ var app = _.extend({
             online: false,
             typing: false
         });
+        // authenticate
+        this.authenticate();
+    },
+    start: function () {
+        console.log('app:start');
         // routing
         app.router = new AppRouter();
-        if (!authUtils.isAuthenticated()) {
-            app.forceSignIn();
-            return;
+        if (!Backbone.history.started) {
+            Backbone.history.start({pushState: true});
         }
-        // ajax data fetch
-        this.fetchData();
     }
 }, Backbone.Events);
 
