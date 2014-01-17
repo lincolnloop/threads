@@ -1,2 +1,6 @@
 node_modules
 .sass-cache
+build
+dist
+.tmp
+config/local.js
