@@ -12,32 +12,29 @@ var Backbone = require('backbone'),
 
 
 var AppRouter = Backbone.Router.extend({
-
     routes: {
         "": 'index'
     },
-
     initialize: function () {
         console.log('AppRouter:initialize');
-
         new AuthRouter();
         new TeamRouter();
         new DiscussionRouter();
+        this.setUp();
     },
-
+    setUp: function () {
+        // setUp Team nav, since it exists on all pages
+        layoutManager.renderComponent(TeamListView({
+            teams: window.app.data.teams
+        }), 'navTeams');
+    },
     index: function () {
         console.log('AppRouter:index');
-
         // Show the default landing page so we don't have to
         // wait for initial data to have something up
         layoutManager.renderComponent(NavView({
             title: 'Home/Unread messages'
         }), 'navMain');
-        // setUp Team nav, since it exists on all pages
-        layoutManager.renderComponent(TeamListView({
-            teams: window.app.data.teams
-        }), 'navTeams');
-
         // TODO: Load home/dashboard
         $('#content-main').html('TODO:Load something here')
     }

@@ -31,17 +31,23 @@ module.exports = _.extend({
     renderComponent: function (view, target) {
         console.log('layoutManager:renderComponent', view, target);
         var callback,
-            prevTarget = this.activeTarget;
-        // make sure team nav is hidden
-        $('body').removeClass('show-nav');
-        // unmount existing component and mount new one
-        this.activeTarget = target;
-        callback = _.partial(React.unmountComponentAtNode, this.regions[prevTarget]);
-        if (target === prevTarget) {
-            callback();
+            prevMain = this.activeMain;
+        // contentMain is a special case
+        // due to animations
+        if (target === 'contentMain') {
+            this.activeMain = target;
+            if (this.activeMain === prevMain) {
+                // unmount existing component and mount new one
+                React.unmountComponentAtNode(this.regions[prevMain]);
+            }
         }
+        // make sure team nav is hidden
+        // TODO: Animate this somewhere else
+        $('body').removeClass('show-nav');
+        // render component
         React.renderComponent(view, this.regions[target]);
-        this.animate(prevTarget, target, callback);
+        //TODO: animate
+        //this.animate(prevTarget, target, callback);
     },
     toggleTeamNav: function () {
         console.log('TeamListView:toggle');
