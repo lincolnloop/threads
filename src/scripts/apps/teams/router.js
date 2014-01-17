@@ -14,7 +14,7 @@ var TeamRouter = Backbone.Router.extend({
         console.log('TeamRouter:detail');
         layoutManager.renderComponent(TeamDetailView({
             team: team
-        }), 'contentTeam');
+        }), 'contentMain');
         layoutManager.renderComponent(NavView({
             title: team.get('name'),
             team: team

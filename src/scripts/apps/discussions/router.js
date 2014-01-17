@@ -25,7 +25,7 @@ var DiscussionRouter = Backbone.Router.extend({
         layoutManager.renderComponent(DiscussionCreateView({
             discussion: new Discussion({team: team.id}),
             team: team
-        }), 'contentDiscussion');
+        }), 'contentMain');
     },
 
     detail: function (teamSlug, discussionId) {
@@ -37,7 +37,7 @@ var DiscussionRouter = Backbone.Router.extend({
             discussion = team.discussions.get(discussionUrl) || new Discussion({url: discussionUrl});
         layoutManager.renderComponent(DiscussionDetailView({
             discussion: discussion
-        }), 'contentDiscussion');
+        }), 'contentMain');
     }
 });
 
