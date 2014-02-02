@@ -2,7 +2,7 @@
 
 module.exports = {
   dev: {
-    src: ['src/scripts/app.js'],
+    src: ['src/app.js'],
     dest: 'build/<%= pkg.name %>.js',
     options: {
       debug: true

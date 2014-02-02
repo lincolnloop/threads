@@ -1,9 +1,9 @@
 "use strict";
 
 var ENV = process.env.NODE_ENV || 'development',
-    config = require('../config/' + ENV),
-    Cookies = require('cookies'),
-    pushState = require('grunt-connect-pushstate/lib/utils').pushState;
+  config = require('../config/' + ENV),
+  Cookies = require('cookies'),
+  pushState = require('grunt-connect-pushstate/lib/utils').pushState;
 
 module.exports = {
   server: {
