@@ -5,6 +5,8 @@ module.exports = {
   options: {
     // options here to override JSHint defaults
     globalstrict: true,
+    // don't require "new" when using react modules
+    newcap: false,
     globals: {
       jQuery: true,
       console: true,
