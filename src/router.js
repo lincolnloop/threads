@@ -1,8 +1,6 @@
 "use strict";
 
 var Backbone = require('backbone'),
-    React = require('react'),
-    authUtils = require('./apps/auth/utils'),
     AuthRouter = require('./apps/auth/router'),
     DiscussionRouter = require('./apps/discussions/router'),
     layoutManager = require('./core/layoutManager'),
@@ -10,32 +8,45 @@ var Backbone = require('backbone'),
     TeamRouter = require('./apps/teams/router'),
     TeamListView = require('./apps/teams/views/list.jsx');
 
-
 var AppRouter = Backbone.Router.extend({
+    /*
+     * Main App Router
+     * Handles index and static/core routes only.
+     * All other routes are delegated to apps/<app-name>/router.js
+     */
     routes: {
         "": 'index'
     },
     initialize: function () {
         console.log('AppRouter:initialize');
+        // sign-*/
         new AuthRouter();
+        // <team-name>/
         new TeamRouter();
+        // discussion/*
+        // <team-name>/<discussion-id>/*
         new DiscussionRouter();
-        this.setUp();
+
+        this.bootstrap();
     },
-    setUp: function () {
-        // setUp Team nav, since it exists on all pages
+    bootstrap: function () {
+        /*
+         * Render Teams Nav (persistent across all pages)
+         */
         layoutManager.renderComponent(TeamListView({
             teams: window.app.data.teams
         }), 'navTeams');
     },
     index: function () {
-        console.log('AppRouter:index');
-        // Show the default landing page so we don't have to
-        // wait for initial data to have something up
+        /*
+         * Index/Latest activty page.
+         * Loads right away without waiting for data to be ready
+         */
+         // nav
         layoutManager.renderComponent(NavView({
-            title: 'Home/Unread messages'
+            title: 'Activity'
         }), 'navMain');
-        // TODO: Load home/dashboard
+        // main content TODO:Reactify
         $('#content-main').html('TODO:Load something here')
     }
 });
