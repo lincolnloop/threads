@@ -49,6 +49,7 @@
     "MD5": "~1.2.0",
     "clientconfig": "0.0.4",
     "foundation": "~4.2.1-1",
-    "backbone": "~1.1.0"
+    "backbone": "~1.1.0",
+    "load-grunt-config": "~0.7.0"
   }
 }
