@@ -2,6 +2,7 @@
 
 var React = require('react'),
     Backbone = require('backbone'),
+    layoutManager = require('../../core/layoutManager'),
     SignInView = require('./views/sign-in.jsx');
 
 var AuthRouter = Backbone.Router.extend({
@@ -16,7 +17,7 @@ var AuthRouter = Backbone.Router.extend({
 
     signIn: function () {
         console.log('AuthRouter:signIn');
-        React.renderComponent(SignInView({}), 'contentHome');
+        layoutManager.renderComponent(SignInView({}), 'contentHome');
     },
 
     signOut: function () {

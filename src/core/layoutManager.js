@@ -13,17 +13,12 @@ module.exports = _.extend({
         'contentTeam:contentHome': 'swipeRight',
     },
     regions: {
-        'contentMain': 'content-main',
-        'navMain': 'nav-main',
-        'navTeams': 'nav-teams'
+        'contentMain': document.getElementById('content-main'),
+        'navMain': document.getElementById('nav-main'),
+        'navTeams': document.getElementById('nav-teams')
     },
     bootstrap: function () {
         console.log('LayoutManager:bootstrap');
-        // layout regions
-        _.each(this.regions, function (id, region) {
-            this.regions[region] = document.getElementById(id);
-            console.log(region, this.regions[region]);
-        }, this);
         // layout changing events
         this.listenTo(window.app, 'teams:toggle', this.toggleTeamNav);
         return this;
@@ -32,8 +27,7 @@ module.exports = _.extend({
         console.log('layoutManager:renderComponent', view, target);
         var callback,
             prevMain = this.activeMain;
-        // contentMain is a special case
-        // due to animations
+        // contentMain is a special case due to animations
         if (target === 'contentMain') {
             this.activeMain = target;
             if (this.activeMain === prevMain) {
