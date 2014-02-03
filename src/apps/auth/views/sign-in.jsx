@@ -3,6 +3,10 @@
 var React = require('react');
 
 var SignInView = React.createClass({
+    /*
+     * Handles the sign-in/token form
+     * and stores the token in local storage.
+     */
     getInitialState: function () {
         return {error: null};
     },
@@ -10,13 +14,17 @@ var SignInView = React.createClass({
         localStorage.apiKey = apiKey;
     },
     login: function (event) {
+        /*
+         * Store the API key in local storage,
+         * and call success callback (app.fetchData)
+         */
         event.preventDefault();
         var apiKey = document.getElementById('api-key').value;
         if (apiKey.length !== 40) {
             this.setState({error: 'Invalid API Key'});
         } else {
             this.addKey(apiKey);
-            // success callback
+            // maps to app.fetchData and is binded in app.authenticate.
             this.props.success();
         }
     },
