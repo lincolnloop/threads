@@ -1,7 +1,12 @@
 "use strict";
 
 module.exports = {
-  src: ['Gruntfile.js', 'src/scripts/**/*.js'],
+  src: [
+    'Gruntfile.js',
+    'src/*.js',
+    'src/apps/**/*.js',
+    'src/core/**/*.js',
+  ],
   options: {
     // options here to override JSHint defaults
     globalstrict: true,

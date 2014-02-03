@@ -47,7 +47,7 @@ var AppRouter = Backbone.Router.extend({
             title: 'Activity'
         }), 'navMain');
         // main content TODO:Reactify
-        $('#content-main').html('TODO:Load something here')
+        document.getElementById('content-main').innerHTML = 'TODO:Load something here!';
     }
 });
 

@@ -26,8 +26,18 @@ var app = _.extend({
     data: {},
     fetchData: function () {
         var self = this;
+        /*
+         * Fetch data in parallel for:
+         * > Current user
+         * > User's teams
+         * > Users list of people who share the same teams as current user.
+         * more info @ https://github.com/caolan/async#parallel
+         */
         async.parallel([
             function (cb) {
+                /*
+                 * Fetch current user's id
+                 */
                 // TODO: more is needed here to plug in the tokens
                 //       this just fetchs the request users ID
                 var url = urls.get('api:refresh_tokens');
@@ -46,6 +56,9 @@ var app = _.extend({
                 });
             },
             function (cb) {
+                /*
+                 * Team list for current user
+                 */
                 function statusCallback(model, response) {
                     return cb(response.status === 200 ? false : response.status);
                 }
@@ -55,6 +68,9 @@ var app = _.extend({
                 });
             },
             function (cb) {
+                /*
+                 * User list for current user
+                 */
                 function statusCallback(model, response) {
                     return cb(response.status === 200 ? false : response.status);
                 }
@@ -67,20 +83,30 @@ var app = _.extend({
             if (err) {
                 console.log('Error fetching data', err);
                 if (err === 403) {
+                    // TODO: missing!
                     app.forceSignIn();
                     return;
                 }
             } else {
+                // get the current user's data
                 self.data.requestUser = self.data.users.get(self.data.tokens.url);
+                // start/load the app
                 self.start();
             }
         });
     },
     authenticate: function () {
+        /*
+         * Check if user is authenticated and
+         * show sign-in View if not, otherwise
+         * fetch the app data
+         */
         if (!authUtils.isAuthenticated()) {
+            // sign in form
             layoutManager.renderComponent(SignInView({
                 success: _.bind(this.fetchData, this)
             }), 'contentMain');
+            // sign in nav
             layoutManager.renderComponent(NavView({
                 title: 'Sign In'
             }), 'navMain');
@@ -90,9 +116,10 @@ var app = _.extend({
     },
     bootstrap: function () {
         console.log('app:boostrap');
-        // layoutManager
+        // Bootstrap the layoutManager.
+        // This needs to happen before any React View is rendered
         this.layoutManager = layoutManager.bootstrap();
-        // initial data 
+        // setup global team and user collections
         this.data.teams = new TeamCollection();
         this.data.users = new UserCollection();
         this.data.anonUser = new User({
@@ -101,12 +128,14 @@ var app = _.extend({
             online: false,
             typing: false
         });
-        // authenticate
+        // attempt to authenticate
+        // TODO: Maybe we should drop the token in favor
+        // of asking the user to authenticate against gingerhq.com?
         this.authenticate();
     },
     start: function () {
         console.log('app:start');
-        // routing
+        // initialize the routers
         app.router = new AppRouter();
         if (!Backbone.history.started) {
             Backbone.history.start({pushState: true});
