@@ -6,7 +6,7 @@ var Backbone = require('backbone'),
     layoutManager = require('./core/layoutManager'),
     NavView = require('./core/views/nav.jsx'),
     TeamRouter = require('./apps/teams/router'),
-    TeamListView = require('./apps/teams/views/list.jsx');
+    OrganizationList = require('./apps/teams/views/OrganizationList.jsx');
 
 var AppRouter = Backbone.Router.extend({
     /*
@@ -33,7 +33,7 @@ var AppRouter = Backbone.Router.extend({
         /*
          * Render Teams Nav (persistent across all pages)
          */
-        layoutManager.renderComponent(TeamListView({
+        layoutManager.renderComponent(OrganizationList({
             teams: window.app.data.teams
         }), 'navTeams');
     },
