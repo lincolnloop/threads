@@ -93,9 +93,9 @@ var app = _.extend({
     if (err) {
       console.log('Error fetching data', err);
       if (err === 403) {
-          // TODO: missing!
-          app.forceSignIn();
-          return;
+        // TODO: missing!
+        app.forceSignIn();
+        return;
       }
     } else {
       // get the current user's data
