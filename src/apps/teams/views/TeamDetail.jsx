@@ -31,13 +31,17 @@ var TeamDetail = React.createClass({
   },
   render: function() {
     console.log('TeamDetailView:render');
-    var createDiscussionUrl = '/' + urls.get('discussion:create:team', {
-      team_slug: this.state.team.slug 
+    var team = this.state.team,
+      createDiscussionUrl;
+    // get create discussion url
+    // TODO: figure out a better, maybe one-liner, API
+    createDiscussionUrl = '/' + urls.get('discussion:create:team', {
+      team_slug: team.slug 
     });
 
     return (
       <div className="team-detail">
-        <h2>{this.state.team.name}</h2>
+        <h2>{team.name}</h2>
         <a className="button" href={createDiscussionUrl}>New Discussion</a>
           {DiscussionList({discussions: this.state.discussions})}
       </div>

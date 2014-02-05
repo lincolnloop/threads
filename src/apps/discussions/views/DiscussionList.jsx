@@ -5,6 +5,7 @@ var React = require('react'),
 
 var DiscussionList = React.createClass({
   render: function() {
+    console.log('DiscussionList', this.props.discussions);
     return (
         <ul>
             {this.props.discussions.map(Discussion)}
