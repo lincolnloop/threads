@@ -1,6 +1,7 @@
 "use strict";
 
-var Backbone = require('backbone'),
+var _ = require('underscore'),
+  Backbone = require('backbone'),
   authUtils = require('./apps/auth/utils'),
   AuthRouter = require('./apps/auth/router'),
   SignInView = require('./apps/auth/views/sign-in.jsx'),
