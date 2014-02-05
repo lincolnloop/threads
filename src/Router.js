@@ -3,13 +3,12 @@
 var _ = require('underscore'),
   Backbone = require('backbone'),
   authUtils = require('./apps/auth/utils'),
-  AuthRouter = require('./apps/auth/router'),
-  SignInView = require('./apps/auth/views/sign-in.jsx'),
-  NavView = require('./core/views/nav.jsx'),
-  DiscussionRouter = require('./apps/discussions/router'),
-  layoutManager = require('./core/layoutManager'),
-  NavView = require('./core/views/nav.jsx'),
-  TeamRouter = require('./apps/teams/router'),
+  AuthRouter = require('./apps/auth/Router'),
+  TeamRouter = require('./apps/teams/Router'),
+  DiscussionRouter = require('./apps/discussions/Router'),
+    layoutManager = require('./core/layoutManager'),
+  SignInView = require('./apps/auth/views/SignIn.jsx'),
+  NavView = require('./core/views/Nav.jsx'),
   OrganizationList = require('./apps/teams/views/OrganizationList.jsx');
 
 var AppRouter = Backbone.Router.extend({
