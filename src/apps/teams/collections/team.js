@@ -28,7 +28,7 @@ var TeamCollection = Backbone.Collection.extend({
       return {
           name: org,
           teams: _.invoke(teams, 'serialized')
-      }
+      };
     });
   }
 });

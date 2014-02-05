@@ -4,7 +4,8 @@ var _ = require('underscore'),
   Backbone = require('backbone'),
   React = require('react'),
   urls = require('../../../urls'),
-  EventsMixin = require('../../../core/eventsMixin');
+  EventsMixin = require('../../../core/eventsMixin'),
+  DiscussionList = require('../../discussions/views/DiscussionList.jsx');
 
 var TeamDetail = React.createClass({
   mixins: [EventsMixin],
@@ -30,26 +31,15 @@ var TeamDetail = React.createClass({
   },
   render: function() {
     console.log('TeamDetailView:render');
-    var createDiscussionUrl,
-      discussionNodes;
-    createDiscussionUrl = '/' + urls.get('discussion:create:team', {
+    var createDiscussionUrl = '/' + urls.get('discussion:create:team', {
       team_slug: this.state.team.slug 
     });
-    discussionNodes = this.state.discussions.map(function (disc) {
-      return (
-        <li key={disc.url}>
-          <a href={disc.message.permalink}>{disc.title}</a>
-        </li>
-      );
-    });
-    
+
     return (
       <div className="team-detail">
         <h2>{this.state.team.name}</h2>
         <a className="button" href={createDiscussionUrl}>New Discussion</a>
-        <ul>
-            {discussionNodes}
-        </ul>
+          {DiscussionList({discussions: this.state.discussions})}
       </div>
     );
   }

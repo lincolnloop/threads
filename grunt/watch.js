@@ -2,7 +2,7 @@
 
 module.exports = {
   js: {
-    files: ['package.json', '<%= jshint.src %>', 'src/scripts/**/*.jsx'],
+    files: ['package.json', '<%= jshint.src %>', 'src/**/*.jsx'],
     tasks: ['browserify:dev', 'jshint']
   },
   html: {
