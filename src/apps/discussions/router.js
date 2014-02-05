@@ -4,8 +4,8 @@ var Backbone = require('backbone'),
     React = require('react'),
     layoutManager = require('../../core/layoutManager'),
     Discussion = require('./models/discussion'),
-    DiscussionDetailView = require('./views/discussion.jsx'),
-    DiscussionCreateView = require('./views/discussionCreate.jsx'),
+    DiscussionDetailView = require('./views/DiscussionDetail.jsx'),
+    DiscussionCreateView = require('./views/DiscussionCreate.jsx'),
     urls = require('../../urls');
 
 var DiscussionRouter = Backbone.Router.extend({

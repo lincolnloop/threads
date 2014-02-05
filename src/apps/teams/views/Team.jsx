@@ -3,6 +3,9 @@
 var React = require('react');
 
 var Team = React.createClass({
+    /*
+     * Team List Item
+     */
   render: function () {
     var unread = this.props.unread ? this.props.unread : '';
     return (

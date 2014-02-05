@@ -1,7 +1,7 @@
 "use strict";
 
 var Backbone = require('backbone'),
-    TeamDetailView = require('./views/detail.jsx'),
+    TeamDetailView = require('./views/TeamDetail.jsx'),
     layoutManager = require('../../core/layoutManager'),
     NavView = require('../../core/views/nav.jsx');
 
@@ -10,11 +10,13 @@ var TeamRouter = Backbone.Router.extend({
         ":team/": 'detail'
     },
     detail: function (slug) {
+        // get current team from slug
         var team = window.app.data.teams.findWhere({slug: slug});
-        console.log('TeamRouter:detail');
+        // render team detail view
         layoutManager.renderComponent(TeamDetailView({
             team: team
         }), 'contentMain');
+        // render top nav
         layoutManager.renderComponent(NavView({
             title: team.get('name'),
             team: team
