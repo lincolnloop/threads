@@ -89,15 +89,6 @@ var app = _.extend({
       }
     ], _.bind(this.fetchDataCallback, self));
   },
-  fetchRequestUser: function () {
-
-  },
-  fetchTeamList: function () {
-
-  },
-  fetchUsers: function () {
-
-  },
   fetchDataCallback: function (err, results) {
     if (err) {
       console.log('Error fetching data', err);
