@@ -10,20 +10,22 @@ var _ = require('underscore'),
 var TeamDetail = React.createClass({
   mixins: [EventsMixin],
  componentWillMount: function () {
-    console.log('TeamDetailView:componentWillMount');
+    console.log('TeamDetailView:componentWillMount', this.state);
     var team = this.props.team;
+    // listenTo team or discussion changes and trigger a state update
+    // which will re-render the view
     this.events.listenTo(team, 'change', this.updateState);
     this.events.listenTo(team.discussions, 'sync add remove change', this.updateState);
-    if (!team.discussions.fetched) {
-      team.discussions.fetch();
-    }
+    // state is cleaned up every time we render a component
+    // so we need to update it on load always.
     this.updateState();
-  },
-  componentWillUnmount: function () {
-    console.log('TeamDetailView:componentWillUnmount');
+    // Always fetch discussions (we have no realtime yet).
+    team.discussions.fetch();
   },
   updateState: function () {
-    console.log('TeamDetailView:updateState');
+    // props store a reference to the backbone model instance,
+    // which in turns is a representation of the data that is in the DB.
+    // state is what handles the data that is shown in the UI.
     this.setState({
       team: this.props.team.serialized(),
       discussions: this.props.team.discussions.serialized()
@@ -38,7 +40,6 @@ var TeamDetail = React.createClass({
     createDiscussionUrl = '/' + urls.get('discussion:create:team', {
       team_slug: team.slug 
     });
-
     return (
       <div className="team-detail">
         <h2>{team.name}</h2>
