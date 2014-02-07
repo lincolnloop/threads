@@ -1,42 +1,44 @@
 "use strict";
 
 var React = require('react'),
-    MessageEditView = require('./messageEdit.jsx');
+  app = require('../../../app.js'),
+  Discussion = require('../models/discussion.js'),
+  MarkdownText = require('./../../../components/MarkdownText.jsx');
 
 module.exports = React.createClass({
-    componentWillMount: function () {
-        this.props.discussion.once('change:url', this.redirect);
-    },
-    messageCreateCallback: function (rawBody) {
-        console.log('DiscussionCreateView:messageCreateCallback');
-        var self = this,
-            title = $('#disc-title').val();
-        this.props.discussion.set({
-            title: title,
-            message: {
-                raw_body: rawBody
-            }
-        });
-        this.props.discussion.save({}, {
-            success: function (disc) {
-                self.props.team.discussions.add(disc);
-            }
-        });
-    },
-    redirect: function () {
-        console.log('DiscussionCreateView:redirect');
-        var discUrl = this.props.discussion.get('message').permalink;
-        window.app.router.navigate(discUrl, {trigger: true});
-    },
-    render: function () {
-        console.log('DiscussionCreateView:render');
-        var teamName = this.props.team.get('name');
-        return (
-            <div className="discussion-create">
-                <h2>{teamName} : New Discussion</h2>
-                <input id="disc-title" type="text" placeholder="What are we talking about?" />
-                <MessageEditView discussion={this.props.discussion} done={this.messageCreateCallback} />
-            </div>
-        );
-    }
+  render: function () {
+    return (
+      <form className="discussion-create" onSubmit={this.submit}>
+        <h2>New Discussion</h2>
+        <input type="text" placeholder="What are we talking about?" ref="title" required />
+        <MarkdownText placeholder="Comment.." ref="message" required />
+        <input type="submit" />
+      </form>
+    );
+  },
+  submit: function (evt) {
+    var title = this.refs.title.getDOMNode().value,
+      discussion = new Discussion();
+    evt.preventDefault();
+    // save the newly creted discussion instace
+    // with the data from the form
+    // and redirect on success
+    discussion.save({
+        title: title,
+        message: {
+          raw_body: this.refs.message.getRawValue()
+        },
+        team: this.props.team.get('url')
+      }, {
+        success: function (discusison) {
+          // add the discussion to the list of discussions for the team
+          this.props.team.discussions.add(discussion);
+          // navigate to the discussion detail url
+          // TODO: ohrl.get('discussion:detail', discussion.get(id))
+          window.app.router.navigate(discussion.get('message').permalink,
+            {trigger: true});
+        }.bind(this)
+      }
+    );
+  }
 });

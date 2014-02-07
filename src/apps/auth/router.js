@@ -3,7 +3,7 @@
 var React = require('react'),
     Backbone = require('backbone'),
     layoutManager = require('../../core/layoutManager'),
-    SignInView = require('./views/sign-in.jsx');
+    SignInView = require('./views/SignIn.jsx');
 
 var AuthRouter = Backbone.Router.extend({
     routes: {

@@ -10,7 +10,6 @@ var _ = require('underscore'),
 var TeamDetail = React.createClass({
   mixins: [EventsMixin],
  componentWillMount: function () {
-    console.log('TeamDetailView:componentWillMount', this.state);
     var team = this.props.team;
     // listenTo team or discussion changes and trigger a state update
     // which will re-render the view

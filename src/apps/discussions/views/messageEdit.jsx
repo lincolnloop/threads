@@ -31,13 +31,13 @@ var MessageEditView = React.createClass({
     submit: function (event) {
         console.log('MessageEditView:submit');
         event.preventDefault();
-        var rawBody = $('textarea', event.target).val();
+        var message = this.refs.message.getDOMNode().value.trim();
         if (this.props.data) {
-            this.editMessage(rawBody);
+            this.editMessage(message);
         } else if (this.props.parent) {
-            this.createMessage(rawBody);
+            this.createMessage(message);
         } else {
-            this.createDiscussion(rawBody);
+            this.createDiscussion(message);
         }
     },
     loadPreview: function (rawBody, callback) {
@@ -45,7 +45,7 @@ var MessageEditView = React.createClass({
             type: 'POST',
             url: window.app.config.apiUrl + urls.get('api:message:preview'),
             contentType: 'application/json',
-            data: JSON.stringify({'raw_body': rawBody}),
+            data: JSON.stringify({'raw_body': message}),
             headers: {
                 Authorization: 'Token ' + localStorage.apiKey
             },
@@ -54,16 +54,14 @@ var MessageEditView = React.createClass({
     },
     preview: function () {
         console.log('MessageEditView:preview');
-        var rawBody,
-            self = this;
+        var message = this.refs.message.getDOMNode().value.trim();
         if (this.state.preview) {
             this.setState({preview: null});
         } else {
-            rawBody = $('textarea', this.getDOMNode()).val();
-            this.loadPreview(rawBody, function (messageObj) {
+            this.loadPreview(message, function (message) {
                 // FIXME: why is this returning an array for body?
-                self.setState({preview: messageObj.body[0]});
-            });
+                this.setState({preview: message});
+            }.bind(this));
         }
     },
     render: function () {
@@ -74,7 +72,7 @@ var MessageEditView = React.createClass({
 
         return (
             <form onSubmit={this.submit}>
-            <textarea className={textareaClass} defaultValue={defaultValue} placeholder="Comment..."></textarea>
+            <textarea ref="message" className={textareaClass} defaultValue={defaultValue} placeholder="Comment..."></textarea>
             <div className={previewClass} dangerouslySetInnerHTML={{__html: this.state.preview}}></div>
             <input type="submit" />{' '}
             <a onClick={this.preview}>{this.state.preview ? 'Back to Edit' : 'Preview' }</a>{' '}

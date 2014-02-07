@@ -20,7 +20,14 @@ module.exports = {
       window: true,
       localStorage: true,
       document: true,
-      process: true
+      process: true,
+      FormData: true,
+      XMLHttpRequest: true,
+      // TODO: Fix these
+      ohrl: true,
+      mixpanel: true,
+      log: true,
+      $$: true
     }
   }
 };
