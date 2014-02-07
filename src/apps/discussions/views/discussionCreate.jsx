@@ -18,27 +18,26 @@ module.exports = React.createClass({
   },
   submit: function (evt) {
     var title = this.refs.title.getDOMNode().value,
-      discussion = new Discussion();
-    evt.preventDefault();
-    // save the newly creted discussion instace
-    // with the data from the form
-    // and redirect on success
-    discussion.save({
+      discussion = new Discussion({
         title: title,
         message: {
           raw_body: this.refs.message.getRawValue()
         },
         team: this.props.team.get('url')
-      }, {
-        success: function (discusison) {
-          // add the discussion to the list of discussions for the team
-          this.props.team.discussions.add(discussion);
-          // navigate to the discussion detail url
-          // TODO: ohrl.get('discussion:detail', discussion.get(id))
-          window.app.router.navigate(discussion.get('message').permalink,
-            {trigger: true});
-        }.bind(this)
-      }
-    );
+      });
+    evt.preventDefault();
+    // save the newly creted discussion instance
+    // and redirect on success
+    discussion.save({}, {
+      success: function (discusison) {
+        var discussionList = this.props.team.discussions;
+        // add the discussion to the list of discussions for the team
+        discussionList.add(discussion);
+        // navigate to the discussion detail url
+        // TODO: ohrl.get('discussion:detail', discussion.get(id))
+        window.app.router.navigate(discussion.get('message').permalink,
+          {trigger: true});
+      }.bind(this)
+    });
   }
 });

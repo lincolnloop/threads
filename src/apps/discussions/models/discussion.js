@@ -71,7 +71,9 @@ var DiscussionModel = Backbone.Model.extend({
         return this.id || urls.get('api:discussion');
     },
     getDateObj: function () {
-        return new Date(this.get('date_latest_activity'));
+        // TODO: this.get('date_latest_activity') 
+        // doesn't return on first save
+        return new Date(this.get('message').date_latest_activity);
     },
     serialized: function () {
         var data = this.toJSON();

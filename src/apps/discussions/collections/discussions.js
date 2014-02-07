@@ -7,7 +7,6 @@ var _ = require('underscore'),
 
 var DiscussionCollection = Backbone.Collection.extend({
     model: DiscussionModel,
-
     initialize: function () {
         console.log('DiscussionCollection:initialize');
         this.on('sync', function () {
