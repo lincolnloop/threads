@@ -8,7 +8,7 @@ var NavView = React.createClass({
     handleExpandClick: function () {
         console.log('handleExpandClick');
         // trigger event to toggle team list @
-        // apps/teams/views/list.jsx
+        // app/teams/views/list.jsx
         window.app.trigger('teams:toggle');
         return false;
     },

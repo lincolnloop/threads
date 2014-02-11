@@ -2,20 +2,20 @@
 
 var _ = require('underscore'),
   Backbone = require('backbone'),
-  authUtils = require('./apps/auth/utils'),
-  AuthRouter = require('./apps/auth/Router'),
-  TeamRouter = require('./apps/teams/Router'),
-  DiscussionRouter = require('./apps/discussions/Router'),
+  authUtils = require('./app/auth/utils'),
+  AuthRouter = require('./app/auth/Router'),
+  TeamRouter = require('./app/teams/Router'),
+  DiscussionRouter = require('./app/discussions/Router'),
     layoutManager = require('./core/layoutManager'),
-  SignInView = require('./apps/auth/views/SignIn.jsx'),
+  SignInView = require('./app/auth/views/SignIn.jsx'),
   NavView = require('./core/views/Nav.jsx'),
-  OrganizationList = require('./apps/teams/views/OrganizationList.jsx');
+  OrganizationList = require('./app/teams/views/OrganizationList.jsx');
 
 var AppRouter = Backbone.Router.extend({
   /*
    * Main App Router
    * Handles index and static/core routes only.
-   * All other routes are delegated to apps/<app-name>/router.js
+   * All other routes are delegated to app/<app-name>/router.js
   */
   routes: {
     "": 'index'

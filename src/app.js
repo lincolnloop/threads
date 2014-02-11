@@ -8,9 +8,9 @@ var _ = require('underscore'),
   AppRouter = require('./Router'),
   config = require('clientconfig'),
   urls = require('./urls'),
-  User = require('./apps/auth/models/user'),
-  UserCollection = require('./apps/auth/collections/user'),
-  TeamCollection = require('./apps/teams/collections/team');
+  User = require('./app/auth/models/user'),
+  UserCollection = require('./app/auth/collections/user'),
+  TeamCollection = require('./app/teams/collections/team');
 
 require('./core/globalEvents');
 
