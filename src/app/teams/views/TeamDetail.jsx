@@ -3,8 +3,8 @@
 var _ = require('underscore'),
   Backbone = require('backbone'),
   React = require('react'),
-  urls = require('../../../urls'),
-  EventsMixin = require('../../../core/eventsMixin'),
+  urls = require('../../urls'),
+  EventsMixin = require('../../core/eventsMixin'),
   DiscussionList = require('../../discussions/views/DiscussionList.jsx');
 
 var TeamDetail = React.createClass({

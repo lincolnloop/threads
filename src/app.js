@@ -5,17 +5,19 @@ var $ = require('jquery');
 var async = require('async');
 var React = require('react');
 var Backbone = require('backbone');
-var router = require('./router.js');
 var config = require('clientconfig');
-var urls = require('./urls');
+// urls/routing
+var urls = require('./app/urls');
+var router = require('./app/router.js');
+// models
 var User = require('./app/auth/models/user');
+// collections
 var UserCollection = require('./app/auth/collections/user');
 var TeamCollection = require('./app/teams/collections/team');
 // views
 var MainView = require('./app/Main.jsx');
 
-
-require('./core/globalEvents');
+require('./app/core/globalEvents');
 
 var app = _.extend({
   // default config can be overridden/extended by config passed in by cookie
@@ -25,7 +27,13 @@ var app = _.extend({
   // app/global data
   data: {
     teams: new TeamCollection(),
-    users: new UserCollection()
+    users: new UserCollection(),
+    anonUser: new User({
+      email: 'nobody@gingerhq.com',
+      name: 'Deleted User',
+      online: false,
+      typing: false
+    })
   },
   fetchData: function () {
     var self = this;
@@ -100,12 +108,7 @@ var app = _.extend({
         'teams': this.data.teams,
         'users': this.data.users,
         'requestUser': this.data.users.get(this.data.tokens.url),
-         anonUser: new User({
-          email: 'nobody@gingerhq.com',
-          name: 'Deleted User',
-          online: false,
-          typing: false
-        })
+        'anonUser': this.data.anonUser
       }), document.getElementById('main'));
     }
   },
@@ -114,7 +117,6 @@ var app = _.extend({
     window.app = this;
     // fetch app data
     window.app.fetchData();
-  }
   }
 }, Backbone.Events);
 

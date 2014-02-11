@@ -3,8 +3,8 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
-var router = require('../router');
-var urls = require('../urls');
+var router = require('./router');
+var urls = require('./urls');
 // --------------------
 // Models
 // --------------------
@@ -13,7 +13,7 @@ var Discussion = require('./discussions/models/discussion');
 // Views
 // --------------------
 // common
-var Nav = require('../core/views/Nav.jsx');
+var Nav = require('./core/views/Nav.jsx');
 // auth
 var SignInView = require('./auth/views/SignIn.jsx');
 // team views
@@ -29,14 +29,10 @@ var Main = React.createClass({
     $('body').toggleClass('show-nav');
   },
   getInitialState: function() {
-    // initial sidebar and content
-    // regardless of route. 
-    // (this never renders? router is fast enough to do the state change?)
+    // Initial sidebar, topNav and content.
+    // All should be component instances.
     return {
-      'sidebar': OrganizationList({
-        'teams': this.state.teams,
-        'toggleTeamNav': this.toggleTeamNav
-      }),
+      'sidebar': '',
       'topNav': Nav({
         'toggleTeamNav': this.toggleTeamNav
       }),

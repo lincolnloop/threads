@@ -6,7 +6,7 @@ var _ = require('underscore'),
     VotesView = require('./votes.jsx'),
     MessageEditView = require('./messageEdit.jsx'),
     Message = require('../models/message'),
-    urls = require('../../../urls');
+    urls = require('../../urls');
 
 require('react/addons');
 

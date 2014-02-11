@@ -3,7 +3,7 @@
 var React = require('react'),
   app = require('../../../app.js'),
   Discussion = require('../models/discussion.js'),
-  MarkdownText = require('./../../../components/MarkdownText.jsx');
+  MarkdownText = require('./../../components/MarkdownText.jsx');
 
 module.exports = React.createClass({
   render: function () {

@@ -3,7 +3,7 @@
 var Backbone = require('backbone'),
     Message = require('./message'),
     MessageCollection = require('../collections/message'),
-    urls = require('../../../urls');
+    urls = require('../../urls');
 
 var DiscussionModel = Backbone.Model.extend({
     idAttribute: "url",

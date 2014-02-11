@@ -2,7 +2,7 @@
 
 var _ = require('underscore'),
     Backbone = require('backbone'),
-    urls = require('../../../urls'),
+    urls = require('../../urls'),
     DiscussionModel = require('../models/discussion');
 
 var DiscussionCollection = Backbone.Collection.extend({

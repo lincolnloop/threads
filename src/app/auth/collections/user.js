@@ -2,7 +2,7 @@
 
 var Backbone = require('backbone'),
     User = require('../models/user'),
-    urls = require('../../../urls');
+    urls = require('../../urls');
 
 module.exports = Backbone.Collection.extend({
     model: User,

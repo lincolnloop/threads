@@ -1,7 +1,7 @@
 "use strict";
 
 var Backbone = require('backbone'),
-    urls = require('../../../urls'),
+    urls = require('../../urls'),
     DiscussionCollection = require('../../discussions/collections/discussions');
 
 var TeamModel = Backbone.Model.extend({

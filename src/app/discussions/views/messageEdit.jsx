@@ -3,7 +3,7 @@
 var $ = require('jquery'),
     React = require('react'),
     Message = require('../models/message'),
-    urls = require('../../../urls');
+    urls = require('../../urls');
 
 var MessageEditView = React.createClass({
     getInitialState: function () {

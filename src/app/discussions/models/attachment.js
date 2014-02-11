@@ -3,7 +3,7 @@
 var _ = require('underscore'),
     $ = require('jquery'),
     Backbone = require('backbone'),
-    urls = require('../../../urls');
+    urls = require('../../urls');
 
 module.exports = Backbone.Model.extend({
 

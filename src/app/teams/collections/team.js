@@ -3,7 +3,7 @@
 var _ = require('underscore'),
   Backbone = require('backbone'),
   TeamModel = require('../models/team'),
-  urls = require('../../../urls');
+  urls = require('../../urls');
 
 var TeamCollection = Backbone.Collection.extend({
   model: TeamModel,

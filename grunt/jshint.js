@@ -4,8 +4,7 @@ module.exports = {
   src: [
     'Gruntfile.js',
     'src/*.js',
-    'src/apps/**/*.js',
-    'src/core/**/*.js',
+    'src/app/**/*.js'
   ],
   options: {
     // options here to override JSHint defaults

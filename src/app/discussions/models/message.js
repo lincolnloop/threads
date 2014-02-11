@@ -5,7 +5,7 @@ var _ = require('underscore'),
     Backbone = require('backbone'),
     AttachmentCollection = require('../collections/attachment'),
     VoteCollection = require('../collections/vote'),
-    urls = require('../../../urls');
+    urls = require('../../urls');
 
 var Message = Backbone.Model.extend({
 
