@@ -5,13 +5,6 @@ var _ = require('underscore'),
     EventsMixin = require('../eventsMixin');
 
 var NavView = React.createClass({
-    handleExpandClick: function () {
-        console.log('handleExpandClick');
-        // trigger event to toggle team list @
-        // app/teams/views/list.jsx
-        window.app.trigger('teams:toggle');
-        return false;
-    },
     render: function () {
         console.log('NavView:render');
         var actionClass = 'action';
@@ -21,7 +14,7 @@ var NavView = React.createClass({
         return (
             <div className="wrapper">
                 <span className={actionClass}>
-                    <a className="expand" onClick={this.handleExpandClick}>Teams</a>
+                    <a className="expand" onClick={this.props.toggleTeamNav}>Teams</a>
                     <a className="back">Back</a>
                 </span>
                 <span className="title">{this.props.title}</span>

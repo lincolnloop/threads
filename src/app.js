@@ -1,16 +1,19 @@
 "use strict";
 
-var _ = require('underscore'),
-  $ = require('jquery'),
-  async = require('async'),
-  React = require('react'),
-  Backbone = require('backbone'),
-  AppRouter = require('./Router'),
-  config = require('clientconfig'),
-  urls = require('./urls'),
-  User = require('./app/auth/models/user'),
-  UserCollection = require('./app/auth/collections/user'),
-  TeamCollection = require('./app/teams/collections/team');
+var _ = require('underscore');
+var $ = require('jquery');
+var async = require('async');
+var React = require('react');
+var Backbone = require('backbone');
+var router = require('./router2.js');
+var config = require('clientconfig');
+var urls = require('./urls');
+var User = require('./app/auth/models/user');
+var UserCollection = require('./app/auth/collections/user');
+var TeamCollection = require('./app/teams/collections/team');
+// views
+var MainView = require('./app/Main.jsx');
+
 
 require('./core/globalEvents');
 
@@ -107,14 +110,15 @@ var app = _.extend({
   bootstrap: function () {
     // set this to window.app
     window.app = this;
-    // initialize the routers
-    app.router = new AppRouter();
+    // fetch app data
+    window.app.fetchData();
   },
   start: function () {
+    this.router = router;
     // start is only called after initial data is fetched
     console.log('app:start');
     if (!Backbone.history.started) {
-      Backbone.history.start({pushState: true});
+      React.renderComponent(MainView({}), document.getElementById('main'));
     }
   }
 }, Backbone.Events);
