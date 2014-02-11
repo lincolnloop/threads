@@ -3,7 +3,7 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
-var router = require('../router2');
+var router = require('../router');
 var urls = require('../urls');
 // --------------------
 // Models
