@@ -25,13 +25,7 @@ var app = _.extend({
   // app/global data
   data: {
     teams: new TeamCollection(),
-    users: new UserCollection(),
-    anonUser: new User({
-      email: 'nobody@gingerhq.com',
-      name: 'Deleted User',
-      online: false,
-      typing: false
-    })
+    users: new UserCollection()
   },
   fetchData: function () {
     var self = this;
@@ -101,10 +95,18 @@ var app = _.extend({
         return;
       }
     } else {
-      // get the current user's data
-      this.data.requestUser = this.data.users.get(this.data.tokens.url);
-      // start/load the app
-      this.start();
+      // render MainView with bootstrap data
+      React.renderComponent(MainView({
+        'teams': this.data.teams,
+        'users': this.data.users,
+        'requestUser': this.data.users.get(this.data.tokens.url),
+         anonUser: new User({
+          email: 'nobody@gingerhq.com',
+          name: 'Deleted User',
+          online: false,
+          typing: false
+        })
+      }), document.getElementById('main'));
     }
   },
   bootstrap: function () {
@@ -112,14 +114,7 @@ var app = _.extend({
     window.app = this;
     // fetch app data
     window.app.fetchData();
-  },
-  start: function () {
-    this.router = router;
-    // start is only called after initial data is fetched
-    console.log('app:start');
-    if (!Backbone.history.started) {
-      React.renderComponent(MainView({}), document.getElementById('main'));
-    }
+  }
   }
 }, Backbone.Events);
 

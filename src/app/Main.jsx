@@ -34,7 +34,7 @@ var Main = React.createClass({
     // (this never renders? router is fast enough to do the state change?)
     return {
       'sidebar': OrganizationList({
-        'teams': window.app.data.teams,
+        'teams': this.state.teams,
         'toggleTeamNav': this.toggleTeamNav
       }),
       'topNav': Nav({
@@ -96,7 +96,7 @@ var Main = React.createClass({
   },
   teamDetail: function(slug) {
     console.log('team:detail');
-    var team = window.app.data.teams.findWhere({slug: slug});
+    var team = this.state.teams.findWhere({slug: slug});
     // content > team discussion list view
     // TODO: Move topNav to it's own *catch all* route
     // to keep it DRY.
@@ -113,7 +113,7 @@ var Main = React.createClass({
   },
   discussionCreate: function (teamSlug) {
     console.log('DiscussionRouter:create');
-    var team = window.app.data.teams.findWhere({slug: teamSlug});
+    var team = this.state.teams.findWhere({slug: teamSlug});
     // content > create view
     // TODO: Move topNav to it's own *catch all* route
     // to keep it DRY.
@@ -130,7 +130,7 @@ var Main = React.createClass({
   },
   discussionDetail: function(teamSlug, discussionId) {
     console.log('discussion:detail');
-    var team = window.app.data.teams.findWhere({slug: teamSlug});
+    var team = this.state.teams.findWhere({slug: teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
           discussion_id: discussionId
         });
