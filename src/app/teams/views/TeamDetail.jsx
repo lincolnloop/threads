@@ -10,16 +10,15 @@ var _ = require('underscore'),
 var TeamDetail = React.createClass({
   mixins: [EventsMixin],
  componentWillMount: function () {
-    var team = this.props.team;
     // listenTo team or discussion changes and trigger a state update
     // which will re-render the view
-    this.events.listenTo(team, 'change', this.updateState);
-    this.events.listenTo(team.discussions, 'sync add remove change', this.updateState);
+    this.events.listenTo(this.props.team, 'change', this.updateState);
+    this.events.listenTo(this.props.team.discussions, 'sync add remove change', this.updateState);
     // state is cleaned up every time we render a component
     // so we need to update it on load always.
     this.updateState();
     // Always fetch discussions (we have no realtime yet).
-    team.discussions.fetch();
+    this.props.team.discussions.fetch();
   },
   updateState: function () {
     // props store a reference to the backbone model instance,
@@ -32,8 +31,8 @@ var TeamDetail = React.createClass({
   },
   render: function() {
     console.log('TeamDetailView:render');
-    var team = this.state.team,
-      createDiscussionUrl;
+    var team = this.state.team;
+    var createDiscussionUrl;
     // get create discussion url
     // TODO: figure out a better, maybe one-liner, API
     createDiscussionUrl = '/' + urls.get('discussion:create:team', {

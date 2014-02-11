@@ -103,11 +103,13 @@ var app = _.extend({
         return;
       }
     } else {
+      // we need to access this globally :/
+      this.data.requestUser = this.data.users.get(this.data.tokens.url);
       // render MainView with bootstrap data
       React.renderComponent(MainView({
         'teams': this.data.teams,
         'users': this.data.users,
-        'requestUser': this.data.users.get(this.data.tokens.url),
+        'requestUser': this.data.requestUser,
         'anonUser': this.data.anonUser
       }), document.getElementById('main'));
     }

@@ -32,7 +32,9 @@ var Main = React.createClass({
     // Initial sidebar, topNav and content.
     // All should be component instances.
     return {
-      'sidebar': '',
+      'sidebar': OrganizationList({
+        'teams': this.props.teams
+      }),
       'topNav': Nav({
         'toggleTeamNav': this.toggleTeamNav
       }),
@@ -92,7 +94,7 @@ var Main = React.createClass({
   },
   teamDetail: function(slug) {
     console.log('team:detail');
-    var team = this.state.teams.findWhere({slug: slug});
+    var team = this.props.teams.findWhere({slug: slug});
     // content > team discussion list view
     // TODO: Move topNav to it's own *catch all* route
     // to keep it DRY.
@@ -109,7 +111,7 @@ var Main = React.createClass({
   },
   discussionCreate: function (teamSlug) {
     console.log('DiscussionRouter:create');
-    var team = this.state.teams.findWhere({slug: teamSlug});
+    var team = this.props.teams.findWhere({slug: teamSlug});
     // content > create view
     // TODO: Move topNav to it's own *catch all* route
     // to keep it DRY.
@@ -126,7 +128,7 @@ var Main = React.createClass({
   },
   discussionDetail: function(teamSlug, discussionId) {
     console.log('discussion:detail');
-    var team = this.state.teams.findWhere({slug: teamSlug});
+    var team = this.props.teams.findWhere({slug: teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
           discussion_id: discussionId
         });
