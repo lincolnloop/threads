@@ -1,9 +1,9 @@
 "use strict";
 
-var _ = require('underscore'),
-  Backbone = require('backbone'),
-  TeamModel = require('../models/team'),
-  urls = require('../../urls');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var TeamModel = require('./Team');
+var urls = require('../urls');
 
 var TeamCollection = Backbone.Collection.extend({
   model: TeamModel,

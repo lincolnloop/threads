@@ -13,7 +13,7 @@ var router = require('./app/router.js');
 var User = require('./app/auth/User');
 // collections
 var UserCollection = require('./app/auth/UserCollection');
-var TeamCollection = require('./app/teams/collections/team');
+var TeamCollection = require('./app/teams/TeamCollection');
 // views
 var MainView = require('./app/Main.jsx');
 
