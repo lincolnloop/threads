@@ -55,6 +55,7 @@ var Main = React.createClass({
     Backbone.history.start({pushState: true});
   },
   render: function() {
+    console.log('MainRender', this.state.content);
     return (
       <div className="main">
         <div className="row">
@@ -100,12 +101,11 @@ var Main = React.createClass({
     // to keep it DRY.
     this.setState({
       'content': TeamDetailView({
-        'team': team
+        'team': team.serialized()
       }),
       'topNav': Nav({
         'title': team.get('name'),
-        'toggleTeamNav': this.toggleTeamNav,
-        'team': team
+        'toggleTeamNav': this.toggleTeamNav
       })
     });
   },

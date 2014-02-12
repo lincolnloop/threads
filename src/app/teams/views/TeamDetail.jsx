@@ -8,30 +8,37 @@ var _ = require('underscore'),
   DiscussionList = require('../../discussions/views/DiscussionList.jsx');
 
 var TeamDetail = React.createClass({
-  mixins: [EventsMixin],
- componentWillMount: function () {
-    // listenTo team or discussion changes and trigger a state update
-    // which will re-render the view
-    this.events.listenTo(this.props.team, 'change', this.updateState);
-    this.events.listenTo(this.props.team.discussions, 'sync add remove change', this.updateState);
-    // state is cleaned up every time we render a component
-    // so we need to update it on load always.
-    this.updateState();
-    // Always fetch discussions (we have no realtime yet).
-    this.props.team.discussions.fetch();
-  },
-  updateState: function () {
-    // props store a reference to the backbone model instance,
-    // which in turns is a representation of the data that is in the DB.
-    // state is what handles the data that is shown in the UI.
+  updateStateFromLocal: function () {
+    // get discussion data from our in-memory storage
+    // and update the component state.
+    var team = window.app.data.teams.get(this.props.team.url);
+    // get in-memory discussion list
     this.setState({
-      team: this.props.team.serialized(),
-      discussions: this.props.team.discussions.serialized()
+      discussions: team.discussions.serialized()
     });
   },
+  updateStateFromRemote: function () {
+    // get discussion data the remote API
+    // and update the component state.
+    var team = window.app.data.teams.get(this.props.team.url);
+    // fetch updated discussion list from the API
+    team.discussions.fetch({
+      success: function (collection, response) {
+        this.setState({
+          discussions: response.results
+        });
+      }.bind(this)
+    });
+  },
+  getInitialState: function() {
+    // we don't need teams stored in state
+    // since they don't really change that much (for now)
+    return {
+      discussions: []
+    }
+  },
   render: function() {
-    console.log('TeamDetailView:render');
-    var team = this.state.team;
+    var team = this.props.team;
     var createDiscussionUrl;
     // get create discussion url
     // TODO: figure out a better, maybe one-liner, API
@@ -42,9 +49,27 @@ var TeamDetail = React.createClass({
       <div className="team-detail">
         <h2>{team.name}</h2>
         <a className="button" href={createDiscussionUrl}>New Discussion</a>
-          {DiscussionList({discussions: this.state.discussions})}
+          <DiscussionList discussions={this.state.discussions} />
       </div>
     );
+  },
+  componentWillMount: function () {
+    // Get in-memory discussions.
+    // React recommends doing AJAX calls on componentDidMount,
+    // so we keep these separate.
+    this.updateStateFromLocal();
+  },
+  componentDidMount: function() {
+    // make an ajax request to fetch discussions from the api
+    this.updateStateFromRemote();
+  },
+  componentWillReceiveProps: function (nextProps) {
+    // when changing teams, make sure we fetch
+    // the new team discussions as well
+    if (this.props.team.url !== nextProps.team.url) {
+      this.updateStateFromLocal();
+      this.updateStateFromRemote();
+    }
   }
 });
 
