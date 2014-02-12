@@ -123,5 +123,3 @@ var app = _.extend({
 }, Backbone.Events);
 
 app.bootstrap();
-
-module.exports = app;

@@ -8,19 +8,19 @@ var _ = require('underscore'),
   DiscussionList = require('../../discussions/views/DiscussionList.jsx');
 
 var TeamDetail = React.createClass({
-  updateStateFromLocal: function () {
+  updateDiscussionsFromLocal: function(teamId) {
     // Gets discussion data from our in-memory storage
     // and updates the component state.
-    var team = window.app.data.teams.get(this.props.team.url);
+    var teamObj = window.app.data.teams.get(teamId);
     this.setState({
-      discussions: team.discussions.serialized()
+      discussions: teamObj.discussions.serialized()
     });
   },
-  updateStateFromRemote: function () {
+  updateDiscussionsFromRemote: function(teamId) {
     // Gets discussion data from the remote API
     // and updates the component state.
-    var team = window.app.data.teams.get(this.props.team.url);
-    team.discussions.fetch({
+    var teamObj = window.app.data.teams.get(teamId);
+    teamObj.discussions.fetch({
       success: function (collection, response) {
         this.setState({
           discussions: response.results
@@ -35,11 +35,11 @@ var TeamDetail = React.createClass({
       discussions: []
     }
   },
-  componentWillMount: function () {
+  componentWillMount: function() {
     // Get in-memory discussions on first load.
     // React recommends doing AJAX calls on componentDidMount,
     // so we keep these separate.
-    this.updateStateFromLocal();
+    this.updateDiscussionsFromLocal(this.props.team.url);
   },
   render: function() {
     var team = this.props.team;
@@ -60,16 +60,16 @@ var TeamDetail = React.createClass({
   componentDidMount: function() {
     // Make an ajax request to fetch discussions from the api
     // this is only called on first load and after render
-    this.updateStateFromRemote();
+    this.updateDiscussionsFromRemote(this.props.team.url);
   },
-  componentWillReceiveProps: function (nextProps) {
+  componentWillReceiveProps: function(nextProps) {
     // When changing teams, fetch discussions from local and remote.
     // NOTE: If we had realtime and our in-memory container already
     // had discussion, we could update from local only.
     // Since because we don't, we need to get it from both local and remote.
     if (this.props.team.url !== nextProps.team.url) {
-      this.updateStateFromLocal();
-      this.updateStateFromRemote();
+      this.updateDiscussionsFromLocal(nextProps.team.url);
+      this.updateDiscussionsFromRemote(nextProps.team.url);
     }
   }
 });
