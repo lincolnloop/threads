@@ -3,8 +3,8 @@
 var _ = require('underscore'),
     $ = require('jquery'),
     Backbone = require('backbone'),
-    AttachmentCollection = require('../collections/attachment'),
-    VoteCollection = require('../collections/vote'),
+    AttachmentCollection = require('./AttachmentCollection'),
+    VoteCollection = require('./VoteCollection'),
     urls = require('../../urls');
 
 var Message = Backbone.Model.extend({

@@ -2,7 +2,7 @@
 
 var Backbone = require('backbone'),
     Message = require('./message'),
-    MessageCollection = require('../collections/message'),
+    MessageCollection = require('./MessageCollection'),
     urls = require('../../urls');
 
 var DiscussionModel = Backbone.Model.extend({

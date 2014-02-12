@@ -2,7 +2,7 @@
 
 var Backbone = require('backbone'),
     urls = require('../../urls'),
-    DiscussionCollection = require('../../discussions/collections/discussions');
+    DiscussionCollection = require('../../discussions/models/DiscussionCollection');
 
 var TeamModel = Backbone.Model.extend({
     idAttribute: "url",

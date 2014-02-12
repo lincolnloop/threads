@@ -4,7 +4,7 @@ var _ = require('underscore');
 var $ = require('jquery');
 var md5 = require('MD5');
 var Backbone = require('backbone');
-var urls = require('../../urls');
+var urls = require('../urls');
 
 module.exports = Backbone.Model.extend({
   idAttribute: "url",
