@@ -10,9 +10,9 @@ var config = require('clientconfig');
 var urls = require('./app/urls');
 var router = require('./app/router.js');
 // models
-var User = require('./app/auth/models/user');
+var User = require('./app/auth/User');
 // collections
-var UserCollection = require('./app/auth/collections/user');
+var UserCollection = require('./app/auth/UserCollection');
 var TeamCollection = require('./app/teams/collections/team');
 // views
 var MainView = require('./app/Main.jsx');
