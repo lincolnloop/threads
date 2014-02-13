@@ -1,7 +1,7 @@
 "use strict";
 
-var React = require('react'),
-  Discussion = require('./Discussion.jsx');
+var React = require('react');
+var Discussion = require('./Discussion.jsx');
 
 var DiscussionList = React.createClass({
   render: function() {

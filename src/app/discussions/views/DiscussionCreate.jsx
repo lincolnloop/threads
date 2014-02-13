@@ -1,9 +1,8 @@
 "use strict";
 
-var React = require('react'),
-  app = require('../../../app.js'),
-  Discussion = require('../models/discussion.js'),
-  MarkdownText = require('./../../components/MarkdownText.jsx');
+var React = require('react');
+var Discussion = require('../models/Discussion.js');
+var MarkdownText = require('./../../components/MarkdownText.jsx');
 
 module.exports = React.createClass({
   render: function () {
