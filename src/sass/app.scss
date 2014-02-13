@@ -3,8 +3,8 @@
 @import "neat";
 @import "bitters/bitters";
 
-$mobile: new-breakpoint(min-width 0px 6);
-$tablet: new-breakpoint(min-width 660px 8);
+$mobile: new-breakpoint(min-width 0px 8);
+$tablet: new-breakpoint(min-width 660px 12);
 $desktop: new-breakpoint(min-width 1160px 12);
 
 // --------------------------
@@ -68,17 +68,17 @@ html, body, #main, .main {
       @include span-columns(3);
     }
     #content {
-      @include span-columns(3);
+      @include span-columns(5);
       @include omega();
     }
   }
 
   @include media($tablet) {
     #sidebar {
-      @include span-columns(3);
+      @include span-columns(4);
     }
     #content {
-      @include span-columns(5);
+      @include span-columns(8);
       @include omega();
     }
   }
