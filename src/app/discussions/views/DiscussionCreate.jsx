@@ -3,6 +3,7 @@
 var React = require('react');
 var Discussion = require('../models/Discussion.js');
 var MarkdownText = require('./../../components/MarkdownText.jsx');
+var router = require('../../router');
 
 module.exports = React.createClass({
   render: function () {
@@ -16,25 +17,25 @@ module.exports = React.createClass({
     );
   },
   submit: function (evt) {
-    var title = this.refs.title.getDOMNode().value,
-      discussion = new Discussion({
-        title: title,
-        message: {
-          raw_body: this.refs.message.getRawValue()
-        },
-        team: this.props.team.get('url')
-      });
+    var title = this.refs.title.getDOMNode().value;
+    var discussion = new Discussion({
+      title: title,
+      message: {
+        raw_body: this.refs.message.getRawValue()
+      },
+      team: this.props.team
+    });
     evt.preventDefault();
-    // save the newly creted discussion instance
+    // save the newly created discussion instance
     // and redirect on success
     discussion.save({}, {
-      success: function (discusison) {
-        var discussionList = this.props.team.discussions;
-        // add the discussion to the list of discussions for the team
-        discussionList.add(discussion);
-        // navigate to the discussion detail url
-        // TODO: ohrl.get('discussion:detail', discussion.get(id))
-        window.app.router.navigate(discussion.get('message').permalink,
+      success: function (discussion) {
+        // get discussion list from local storage
+        var discussions = window.app.data.teams.get(this.props.team).discussions;
+        // add discussion to local storage
+        discussions.add(discussion);
+        // redirect to discussion detail page
+        router.navigate(discussion.get('message').permalink,
           {trigger: true});
       }.bind(this)
     });

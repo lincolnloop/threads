@@ -117,7 +117,7 @@ var Main = React.createClass({
     // to keep it DRY.
     this.setState({
       'content': DiscussionCreateView({
-        'discussion': new Discussion({team: team.id})
+        'team': team.get('url')
       }),
       'topNav': Nav({
         'title': team.get('name'),
