@@ -1,11 +1,11 @@
 "use strict";
 
-var _ = require('underscore'),
-  Backbone = require('backbone'),
-  React = require('react'),
-  urls = require('../../urls'),
-  EventsMixin = require('../../core/eventsMixin'),
-  DiscussionList = require('../../discussions/views/DiscussionList.jsx');
+var _ = require('underscore');
+var Backbone = require('backbone');
+var React = require('react');
+var urls = require('../../urls');
+var EventsMixin = require('../../core/eventsMixin');
+var DiscussionList = require('../../discussions/views/DiscussionList.jsx');
 
 var TeamDetail = React.createClass({
   updateDiscussionsFromLocal: function(teamId) {

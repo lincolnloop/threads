@@ -1,8 +1,8 @@
 "use strict";
 
-var $ = require('jquery'),
-  React = require('react'),
-  urls = require('../urls');
+var $ = require('jquery');
+var React = require('react');
+var urls = require('../urls');
 
 var MarkdowText = React.createClass({
   getInitialState: function () {

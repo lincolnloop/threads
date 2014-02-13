@@ -1,9 +1,9 @@
 "use strict";
 
-var _ = require('underscore'),
-  React = require('react'),
-  EventsMixin = require('../../core/eventsMixin'),
-  Organization = require('./Organization.jsx');
+var _ = require('underscore');
+var React = require('react');
+var EventsMixin = require('../../core/eventsMixin');
+var Organization = require('./Organization.jsx');
 
 var OrganizationList = React.createClass({
   mixins: [EventsMixin],
