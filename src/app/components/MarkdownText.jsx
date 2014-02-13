@@ -37,7 +37,7 @@ var MarkdowText = React.createClass({
         React.DOM.textarea({
           ref: 'textarea',
           placeholder: this.props.placeholder,
-          value: this.state.rawValue,
+          defaultValue: this.state.rawValue,
           required: !!this.props.required
         }),
         // Stop preview button
