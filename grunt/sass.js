@@ -1,8 +1,13 @@
 "use strict";
 
+// bourbon is required by neat
+// and already includes it in it's includePaths
+// var bourbon = require('node-bourbon').includePaths;
+var neat = require('node-neat').includePaths;
+
 module.exports = {
   options: {
-    includePaths: ['node_modules/foundation/scss']
+    includePaths: neat
   },
   dev: {
     files: {

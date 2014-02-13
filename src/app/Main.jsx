@@ -58,20 +58,14 @@ var Main = React.createClass({
     console.log('MainRender', this.state.content);
     return (
       <div className="main">
-        <div className="row">
-          <nav id="nav-main" className="large-12 columns">
-            {this.state.topNav}
-          </nav>
-        </div>
-        <div className="row">
-          <nav id="nav-teams" className="large-12 columns">
-            {this.state.sidebar}
-          </nav>
-        </div>
-        <div className="row">
-          <div id="content-main" className="large-12 columns">
-            {this.state.content}
-          </div>
+        <nav id="top-nav">
+          {this.state.topNav}
+        </nav>
+        <nav id="sidebar">
+          {this.state.sidebar}
+        </nav>
+        <div id="content">
+          {this.state.content}
         </div>
       </div>
     );
