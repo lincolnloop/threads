@@ -20,7 +20,12 @@ var TeamDetail = React.createClass({
   fetchDiscussions: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
+    if (this.team.discussions.fetched) {
+      // do nothing if initial discussions were already fetched
+      return false;
+    }
     this.team.discussions.fetch({
+      remove: false,
       success: function (collection, response) {
         this.setState({
           discussions: response.results
@@ -111,7 +116,7 @@ var TeamDetail = React.createClass({
     // NOTE: If we had realtime, we could rely on our memory storage only
     // Because we don't, we need data from both local and remote storage.
     if (this.props.team.url !== nextProps.team.url) {
-      this.team = window.app.data.teams.get(nextProps.team.url)
+      this.team = window.app.data.teams.get(nextProps.team.url);
       this.getDiscussions();
       this.fetchDiscussions();
     }
