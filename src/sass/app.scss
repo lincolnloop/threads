@@ -82,4 +82,21 @@ html, body, #main, .main {
       @include omega();
     }
   }
+
+  .team-detail {
+    .btn-create-discussion {
+      float: right;
+      margin-right: 2.3%;
+    }
+    li {
+      clear: both;
+      padding-right: 2.3%;
+      a {
+        display: block;
+        font-size: 1.2em;
+        padding: 10px 0;
+        border-bottom: 1px solid #CCC;
+      }
+    }
+  }
 }
