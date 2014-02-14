@@ -5,11 +5,10 @@ var Discussion = require('./Discussion.jsx');
 
 var DiscussionList = React.createClass({
   render: function() {
-    console.log('DiscussionList', this.props.discussions);
     return (
-        <ul>
-            {this.props.discussions.map(Discussion)}
-        </ul>
+      <ul ref="list">
+        {this.props.discussions.map(Discussion)}
+      </ul>
     );
   }
 });
