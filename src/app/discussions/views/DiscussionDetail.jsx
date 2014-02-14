@@ -3,7 +3,7 @@
 var _ = require('underscore');
 var React = require('react');
 var EventsMixin = require('../../core/eventsMixin');
-var MessageTreeView = require('./messages.jsx');
+var MessageTreeView = require('./MessageTree.jsx');
 
 var DiscussionDetailView = React.createClass({
   /*

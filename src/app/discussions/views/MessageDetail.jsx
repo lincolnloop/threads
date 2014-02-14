@@ -1,51 +1,14 @@
 "use strict";
 
 var _ = require('underscore');
-var $ = require('jquery');
 var React = require('react');
 var VotesView = require('./Votes.jsx');
 var MessageEditView = require('./MessageEdit.jsx');
-var Message = require('../models/Message');
-var urls = require('../../urls');
+var MessageContentView = require('./MessageContent.jsx');
 
 require('react/addons');
 
-var MessageTreeView = React.createClass({
-  shouldComponentUpdate: function (nextProps, nextState) {
-    return !(_.isEqual(this.state, nextState) &&
-         _.isEqual(this.props.data, nextProps.data));
-  },
-  render: function () {
-    console.log('MessageTreeView:render');
-    var self = this,
-      childViews = this.props.data.children.map(function (message) {
-        // recursively using JSX causes issues. Falling back to regular JS.
-        return MessageTreeView({
-          key: message.url,
-          data: message,
-          discussion: self.props.discussion
-        });
-      });
-    return (
-      <div className="message-children">
-        <MessageDetailView key={this.props.data.url} data={this.props.data} discussion={this.props.discussion} />
-        {childViews}
-      </div>
-    );
-  }
-});
-
-var MessageContentView = React.createClass({
-  shouldComponentUpdate: function (nextProps, nextState) {
-    return this.props.data.body !== nextProps.data.body;
-  },
-  render: function () {
-    console.log('MessageContentView:render');
-    return <div className="content"  dangerouslySetInnerHTML={{__html: this.props.data.body}}></div>;
-  }
-});
-
-var MessageDetailView = React.createClass({
+module.exports = React.createClass({
   getInitialState: function () {
     return {
       editing: false,
@@ -94,5 +57,3 @@ var MessageDetailView = React.createClass({
     );
   }
 });
-
-module.exports = MessageTreeView;
