@@ -21,7 +21,8 @@ var TeamDetail = React.createClass({
     // Fetches discussion data from the remote API
     // and updates the component state.
     if (this.team.discussions.fetched) {
-      // do nothing if initial discussions were already fetched
+      // Do nothing if the initial discussions were already fetched
+      // NOTE: This only works if we have realtime updates (!)
       return false;
     }
     this.team.discussions.fetch({
