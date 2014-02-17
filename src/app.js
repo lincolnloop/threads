@@ -16,6 +16,7 @@ var UserCollection = require('./app/auth/UserCollection');
 var TeamCollection = require('./app/teams/TeamCollection');
 // views
 var MainView = require('./app/Main.jsx');
+var SignInView = require('./app/auth/views/SignIn.jsx');
 
 require('./app/core/globalEvents');
 
@@ -98,9 +99,9 @@ var app = _.extend({
     if (err) {
       console.log('Error fetching data', err);
       if (err === 403) {
-        // TODO: missing!
-        app.forceSignIn();
-        return;
+        React.renderComponent(SignInView({
+          success: _.bind(this.fetchData, this)
+        }), document.getElementById('main'));
       }
     } else {
       // we need to access this globally :/
