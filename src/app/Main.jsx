@@ -113,12 +113,18 @@ var Main = React.createClass({
     console.log('DiscussionRouter:create');
     var team = this.props.teams.findWhere({slug: teamSlug});
     // content > create view
+    var content = React.addons.TransitionGroup({
+      transitionName: 'content',
+      component: React.DOM.div,
+      children: DiscussionCreateView({
+        'team': team.get('url'),
+        'key': 'create-' + team.get('slug')
+      })
+    });
     // TODO: Move topNav to it's own *catch all* route
     // to keep it DRY.
     this.setState({
-      'content': DiscussionCreateView({
-        'team': team.get('url')
-      }),
+      'content': content,
       'topNav': Nav({
         'title': team.get('name'),
         'toggleTeamNav': this.toggleTeamNav,
