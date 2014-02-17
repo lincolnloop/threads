@@ -12,7 +12,10 @@ var MessageTreeView = React.createClass({
   render: function () {
     console.log('MessageTreeView:render');
     var self = this;
-    var childViews = this.props.data.children.map(function (message) {
+    if (!this.props.message) {
+      return (<span />);
+    }
+    var childViews = this.props.message.children.map(function (message) {
       // recursively using JSX causes issues. Falling back to regular JS.
       return MessageTreeView({
         key: message.url,

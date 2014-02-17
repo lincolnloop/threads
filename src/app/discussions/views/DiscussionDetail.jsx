@@ -2,46 +2,58 @@
 
 var _ = require('underscore');
 var React = require('react');
-var EventsMixin = require('../../core/eventsMixin');
+// --------------------
+// Models
+// --------------------
+var Discussion = require('../models/Discussion');
+// --------------------
+// Views
+// --------------------
 var MessageTreeView = require('./MessageTree.jsx');
 
 var DiscussionDetailView = React.createClass({
-  /*
-   * Manages state of the message tree including votes and attachments.
-   */
-  mixins: [EventsMixin],
-  componentWillMount: function () {
-    console.log('DiscussionDetailView:componentWillMount');
-    var discussion = this.props.discussion;
-    this.events.listenTo(discussion, 'change', this.updateState);
-    this.events.listenTo(discussion.message, 'change reset voteChanged', this.updateState);
-    this.events.listenTo(discussion.messages, 'change reset voteChanged', this.updateState);
-    this.updateState();
-    discussion.fetchAll();
+  fetchDiscussion: function() {
+    // Fetches discussion detail from the remote API
+    // and updates the component state.
+    if (this.discussion.fetched) {
+      // Do nothing if the discussion was already fetched
+      // NOTE: This only works if we have realtime updates (!)
+      return false;
+    }
+    this.discussion.fetch({
+      success: function (model, response) {
+        reset: true,
+        this.setState({
+          discussion: model.setRelationships().serialized()
+        });
+      }.bind(this)
+    });
   },
-  shouldComponentUpdate: function (nextProps, nextState) {
-    return !_.isEqual(this.state, nextState);
+  getInitialState: function() {
+    return {
+      discussion: []
+    }
   },
-  updateState: function (event) {
-    console.log('DiscussionDetailView:updateState');
-    this.setState({data: this.props.discussion.serialized()});
+  componentWillMount: function() {
+    this.team = window.app.data.teams.get(this.props.team.url);
+    this.discussion = this.team.discussions.get(this.props.discussionUrl) ||
+                      new Discussion({url: this.props.discussionUrl});
+    return {
+      discussion: this.discussion.serialized()
+    }
   },
   render: function() {
-    console.log('DiscussionDetailView:render');
-    var message = this.props.discussion.message;
-    // if the message doesn't have an ID, we're still waiting on a sync
-    return message.isNew() ? this.renderEmpty() : this.renderFull();
-  },
-  renderEmpty: function () {
-    return <div className="discussion-detail loading"></div>;
-  },
-  renderFull: function () {
     return (
       <div className="discussion-detail">
-        <h2>{this.state.data.title}</h2>
-        <MessageTreeView data={this.state.data.message} discussion={this.props.discussion} />
+        <h2>{this.state.discussion.title}</h2>
+        <MessageTreeView message={this.state.discussion.message} discussion={this.state.discussion} />
       </div>
     );
+  },
+  componentDidMount: function() {
+    // fetch discussion data from remote
+    this.fetchDiscussion();
   }
 });
+
 module.exports = DiscussionDetailView;

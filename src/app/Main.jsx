@@ -136,16 +136,16 @@ var Main = React.createClass({
     console.log('discussion:detail');
     var team = this.props.teams.findWhere({slug: teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
-          discussion_id: discussionId
-        });
-    var discussion = team.discussions.get(discussionUrl) || new Discussion({url: discussionUrl});
+      discussion_id: discussionId
+    });
     // content > discussion detail view
     var content = React.addons.TransitionGroup({
       transitionName: 'content',
       component: React.DOM.div,
       children: DiscussionDetailView({
-        'discussion': discussion,
-        'key': 'discussion-' + discussion.get('id')
+        'team': team.serialized(),
+        'discussionUrl': discussionUrl,
+        'key': 'discussion-detail' + discussionUrl
       })
     });
     // TODO: Move topNav to it's own *catch all* route
