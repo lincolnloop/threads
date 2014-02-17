@@ -140,12 +140,18 @@ var Main = React.createClass({
         });
     var discussion = team.discussions.get(discussionUrl) || new Discussion({url: discussionUrl});
     // content > discussion detail view
+    var content = React.addons.TransitionGroup({
+      transitionName: 'content',
+      component: React.DOM.div,
+      children: DiscussionDetailView({
+        'discussion': discussion,
+        'key': 'discussion-' + discussion.get('id')
+      })
+    });
     // TODO: Move topNav to it's own *catch all* route
     // to keep it DRY.
     this.setState({
-      'content': DiscussionDetailView({
-        'discussion': discussion
-      }),
+      'content': content,
       'topNav': Nav({
         'title': team.get('name'),
         'toggleTeamNav': this.toggleTeamNav,
