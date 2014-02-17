@@ -91,12 +91,18 @@ var Main = React.createClass({
     console.log('team:detail');
     var team = this.props.teams.findWhere({slug: slug});
     // content > team discussion list view
+    var content = React.addons.TransitionGroup({
+      transitionName: 'content',
+      component: React.DOM.div,
+      children: TeamDetailView({
+        'team': team.serialized(),
+        'key': team.get('slug')
+      })
+    });
     // TODO: Move topNav to it's own *catch all* route
     // to keep it DRY.
     this.setState({
-      'content': TeamDetailView({
-        'team': team.serialized()
-      }),
+      'content':  content,
       'topNav': Nav({
         'title': team.get('name'),
         'toggleTeamNav': this.toggleTeamNav

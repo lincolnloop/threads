@@ -98,4 +98,30 @@ html, body, #main, .main {
       }
     }
   }
+
+  #content {
+    position: relative;
+    overflow-x: hidden;
+    //
+    // animations
+    //
+    .content-enter {
+      margin-left: -100%;
+      width: 100%;
+      transition: 1s;
+    }
+    .content-enter.content-enter-active {
+      margin-left: 0;
+    }
+    .content-leave {
+      position: absolute;
+      left: 5%;
+      top: 0;
+      width: 100%;
+      transition: 1s;
+    }
+    .content-leave.content-leave-active {
+      left: 105%;
+    }
+  }
 }
