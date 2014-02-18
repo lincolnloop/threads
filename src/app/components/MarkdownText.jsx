@@ -7,7 +7,7 @@ var urls = require('../urls');
 var MarkdowText = React.createClass({
   getInitialState: function () {
     return {
-      previewValue: null,
+      previewValue: this.props.previewValue ? this.props.previewValue : null,
       rawValue: this.props.value ? this.props.value : null
     };
   },

@@ -5,6 +5,7 @@ var React = require('react');
 var VotesView = require('./Votes.jsx');
 var MessageEditView = require('./MessageEdit.jsx');
 var MessageContentView = require('./MessageContent.jsx');
+var MarkdownText = require('../../components/MarkdownText.jsx');
 
 require('react/addons');
 
@@ -34,37 +35,45 @@ var MessageDetail = React.createClass({
   },
   render: function () {
     console.log('MessageDetailView:render');
-    var MessageView = this.state.editing && !this.previewing ? MessageEditView : MessageContentView,
-      doneEditing = _.partial(this.done, 'editing'),
-      doneReplying = _.partial(this.done, 'replying'),
-      classes = React.addons.classSet({
-        'message-detail': true,
-        'message-unread': !this.props.message.read,
-        'message-collapsed': this.props.message.collapsed
-      });
+    var MessageView = this.state.editing && !this.previewing ? MessageEditView : MessageContentView;
+    var doneEditing = _.partial(this.done, 'editing');
+    var doneReplying = _.partial(this.done, 'replying');
+    var classes = React.addons.classSet({
+      'message-detail': true,
+      'message-unread': !this.props.message.read,
+      'message-collapsed': this.props.message.collapsed
+    });
     return (
-      <div className={classes}>
-        <div className="avatar">
-          <img src={this.props.message.user.gravatar} />
-        </div>
-        <div className="username">{this.props.message.user.name}</div>
-        <div className="date">
-          {this.props.message.date_created}
-        </div>
-        {MessageView({
+      React.DOM.div({className: classes},
+        React.DOM.div({className: 'avatar'},
+          React.DOM.img({src: this.props.message.user.gravatar})
+        ),
+        React.DOM.div({
+          className: 'username',
+          children: this.props.message.user.name
+        }),
+        React.DOM.div({
+          className: 'date',
+          children: this.props.message.date_created
+        }),
+        MarkdownText({
+          value: this.props.message.raw_body,
+          previewValue: this.props.message.body
+        }),
+        MessageView({
           data: this.props.message,
           discussion: this.props.discussion,
           done: doneEditing
-        })}
-        {this.props.message.canEdit ? <a onClick={this.edit}>edit</a> : ''}
-        {VotesView({
+        }),
+        this.props.message.canEdit ? React.DOM.a({onClick: this.edit, children: 'edit'}) : '',
+        VotesView({
           data: this.props.message.votes,
           messageUrl: this.props.message.url,
           discussion: this.props.discussion
-        })}
-        <a onClick={this.reply}>reply</a>
-        {this.state.replying ? <MessageEditView parent={this.props.message.url} discussion={this.props.discussion} done={doneReplying} /> : ''}
-      </div>
+        }),
+        React.DOM.a({onClick: this.reply, children: 'reply'}),
+        this.state.replying ? MessageEditView({parent: this.props.message.url, discussion: this.props.discussion, done: doneReplying}) : ''
+      )
     );
   }
 });
