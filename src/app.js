@@ -5,20 +5,30 @@ var $ = require('jquery');
 var async = require('async');
 var React = require('react');
 var Backbone = require('backbone');
+var FastClick = require('fastclick');
 var config = require('clientconfig');
+
 // urls/routing
 var urls = require('./app/urls');
 var router = require('./app/router.js');
+
 // models
 var User = require('./app/auth/User');
+
 // collections
 var UserCollection = require('./app/auth/UserCollection');
 var TeamCollection = require('./app/teams/TeamCollection');
+
 // views
 var MainView = require('./app/Main.jsx');
 var SignInView = require('./app/auth/views/SignIn.jsx');
 
 require('./app/core/globalEvents');
+
+
+// Initialize FastClick
+FastClick(document.body);
+
 
 var app = _.extend({
   // default config can be overridden/extended by config passed in by cookie
