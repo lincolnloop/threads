@@ -5,7 +5,7 @@ module.exports = {
     fileNameFormat: '${name}.${hash}.${ext}'
   },
   production: {
-    src: ['dist/ginger.css', 'dist/ginger.min.js'],
+    src: ['dist/threads.css', 'dist/threads.min.js'],
     dest: 'dist/index.html'
   }
 }
