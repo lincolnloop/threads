@@ -1,0 +1,33 @@
+.message-children {
+  padding-left: 0;
+  margin-left: 20px; 
+  border-left: 1px solid #eee;
+}
+
+.message-detail {
+  position: relative;
+  background: #eee;
+  padding: 10px 10px 10px 90px;
+  margin-bottom: 20px;
+  border-left: none;
+
+  .avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 80px;
+    background: #ddd;
+    text-align: center;
+    padding: 10px;
+  }
+  .username {
+    font-weight: bold;
+  }
+  .date {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 0.9em;
+  }
+}

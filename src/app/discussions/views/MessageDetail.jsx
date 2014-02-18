@@ -8,7 +8,7 @@ var MessageContentView = require('./MessageContent.jsx');
 
 require('react/addons');
 
-module.exports = React.createClass({
+var MessageDetail = React.createClass({
   getInitialState: function () {
     return {
       editing: false,
@@ -44,16 +44,29 @@ module.exports = React.createClass({
       });
     return (
       <div className={classes}>
-        <MessageView data={this.props.message} discussion={this.props.discussion} done={doneEditing} />
+        <div className="avatar">
+          <img src={this.props.message.user.gravatar} />
+        </div>
+        <div className="username">{this.props.message.user.name}</div>
+        <div className="date">
+          {this.props.message.date_created}
+        </div>
+        {MessageView({
+          data: this.props.message,
+          discussion: this.props.discussion,
+          done: doneEditing
+        })}
         {this.props.message.canEdit ? <a onClick={this.edit}>edit</a> : ''}
-        <img src={this.props.message.user.gravatar} />{' '}
-        {this.props.message.user.name}<br />
-        {this.props.message.date_created}<br />
+        {VotesView({
+          data: this.props.message.votes,
+          messageUrl: this.props.message.url,
+          discussion: this.props.discussion
+        })}
         <a onClick={this.reply}>reply</a>
-        <VotesView data={this.props.message.votes} messageUrl={this.props.message.url} discussion={this.props.discussion} />
-        <hr />
         {this.state.replying ? <MessageEditView parent={this.props.message.url} discussion={this.props.discussion} done={doneReplying} /> : ''}
       </div>
     );
   }
 });
+
+module.exports = MessageDetail;

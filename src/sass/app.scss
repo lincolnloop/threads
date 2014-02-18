@@ -2,6 +2,8 @@
 @import "bourbon";
 @import "neat";
 @import "bitters/bitters";
+@import "animations";
+@import "components/message";
 
 $mobile: new-breakpoint(min-width 0px 8);
 $tablet: new-breakpoint(min-width 660px 12);
@@ -100,28 +102,8 @@ html, body, #main, .main {
   }
 
   #content {
+    // required for animations
     position: relative;
     overflow-x: hidden;
-    //
-    // animations
-    //
-    .content-enter {
-      margin-left: -100%;
-      width: 100%;
-      transition: 1s;
-    }
-    .content-enter.content-enter-active {
-      margin-left: 0;
-    }
-    .content-leave {
-      position: absolute;
-      left: 5%;
-      top: 0;
-      width: 100%;
-      transition: 1s;
-    }
-    .content-leave.content-leave-active {
-      left: 105%;
-    }
   }
 }

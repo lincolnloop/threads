@@ -22,7 +22,6 @@ var VoteListView = React.createClass({
   }
 });
 
-
 var VotesView = React.createClass({
   buildButtonText: function (votes, value) {
     var text = '',
@@ -86,8 +85,8 @@ var VotesView = React.createClass({
     return (
       <div className={this.state.disabled ? 'votes disabled' : 'votes'}>
       <button className="vote-button" onClick={voteUp}>{upvoteText}</button>
-      <VoteListView data={upvotes} value="+1" />
       <button className="vote-button" onClick={voteDown}>{downvoteText}</button>
+      <VoteListView data={upvotes} value="+1" />
       <VoteListView data={downvotes} value="-1" />
       </div>
     );
