@@ -7,7 +7,7 @@ module.exports = {
     extensions: ['.jsx'],
   },
   dev: {
-    src: ['src/app.js'],
+    src: ['src/main.js'],
     dest: 'build/<%= pkg.name %>.js'
   },
   production: {

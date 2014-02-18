@@ -9,20 +9,20 @@ var FastClick = require('fastclick');
 var config = require('clientconfig');
 
 // urls/routing
-var urls = require('./app/urls');
+var urls = require('./urls');
 
 // models
-var User = require('./app/auth/User');
+var User = require('./auth/User');
 
 // collections
-var UserCollection = require('./app/auth/UserCollection');
-var TeamCollection = require('./app/teams/TeamCollection');
+var UserCollection = require('./auth/UserCollection');
+var TeamCollection = require('./teams/TeamCollection');
 
 // views
-var MainView = require('./app/Main');
-var SignInView = require('./app/auth/views/SignIn');
+var AppView = require('./app');
+var SignInView = require('./auth/views/SignIn');
 
-require('./app/core/globalEvents');
+require('./core/globalEvents');
 
 
 // Initialize FastClick
@@ -116,7 +116,7 @@ var app = _.extend({
       // we need to access this globally :/
       this.data.requestUser = this.data.users.get(this.data.tokens.url);
       // render MainView with bootstrap data
-      React.renderComponent(MainView({
+      React.renderComponent(AppView({
         'teams': this.data.teams,
         'users': this.data.users,
         'requestUser': this.data.requestUser,
