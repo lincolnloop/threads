@@ -22,12 +22,18 @@ var MessageDetail = React.createClass({
          _.isEqual(this.props.message.votes, nextProps.message.votes));
   },
   edit: function (event) {
+    console.log('edit');
     this.setState({editing: true});
   },
   reply: function (event) {
+    console.log('reply');
     this.setState({replying: true});
   },
-  done: function (input) {
+  update: function() {
+    // update message from current value
+    console.log('update');
+  },
+  cancelEdit: function (input) {
     var state = {};
     state[input] = false;
     this.setState(state);
@@ -36,7 +42,8 @@ var MessageDetail = React.createClass({
     console.log('MessageDetailView:render');
     var message = this.props.message;
     var user = message.user;
-    var MessageView = this.state.editing && !this.previewing ? MessageEditView : MessageContentView;
+    // Get the correct MessageView based on editing state
+    var MessageView = this.state.editing ? MessageEditView : MessageContentView;
     var doneEditing = _.partial(this.done, 'editing');
     var doneReplying = _.partial(this.done, 'replying');
     var classes = React.addons.classSet({
@@ -50,20 +57,15 @@ var MessageDetail = React.createClass({
           React.DOM.img({src: user.gravatar})
         ),
         React.DOM.div({className: 'username', children: user.name}),
-        React.DOM.div({className: 'date',children: message.date_created}),
+        React.DOM.div({className: 'date', children: message.date_created}),
         MessageView({
-          data: message,
+          message: message,
           discussion: this.props.discussion,
-          done: doneEditing
-        }),
-        message.canEdit ? React.DOM.a({onClick: this.edit, children: 'edit'}) : '',
-        VotesView({
-          data: message.votes,
-          messageUrl: message.url,
-          discussion: this.props.discussion
-        }),
-        React.DOM.a({onClick: this.reply, children: 'reply'}),
-        this.state.replying ? MessageEditView({parent: message.url, discussion: this.props.discussion, done: doneReplying}) : ''
+          handleEditClick: this.edit,
+          handleReplyClick: this.reply,
+          handleEditDoneClick: this.update,
+          handleEditCancelClick: this.cancelEdit
+        })
       )
     );
   }

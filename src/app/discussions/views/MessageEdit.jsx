@@ -4,6 +4,7 @@ var $ = require('jquery');
 var React = require('react');
 var Message = require('../models/Message');
 var urls = require('../../urls');
+var MessageEditActionsView = require('./MessageActions');
 
 var MessageEditView = React.createClass({
   getInitialState: function () {
@@ -71,12 +72,13 @@ var MessageEditView = React.createClass({
       textareaClass = this.state.preview ? 'hide' : '';
 
     return (
-      <form onSubmit={this.submit}>
-      <textarea ref="message" className={textareaClass} defaultValue={defaultValue} placeholder="Comment..."></textarea>
-      <div className={previewClass} dangerouslySetInnerHTML={{__html: this.state.preview}}></div>
-      <input type="submit" />{' '}
-      <a onClick={this.preview}>{this.state.preview ? 'Back to Edit' : 'Preview' }</a>{' '}
-      <a onClick={this.props.done}>cancel</a>
+      <form className="message-content message-content-edit" onSubmit={this.submit}>
+        <textarea ref="message" className={textareaClass} defaultValue={defaultValue} placeholder="Comment..."></textarea>
+        <div className={previewClass} dangerouslySetInnerHTML={{__html: this.state.preview}}></div>
+        {MessageEditActionsView({
+          handleEditDoneClick: this.props.handleEditDoneClick,
+          handleEditCancelClick: this.props.handleEditCancelClick,
+        })}
       </form>
     );
   }
