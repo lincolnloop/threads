@@ -10,7 +10,6 @@ var config = require('clientconfig');
 
 // urls/routing
 var urls = require('./app/urls');
-var router = require('./app/router.js');
 
 // models
 var User = require('./app/auth/User');
