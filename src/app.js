@@ -68,13 +68,13 @@ var app = _.extend({
           dataType: "json",
           url: app.config.apiUrl + url,
           headers: {
-              Authorization: 'Token ' + localStorage.apiKey
+            Authorization: 'Token ' + localStorage.apiKey
           },
           success: function (data) {
-              self.data.tokens = data;
+            self.data.tokens = data;
           },
           complete: function (response) {
-              cb(response.status === 200 ? false : response.status);
+            cb(response.status === 200 ? false : response.status);
           }
         });
       },
@@ -104,7 +104,7 @@ var app = _.extend({
       }
     ], _.bind(this.fetchDataCallback, self));
   },
-  fetchDataCallback: function (err, results) {
+  fetchDataCallback: function (err) {
     if (err) {
       console.log('Error fetching data', err);
       if (err === 403) {
