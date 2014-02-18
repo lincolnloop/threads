@@ -21,8 +21,8 @@ var DiscussionDetailView = React.createClass({
       return false;
     }
     this.discussion.fetch({
+      reset: true,
       success: function (model, response) {
-        reset: true,
         this.setState({
           discussion: model.setRelationships().serialized()
         });
@@ -46,7 +46,10 @@ var DiscussionDetailView = React.createClass({
     return (
       <div className="discussion-detail">
         <h2>{this.state.discussion.title}</h2>
-        <MessageTreeView message={this.state.discussion.message} discussion={this.state.discussion} />
+        {MessageTreeView({
+          message: this.state.discussion.message,
+          discussion: this.state.discussion
+        })}
       </div>
     );
   },

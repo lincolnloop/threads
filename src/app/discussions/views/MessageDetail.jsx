@@ -17,9 +17,9 @@ module.exports = React.createClass({
   },
   shouldComponentUpdate: function (nextProps, nextState) {
     return !(_.isEqual(this.state, nextState) &&
-         this.props.data.url === nextProps.data.url &&
-         this.props.data.body === nextProps.data.body &&
-         _.isEqual(this.props.data.votes, nextProps.data.votes));
+         this.props.message.url === nextProps.message.url &&
+         this.props.message.body === nextProps.message.body &&
+         _.isEqual(this.props.message.votes, nextProps.message.votes));
   },
   edit: function (event) {
     this.setState({editing: true});
@@ -39,20 +39,20 @@ module.exports = React.createClass({
       doneReplying = _.partial(this.done, 'replying'),
       classes = React.addons.classSet({
         'message-detail': true,
-        'message-unread': !this.props.data.read,
-        'message-collapsed': this.props.data.collapsed
+        'message-unread': !this.props.message.read,
+        'message-collapsed': this.props.message.collapsed
       });
     return (
       <div className={classes}>
-        <MessageView data={this.props.data} discussion={this.props.discussion} done={doneEditing} />
-        {this.props.data.canEdit ? <a onClick={this.edit}>edit</a> : ''}
-        <img src={this.props.data.user.gravatar} />{' '}
-        {this.props.data.user.name}<br />
-        {this.props.data.date_created}<br />
+        <MessageView data={this.props.message} discussion={this.props.discussion} done={doneEditing} />
+        {this.props.message.canEdit ? <a onClick={this.edit}>edit</a> : ''}
+        <img src={this.props.message.user.gravatar} />{' '}
+        {this.props.message.user.name}<br />
+        {this.props.message.date_created}<br />
         <a onClick={this.reply}>reply</a>
-        <VotesView data={this.props.data.votes} messageUrl={this.props.data.url} discussion={this.props.discussion} />
+        <VotesView data={this.props.message.votes} messageUrl={this.props.message.url} discussion={this.props.discussion} />
         <hr />
-        {this.state.replying ? <MessageEditView parent={this.props.data.url} discussion={this.props.discussion} done={doneReplying} /> : ''}
+        {this.state.replying ? <MessageEditView parent={this.props.message.url} discussion={this.props.discussion} done={doneReplying} /> : ''}
       </div>
     );
   }

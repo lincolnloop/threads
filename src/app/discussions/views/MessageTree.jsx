@@ -5,13 +5,7 @@ var React = require('react');
 var MessageDetailView = require('./MessageDetail.jsx');
 
 var MessageTreeView = React.createClass({
-  shouldComponentUpdate: function (nextProps, nextState) {
-    return !(_.isEqual(this.state, nextState) &&
-      _.isEqual(this.props.data, nextProps.data));
-  },
   render: function () {
-    console.log('MessageTreeView:render');
-    var self = this;
     if (!this.props.message) {
       return (<span />);
     }
@@ -19,13 +13,17 @@ var MessageTreeView = React.createClass({
       // recursively using JSX causes issues. Falling back to regular JS.
       return MessageTreeView({
         key: message.url,
-        data: message,
-        discussion: self.props.discussion
+        message: message,
+        discussion: this.props.discussion
       });
-    });
+    }.bind(this));
     return (
       <div className="message-children">
-        <MessageDetailView key={this.props.data.url} data={this.props.data} discussion={this.props.discussion} />
+        {MessageDetailView({
+          key: this.props.discussion.url,
+          message: this.props.message,
+          discussion: this.props.discussion
+        })}
         {childViews}
       </div>
     );
