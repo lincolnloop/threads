@@ -35,6 +35,8 @@ var MessageDetail = React.createClass({
   },
   render: function () {
     console.log('MessageDetailView:render');
+    var message = this.props.message;
+    var user = message.user;
     var MessageView = this.state.editing && !this.previewing ? MessageEditView : MessageContentView;
     var doneEditing = _.partial(this.done, 'editing');
     var doneReplying = _.partial(this.done, 'replying');
@@ -46,33 +48,24 @@ var MessageDetail = React.createClass({
     return (
       React.DOM.div({className: classes},
         React.DOM.div({className: 'avatar'},
-          React.DOM.img({src: this.props.message.user.gravatar})
+          React.DOM.img({src: user.gravatar})
         ),
-        React.DOM.div({
-          className: 'username',
-          children: this.props.message.user.name
-        }),
-        React.DOM.div({
-          className: 'date',
-          children: this.props.message.date_created
-        }),
-        MarkdownText({
-          value: this.props.message.raw_body,
-          previewValue: this.props.message.body
-        }),
+        React.DOM.div({className: 'username', hildren: user.name}),
+        React.DOM.div({className: 'date',children: message.date_created}),
+        MarkdownText({value: message.raw_body, previewValue: message.body}),
         MessageView({
-          data: this.props.message,
+          data: message,
           discussion: this.props.discussion,
           done: doneEditing
         }),
-        this.props.message.canEdit ? React.DOM.a({onClick: this.edit, children: 'edit'}) : '',
+        message.canEdit ? React.DOM.a({onClick: this.edit, children: 'edit'}) : '',
         VotesView({
-          data: this.props.message.votes,
-          messageUrl: this.props.message.url,
+          data: message.votes,
+          messageUrl: message.url,
           discussion: this.props.discussion
         }),
         React.DOM.a({onClick: this.reply, children: 'reply'}),
-        this.state.replying ? MessageEditView({parent: this.props.message.url, discussion: this.props.discussion, done: doneReplying}) : ''
+        this.state.replying ? MessageEditView({parent: message.url, discussion: this.props.discussion, done: doneReplying}) : ''
       )
     );
   }
