@@ -5,7 +5,6 @@ var React = require('react');
 var VotesView = require('./Votes');
 var MessageEditView = require('./MessageEdit');
 var MessageContentView = require('./MessageContent');
-var MarkdownText = require('../../components/MarkdownText');
 
 require('react/addons');
 
@@ -50,9 +49,8 @@ var MessageDetail = React.createClass({
         React.DOM.div({className: 'avatar'},
           React.DOM.img({src: user.gravatar})
         ),
-        React.DOM.div({className: 'username', hildren: user.name}),
+        React.DOM.div({className: 'username', children: user.name}),
         React.DOM.div({className: 'date',children: message.date_created}),
-        MarkdownText({value: message.raw_body, previewValue: message.body}),
         MessageView({
           data: message,
           discussion: this.props.discussion,
