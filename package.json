@@ -7,12 +7,6 @@
   },
   "version": "0.1.0",
   "main": "./src/scripts/app.js",
-  "browser": {
-    "jquery": "./src/vendor/jquery/jquery-2.0.3.js"
-  },
-  "browserify-shim": {
-    "jquery": "$"
-  },
   "browserify": {
     "transform": [
       "browserify-shim",
