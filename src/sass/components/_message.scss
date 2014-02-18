@@ -1,7 +1,11 @@
-.message-children {
+.message {
   padding-left: 0;
   margin-left: 20px; 
   border-left: 1px solid #eee;
+  .message-children {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 20px;
+  }
 }
 
 .message-detail {

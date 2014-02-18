@@ -10,6 +10,13 @@ $tablet: new-breakpoint(min-width 660px 12);
 $desktop: new-breakpoint(min-width 1160px 12);
 
 // --------------------------
+// Common
+// --------------------------
+a {
+  cursor: pointer;
+}
+
+// --------------------------
 // Color
 // --------------------------
 $dark: rgb(24,29,33);

@@ -6,19 +6,24 @@ var MessageDetailView = require('./MessageDetail.jsx');
 
 var MessageTreeView = React.createClass({
   render: function () {
+    var childViews = '';
     if (!this.props.message) {
       return (<span />);
     }
-    var childViews = this.props.message.children.map(function (message) {
-      // recursively using JSX causes issues. Falling back to regular JS.
-      return MessageTreeView({
-        key: message.url,
-        message: message,
-        discussion: this.props.discussion
+    if (this.props.message.children.length) {
+      childViews = React.DOM.div({className: "message-children",
+          children: this.props.message.children.map(function(message) {
+          // recursively using JSX causes issues. Falling back to regular JS.
+          return MessageTreeView({
+            key: message.url,
+            message: message,
+            discussion: this.props.discussion
+          });
+        }.bind(this))
       });
-    }.bind(this));
+    }
     return (
-      <div className="message-children">
+      <div className="message">
         {MessageDetailView({
           key: this.props.discussion.url,
           message: this.props.message,
