@@ -5,20 +5,29 @@ var $ = require('jquery');
 var async = require('async');
 var React = require('react');
 var Backbone = require('backbone');
+var FastClick = require('fastclick');
 var config = require('clientconfig');
+
 // urls/routing
 var urls = require('./app/urls');
-var router = require('./app/router.js');
+
 // models
 var User = require('./app/auth/User');
+
 // collections
 var UserCollection = require('./app/auth/UserCollection');
 var TeamCollection = require('./app/teams/TeamCollection');
+
 // views
 var MainView = require('./app/Main.jsx');
 var SignInView = require('./app/auth/views/SignIn.jsx');
 
 require('./app/core/globalEvents');
+
+
+// Initialize FastClick
+FastClick(document.body);
+
 
 var app = _.extend({
   // default config can be overridden/extended by config passed in by cookie
@@ -59,13 +68,13 @@ var app = _.extend({
           dataType: "json",
           url: app.config.apiUrl + url,
           headers: {
-              Authorization: 'Token ' + localStorage.apiKey
+            Authorization: 'Token ' + localStorage.apiKey
           },
           success: function (data) {
-              self.data.tokens = data;
+            self.data.tokens = data;
           },
           complete: function (response) {
-              cb(response.status === 200 ? false : response.status);
+            cb(response.status === 200 ? false : response.status);
           }
         });
       },
@@ -95,7 +104,7 @@ var app = _.extend({
       }
     ], _.bind(this.fetchDataCallback, self));
   },
-  fetchDataCallback: function (err, results) {
+  fetchDataCallback: function (err) {
     if (err) {
       console.log('Error fetching data', err);
       if (err === 403) {
@@ -122,5 +131,6 @@ var app = _.extend({
     window.app.fetchData();
   }
 }, Backbone.Events);
+
 
 app.bootstrap();

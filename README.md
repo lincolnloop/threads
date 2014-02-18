@@ -1,23 +1,48 @@
-Pre-requisites
---------------
+```
+  ________                        __
+ /_  __/ /_  ________  ____ _____/ /____
+  / / / __ \/ ___/ _ \/ __ `/ __  / ___/
+ / / / / / / /  /  __/ /_/ / /_/ (__  )
+/_/ /_/ /_/_/   \___/\__,_/\__,_/____/
 
-[libsass](https://github.com/hcatlin/libsass#libsass) `brew install libsass` on OS X
+```
 
-Install
--------
 
-`npm install .`
+Installation
+------------
+
+Install libsass. On Mac OS X:
+
+    $ brew install libsass
+
+If you don't have it installed already, install the grunt cli package globally.
+
+    $ npm install -g grunt
+
+Install local dependencies:
+
+    $ npm install
 
 
 Local Development
 -----------------
 
-`grunt build && grunt serve` will build the assets and start a server on port 9001. The development config expects you have Ginger's back-end Django server running on port 8000.
+First, create a *config/local.js* file by copying *config/local.example.js* and
+making any desired changes.
 
-`grunt watch` will rebuild the necessary files when they change.
+To build the app, start a development server on port 8080, and rebuild
+automatically on changes, simply run grunt's default task:
+
+    $ grunt
+
+The frontend of threads will automatically look for a backend (API) connection
+on the host specified in the `apiUrl` config parameter in your
+*config/local.js*.
 
 
-Production
------------
+Production Build
+----------------
 
-`grunt dist && rsync -avz dist/* gingerhq.com:/var/www/next.gingerhq.com`
+To build a bundle for production:
+
+    $ grunt dist && rsync -avz dist/* gingerhq.com:/var/www/next.gingerhq.com

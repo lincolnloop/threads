@@ -9,7 +9,7 @@ module.exports = {
   server: {
     options: {
       base: 'build',
-      port: 8000,
+      port: 8080,
       middleware: function (connect, options) {
         return [
             Cookies.express(),
