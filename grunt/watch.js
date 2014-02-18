@@ -1,6 +1,7 @@
 "use strict";
 
 module.exports = {
+  options: {livereload: true},
   js: {
     files: ['package.json', '<%= jshint.src %>', 'src/**/*.jsx'],
     tasks: ['browserify:dev', 'jshint']

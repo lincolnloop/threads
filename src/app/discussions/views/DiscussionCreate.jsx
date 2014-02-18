@@ -2,7 +2,7 @@
 
 var React = require('react');
 var Discussion = require('../models/Discussion.js');
-var MarkdownText = require('./../../components/MarkdownText.jsx');
+var MarkdownText = require('./../../components/MarkdownText');
 var router = require('../../router');
 
 module.exports = React.createClass({

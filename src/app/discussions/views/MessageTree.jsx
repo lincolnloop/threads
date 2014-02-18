@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var React = require('react');
-var MessageDetailView = require('./MessageDetail.jsx');
+var MessageDetailView = require('./MessageDetail');
 
 var MessageTreeView = React.createClass({
   render: function () {

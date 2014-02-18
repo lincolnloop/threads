@@ -2,9 +2,9 @@
 
 var _ = require('underscore');
 var React = require('react');
-var VotesView = require('./Votes.jsx');
-var MessageEditView = require('./MessageEdit.jsx');
-var MessageContentView = require('./MessageContent.jsx');
+var VotesView = require('./Votes');
+var MessageEditView = require('./MessageEdit');
+var MessageContentView = require('./MessageContent');
 
 require('react/addons');
 

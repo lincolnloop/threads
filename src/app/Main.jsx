@@ -13,15 +13,15 @@ var Discussion = require('./discussions/models/discussion');
 // Views
 // --------------------
 // common
-var Nav = require('./core/views/Nav.jsx');
+var Nav = require('./core/views/Nav');
 // auth
-var SignInView = require('./auth/views/SignIn.jsx');
+var SignInView = require('./auth/views/SignIn');
 // team views
-var OrganizationList = require('./teams/views/OrganizationList.jsx');
-var TeamDetailView = require('./teams/views/TeamDetail.jsx');
+var OrganizationList = require('./teams/views/OrganizationList');
+var TeamDetailView = require('./teams/views/TeamDetail');
 // discussion views
-var DiscussionDetailView = require('./discussions/views/DiscussionDetail.jsx');
-var DiscussionCreateView = require('./discussions/views/DiscussionCreate.jsx');
+var DiscussionDetailView = require('./discussions/views/DiscussionDetail');
+var DiscussionCreateView = require('./discussions/views/DiscussionCreate');
 
 var Main = React.createClass({
   toggleTeamNav: function () {

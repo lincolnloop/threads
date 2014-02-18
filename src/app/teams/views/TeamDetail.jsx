@@ -7,7 +7,7 @@ var inViewport = require('in-viewport');
 var React = require('react');
 var urls = require('../../urls');
 var EventsMixin = require('../../core/eventsMixin');
-var DiscussionList = require('../../discussions/views/DiscussionList.jsx');
+var DiscussionList = require('../../discussions/views/DiscussionList');
 
 var TeamDetail = React.createClass({
   getDiscussions: function() {
@@ -92,7 +92,7 @@ var TeamDetail = React.createClass({
     // get create discussion url
     // TODO: figure out a better, maybe one-liner, API
     createDiscussionUrl = '/' + urls.get('discussion:create:team', {
-      team_slug: team.slug 
+      team_slug: team.slug
     });
     return (
       <div className="team-detail">
