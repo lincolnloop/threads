@@ -5,29 +5,39 @@ var Backbone = require('backbone');
 var React = require('react');
 var router = require('./router');
 var urls = require('./urls');
+
 // --------------------
 // Models
 // --------------------
+
 var Discussion = require('./discussions/models/discussion');
+
 // --------------------
 // Views
 // --------------------
+
 // common
 var Nav = require('./core/views/Nav');
+
 // auth
 var SignInView = require('./auth/views/SignIn');
+
 // team views
 var OrganizationList = require('./teams/views/OrganizationList');
 var TeamDetailView = require('./teams/views/TeamDetail');
+
 // discussion views
 var DiscussionDetailView = require('./discussions/views/DiscussionDetail');
 var DiscussionCreateView = require('./discussions/views/DiscussionCreate');
 
-var Main = React.createClass({
+
+var AppView = React.createClass({
+
   toggleTeamNav: function () {
     // todo: handle this through this.setState
     $('body').toggleClass('show-nav');
   },
+
   getInitialState: function() {
     // Initial sidebar, topNav and content.
     // All should be component instances.
@@ -41,6 +51,7 @@ var Main = React.createClass({
       'content': ''
     }
   },
+
   componentWillMount: function() {
     // --------------------
     // route view binding
@@ -54,6 +65,7 @@ var Main = React.createClass({
     // start history
     Backbone.history.start({pushState: true});
   },
+
   render: function() {
     console.log('MainRender', this.state.content);
     return (
@@ -70,10 +82,12 @@ var Main = React.createClass({
       </div>
     );
   },
+
   // pages
   index: function() {
     console.log('main:index');
   },
+
   signIn: function() {
     console.log('main:signIn');
     // content > sign in view
@@ -84,9 +98,11 @@ var Main = React.createClass({
       })
     });
   },
+
   signOut: function() {
     console.log('main:signOut');
   },
+
   teamDetail: function(slug) {
     console.log('team:detail');
     var team = this.props.teams.findWhere({slug: slug});
@@ -109,6 +125,7 @@ var Main = React.createClass({
       })
     });
   },
+
   discussionCreate: function (teamSlug) {
     console.log('DiscussionRouter:create');
     var team = this.props.teams.findWhere({slug: teamSlug});
@@ -132,6 +149,7 @@ var Main = React.createClass({
       })
     });
   },
+
   discussionDetail: function(teamSlug, discussionId) {
     console.log('discussion:detail');
     var team = this.props.teams.findWhere({slug: teamSlug});
@@ -159,6 +177,7 @@ var Main = React.createClass({
       })
     });
   }
+
 });
 
-module.exports = Main;
+module.exports = AppView;
