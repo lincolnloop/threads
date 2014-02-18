@@ -9,7 +9,7 @@ var Discussion = require('../models/Discussion');
 // --------------------
 // Views
 // --------------------
-var MessageTreeView = require('./MessageTree.jsx');
+var MessageTreeView = require('./MessageTree');
 
 var DiscussionDetailView = React.createClass({
   fetchDiscussion: function() {

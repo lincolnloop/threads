@@ -1,7 +1,7 @@
 "use strict";
 
 var React = require('react');
-var Team = require('./Team.jsx');
+var Team = require('./Team');
 
 var Organization = React.createClass({
   render: function() {

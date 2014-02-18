@@ -1,18 +1,13 @@
 {
-  "name": "ginger",
-  "description": "Ginger client-side app",
+  "name": "threads",
+  "private": true,
+  "description": "Threads, the client-side interface for Ginger",
   "repository": {
     "type": "git",
-    "url": "https://github.com/lincolnloop/ginger-mobile.git"
+    "url": "https://github.com/lincolnloop/threads.git"
   },
   "version": "0.1.0",
-  "main": "./src/scripts/app.js",
-  "browserify": {
-    "transform": [
-      "browserify-shim",
-      "reactify"
-    ]
-  },
+  "main": "./src/app.js",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-uglify": "~0.2.0",

@@ -19,8 +19,8 @@ var UserCollection = require('./app/auth/UserCollection');
 var TeamCollection = require('./app/teams/TeamCollection');
 
 // views
-var MainView = require('./app/Main.jsx');
-var SignInView = require('./app/auth/views/SignIn.jsx');
+var MainView = require('./app/Main');
+var SignInView = require('./app/auth/views/SignIn');
 
 require('./app/core/globalEvents');
 

@@ -3,7 +3,7 @@
 var _ = require('underscore');
 var React = require('react');
 var EventsMixin = require('../../core/eventsMixin');
-var Organization = require('./Organization.jsx');
+var Organization = require('./Organization');
 
 var OrganizationList = React.createClass({
   mixins: [EventsMixin],
