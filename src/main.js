@@ -6,6 +6,7 @@ var Backbone = require('backbone');
 var React = require('react');
 var FastClick = require('fastclick');
 var AppView = require('./app');
+var config = require('./utils/config');
 
 
 // Initialize FastClick
@@ -24,7 +25,7 @@ Backbone.ajax = function(request) {
   });
   // convert paths to full URLs
   if (request.url.indexOf('/') === 0) {
-    request.url = window.app.config.apiUrl + request.url;
+    request.url = config.apiUrl + request.url;
   }
   return Backbone.$.ajax.apply(Backbone.$, arguments);
 };

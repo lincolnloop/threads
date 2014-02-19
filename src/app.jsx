@@ -12,6 +12,7 @@ var fetch = require('./utils/fetch');
 // Models
 // --------------------
 
+var User = require('./auth/User');
 var Discussion = require('./discussions/models/discussion');
 
 // --------------------
@@ -49,10 +50,16 @@ var AppView = React.createClass({
         'toggleTeamNav': this.toggleTeamNav
       }),
       'content': '',
+      'initialized': false,
+      'user': null,
       'teams': null,
       'users': null,
-      'user': null,
-      'anonUser': null
+      'anonUser': new User({
+        email: 'nobody@gingerhq.com',
+        name: 'Deleted User',
+        online: false,
+        typing: false
+      })
     }
   },
 
@@ -75,30 +82,36 @@ var AppView = React.createClass({
      * Fill in the initial data using RSVP.hash() to manage multiple promises
      */
     RSVP.hash({
-      token: fetch.token(),
+      user: fetch.user(),
+      teams: fetch.teams(),
+      users: fetch.users()
     }).then(function(results) {
-      console.log(results);
-    }).catch(function(reason) {
+      this.setState({
+        initialized: true,
+        user: results.user,
+        teams: results.teams,
+        users: results.users
+      });
+    }.bind(this)).catch(function(reason) {
       console.log(reason);
     });
   },
 
   render: function() {
     console.log('MainRender', this.state.content);
-    return;
-    // return (
-    //   <div className="main">
-    //     <nav id="top-nav">
-    //       {this.state.topNav}
-    //     </nav>
-    //     <nav id="sidebar">
-    //       {this.state.sidebar}
-    //     </nav>
-    //     <div id="content">
-    //       {this.state.content}
-    //     </div>
-    //   </div>
-    // );
+    return (
+      <div className="main">
+        <nav id="top-nav">
+          {this.state.topNav}
+        </nav>
+        <nav id="sidebar">
+          {this.state.initialized ? this.state.sidebar : ''}
+        </nav>
+        <div id="content">
+          {this.state.initialized ? this.state.content : ''}
+        </div>
+      </div>
+    );
   },
 
   // pages
