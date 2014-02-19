@@ -31,7 +31,7 @@ var DiscussionDetailView = React.createClass({
   },
   getInitialState: function() {
     return {
-      discussion: []
+      discussion: {}
     }
   },
   componentWillMount: function() {
@@ -43,11 +43,13 @@ var DiscussionDetailView = React.createClass({
     }
   },
   render: function() {
+    var message = this.state.discussion.message;
     return (
       <div className="discussion-detail">
         <h2>{this.state.discussion.title}</h2>
         {MessageTreeView({
-          message: this.state.discussion.message,
+          key: message ? message.cid : 'empty-message',
+          message: message,
           discussion: this.state.discussion
         })}
       </div>

@@ -91,6 +91,16 @@ var MessageTreeView = React.createClass({
   componentWillReceiveProps: function(nextProps) {
     // update replies state
     this.setState({replies: nextProps.discussion.message.children});
+  },
+  shouldComponentUpdate: function(nextProps, nextState) {
+    // Only update component if:
+    // 1. we're replying to it
+    // 2. we stopped replying (which means it has a new children)
+    // TODO: Realtime needs to be handled differently
+    if (nextState.replying !== this.state.replying) {
+      return true;
+    }
+    return false;
   }
 });
 
