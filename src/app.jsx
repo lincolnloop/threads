@@ -43,9 +43,6 @@ var AppView = React.createClass({
 
   getInitialState: function() {
     return {
-      'sidebar': OrganizationList({
-        'teams': this.props.teams
-      }),
       'topNav': Nav({
         'toggleTeamNav': this.toggleTeamNav
       }),
@@ -82,15 +79,15 @@ var AppView = React.createClass({
      * Fill in the initial data using RSVP.hash() to manage multiple promises
      */
     RSVP.hash({
-      user: fetch.user(),
+      userUri: fetch.userUri(),
       teams: fetch.teams(),
       users: fetch.users()
     }).then(function(results) {
       this.setState({
         initialized: true,
-        user: results.user,
         teams: results.teams,
-        users: results.users
+        users: results.users,
+        user: results.users.get(results.userUri)
       });
     }.bind(this)).catch(function(reason) {
       console.log(reason);
@@ -98,17 +95,23 @@ var AppView = React.createClass({
   },
 
   render: function() {
-    console.log('MainRender', this.state.content);
+    console.log('AppView:render');
+
+    var orgList = '';
+    if (this.state.initialized) {
+      orgList = (
+        <OrganizationList teams={this.state.teams} />
+      );
+    }
+
     return (
       <div className="main">
         <nav id="top-nav">
           {this.state.topNav}
         </nav>
-        <nav id="sidebar">
-          {this.state.initialized ? this.state.sidebar : ''}
-        </nav>
+        <nav id="sidebar">{orgList}</nav>
         <div id="content">
-          {this.state.initialized ? this.state.content : ''}
+          {this.state.content}
         </div>
       </div>
     );
@@ -136,7 +139,7 @@ var AppView = React.createClass({
 
   teamDetail: function(slug) {
     console.log('team:detail');
-    var team = this.props.teams.findWhere({slug: slug});
+    var team = this.state.teams.findWhere({slug: slug});
     // content > team discussion list view
     var content = React.addons.TransitionGroup({
       transitionName: 'content',
@@ -159,7 +162,7 @@ var AppView = React.createClass({
 
   discussionCreate: function (teamSlug) {
     console.log('DiscussionRouter:create');
-    var team = this.props.teams.findWhere({slug: teamSlug});
+    var team = this.state.teams.findWhere({slug: teamSlug});
     // content > create view
     var content = React.addons.TransitionGroup({
       transitionName: 'content',
@@ -183,7 +186,7 @@ var AppView = React.createClass({
 
   discussionDetail: function(teamSlug, discussionId) {
     console.log('discussion:detail');
-    var team = this.props.teams.findWhere({slug: teamSlug});
+    var team = this.state.teams.findWhere({slug: teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
       discussion_id: discussionId
     });
@@ -210,5 +213,9 @@ var AppView = React.createClass({
   }
 
 });
+
+// TODO: I feel like there should be a better way to do this, but I don't know
+//       of one yet.
+window.AppView = AppView;
 
 module.exports = AppView;

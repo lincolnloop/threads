@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var config = require('../../utils/config');
 
 var SignInView = React.createClass({
   //
@@ -29,7 +30,7 @@ var SignInView = React.createClass({
     }
   },
   render: function() {
-    var apiLink = window.app.config.apiUrl + '/accounts/api-access/';
+    var apiLink = config.apiUrl + '/accounts/api-access/';
     return (
       <div className="sign-in">
         <form onSubmit={this.login}>

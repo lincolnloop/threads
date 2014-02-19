@@ -61,10 +61,10 @@ var Message = Backbone.Model.extend({
   },
 
   setUser: function () {
-    var userId = this.get('user') || window.app.data.requestUser.id;
-    this.user = window.app.data.users.get(userId) || window.app.data.anonUser;
+    var userId = this.get('user') || window.AppView.state.user.id;
+    this.user = window.AppView.state.users.get(userId) || window.AppView.state.anonUser;
     // messages are never new to the user who wrote them
-    if (this.user.id === window.app.data.requestUser.id) {
+    if (this.user.id === window.AppView.state.user.id) {
       this.set({read: true}, {silent: true});
     }
   },
@@ -166,11 +166,11 @@ var Message = Backbone.Model.extend({
     return this.get('discussion') && this.get('parent');
   },
   isEditable: function () {
-    return this.user.id === window.app.data.requestUser.id;
+    return this.user.id === window.AppView.state.user.id;
   },
   getOrFetchForkedDiscussion: function () {
     // return the forked discussion or fetch it
-    var team = window.app.data.teams.get(this.get('team')),
+    var team = window.AppView.state.teams.get(this.get('team')),
       Discussion = require('./discussion');
     // check that we haven't already fetched the discussion
     // or a fetch is in progress

@@ -3,6 +3,7 @@
 var $ = require('jquery');
 var React = require('react');
 var urls = require('../urls');
+var config = require('../utils/config');
 
 var MarkdowText = React.createClass({
   getInitialState: function () {
@@ -59,7 +60,7 @@ var MarkdowText = React.createClass({
     // Fetch the preview from the server
     $.ajax({
       type: 'POST',
-      url: window.app.config.apiUrl + urls.get('api:message:preview'),
+      url: config.apiUrl + urls.get('api:message:preview'),
       contentType: 'application/json',
       data: JSON.stringify({'raw_body': this.getRawValue()}),
       headers: {

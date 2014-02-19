@@ -7,7 +7,7 @@ var TeamCollection = require('../teams/TeamCollection');
 var UserCollection = require('../auth/UserCollection');
 
 
-var user = function() {
+var userUri = function() {
   /*
    * Return a promise for the user URI
    */
@@ -92,6 +92,6 @@ var users = function() {
 };
 
 
-exports.user = user;
+exports.userUri = userUri;
 exports.teams = teams;
 exports.users = users;

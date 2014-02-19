@@ -35,7 +35,7 @@ var DiscussionDetailView = React.createClass({
     }
   },
   componentWillMount: function() {
-    this.team = window.app.data.teams.get(this.props.team.url);
+    this.team = window.AppView.state.teams.get(this.props.team.url);
     this.discussion = this.team.discussions.get(this.props.discussionUrl) ||
                       new Discussion({url: this.props.discussionUrl});
     return {

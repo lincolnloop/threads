@@ -69,9 +69,9 @@ var VotesView = React.createClass({
     console.log('VotesView:render');
     // get the users vote or create a placeholder for it
     this.userVote = _.find(this.props.data, function (vote) {
-      return vote.user.url === window.app.data.requestUser.id;
+      return vote.user.url === window.AppView.state.user.id;
     }) || {
-      user: window.app.data.requestUser.id,
+      user: window.AppView.state.user.id,
       message: this.props.messageUrl
     };
     var upvotes = _.where(this.props.data, {value: '+1'}),

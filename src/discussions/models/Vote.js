@@ -8,9 +8,9 @@ module.exports = Backbone.Model.extend({
 
   initialize: function (options) {
     if (options.user) {
-      this.user = window.app.data.users.get(options.user) || window.app.data.anonUser;
+      this.user = window.AppView.state.users.get(options.user) || window.AppView.state.anonUser;
     } else {
-      this.user = window.app.data.requestUser;
+      this.user = window.AppView.state.user;
     }
   },
   serialized: function () {

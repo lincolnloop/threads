@@ -31,7 +31,7 @@ module.exports = React.createClass({
     discussion.save({}, {
       success: function (discussion) {
         // get discussion list from local storage
-        var discussions = window.app.data.teams.get(this.props.team).discussions;
+        var discussions = window.AppView.state.teams.get(this.props.team).discussions;
         // add discussion to local storage
         discussions.add(discussion);
         // redirect to discussion detail page
