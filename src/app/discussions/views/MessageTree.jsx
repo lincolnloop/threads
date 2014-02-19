@@ -50,6 +50,7 @@ var MessageTreeView = React.createClass({
     };
   },
   render: function() {
+    console.log('MessageTree:render');
     var repliesView = function(){};
     // Get the ReplyView (or an empty render) based on `replying` state
     var ReplyView = this.state.replying ? MessageReplyView : function(){};
@@ -86,6 +87,10 @@ var MessageTreeView = React.createClass({
         repliesView
       )
     );
+  },
+  componentWillReceiveProps: function(nextProps) {
+    // update replies state
+    this.setState({replies: nextProps.discussion.message.children});
   }
 });
 
