@@ -1,7 +1,9 @@
 "use strict";
 
 var _ = require('underscore');
+var Backbone = require('backbone');
 var React = require('react');
+var urls = require('../../urls');
 var MessageDetailView = require('./MessageDetail');
 var MessageReplyView = require('./MessageReply');
 
@@ -18,9 +20,9 @@ var MessageTreeView = React.createClass({
     // setup new message data
     var data = {
       raw_body: this.refs.reply.refs.comment.getRawValue(),
-      parent: this.state.message.url,
+      parent: this.props.message.url,
       read: true,
-      user: window.app.data.users.get(this.state.message.user.url).serialized() 
+      user: window.app.data.requestUser.serialized()
     };
     Backbone.ajax({
       'url': urls.get('api:message'),
@@ -28,6 +30,7 @@ var MessageTreeView = React.createClass({
       'data': data,
       success: function(reply) {
         var replies = _.clone(this.state.replies);
+        reply.user = window.app.data.users.get(reply.user).serialized();
         replies.push(reply);
         this.setState({'replies': replies, 'replying': false});
       }.bind(this)
@@ -50,17 +53,17 @@ var MessageTreeView = React.createClass({
     var repliesView = function(){};
     // Get the ReplyView (or an empty render) based on `replying` state
     var ReplyView = this.state.replying ? MessageReplyView : function(){};
-
     if (!this.props.message) {
       return (<span />);
     }
-    if (this.props.message.children.length) {
+    if (this.state.replies.length) {
       repliesView = React.DOM.div({className: "message-children",
-          children: this.props.message.children.map(function(message) {
+          children: this.state.replies.map(function(message) {
           // recursively using JSX causes issues. Falling back to regular JS.
           return MessageTreeView({
             key: message.url,
             message: message,
+            replies: message.children,
             discussion: this.props.discussion
           });
         }.bind(this))
@@ -72,12 +75,11 @@ var MessageTreeView = React.createClass({
           key: this.props.discussion.url,
           message: this.props.message,
           discussion: this.props.discussion,
-          handleReplyClick: _.partial(this.changeState, 'replying', true),
-          handleReplySubmit: this.addReply
+          handleReplyClick: _.partial(this.changeState, 'replying', true)
         }),
         ReplyView({
           'ref': 'reply',
-          'handleReplySubmit': this.props.handleReplySubmit,
+          'handleReplySubmit': this.addReply,
           'handleReplyCancel': _.partial(this.changeState, 'replying', false)
         }),
         // TODO: Create a separate list view out of this
