@@ -6,7 +6,10 @@ var Discussion = React.createClass({
   render: function() {
     return (
         <li key={this.props.url}>
-          <a href={this.props.message.permalink}>{this.props.title} {this.props.unread_count}</a>
+          <a href={this.props.message.permalink}>
+            {this.props.title}
+            <span className="unread">{this.props.unread_count}</span>
+          </a>
         </li>
     );
   }
