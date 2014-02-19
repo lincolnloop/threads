@@ -11,7 +11,7 @@ module.exports = React.createClass({
       <form className="discussion-create" onSubmit={this.submit}>
         <h2>New Discussion</h2>
         <input type="text" placeholder="What are we talking about?" ref="title" required />
-        <MarkdownText placeholder="Comment.." ref="message" required />
+        <MarkdownText placeholder="Comment.." ref="comment" required />
         <input type="submit" />
       </form>
     );
@@ -21,7 +21,7 @@ module.exports = React.createClass({
     var discussion = new Discussion({
       title: title,
       message: {
-        raw_body: this.refs.message.getRawValue()
+        raw_body: this.refs.comment.getRawValue()
       },
       team: this.props.team
     });

@@ -4,11 +4,11 @@ var React = require('react');
 var MarkdownText = require('../../components/MarkdownText');
 
 var MessageEditView = React.createClass({
-  render: function () {
+  render: function() {
     return (
-      <form className="message-content message-content-edit" onSubmit={this.props.handeEditSubmit}>
+      <form className="message-content message-content-edit" onSubmit={this.props.handleEditSubmit}>
         <MarkdownText placeholder="Comment.."
-                      ref="message"
+                      ref="comment"
                       defaultValue={this.props.message.raw_body}
                       required />
         <div className="message-actions message-edit-actions">
