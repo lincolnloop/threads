@@ -3,18 +3,18 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
+var urls = require('../../urls');
 var VotesView = require('./Votes');
 var MessageEditView = require('./MessageEdit');
 var MessageContentView = require('./MessageContent');
-var MessageReplyView = require('./MessageReply');
 
 require('react/addons');
 
 var MessageDetail = React.createClass({
   changeState: function (key, value) {
-    // callback helper for edit/reply/cancel state changes
+    // callback helper for `editing` state changes
     // usage:
-    // _.partial(this.changeState, '<editing|replying>', true|false)
+    // _.partial(this.changeState, '<editing>', true|false)
     var state = {};
     state[key] = value;
     this.setState(state);
@@ -36,14 +36,9 @@ var MessageDetail = React.createClass({
     });
     return false;
   },
-  reply: function () {
-    // save a reply
-    console.log('save reply');
-  },
   getInitialState: function () {
     return {
       'editing': false,
-      'replying': false,
       'message': this.props.message
     };
   },
@@ -52,10 +47,10 @@ var MessageDetail = React.createClass({
     // shortcuts
     var message = this.state.message;
     var user = message.user;
+    var div = React.DOM.div;
+    var img = React.DOM.img;
     // Get the correct MessageView based on `editing` state
     var MessageView = this.state.editing ? MessageEditView : MessageContentView;
-    // Get the ReplyView (or an empty render) based on `replying` state
-    var ReplyView = this.state.replying ? MessageReplyView: function(){};
     // main message classes
     var classes = React.addons.classSet({
       'message-detail': true,
@@ -63,28 +58,28 @@ var MessageDetail = React.createClass({
       'message-collapsed': message.collapsed
     });
     return (
-      React.DOM.div({'className': 'message-container'},
-        React.DOM.div({'className': classes},
-          React.DOM.div({'className': 'avatar'},
-            React.DOM.img({'src': user.gravatar})
+      div({'className': 'message-container'},
+        div({'className': classes},
+          div({'className': 'avatar'},
+            img({'src': user.gravatar})
           ),
-          React.DOM.div({'className': 'username', 'children': user.name}),
-          React.DOM.div({'className': 'date', 'children': message.date_created}),
+          div({'className': 'username', 'children': user.name}),
+          div({'className': 'date', 'children': message.date_created}),
           MessageView({
             'ref': 'message',
             'message': message,
+            // TODO: we only need the discussion here because of votes
+            // and that should not rely on the discussion at all
             'discussion': this.props.discussion,
             'canEdit': message.canEdit,
             'handleEditClick': _.partial(this.changeState, 'editing', true),
-            'handleReplyClick': _.partial(this.changeState, 'replying', true),
+            // TODO: consider moving this outside of the message.
+            // Replies are part of the MessageTree component, not the Message.
+            'handleReplyClick': this.props.handleReplyClick,
             'handleEditSubmit': this.update,
             'handleEditCancelClick': _.partial(this.changeState, 'editing', false)
           })
-        ),
-        ReplyView({
-          'handleReplySubmit': this.reply,
-          'handleCancelClick': _.partial(this.changeState, 'replying', false)
-        })
+        )
       )
     );
   },

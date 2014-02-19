@@ -8,7 +8,7 @@ var MessageContentView = React.createClass({
   shouldComponentUpdate: function (nextProps, nextState) {
     return this.props.message.body !== nextProps.message.body;
   },
-  render: function () {
+  render: function() {
     return (
       React.DOM.div(
         {className: 'message-content'},
