@@ -3,7 +3,7 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 
-exports.events = {
+var Events = {
   componentWillMount: function () {
     this.events = _.extend({}, Backbone.Events);
   },
@@ -11,3 +11,5 @@ exports.events = {
     this.events.stopListening();
   }
 };
+
+exports.Events  = Events;

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var $ = require('jquery');
@@ -7,8 +7,8 @@ var Backbone = require('backbone');
 var urls = require('../urls');
 
 module.exports = Backbone.Model.extend({
-  idAttribute: "url",
-  initialize: function (options) {
+  idAttribute: 'url',
+  initialize: function () {
     _.bindAll(this, 'setEmailHash', 'getGravatar', 'saveOrg',
       'bindTypingEvents', 'notifyTyping');
     this.setEmailHash();
@@ -33,7 +33,7 @@ module.exports = Backbone.Model.extend({
     return this.id;
   },
   setEmailHash: function () {
-    this.emailHash = md5(this.get('email') || "");
+    this.emailHash = md5(this.get('email') || '');
   },
   getGravatar: function (size) {
     size = size || 40;
@@ -43,7 +43,7 @@ module.exports = Backbone.Model.extend({
     var ajaxOpts;
     if (this.get('organization')) {
       ajaxOpts = {
-        type: "PUT",
+        type: 'PUT',
         url: urls.get('api:userprofile'),
         contentType: 'application/json',
         data: JSON.stringify({'organization': this.get('organization')})

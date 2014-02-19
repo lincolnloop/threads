@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var $ = require('jquery');
 var React = require('react');
@@ -66,7 +66,7 @@ var MarkdowText = React.createClass({
         Authorization: 'Token ' + localStorage.apiKey
       },
       success: function (evt) {
-        // TODO: Fix the API. 
+        // TODO: Fix the API.
         // It's returning an array for the body.
         this.setState({previewValue: evt.body[0], rawValue: this.getRawValue()});
       }.bind(this)

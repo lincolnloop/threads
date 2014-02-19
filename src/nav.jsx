@@ -1,8 +1,7 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var React = require('react');
-var EventsMixin = require('../eventsMixin');
 
 var NavView = React.createClass({
   render: function () {

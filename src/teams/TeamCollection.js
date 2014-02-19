@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -26,8 +26,8 @@ var TeamCollection = Backbone.Collection.extend({
     // and it's teams
     return _.map(data, function (teams, org) {
       return {
-          name: org,
-          teams: _.invoke(teams, 'serialized')
+        name: org,
+        teams: _.invoke(teams, 'serialized')
       };
     });
   }

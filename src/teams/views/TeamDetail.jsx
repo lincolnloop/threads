@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var Backbone = require('backbone');
@@ -6,7 +6,6 @@ var Backbone = require('backbone');
 var inViewport = require('in-viewport');
 var React = require('react');
 var urls = require('../../urls');
-var EventsMixin = require('../../core/eventsMixin');
 var DiscussionList = require('../../discussions/views/DiscussionList');
 
 var TeamDetail = React.createClass({

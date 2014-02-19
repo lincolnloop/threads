@@ -1,6 +1,5 @@
-"use strict";
+'use strict';
 
-var _ = require('underscore');
 var Backbone = require('backbone');
 var Message = require('./Message');
 

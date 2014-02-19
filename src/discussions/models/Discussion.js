@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var Backbone = require('backbone'),
   Message = require('./Message'),
@@ -6,7 +6,7 @@ var Backbone = require('backbone'),
   urls = require('../../urls');
 
 var DiscussionModel = Backbone.Model.extend({
-  idAttribute: "url",
+  idAttribute: 'url',
   initialize: function () {
     console.log('DiscussionModel:initialize');
     this.message = new Message();
@@ -73,7 +73,7 @@ var DiscussionModel = Backbone.Model.extend({
     return this.id || urls.get('api:discussion');
   },
   getDateObj: function () {
-    // TODO: this.get('date_latest_activity') 
+    // TODO: this.get('date_latest_activity')
     // doesn't return on first save
     return new Date(this.get('message').date_latest_activity);
   },

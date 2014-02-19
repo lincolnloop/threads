@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var _ = require('underscore');
 var React = require('react');
@@ -80,7 +80,7 @@ var VotesView = React.createClass({
       downvoteText = this.buildButtonText(downvotes, '-1'),
       voteUp = _.partial(this.vote, '+1'),
       voteDown = _.partial(this.vote, '-1');
-    
+
 
     return (
       <div className={this.state.disabled ? 'votes disabled' : 'votes'}>

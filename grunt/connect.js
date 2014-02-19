@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 var ENV = process.env.NODE_ENV || 'development',
   config = require('../config/' + ENV),
@@ -12,13 +12,13 @@ module.exports = {
       port: 8080,
       middleware: function (connect, options) {
         return [
-            Cookies.express(),
-            function (req, res, next) {
-              res.cookies.set('config', JSON.stringify(config), { httpOnly: false });
-              next();
-            },
-            pushState(),
-            connect.static(options.base)
+          Cookies.express(),
+          function (req, res, next) {
+            res.cookies.set('config', JSON.stringify(config), { httpOnly: false });
+            next();
+          },
+          pushState(),
+          connect.static(options.base)
         ];
       }
     }

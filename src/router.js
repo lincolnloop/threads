@@ -1,6 +1,5 @@
-"use strict";
+'use strict';
 
-var _ = require('underscore');
 var Backbone = require('backbone');
 
 var AppRouter = Backbone.Router.extend({
@@ -10,12 +9,12 @@ var AppRouter = Backbone.Router.extend({
    * No routes are handled here directly, but on the AppView instead.
   */
   routes: {
-    "": 'index',
-    "sign-in": 'signIn',
-    "sign-out": 'signOut',
-    ":team/": 'team:detail',
-    "discussion/create/:teamSlug/": 'team:create',
-    ":teamSlug/:discussionId/:discussionSlug/": 'discussion:detail'
+    '': 'index',
+    'sign-in': 'signIn',
+    'sign-out': 'signOut',
+    ':team/': 'team:detail',
+    'discussion/create/:teamSlug/': 'team:create',
+    ':teamSlug/:discussionId/:discussionSlug/': 'discussion:detail'
   }
 });
 

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // bourbon is required by neat
 // and already includes it in it's includePaths
@@ -20,4 +20,4 @@ module.exports = {
     },
     options: '<%= sass.dev.options %>'
   }
-}
+};

@@ -3,8 +3,10 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
+var RSVP = require('rsvp');
 var router = require('./router');
 var urls = require('./urls');
+var fetch = require('./utils/fetch');
 
 // --------------------
 // Models
@@ -17,7 +19,7 @@ var Discussion = require('./discussions/models/discussion');
 // --------------------
 
 // common
-var Nav = require('./core/views/Nav');
+var Nav = require('./nav');
 
 // auth
 var SignInView = require('./auth/views/SignIn');
@@ -39,8 +41,6 @@ var AppView = React.createClass({
   },
 
   getInitialState: function() {
-    // Initial sidebar, topNav and content.
-    // All should be component instances.
     return {
       'sidebar': OrganizationList({
         'teams': this.props.teams
@@ -48,14 +48,18 @@ var AppView = React.createClass({
       'topNav': Nav({
         'toggleTeamNav': this.toggleTeamNav
       }),
-      'content': ''
+      'content': '',
+      'teams': null,
+      'users': null,
+      'user': null,
+      'anonUser': null
     }
   },
 
   componentWillMount: function() {
-    // --------------------
-    // route view binding
-    // --------------------
+    /*
+     * Route view binding
+     */
     router.on('route:index', this.index);
     router.on('route:signIn', this.signIn);
     router.on('route:signOut', this.signOut);
@@ -66,21 +70,35 @@ var AppView = React.createClass({
     Backbone.history.start({pushState: true});
   },
 
+  componentDidMount: function() {
+    /*
+     * Fill in the initial data using RSVP.hash() to manage multiple promises
+     */
+    RSVP.hash({
+      token: fetch.token(),
+    }).then(function(results) {
+      console.log(results);
+    }).catch(function(reason) {
+      console.log(reason);
+    });
+  },
+
   render: function() {
     console.log('MainRender', this.state.content);
-    return (
-      <div className="main">
-        <nav id="top-nav">
-          {this.state.topNav}
-        </nav>
-        <nav id="sidebar">
-          {this.state.sidebar}
-        </nav>
-        <div id="content">
-          {this.state.content}
-        </div>
-      </div>
-    );
+    return;
+    // return (
+    //   <div className="main">
+    //     <nav id="top-nav">
+    //       {this.state.topNav}
+    //     </nav>
+    //     <nav id="sidebar">
+    //       {this.state.sidebar}
+    //     </nav>
+    //     <div id="content">
+    //       {this.state.content}
+    //     </div>
+    //   </div>
+    // );
   },
 
   // pages
