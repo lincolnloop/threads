@@ -4,6 +4,7 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
+var store = require('../../store');
 var VotesView = require('./Votes');
 var MessageEditView = require('./MessageEdit');
 var MessageContentView = require('./MessageContent');
@@ -46,7 +47,7 @@ var MessageDetail = React.createClass({
     log.debug('MessageDetailView:render');
     // shortcuts
     var message = this.state.message;
-    var user = message.user;
+    var user = store.find('users', {url: message.user});
     var div = React.DOM.div;
     var img = React.DOM.img;
     // Get the correct MessageView based on `editing` state
