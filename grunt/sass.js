@@ -11,12 +11,12 @@ module.exports = {
   },
   dev: {
     files: {
-      'build/<%= pkg.name %>.css': 'src/sass/app.scss',
+      'build/<%= pkg.name %>.css': 'client/sass/app.scss',
     }
   },
   production: {
     files: {
-      'dist/<%= pkg.name %>.css': 'src/sass/app.scss',
+      'dist/<%= pkg.name %>.css': 'client/sass/app.scss',
     },
     options: '<%= sass.dev.options %>'
   }
