@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
 module.exports = {
   dev: {
     files: {
-      'build/index.html': ['src/index.html.tpl']
+      'build/index.html': ['server/templates/index.html.tpl']
     },
     options: {
       data: {
@@ -14,7 +14,7 @@ module.exports = {
   },
   production: {
     files: {
-      'dist/index.html': ['src/index.html.tpl']
+      'dist/index.html': ['server/templates/index.html.tpl']
     },
     options: {
       data: {

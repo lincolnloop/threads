@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = {
   options: {
@@ -7,7 +7,7 @@ module.exports = {
     extensions: ['.jsx'],
   },
   dev: {
-    src: ['src/app.js'],
+    src: ['client/index.js'],
     dest: 'build/<%= pkg.name %>.js'
   },
   production: {

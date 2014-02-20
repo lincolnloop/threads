@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
 module.exports = {
   options: {livereload: true},
   js: {
-    files: ['package.json', '<%= jshint.src %>', 'src/**/*.jsx'],
+    files: ['package.json', '<%= jshint.src %>', 'client/**/*.jsx'],
     tasks: ['browserify:dev', 'jshint']
   },
   html: {

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 module.exports = {
   options: {
@@ -8,4 +8,4 @@ module.exports = {
     src: ['dist/threads.css', 'dist/threads.min.js'],
     dest: 'dist/index.html'
   }
-}
+};

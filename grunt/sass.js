@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 // bourbon is required by neat
 // and already includes it in it's includePaths
@@ -11,13 +11,13 @@ module.exports = {
   },
   dev: {
     files: {
-      'build/<%= pkg.name %>.css': 'src/sass/app.scss',
+      'build/<%= pkg.name %>.css': 'client/sass/app.scss',
     }
   },
   production: {
     files: {
-      'dist/<%= pkg.name %>.css': 'src/sass/app.scss',
+      'dist/<%= pkg.name %>.css': 'client/sass/app.scss',
     },
     options: '<%= sass.dev.options %>'
   }
-}
+};
