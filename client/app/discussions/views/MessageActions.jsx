@@ -2,6 +2,7 @@
 
 var React = require('react');
 var VotesView = require('./Votes');
+var log = require('loglevel');
 
 var MessageActionsView = React.createClass({
   getEditView: function() {

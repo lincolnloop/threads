@@ -5,6 +5,7 @@ var Backbone = require('backbone');
 // TODO: Shim or fork inViewport to this is supported
 var inViewport = require('in-viewport');
 var React = require('react');
+var log = require('loglevel');
 var urls = require('../../urls');
 var DiscussionList = require('../../discussions/views/DiscussionList');
 

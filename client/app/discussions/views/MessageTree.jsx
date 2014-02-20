@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
+var log = require('loglevel');
 var urls = require('../../urls');
 var MessageDetailView = require('./MessageDetail');
 var MessageReplyView = require('./MessageReply');

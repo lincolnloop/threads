@@ -4,6 +4,7 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var TeamModel = require('./Team');
 var urls = require('../urls');
+var log = require('loglevel');
 
 var TeamCollection = Backbone.Collection.extend({
   model: TeamModel,

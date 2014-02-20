@@ -3,6 +3,7 @@
 var Backbone = require('backbone');
 var urls = require('../../urls');
 var DiscussionModel = require('./Discussion');
+var log = require('loglevel');
 
 var DiscussionCollection = Backbone.Collection.extend({
   model: DiscussionModel,

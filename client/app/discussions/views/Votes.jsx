@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var React = require('react');
+var log = require('loglevel');
 var Vote = require('../models/Vote');
 
 var VoteListView = React.createClass({

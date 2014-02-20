@@ -1,9 +1,10 @@
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery'),
-    Backbone = require('backbone'),
-    urls = require('../../urls');
+var _ = require('underscore');
+var $ = require('jquery');
+var Backbone = require('backbone');
+var urls = require('../../urls');
+var log = require('loglevel');
 
 module.exports = Backbone.Model.extend({
 

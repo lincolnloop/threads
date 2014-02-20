@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
+var log = require('loglevel');
 var VotesView = require('./Votes');
 var MessageEditView = require('./MessageEdit');
 var MessageContentView = require('./MessageContent');

@@ -2,6 +2,7 @@
 
 var React = require('react');
 var Team = require('./Team');
+var log = require('loglevel');
 
 var Organization = React.createClass({
   render: function() {
