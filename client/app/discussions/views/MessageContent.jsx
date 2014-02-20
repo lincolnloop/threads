@@ -5,9 +5,7 @@ var React = require('react');
 var MessageActionsView = require('./MessageActions');
 
 var MessageContentView = React.createClass({
-  shouldComponentUpdate: function (nextProps, nextState) {
-    return this.props.message.body !== nextProps.message.body;
-  },
+
   render: function() {
     return (
       React.DOM.div(
@@ -25,7 +23,12 @@ var MessageContentView = React.createClass({
         })
       )
     );
+  },
+
+  shouldComponentUpdate: function (nextProps, nextState) {
+    return this.props.message.body !== nextProps.message.body;
   }
+
 });
 
 module.exports = MessageContentView;

@@ -2,10 +2,11 @@
 
 var _ = require('underscore');
 var React = require('react');
+var log = require('loglevel');
 
 var NavView = React.createClass({
   render: function () {
-    console.log('NavView:render');
+    log.debug('NavView:render');
     var actionClass = 'action';
     if (this.props.discussion) {
       actionClass += ' back';

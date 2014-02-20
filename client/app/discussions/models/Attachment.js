@@ -1,9 +1,10 @@
 'use strict';
 
-var _ = require('underscore'),
-    $ = require('jquery'),
-    Backbone = require('backbone'),
-    urls = require('../../urls');
+var _ = require('underscore');
+var $ = require('jquery');
+var Backbone = require('backbone');
+var urls = require('../../urls');
+var log = require('loglevel');
 
 module.exports = Backbone.Model.extend({
 
@@ -73,12 +74,12 @@ module.exports = Backbone.Model.extend({
   },
 
   uploadProgress: function (event) {
-    console.log('Attachement:uploadProgress');
+    log.debug('Attachement:uploadProgress');
     var percentComplete = 0;
     if (event.lengthComputable) {
       percentComplete = Math.round(event.loaded * 100 / event.total);
       this.set({'percentComplete': percentComplete});
-      console.log('Attachment:setPercentComplete' + percentComplete);
+      log.debug('Attachment:setPercentComplete' + percentComplete);
     }
   },
 

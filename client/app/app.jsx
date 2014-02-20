@@ -6,6 +6,7 @@ var React = require('react');
 var router = require('./router');
 var urls = require('./urls');
 var store = require('./store');
+var log = require('loglevel');
 var Events = require('./utils/mixins').Events;
 
 // --------------------
@@ -33,6 +34,33 @@ var DiscussionCreateView = require('./discussions/views/DiscussionCreate');
 
 var AppView = React.createClass({
   mixins: [Events],
+
+  render: function() {
+    log.debug('AppView:render', this.state);
+
+    if (this.state.initialized && !this.state.authenticated) {
+      // Show the SignIn view
+      return (
+        <SignInView success={this.refreshData} />
+      );
+    }
+
+    var orgList = '';
+    if (this.state.initialized) {
+      orgList = (
+        <OrganizationList organizations={this.state.teams} />
+      );
+    }
+
+    return (
+      <div className="main">
+        <nav id="sidebar">{orgList}</nav>
+        <div id="content">
+          {this.state.content}
+        </div>
+      </div>
+    );
+  },
 
   toggleTeamNav: function() {
     // todo: handle this through this.setState
@@ -97,41 +125,14 @@ var AppView = React.createClass({
     store.fetch();
   },
 
-  render: function() {
-    console.log('AppView:render', this.state);
-
-    if (this.state.initialized && !this.state.authenticated) {
-      // Show the SignIn view
-      return (
-        <SignInView success={this.refreshData} />
-      );
-    }
-
-    var orgList = '';
-    if (this.state.initialized) {
-      orgList = (
-        <OrganizationList organizations={this.state.teams} />
-      );
-    }
-
-    return (
-      <div className="main">
-        <nav id="sidebar">{orgList}</nav>
-        <div id="content">
-          {this.state.content}
-        </div>
-      </div>
-    );
-  },
-
   // pages
   index: function() {
-    console.log('main:index');
+    log.debug('main:index');
     this.render();
   },
 
   signIn: function() {
-    console.log('main:signIn');
+    log.debug('main:signIn');
     // content > sign in view
     this.setState({
       'content': SignInView({}),
@@ -142,11 +143,11 @@ var AppView = React.createClass({
   },
 
   signOut: function() {
-    console.log('main:signOut');
+    log.debug('main:signOut');
   },
 
   teamDetail: function(teamSlug) {
-    console.log('team:detail');
+    log.debug('team:detail');
     var team = store.find('teams', {slug: teamSlug});
     // content > team discussion list view
     // TODO: We need to bootstrap teams on load
@@ -170,7 +171,7 @@ var AppView = React.createClass({
   },
 
   discussionCreate: function (teamSlug) {
-    console.log('DiscussionRouter:create');
+    log.debug('DiscussionRouter:create');
     var team = store.find('teams', {slug: teamSlug});
     // content > create view
     var content = React.addons.TransitionGroup({
@@ -194,7 +195,7 @@ var AppView = React.createClass({
   },
 
   discussionDetail: function(teamSlug, discussionId) {
-    console.log('discussion:detail');
+    log.debug('discussion:detail');
     var team = store.find('teams', {'slug': teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
       'discussion_id': discussionId

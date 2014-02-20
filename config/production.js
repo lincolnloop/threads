@@ -1,3 +1,4 @@
 module.exports = {
-    apiUrl: 'https://gingerhq.com'
+  'debug': false,
+  'apiUrl': 'https://gingerhq.com'
 };

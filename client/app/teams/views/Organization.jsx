@@ -2,10 +2,11 @@
 
 var React = require('react');
 var Team = require('./Team');
+var log = require('loglevel');
 
 var Organization = React.createClass({
   render: function() {
-    console.log('Organization:render');
+    log.debug('Organization:render');
     return (
       <div className="org-group" key={this.props.name}>
         <h3>{this.props.name}</h3>

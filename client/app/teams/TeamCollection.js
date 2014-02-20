@@ -4,12 +4,13 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var TeamModel = require('./Team');
 var urls = require('../urls');
+var log = require('loglevel');
 
 var TeamCollection = Backbone.Collection.extend({
   model: TeamModel,
 
   initialize: function () {
-    console.log('TeamCollection:initialize');
+    log.debug('TeamCollection:initialize');
   },
   comparator: function (team) {
     return team.get('organization') + team.get('name');

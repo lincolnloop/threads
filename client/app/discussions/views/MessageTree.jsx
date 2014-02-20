@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
+var log = require('loglevel');
 var urls = require('../../urls');
 var MessageDetailView = require('./MessageDetail');
 var MessageReplyView = require('./MessageReply');
@@ -36,7 +37,7 @@ var MessageTreeView = React.createClass({
       }.bind(this)
     });
     // save a reply
-    console.log('save reply');
+    log.debug('save reply');
     return false;
   },
   getInitialState: function() {
@@ -50,7 +51,7 @@ var MessageTreeView = React.createClass({
     };
   },
   render: function() {
-    console.log('MessageTree:render');
+    log.debug('MessageTree:render');
     var repliesView = function(){};
     // Get the ReplyView (or an empty render) based on `replying` state
     var ReplyView = this.state.replying ? MessageReplyView : function(){};

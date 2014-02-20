@@ -2,14 +2,13 @@
 
 var React = require('react');
 var VotesView = require('./Votes');
+var log = require('loglevel');
+
 
 var MessageActionsView = React.createClass({
-  getEditView: function() {
-    // Get the edit link if the user has edit permissions
-    return this.props.canEdit ? React.DOM.a({onClick: this.props.handleEditClick, children: 'edit'}) : React.DOM.span({})
-  },
+
   render: function() {
-    console.log('MessageActionsView:render');
+    log.debug('MessageActionsView:render');
     var message = this.props.message;
     return (
       React.DOM.div(
@@ -23,7 +22,13 @@ var MessageActionsView = React.createClass({
         this.getEditView()
       )
     );
+  },
+
+  getEditView: function() {
+    // Get the edit link if the user has edit permissions
+    return this.props.canEdit ? React.DOM.a({onClick: this.props.handleEditClick, children: 'edit'}) : React.DOM.span({})
   }
+
 });
 
 module.exports = MessageActionsView;

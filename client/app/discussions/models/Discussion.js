@@ -1,14 +1,15 @@
 'use strict';
 
-var Backbone = require('backbone'),
-  Message = require('./Message'),
-  MessageCollection = require('./MessageCollection'),
-  urls = require('../../urls');
+var Backbone = require('backbone');
+var Message = require('./Message');
+var MessageCollection = require('./MessageCollection');
+var urls = require('../../urls');
+var log = require('loglevel');
 
 var DiscussionModel = Backbone.Model.extend({
   idAttribute: 'url',
   initialize: function () {
-    console.log('DiscussionModel:initialize');
+    log.debug('DiscussionModel:initialize');
     this.message = new Message();
     this.messages = new MessageCollection();
     this.latestMessage = new Message();

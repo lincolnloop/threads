@@ -2,12 +2,13 @@
 
 var _ = require('underscore');
 var React = require('react');
+var log = require('loglevel');
 var Vote = require('../models/Vote');
 var store = require('../../store');
 
 var VoteListView = React.createClass({
   render: function () {
-    console.log('VoteListView:render');
+    log.debug('VoteListView:render');
     var voteNodes = this.props.data.map(function (vote) {
       return (
         <li key={vote.url || 'new'}>
@@ -39,9 +40,9 @@ var VotesView = React.createClass({
     return text;
   },
   vote: function (value) {
-    console.log('VoteView:vote:' + value);
+    log.debug('VoteView:vote:' + value);
     if (!this.state.enabled) {
-      console.log('disabled');
+      log.debug('disabled');
       return;
     }
     this.enable(false);
@@ -67,7 +68,7 @@ var VotesView = React.createClass({
     return {enabled: true};
   },
   render: function() {
-    console.log('VotesView:render');
+    log.debug('VotesView:render');
     // get the users vote or create a placeholder for it
     this.userVote = _.find(this.props.data, function (vote) {
       return vote.user.url === store.get('user').id;

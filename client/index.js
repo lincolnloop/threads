@@ -5,9 +5,15 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 var React = require('react');
 var FastClick = require('fastclick');
-var store = require('./app/store');
 var AppView = require('./app/app');
+var log = require('loglevel');
 var config = require('./app/utils/config');
+
+
+// Configure logging
+if (config.debug) {
+  log.setLevel('debug');
+}
 
 
 // Initialize FastClick
@@ -45,5 +51,7 @@ $(document).ajaxStart(function () {
   $('body').removeClass('loading');
 });
 
+
 // Kick off the app
+// ----------------
 React.renderComponent(AppView(), document.getElementById('main'));

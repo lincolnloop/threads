@@ -5,7 +5,9 @@ var Discussion = require('../models/Discussion.js');
 var MarkdownText = require('./../../components/MarkdownText');
 var router = require('../../router');
 
-module.exports = React.createClass({
+
+var DiscussionCreateView = React.createClass({
+
   render: function () {
     return (
       <form className="discussion-create" onSubmit={this.submit}>
@@ -16,6 +18,7 @@ module.exports = React.createClass({
       </form>
     );
   },
+
   submit: function (evt) {
     var title = this.refs.title.getDOMNode().value;
     var discussion = new Discussion({
@@ -40,4 +43,7 @@ module.exports = React.createClass({
       }.bind(this)
     });
   }
+
 });
+
+module.exports = DiscussionCreateView;

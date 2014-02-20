@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
+var log = require('loglevel');
 var VotesView = require('./Votes');
 var MessageEditView = require('./MessageEdit');
 var MessageContentView = require('./MessageContent');
@@ -42,7 +43,7 @@ var MessageDetail = React.createClass({
     };
   },
   render: function () {
-    console.log('MessageDetailView:render');
+    log.debug('MessageDetailView:render');
     // shortcuts
     var message = this.state.message;
     var user = message.user;
@@ -83,7 +84,7 @@ var MessageDetail = React.createClass({
     );
   },
   shouldComponentUpdate: function (nextProps, nextState) {
-    console.log('shouldComponentUpdate');
+    log.debug('shouldComponentUpdate');
     return !(_.isEqual(this.state, nextState) &&
          this.state.message.url === nextProps.message.url &&
          this.state.message.body === nextProps.message.body &&

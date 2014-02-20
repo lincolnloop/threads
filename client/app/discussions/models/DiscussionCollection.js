@@ -3,11 +3,12 @@
 var Backbone = require('backbone');
 var urls = require('../../urls');
 var DiscussionModel = require('./Discussion');
+var log = require('loglevel');
 
 var DiscussionCollection = Backbone.Collection.extend({
   model: DiscussionModel,
   initialize: function () {
-    console.log('DiscussionCollection:initialize');
+    log.debug('DiscussionCollection:initialize');
     this.on('sync', function () {
       this.fetched = true;
     }, this);
