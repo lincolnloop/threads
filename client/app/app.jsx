@@ -50,11 +50,12 @@ var AppView = React.createClass({
     this.setState({
       // TODO: we should not need this
       'initialized': true,
+      'authenticated': true,
       'teams': window.data.teams.serialized()
     });
     // start history
     // TODO: Temporary placement for Backbone.history.start
-    // until we figure out how to bootstrap required initial data 
+    // until we figure out how to bootstrap required initial data
     // (or avoid requiring initial data)
     Backbone.history.start({pushState: true});
   },
@@ -66,6 +67,7 @@ var AppView = React.createClass({
       }),
       'content': '',
       'initialized': false,
+      'authenticated': false,
       // TODO: Collection and User instances should not
       // be stored in state.
       'user': {},
@@ -89,8 +91,12 @@ var AppView = React.createClass({
   },
 
   componentDidMount: function() {
+    this.refreshData();
+  },
+
+  refreshData: function() {
     /*
-     * Fill in the initial data using RSVP.hash() to manage multiple promises
+     * Refresh the data using RSVP.hash() to manage multiple promises
      */
     RSVP.hash({
       'userUri': fetch.userUri(),
@@ -109,16 +115,27 @@ var AppView = React.createClass({
           'typing': false
         })
       };
-      // can't do state changes here, otherwise any app 
+      // can't do state changes here, otherwise any app
       // errors are caught by the catch below
       this.events.trigger('start');
     }.bind(this)).catch(function(reason) {
-      console.log(reason);
-    });
+      // For now, just assume this is a sign in error, so show the auth view
+      this.setState({
+        'initialized': true,
+        'authenticated': false,
+      });
+    }.bind(this));
   },
 
   render: function() {
     console.log('AppView:render', this.state);
+
+    if (this.state.initialized && !this.state.authenticated) {
+      // Show the SignIn view
+      return (
+        <SignInView success={this.refreshData} />
+      );
+    }
 
     var orgList = '';
     if (this.state.initialized) {
