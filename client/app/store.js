@@ -5,6 +5,12 @@ var User = require('./auth/User');
 var fetch = require('./utils/fetch');
 
 var Store = function() {
+  // Session/memory data storage container class.
+  // Provides a wrapper around global Backbone models and collections.
+  // API examples:
+  // this.store.get('user'); // returns the current user in JSON
+  // this.store.get('teams'); // returns the teams list in JSON
+  // this.store.find('teams', {'url': '/api/v2/team-xpto' }); // returns team xpto in JSON
   this._store = {};
 };
 
