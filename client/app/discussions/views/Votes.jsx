@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var React = require('react');
 var Vote = require('../models/Vote');
+var store = require('../../store');
 
 var VoteListView = React.createClass({
   render: function () {
@@ -69,9 +70,9 @@ var VotesView = React.createClass({
     console.log('VotesView:render');
     // get the users vote or create a placeholder for it
     this.userVote = _.find(this.props.data, function (vote) {
-      return vote.user.url === window.data.user.id;
+      return vote.user.url === store.get('user').id;
     }) || {
-      user: window.data.user.id,
+      user: store.get('user').id,
       message: this.props.messageUrl
     };
     var upvotes = _.where(this.props.data, {value: '+1'}),

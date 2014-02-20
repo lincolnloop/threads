@@ -4,7 +4,7 @@ module.exports = {
   src: [
     'Gruntfile.js',
     'grunt/**/*.js',
-    'src/**/*.js',
+    'client/**/*.js',
   ],
   options: {
     jshintrc: true  // Look for .jshintrc

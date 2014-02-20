@@ -41,7 +41,6 @@ var DiscussionModel = Backbone.Model.extend({
     if (msg) {
       this.hasSummary = true;
       this.message.set(msg);
-      this.message.setUser();
       this.user = this.message.user;
     }
     if (children) {
@@ -50,13 +49,11 @@ var DiscussionModel = Backbone.Model.extend({
       this.messages.invoke('set', {team: this.get('team')}, {silent: true});
       if (children.length === 0) {
         this.latestMessage.set(msg);
-        this.latestMessage.setUser();
       } else {
         this.setLatest();
       }
     } else {
       this.latestMessage.set(latest);
-      this.latestMessage.setUser();
     }
     this.set({
       date_latest_activity: this.latestMessage.get('date_created')

@@ -6,6 +6,7 @@ var Backbone = require('backbone');
 var inViewport = require('in-viewport');
 var React = require('react');
 var urls = require('../../urls');
+var store = require('../../store');
 var DiscussionList = require('../../discussions/views/DiscussionList');
 
 var TeamDetail = React.createClass({
@@ -69,7 +70,7 @@ var TeamDetail = React.createClass({
   getInitialState: function() {
     // We don't need teams stored in state
     // since they don't really change that much (for now).
-    this.team = window.data.teams.get(this.props.team.url);
+    this.team = store.findObject('teams', {url: this.props.team.url});
     return {
       discussions: [],
       // last discussion element
@@ -116,7 +117,7 @@ var TeamDetail = React.createClass({
     // NOTE: If we had realtime, we could rely on our memory storage only
     // Because we don't, we need data from both local and remote storage.
     if (this.props.team.url !== nextProps.team.url) {
-      this.team = window.data.teams.get(nextProps.team.url);
+      this.team = store.getObject('teams', {'url': nextProps.team.url});
       this.getDiscussions();
       this.fetchDiscussions();
     }

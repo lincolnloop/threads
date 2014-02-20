@@ -1,11 +1,11 @@
 'use strict';
 
-var _ = require('underscore'),
-  $ = require('jquery'),
-  Backbone = require('backbone'),
-  AttachmentCollection = require('./AttachmentCollection'),
-  VoteCollection = require('./VoteCollection'),
-  urls = require('../../urls');
+var _ = require('underscore');
+var $ = require('jquery');
+var Backbone = require('backbone');
+var AttachmentCollection = require('./AttachmentCollection');
+var VoteCollection = require('./VoteCollection');
+var urls = require('../../urls');
 
 var Message = Backbone.Model.extend({
 
@@ -13,20 +13,18 @@ var Message = Backbone.Model.extend({
 
   initialize: function (options) {
     _.bindAll(this, 'permalink', 'toggleCollapse', 'socketAttachment',
-            'socketVote', 'setUser', 'setAttachments', 'setVotes', 'fork',
+            'socketVote', 'setAttachments', 'setVotes', 'fork',
             'isForked', 'getOrFetchForkedDiscussion');
     if (typeof options === 'undefined') {
       options = {};
     }
 
-    this.setUser();
     this.attachments = new AttachmentCollection(options.attachments);
     this.votes = new VoteCollection(options.votes);
     this.votes.on('add remove destroy reset change', function () {
       this.trigger('voteChanged');
     }.bind(this));
     this.bind('change:votes', this.setVotes);
-    this.bind('change:user', this.setUser);
     this.bind('change:attachments', this.setAttachments);
     $(document).bind('socket.io:attachment', this.socketAttachment);
     $(document).bind('socket.io:vote', this.socketVote);
@@ -42,7 +40,6 @@ var Message = Backbone.Model.extend({
     if (this.user) {
       data.user = this.user.serialized();
     }
-    data.canEdit = this.isEditable();
     data.votes = this.votes.invoke('serialized');
     return data;
   },
@@ -58,15 +55,17 @@ var Message = Backbone.Model.extend({
   url: function () {
     return this.id || urls.get('api:message');
   },
-
+/*
   setUser: function () {
-    var userId = this.get('user') || window.data.user.id;
-    this.user = window.data.users.get(userId) || window.data.anonUser;
+    debugger;
+    var userId = this.get('user') || store.get('user').id;
+    this.user = store.find('users', {id: userId}) || store.get('anonUser');
     // messages are never new to the user who wrote them
-    if (this.user.id === window.data.user.id) {
+    if (this.user.id === store.get('user').id) {
       this.set({read: true}, {silent: true});
     }
   },
+  */
 
   setAttachments: function () {
     // update collection when underlying attachments change
@@ -163,9 +162,6 @@ var Message = Backbone.Model.extend({
   },
   isForked: function () {
     return this.get('discussion') && this.get('parent');
-  },
-  isEditable: function () {
-    return this.user.id === window.data.user.id;
   },
   getOrFetchForkedDiscussion: function () {
     // return the forked discussion or fetch it

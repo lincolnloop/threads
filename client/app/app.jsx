@@ -3,25 +3,19 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
-var RSVP = require('rsvp');
 var router = require('./router');
 var urls = require('./urls');
-var fetch = require('./utils/fetch');
+var store = require('./store');
 var Events = require('./utils/mixins').Events;
 
 // --------------------
 // Models
 // --------------------
-
-var User = require('./auth/User');
-var UserCollection = require('./auth/UserCollection');
-var TeamCollection = require('./teams/TeamCollection');
 var Discussion = require('./discussions/models/discussion');
 
 // --------------------
 // Views
 // --------------------
-
 // common
 var Nav = require('./nav');
 
@@ -45,19 +39,24 @@ var AppView = React.createClass({
     $('body').toggleClass('show-nav');
   },
 
-  start: function() {
-    // set new app state to re-render teams nav
+  startSucess: function() {
+    // Initial data fetch success > refresh app
     this.setState({
-      // TODO: we should not need this
       'initialized': true,
       'authenticated': true,
-      'teams': window.data.teams.serialized()
+      'teams': store.get('teams')
     });
     // start history
-    // TODO: Temporary placement for Backbone.history.start
-    // until we figure out how to bootstrap required initial data
-    // (or avoid requiring initial data)
     Backbone.history.start({pushState: true});
+  },
+
+  startFailed: function(reason) {
+    // Initial data fetch failed.
+    // For now, we just assume sign in error.
+    this.setState({
+      'initialized': true,
+      'authenticated': false
+    })
   },
 
   getInitialState: function() {
@@ -76,9 +75,9 @@ var AppView = React.createClass({
   },
 
   componentWillMount: function() {
-    /*
-     * Route view binding
-     */
+    //
+    // Route view binding
+    //
     router.on('route:index', this.index);
     router.on('route:signIn', this.signIn);
     router.on('route:signOut', this.signOut);
@@ -91,40 +90,11 @@ var AppView = React.createClass({
   },
 
   componentDidMount: function() {
-    this.refreshData();
-  },
-
-  refreshData: function() {
-    /*
-     * Refresh the data using RSVP.hash() to manage multiple promises
-     */
-    RSVP.hash({
-      'userUri': fetch.userUri(),
-      'teams': fetch.teams(),
-      'users': fetch.users()
-    }).then(function(results) {
-      // TODO: store initial data in window (temporary)
-      window.data = {
-        'teams': results.teams,
-        'users': results.users,
-        'user': results.users.get(results.userUri),
-        'anonUser': new User({
-          'email': 'nobody@gingerhq.com',
-          'name': 'Deleted User',
-          'online': false,
-          'typing': false
-        })
-      };
-      // can't do state changes here, otherwise any app
-      // errors are caught by the catch below
-      this.events.trigger('start');
-    }.bind(this)).catch(function(reason) {
-      // For now, just assume this is a sign in error, so show the auth view
-      this.setState({
-        'initialized': true,
-        'authenticated': false,
-      });
-    }.bind(this));
+    // fetch initial data
+    // TODO: enable event triggering on store object
+    window.addEventListener('store:fetchSuccess', this.startSucess);
+    window.addEventListener('store:fetchFailed', this.startFail);
+    store.fetch();
   },
 
   render: function() {
@@ -175,17 +145,17 @@ var AppView = React.createClass({
     console.log('main:signOut');
   },
 
-  teamDetail: function(slug) {
+  teamDetail: function(teamSlug) {
     console.log('team:detail');
-    var team = window.data.teams.findWhere({slug: slug});
+    var team = store.find('teams', {slug: teamSlug});
     // content > team discussion list view
     // TODO: We need to bootstrap teams on load
     var content = React.addons.TransitionGroup({
-      transitionName: 'content',
-      component: React.DOM.div,
-      children: TeamDetailView({
-        'team': team.serialized(),
-        'key': team.get('slug')
+      'transitionName': 'content',
+      'component': React.DOM.div,
+      'children': TeamDetailView({
+        'team': team,
+        'key': teamSlug
       })
     });
     // TODO: Move topNav to it's own *catch all* route
@@ -193,7 +163,7 @@ var AppView = React.createClass({
     this.setState({
       'content':  content,
       'topNav': Nav({
-        'title': team.get('name'),
+        'title': team.name,
         'toggleTeamNav': this.toggleTeamNav
       })
     });
@@ -201,12 +171,12 @@ var AppView = React.createClass({
 
   discussionCreate: function (teamSlug) {
     console.log('DiscussionRouter:create');
-    var team = window.data.teams.findWhere({slug: teamSlug});
+    var team = store.find('teams', {slug: teamSlug});
     // content > create view
     var content = React.addons.TransitionGroup({
-      transitionName: 'content',
-      component: React.DOM.div,
-      children: DiscussionCreateView({
+      'transitionName': 'content',
+      'component': React.DOM.div,
+      'children': DiscussionCreateView({
         'team': team.get('url'),
         'key': 'create-' + team.get('slug')
       })
@@ -225,16 +195,16 @@ var AppView = React.createClass({
 
   discussionDetail: function(teamSlug, discussionId) {
     console.log('discussion:detail');
-    var team = window.data.teams.findWhere({slug: teamSlug});
+    var team = store.find('teams', {'slug': teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
-      discussion_id: discussionId
+      'discussion_id': discussionId
     });
     // content > discussion detail view
     var content = React.addons.TransitionGroup({
-      transitionName: 'content',
-      component: React.DOM.div,
-      children: DiscussionDetailView({
-        'team': team.serialized(),
+      'transitionName': 'content',
+      'component': React.DOM.div,
+      'children': DiscussionDetailView({
+        'team': team,
         'discussionUrl': discussionUrl,
         'key': 'discussion-detail' + discussionUrl
       })
@@ -244,7 +214,7 @@ var AppView = React.createClass({
     this.setState({
       'content': content,
       'topNav': Nav({
-        'title': team.get('name'),
+        'title': team.name,
         'toggleTeamNav': this.toggleTeamNav,
         'team': team
       })

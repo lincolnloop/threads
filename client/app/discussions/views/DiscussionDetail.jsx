@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var React = require('react');
+var store = require('../../store');
 // --------------------
 // Models
 // --------------------
@@ -35,7 +36,7 @@ var DiscussionDetailView = React.createClass({
     }
   },
   componentWillMount: function() {
-    this.team = window.data.teams.get(this.props.team.url);
+    this.team = store.findObject('teams', {url: this.props.team.url});
     this.discussion = this.team.discussions.get(this.props.discussionUrl) ||
                       new Discussion({'url': this.props.discussionUrl});
     return {
