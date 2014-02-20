@@ -24,7 +24,7 @@ var DiscussionDetailView = React.createClass({
       reset: true,
       success: function (model, response) {
         this.setState({
-          discussion: model.setRelationships().serialized()
+          'discussion': model.setRelationships().serialized()
         });
       }.bind(this)
     });
@@ -37,7 +37,7 @@ var DiscussionDetailView = React.createClass({
   componentWillMount: function() {
     this.team = window.app.data.teams.get(this.props.team.url);
     this.discussion = this.team.discussions.get(this.props.discussionUrl) ||
-                      new Discussion({url: this.props.discussionUrl});
+                      new Discussion({'url': this.props.discussionUrl});
     return {
       discussion: this.discussion.serialized()
     }
@@ -48,9 +48,9 @@ var DiscussionDetailView = React.createClass({
       <div className="discussion-detail">
         <h2>{this.state.discussion.title}</h2>
         {MessageTreeView({
-          key: message ? message.cid : 'empty-message',
-          message: message,
-          discussion: this.state.discussion
+          'key': message ? message.cid : 'empty-message',
+          'message': message,
+          'discussion': this.state.discussion
         })}
       </div>
     );

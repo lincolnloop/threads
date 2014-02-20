@@ -11,17 +11,17 @@ var MessageContentView = React.createClass({
   render: function() {
     return (
       React.DOM.div(
-        {className: 'message-content'},
+        {'className': 'message-content'},
         React.DOM.div({
-          className: 'content',
-          dangerouslySetInnerHTML: {__html: this.props.message.body}
+          'className': 'content',
+          'dangerouslySetInnerHTML': {__html: this.props.message.body}
         }),
         MessageActionsView({
-          handleReplyClick: this.props.handleReplyClick,
-          handleEditClick: this.props.handleEditClick,
-          message: this.props.message,
-          discussions: this.props.discussion,
-          canEdit: this.props.canEdit
+          'handleReplyClick': this.props.handleReplyClick,
+          'handleEditClick': this.props.handleEditClick,
+          'message': this.props.message,
+          'discussions': this.props.discussion,
+          'canEdit': this.props.canEdit
         })
       )
     );

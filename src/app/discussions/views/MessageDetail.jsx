@@ -21,7 +21,7 @@ var MessageDetail = React.createClass({
   update: function() {
     // update message from current value
     var rawValue = this.refs.message.refs.comment.getRawValue();
-    var data = _.extend(_.clone(this.state.message), {raw_body: rawValue});
+    var data = _.extend(_.clone(this.state.message), {'raw_body': rawValue});
     // TODO: replace with an AJAX mixin
     Backbone.ajax({
       'url': this.state.message.url,

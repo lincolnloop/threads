@@ -21,7 +21,7 @@ module.exports = React.createClass({
     var discussion = new Discussion({
       title: title,
       message: {
-        raw_body: this.refs.comment.getRawValue()
+        'raw_body': this.refs.comment.getRawValue()
       },
       team: this.props.team
     });
@@ -36,7 +36,7 @@ module.exports = React.createClass({
         discussions.add(discussion);
         // redirect to discussion detail page
         router.navigate(discussion.get('message').permalink,
-          {trigger: true});
+          {'trigger': true});
       }.bind(this)
     });
   }

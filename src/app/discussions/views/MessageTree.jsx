@@ -19,10 +19,10 @@ var MessageTreeView = React.createClass({
   addReply: function () {
     // setup new message data
     var data = {
-      raw_body: this.refs.reply.refs.comment.getRawValue(),
-      parent: this.props.message.url,
-      read: true,
-      user: window.app.data.requestUser.serialized()
+      'raw_body': this.refs.reply.refs.comment.getRawValue(),
+      'parent': this.props.message.url,
+      'read': true,
+      'user': window.app.data.requestUser.serialized()
     };
     Backbone.ajax({
       'url': urls.get('api:message'),
@@ -58,25 +58,25 @@ var MessageTreeView = React.createClass({
       return (<span />);
     }
     if (this.state.replies.length) {
-      repliesView = React.DOM.div({className: "message-children",
-          children: this.state.replies.map(function(message) {
+      repliesView = React.DOM.div({className: "message-children"},
+          this.state.replies.map(function(message) {
           // recursively using JSX causes issues. Falling back to regular JS.
           return MessageTreeView({
-            key: message.url,
-            message: message,
-            replies: message.children,
-            discussion: this.props.discussion
+            'key': message.url,
+            'message': message,
+            'replies': message.children,
+            'discussion': this.props.discussion
           });
         }.bind(this))
-      });
+      );
     }
     return (
       React.DOM.div({'className': 'message'},
         MessageDetailView({
-          key: this.props.discussion.url,
-          message: this.props.message,
-          discussion: this.props.discussion,
-          handleReplyClick: _.partial(this.changeState, 'replying', true)
+          'key': this.props.discussion.url,
+          'message': this.props.message,
+          'discussion': this.props.discussion,
+          'handleReplyClick': _.partial(this.changeState, 'replying', true)
         }),
         ReplyView({
           'ref': 'reply',

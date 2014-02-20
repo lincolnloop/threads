@@ -15,9 +15,9 @@ var MessageActionsView = React.createClass({
       React.DOM.div(
         {className: 'message-actions'},
         VotesView({
-          data: message.votes,
-          messageUrl: message.url,
-          discussion: this.props.discussion
+          'data': message.votes,
+          'messageUrl': message.url,
+          'discussion': this.props.discussion
         }),
         React.DOM.a({onClick: this.props.handleReplyClick, children: 'reply'}),
         this.getEditView()
