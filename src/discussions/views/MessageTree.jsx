@@ -22,7 +22,7 @@ var MessageTreeView = React.createClass({
       'raw_body': this.refs.reply.refs.comment.getRawValue(),
       'parent': this.props.message.url,
       'read': true,
-      'user': window.app.data.requestUser.serialized()
+      'user': window.data.user.serialized()
     };
     Backbone.ajax({
       'url': urls.get('api:message'),
@@ -30,7 +30,7 @@ var MessageTreeView = React.createClass({
       'data': data,
       success: function(reply) {
         var replies = _.clone(this.state.replies);
-        reply.user = window.app.data.users.get(reply.user).serialized();
+        reply.user = window.data.users.get(reply.user).serialized();
         replies.push(reply);
         this.setState({'replies': replies, 'replying': false});
       }.bind(this)

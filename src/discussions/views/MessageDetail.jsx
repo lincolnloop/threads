@@ -29,7 +29,7 @@ var MessageDetail = React.createClass({
       'data': data,
       success: function(message) {
         var updatedMessage = _.extend(_.clone(this.state.message), message);
-        updatedMessage.user = window.app.data.users.get(message.user).serialized();
+        updatedMessage.user = window.data.users.get(message.user).serialized();
         this.setState({'message': updatedMessage, 'editing': false});
       }.bind(this)
     });
