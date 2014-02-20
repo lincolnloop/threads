@@ -56,7 +56,7 @@ Store.prototype = {
       // no match, or not a collection
       return null;
     }
-    // key match, and is a collection
+    // if there is a key match, and is a collection
     return item.findWhere(kwargs);
 
   },
