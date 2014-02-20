@@ -31,7 +31,6 @@ var MessageDetail = React.createClass({
       'data': data,
       success: function(message) {
         var updatedMessage = _.extend(_.clone(this.state.message), message);
-        updatedMessage.user = window.data.users.get(message.user).serialized();
         this.setState({'message': updatedMessage, 'editing': false});
       }.bind(this)
     });
@@ -72,7 +71,6 @@ var MessageDetail = React.createClass({
             // TODO: we only need the discussion here because of votes
             // and that should not rely on the discussion at all
             'discussion': this.props.discussion,
-            'canEdit': message.canEdit,
             'handleEditClick': _.partial(this.changeState, 'editing', true),
             // TODO: consider moving this outside of the message.
             // Replies are part of the MessageTree component, not the Message.

@@ -18,8 +18,7 @@ var MessageContentView = React.createClass({
           'handleReplyClick': this.props.handleReplyClick,
           'handleEditClick': this.props.handleEditClick,
           'message': this.props.message,
-          'discussions': this.props.discussion,
-          'canEdit': this.props.canEdit
+          'discussions': this.props.discussion
         })
       )
     );

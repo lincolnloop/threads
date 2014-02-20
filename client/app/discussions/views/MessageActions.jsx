@@ -3,7 +3,7 @@
 var React = require('react');
 var VotesView = require('./Votes');
 var log = require('loglevel');
-
+var store = require('../../store');
 
 var MessageActionsView = React.createClass({
 
@@ -25,8 +25,10 @@ var MessageActionsView = React.createClass({
   },
 
   getEditView: function() {
-    // Get the edit link if the user has edit permissions
-    return this.props.canEdit ? React.DOM.a({onClick: this.props.handleEditClick, children: 'edit'}) : React.DOM.span({})
+    // Edit View
+    var EditView = React.DOM.a({onClick: this.props.handleEditClick, children: 'edit'});
+    // Show the Edit View only if the user is the comment author
+    return this.props.message.user ===  store.get('user').url ? EditView : function(){}
   }
 
 });

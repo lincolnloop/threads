@@ -5,6 +5,7 @@ var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var urls = require('../../urls');
+var store = require('../../store');
 var MessageDetailView = require('./MessageDetail');
 var MessageReplyView = require('./MessageReply');
 
@@ -23,7 +24,7 @@ var MessageTreeView = React.createClass({
       'raw_body': this.refs.reply.refs.comment.getRawValue(),
       'parent': this.props.message.url,
       'read': true,
-      'user': window.data.user.serialized()
+      'user': store.get('user')
     };
     Backbone.ajax({
       'url': urls.get('api:message'),
@@ -31,7 +32,6 @@ var MessageTreeView = React.createClass({
       'data': data,
       success: function(reply) {
         var replies = _.clone(this.state.replies);
-        reply.user = window.data.users.get(reply.user).serialized();
         replies.push(reply);
         this.setState({'replies': replies, 'replying': false});
       }.bind(this)
