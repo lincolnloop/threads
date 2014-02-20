@@ -11,7 +11,7 @@ module.exports = React.createClass({
       <form className="discussion-create" onSubmit={this.submit}>
         <h2>New Discussion</h2>
         <input type="text" placeholder="What are we talking about?" ref="title" required />
-        <MarkdownText placeholder="Comment.." ref="message" required />
+        <MarkdownText placeholder="Comment.." ref="comment" required />
         <input type="submit" />
       </form>
     );
@@ -21,7 +21,7 @@ module.exports = React.createClass({
     var discussion = new Discussion({
       title: title,
       message: {
-        raw_body: this.refs.message.getRawValue()
+        'raw_body': this.refs.comment.getRawValue()
       },
       team: this.props.team
     });
@@ -31,12 +31,12 @@ module.exports = React.createClass({
     discussion.save({}, {
       success: function (discussion) {
         // get discussion list from local storage
-        var discussions = window.AppView.state.teams.get(this.props.team).discussions;
+        var discussions = window.data.teams.get(this.props.team).discussions;
         // add discussion to local storage
         discussions.add(discussion);
         // redirect to discussion detail page
         router.navigate(discussion.get('message').permalink,
-          {trigger: true});
+          {'trigger': true});
       }.bind(this)
     });
   }

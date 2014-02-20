@@ -69,7 +69,7 @@ var TeamDetail = React.createClass({
   getInitialState: function() {
     // We don't need teams stored in state
     // since they don't really change that much (for now).
-    this.team = window.AppView.state.teams.get(this.props.team.url);
+    this.team = window.data.teams.get(this.props.team.url);
     return {
       discussions: [],
       // last discussion element
@@ -116,7 +116,7 @@ var TeamDetail = React.createClass({
     // NOTE: If we had realtime, we could rely on our memory storage only
     // Because we don't, we need data from both local and remote storage.
     if (this.props.team.url !== nextProps.team.url) {
-      this.team = window.AppView.state.teams.get(nextProps.team.url);
+      this.team = window.data.teams.get(nextProps.team.url);
       this.getDiscussions();
       this.fetchDiscussions();
     }

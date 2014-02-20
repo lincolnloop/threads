@@ -22,10 +22,9 @@ var Message = Backbone.Model.extend({
     this.setUser();
     this.attachments = new AttachmentCollection(options.attachments);
     this.votes = new VoteCollection(options.votes);
-    var self = this;
     this.votes.on('add remove destroy reset change', function () {
-      self.trigger('voteChanged');
-    });
+      this.trigger('voteChanged');
+    }.bind(this));
     this.bind('change:votes', this.setVotes);
     this.bind('change:user', this.setUser);
     this.bind('change:attachments', this.setAttachments);
@@ -61,10 +60,10 @@ var Message = Backbone.Model.extend({
   },
 
   setUser: function () {
-    var userId = this.get('user') || window.AppView.state.user.id;
-    this.user = window.AppView.state.users.get(userId) || window.AppView.state.anonUser;
+    var userId = this.get('user') || window.data.user.id;
+    this.user = window.data.users.get(userId) || window.data.anonUser;
     // messages are never new to the user who wrote them
-    if (this.user.id === window.AppView.state.user.id) {
+    if (this.user.id === window.data.user.id) {
       this.set({read: true}, {silent: true});
     }
   },
@@ -166,11 +165,11 @@ var Message = Backbone.Model.extend({
     return this.get('discussion') && this.get('parent');
   },
   isEditable: function () {
-    return this.user.id === window.AppView.state.user.id;
+    return this.user.id === window.data.user.id;
   },
   getOrFetchForkedDiscussion: function () {
     // return the forked discussion or fetch it
-    var team = window.AppView.state.teams.get(this.get('team')),
+    var team = window.data.teams.get(this.get('team')),
       Discussion = require('./discussion');
     // check that we haven't already fetched the discussion
     // or a fetch is in progress

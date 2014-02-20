@@ -6,7 +6,7 @@ var Discussion = require('./Discussion');
 var DiscussionList = React.createClass({
   render: function() {
     return (
-      <ul ref="list">
+      <ul className="discussion-list" ref="list">
         {this.props.discussions.map(Discussion)}
       </ul>
     );

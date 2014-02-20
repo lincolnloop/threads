@@ -2,26 +2,13 @@
 
 var _ = require('underscore');
 var React = require('react');
-var Events = require('../../utils/mixins').Events;
 var Organization = require('./Organization');
 
 var OrganizationList = React.createClass({
-  mixins: [Events],
-  componentWillMount: function () {
-    _.bindAll(this, 'updateState');
-    // TODO: add forces a render for every team that is added to a collection
-    this.events.listenTo(this.props.teams, 'sync add remove change', this.updateState);
-    this.updateState();
-  },
-  updateState: function () {
-    // Generate a serialized representation of organizations and teams
-    // and set state for rendering
-    this.setState({organizations: this.props.teams.serialized()});
-  },
   render: function() {
     return (
       <div className="team-list">
-        {this.state.organizations.map(Organization)}
+        {this.props.organizations.map(Organization)}
       </div>
     );
   }

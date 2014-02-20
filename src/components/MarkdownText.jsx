@@ -5,11 +5,11 @@ var React = require('react');
 var urls = require('../urls');
 var config = require('../utils/config');
 
-var MarkdowText = React.createClass({
+var MarkdownText = React.createClass({
   getInitialState: function () {
     return {
       previewValue: null,
-      rawValue: this.props.value ? this.props.value : null
+      rawValue: this.props.defaultValue ? this.props.defaultValue : null
     };
   },
   render: function () {
@@ -78,4 +78,4 @@ var MarkdowText = React.createClass({
   }
 });
 
-module.exports = MarkdowText;
+module.exports = MarkdownText;

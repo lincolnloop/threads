@@ -1,0 +1,10 @@
+.discussion-list {
+  li {
+    .unread {
+      display: inline-block;
+      margin-left: 10px;
+      background: #eee;
+      padding: 3px 5px;
+    }
+  }
+}

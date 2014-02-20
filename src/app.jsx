@@ -7,12 +7,15 @@ var RSVP = require('rsvp');
 var router = require('./router');
 var urls = require('./urls');
 var fetch = require('./utils/fetch');
+var Events = require('./utils/mixins').Events;
 
 // --------------------
 // Models
 // --------------------
 
 var User = require('./auth/User');
+var UserCollection = require('./auth/UserCollection');
+var TeamCollection = require('./teams/TeamCollection');
 var Discussion = require('./discussions/models/discussion');
 
 // --------------------
@@ -35,10 +38,25 @@ var DiscussionCreateView = require('./discussions/views/DiscussionCreate');
 
 
 var AppView = React.createClass({
+  mixins: [Events],
 
-  toggleTeamNav: function () {
+  toggleTeamNav: function() {
     // todo: handle this through this.setState
     $('body').toggleClass('show-nav');
+  },
+
+  start: function() {
+    // set new app state to re-render teams nav
+    this.setState({
+      // TODO: we should not need this
+      'initialized': true,
+      'teams': window.data.teams.serialized()
+    });
+    // start history
+    // TODO: Temporary placement for Backbone.history.start
+    // until we figure out how to bootstrap required initial data 
+    // (or avoid requiring initial data)
+    Backbone.history.start({pushState: true});
   },
 
   getInitialState: function() {
@@ -48,15 +66,10 @@ var AppView = React.createClass({
       }),
       'content': '',
       'initialized': false,
-      'user': null,
-      'teams': null,
-      'users': null,
-      'anonUser': new User({
-        email: 'nobody@gingerhq.com',
-        name: 'Deleted User',
-        online: false,
-        typing: false
-      })
+      // TODO: Collection and User instances should not
+      // be stored in state.
+      'user': {},
+      'teams': []
     }
   },
 
@@ -70,8 +83,9 @@ var AppView = React.createClass({
     router.on('route:team:detail', this.teamDetail);
     router.on('route:team:create', this.discussionCreate);
     router.on('route:discussion:detail', this.discussionDetail);
-    // start history
-    Backbone.history.start({pushState: true});
+
+    // bind bootstrap event
+    this.events.on('start', this.start);
   },
 
   componentDidMount: function() {
@@ -79,36 +93,42 @@ var AppView = React.createClass({
      * Fill in the initial data using RSVP.hash() to manage multiple promises
      */
     RSVP.hash({
-      userUri: fetch.userUri(),
-      teams: fetch.teams(),
-      users: fetch.users()
+      'userUri': fetch.userUri(),
+      'teams': fetch.teams(),
+      'users': fetch.users()
     }).then(function(results) {
-      this.setState({
-        initialized: true,
-        teams: results.teams,
-        users: results.users,
-        user: results.users.get(results.userUri)
-      });
+      // TODO: store initial data in window (temporary)
+      window.data = {
+        'teams': results.teams,
+        'users': results.users,
+        'user': results.users.get(results.userUri),
+        'anonUser': new User({
+          'email': 'nobody@gingerhq.com',
+          'name': 'Deleted User',
+          'online': false,
+          'typing': false
+        })
+      };
+      // can't do state changes here, otherwise any app 
+      // errors are caught by the catch below
+      this.events.trigger('start');
     }.bind(this)).catch(function(reason) {
       console.log(reason);
     });
   },
 
   render: function() {
-    console.log('AppView:render');
+    console.log('AppView:render', this.state);
 
     var orgList = '';
     if (this.state.initialized) {
       orgList = (
-        <OrganizationList teams={this.state.teams} />
+        <OrganizationList organizations={this.state.teams} />
       );
     }
 
     return (
       <div className="main">
-        <nav id="top-nav">
-          {this.state.topNav}
-        </nav>
         <nav id="sidebar">{orgList}</nav>
         <div id="content">
           {this.state.content}
@@ -120,6 +140,7 @@ var AppView = React.createClass({
   // pages
   index: function() {
     console.log('main:index');
+    this.render();
   },
 
   signIn: function() {
@@ -139,8 +160,9 @@ var AppView = React.createClass({
 
   teamDetail: function(slug) {
     console.log('team:detail');
-    var team = this.state.teams.findWhere({slug: slug});
+    var team = window.data.teams.findWhere({slug: slug});
     // content > team discussion list view
+    // TODO: We need to bootstrap teams on load
     var content = React.addons.TransitionGroup({
       transitionName: 'content',
       component: React.DOM.div,
@@ -162,7 +184,7 @@ var AppView = React.createClass({
 
   discussionCreate: function (teamSlug) {
     console.log('DiscussionRouter:create');
-    var team = this.state.teams.findWhere({slug: teamSlug});
+    var team = window.data.teams.findWhere({slug: teamSlug});
     // content > create view
     var content = React.addons.TransitionGroup({
       transitionName: 'content',
@@ -186,7 +208,7 @@ var AppView = React.createClass({
 
   discussionDetail: function(teamSlug, discussionId) {
     console.log('discussion:detail');
-    var team = this.state.teams.findWhere({slug: teamSlug});
+    var team = window.data.teams.findWhere({slug: teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
       discussion_id: discussionId
     });
@@ -211,11 +233,6 @@ var AppView = React.createClass({
       })
     });
   }
-
 });
-
-// TODO: I feel like there should be a better way to do this, but I don't know
-//       of one yet.
-window.AppView = AppView;
 
 module.exports = AppView;
