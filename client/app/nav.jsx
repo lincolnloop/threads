@@ -5,7 +5,7 @@ var React = require('react');
 
 var NavView = React.createClass({
   render: function () {
-    console.log('NavView:render');
+    log.debug('NavView:render');
     var actionClass = 'action';
     if (this.props.discussion) {
       actionClass += ' back';

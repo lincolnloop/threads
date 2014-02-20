@@ -9,7 +9,7 @@ var MessageActionsView = React.createClass({
     return this.props.canEdit ? React.DOM.a({onClick: this.props.handleEditClick, children: 'edit'}) : React.DOM.span({})
   },
   render: function() {
-    console.log('MessageActionsView:render');
+    log.debug('MessageActionsView:render');
     var message = this.props.message;
     return (
       React.DOM.div(

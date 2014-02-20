@@ -73,12 +73,12 @@ module.exports = Backbone.Model.extend({
   },
 
   uploadProgress: function (event) {
-    console.log('Attachement:uploadProgress');
+    log.debug('Attachement:uploadProgress');
     var percentComplete = 0;
     if (event.lengthComputable) {
       percentComplete = Math.round(event.loaded * 100 / event.total);
       this.set({'percentComplete': percentComplete});
-      console.log('Attachment:setPercentComplete' + percentComplete);
+      log.debug('Attachment:setPercentComplete' + percentComplete);
     }
   },
 

@@ -7,7 +7,7 @@ var DiscussionCollection = require('../discussions/models/DiscussionCollection')
 var TeamModel = Backbone.Model.extend({
   idAttribute: 'url',
   initialize: function () {
-    console.log('TeamModel:initialize');
+    log.debug('TeamModel:initialize');
     this.discussions = new DiscussionCollection();
     this.discussions.team = this;
   },

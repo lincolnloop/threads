@@ -7,7 +7,7 @@ var DiscussionModel = require('./Discussion');
 var DiscussionCollection = Backbone.Collection.extend({
   model: DiscussionModel,
   initialize: function () {
-    console.log('DiscussionCollection:initialize');
+    log.debug('DiscussionCollection:initialize');
     this.on('sync', function () {
       this.fetched = true;
     }, this);

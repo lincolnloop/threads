@@ -36,7 +36,7 @@ var MessageTreeView = React.createClass({
       }.bind(this)
     });
     // save a reply
-    console.log('save reply');
+    log.debug('save reply');
     return false;
   },
   getInitialState: function() {
@@ -50,7 +50,7 @@ var MessageTreeView = React.createClass({
     };
   },
   render: function() {
-    console.log('MessageTree:render');
+    log.debug('MessageTree:render');
     var repliesView = function(){};
     // Get the ReplyView (or an empty render) based on `replying` state
     var ReplyView = this.state.replying ? MessageReplyView : function(){};

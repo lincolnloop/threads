@@ -9,7 +9,7 @@ var TeamCollection = Backbone.Collection.extend({
   model: TeamModel,
 
   initialize: function () {
-    console.log('TeamCollection:initialize');
+    log.debug('TeamCollection:initialize');
   },
   comparator: function (team) {
     return team.get('organization') + team.get('name');

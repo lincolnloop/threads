@@ -8,7 +8,7 @@ var Backbone = require('backbone'),
 var DiscussionModel = Backbone.Model.extend({
   idAttribute: 'url',
   initialize: function () {
-    console.log('DiscussionModel:initialize');
+    log.debug('DiscussionModel:initialize');
     this.message = new Message();
     this.messages = new MessageCollection();
     this.latestMessage = new Message();

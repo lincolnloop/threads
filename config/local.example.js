@@ -1,3 +1,4 @@
 module.exports = {
-    apiUrl: 'http://localhost:8000'
+  'debug': true,
+  'apiUrl': 'http://localhost:8000'
 };
