@@ -7,7 +7,8 @@ var Message = Backbone.Model.extend({
   idAttribute: 'url',
   serialized: function() {
     var data = this.toJSON();
-    data.isForked = this.isForked();
+    // forked messages have both a discussion and a parent message
+    data.isForked = this.get('discussion') && this.get('parent');
     return data;
   },
   validate: function (attrs) {
@@ -19,9 +20,6 @@ var Message = Backbone.Model.extend({
   },
   url: function () {
     return this.id || urls.get('api:message');
-  },
-  isForked: function () {
-    return this.get('discussion') && this.get('parent');
   }
 });
 
