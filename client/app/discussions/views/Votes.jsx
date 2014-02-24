@@ -3,7 +3,6 @@
 var _ = require('underscore');
 var React = require('react');
 var log = require('loglevel');
-var Vote = require('../models/Vote');
 var store = require('../../store');
 
 var VoteListView = React.createClass({
@@ -40,6 +39,7 @@ var VotesView = React.createClass({
     return text;
   },
   vote: function (value) {
+    /*
     log.debug('VoteView:vote:' + value);
     if (!this.state.enabled) {
       log.debug('disabled');
@@ -60,6 +60,7 @@ var VotesView = React.createClass({
       message.votes.add(vote, {merge: true});
       vote.save({}, {success: reEnable});
     }
+    */
   },
   enable: function (enabled) {
     this.setState({enabled: enabled});
