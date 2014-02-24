@@ -6,7 +6,7 @@ var Backbone = require('backbone');
 var urls = require('../../urls');
 var log = require('loglevel');
 
-module.exports = Backbone.Model.extend({
+var Attachment = Backbone.Model.extend({
 
   idAttribute: 'url',
   maxFilenameLength: 18,
@@ -31,7 +31,9 @@ module.exports = Backbone.Model.extend({
     return this;
   },
 
-  url: function () { return this.id || urls.get('api:attachment'); },
+  url: function () {
+    return this.id || urls.get('api:attachment');
+  },
 
   save: function () {
     /*
@@ -88,5 +90,6 @@ module.exports = Backbone.Model.extend({
       this.xhr.abort();
     }
   }
-
 });
+
+module.exports = Attachment;
