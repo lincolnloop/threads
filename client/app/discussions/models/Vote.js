@@ -8,7 +8,6 @@ module.exports = Backbone.Model.extend({
   
   serialized: function () {
     var data = this.toJSON();
-    //data.user = this.user.serialized();
     return data;
   },
 
