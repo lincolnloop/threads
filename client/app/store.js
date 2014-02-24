@@ -16,7 +16,8 @@ var Store = function() {
 
 Store.prototype = {
   fetch: function() {
-    // Get common data using RSVP.hash() to manage multiple promises
+    // Get common data using RSVP.hash() to manage multiple promises.
+    // Note: this should be used at load only.
     RSVP.hash({
       'userUri': fetch.userUri(),
       'teams': fetch.teams(),
