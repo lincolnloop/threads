@@ -30,8 +30,7 @@ Store.prototype = {
       this._store.anonUser = new User({
         'email': 'nobody@gingerhq.com',
         'name': 'Deleted User',
-        'online': false,
-        'typing': false
+        'online': false
       });
       var evt = new CustomEvent('store:fetchSuccess');
       // TODO: trigger event from the object itself

@@ -9,24 +9,12 @@ var urls = require('../urls');
 module.exports = Backbone.Model.extend({
   idAttribute: 'url',
   initialize: function () {
-    _.bindAll(this, 'setEmailHash', 'getGravatar', 'saveOrg',
-      'bindTypingEvents', 'notifyTyping');
+    _.bindAll(this, 'setEmailHash', 'getGravatar', 'saveOrg');
     this.setEmailHash();
     this.bind('change:email', this.setEmailHash);
   },
   defaults: {
-    online: false,
-    typing: false
-  },
-  // only bind change:typing for requestUser
-  bindTypingEvents: function () {
-    // TODO: This is not used anymore?
-    this.bind('change:typing', this.notifyTyping);
-  },
-  // triggers the websocket in common/messages.js
-  notifyTyping: function () {
-    // stop-gap attempt for awful CPU usage
-    //$(document).trigger("ginger:typing", this);
+    online: false
   },
   // API URL
   url: function () {
