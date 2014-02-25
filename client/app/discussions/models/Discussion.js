@@ -10,22 +10,8 @@ var DiscussionModel = Backbone.Model.extend({
   idAttribute: 'url',
   initialize: function () {
     log.debug('DiscussionModel:initialize');
-    this.message = new Message();
     this.messages = new MessageCollection();
-    this.latestMessage = new Message();
-    this.hasSummary = false;
-    this.hasDetail = false;
-    this.on('reset', this.setRelationships);
     this.setRelationships();
-  },
-  setLatest: function () {
-    /*
-     * Updates latestMessage and the attribute 'date_latest_activity'
-     * Called when new messages are added to the
-     * `messages` collection, and when the `date_created` attribute changes.
-     */
-    this.latestMessage = this.messages.last();
-    this.set({date_latest_activity: this.latestMessage.get('date_created')});
   },
   setRelationships: function () {
     /*
@@ -33,39 +19,22 @@ var DiscussionModel = Backbone.Model.extend({
      * from the JSON attributes on `this`.
      * This needs to be called manually when full data is fetched from the server.
      */
-    var msg = this.get('message'),
-      latest = this.get('latest_message'),
-      children = this.get('children');
+    
+    var children = this.get('children');
     if (this.isNew()) {
       return this;
     }
-    if (msg) {
-      this.hasSummary = true;
-      this.message.set(msg);
-      this.user = this.message.user;
-    }
     if (children) {
-      this.hasDetail = true;
       this.messages.reset(children);
       this.messages.invoke('set', {team: this.get('team')}, {silent: true});
-      if (children.length === 0) {
-        this.latestMessage.set(msg);
-      } else {
-        this.setLatest();
-      }
-    } else {
-      this.latestMessage.set(latest);
     }
-    this.set({
-      date_latest_activity: this.latestMessage.get('date_created')
-    });
+    if (this.get('latest_message')) {
+      this.set({
+        date_latest_activity: this.get('latest_message').date_created
+      });
+    }
 
     return this;
-  },
-  fetchAll: function (cb) {
-    if (!this.hasDetail) {
-      this.fetch({success: cb});
-    }
   },
   url: function () {
     return this.id || urls.get('api:discussion');
@@ -77,12 +46,10 @@ var DiscussionModel = Backbone.Model.extend({
   },
   serialized: function () {
     var data = this.toJSON();
-    data.message = this.message.serialized();
-    data.message.children = this.messages.serialized();
+    if (data.message) {
+      data.message.children = this.messages.serialized();
+    }
     return data;
-  },
-  getMessage: function (messageUrl) {
-    return this.message.id === messageUrl ? this.message : this.messages.get(messageUrl);
   }
 });
 
