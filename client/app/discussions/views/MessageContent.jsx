@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var React = require('react');
 var MessageActionsView = require('./MessageActions');
+var VotesView = require('./VotesList');
 
 var MessageContentView = React.createClass({
 
@@ -14,6 +15,9 @@ var MessageContentView = React.createClass({
           'className': 'content',
           'dangerouslySetInnerHTML': {__html: this.props.message.body}
         }),
+        !this.props.message.votes.length ? function() {} : VotesView({
+            'votes': this.props.message.votes
+          }),
         MessageActionsView({
           'handleReplyClick': this.props.handleReplyClick,
           'handleEditClick': this.props.handleEditClick,

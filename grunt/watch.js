@@ -11,7 +11,7 @@ module.exports = {
     tasks: ['template:dev']
   },
   scss: {
-    files: ['src/sass/**/*.scss'],
+    files: ['client/sass/**/*.scss'],
     tasks: ['sass:dev']
   }
 };

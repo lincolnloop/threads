@@ -1,7 +1,6 @@
 'use strict';
 
 var Backbone = require('backbone');
-var Message = require('./Message');
 var MessageCollection = require('./MessageCollection');
 var urls = require('../../urls');
 var log = require('loglevel');
