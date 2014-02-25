@@ -1,22 +1,25 @@
 "use strict";
 
+var _ = require('underscore');
 var React = require('react');
-var VotesView = require('./Votes');
+var VotesButtonsView = require('./VoteButtons');
 var log = require('loglevel');
 var store = require('../../store');
 
 var MessageActionsView = React.createClass({
 
   render: function() {
-    log.debug('MessageActionsView:render');
     var message = this.props.message;
+    var user = store.findAll('user');
+    var voteStatus = _.find(message.votes, function(vote) {
+      return vote.user === user.url;
+    });
     return (
       React.DOM.div(
         {className: 'message-actions'},
-        VotesView({
-          'data': message.votes,
-          'messageUrl': message.url,
-          'discussion': this.props.discussion
+        VotesButtonsView({
+          'vote': voteStatus ? voteStatus.value : null,
+          'handleVote': this.props.handleVote
         }),
         React.DOM.a({onClick: this.props.handleReplyClick, children: 'reply'}),
         this.getEditView()
@@ -28,7 +31,7 @@ var MessageActionsView = React.createClass({
     // Edit View
     var EditView = React.DOM.a({onClick: this.props.handleEditClick, children: 'edit'});
     // Show the Edit View only if the user is the comment author
-    return this.props.message.user ===  store.get('user').url ? EditView : function(){}
+    return this.props.message.user ===  store.findAll('user').url ? EditView : function(){}
   }
 
 });

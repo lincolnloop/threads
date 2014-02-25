@@ -5,7 +5,6 @@ var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var store = require('../../store');
-var VotesView = require('./Votes');
 var MessageEditView = require('./MessageEdit');
 var MessageContentView = require('./MessageContent');
 
@@ -35,6 +34,31 @@ var MessageDetail = React.createClass({
       }.bind(this)
     });
     return false;
+  },
+  handleVote: function(value) {
+    var message = this.state.message;
+    // find if user already has a vote
+    var vote = _.find(this.state.message.votes, function(vote) { 
+      return vote.user == store.findAll('user').url 
+    });
+    debugger;
+    if (!vote) {
+      // create a new vote
+    } else {
+      if (vote.value === value ) {
+        // destroy current vote
+      } else {
+        // update current vote
+      }
+    }
+    if (this.userVote.value === value) {
+      message.votes.remove(vote);
+      vote.destroy();
+    } else {
+      vote.set('value', value);
+      message.votes.add(vote, {merge: true});
+      vote.save({});
+    }
   },
   getInitialState: function () {
     return {
@@ -76,7 +100,9 @@ var MessageDetail = React.createClass({
             // Replies are part of the MessageTree component, not the Message.
             'handleReplyClick': this.props.handleReplyClick,
             'handleEditSubmit': this.update,
-            'handleEditCancelClick': _.partial(this.changeState, 'editing', false)
+            'handleEditCancelClick': _.partial(this.changeState, 'editing', false),
+            // voting
+            'handleVote': this.handleVote,
           })
         )
       )

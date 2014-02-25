@@ -3,6 +3,7 @@
 var RSVP = require('rsvp');
 var User = require('./auth/User');
 var fetch = require('./utils/fetch');
+var log = require('loglevel');
 
 var Store = function() {
   // Session/memory data storage container class.
@@ -12,6 +13,9 @@ var Store = function() {
   // this.store.get('teams'); // returns the teams list in JSON
   // this.store.find('teams', {'url': '/api/v2/team-xpto' }); // returns team xpto in JSON
   this._store = {};
+  this._schema = {
+    'votes': 'api:vote'
+  };
 };
 
 Store.prototype = {
@@ -41,35 +45,50 @@ Store.prototype = {
     }.bind(this));
   },
 
-  getObject: function(key) {
+  findAllObjects: function(type) {
     // TODO: `getObject` method, returns a Backbone object
     // we should not need this as a `public` method, 
     // but it will have to do for now.
-    return this._store[key] ? this._store[key]: undefined;
+    return this._store[type] ? this._store[type]: undefined;
   },
 
-  get: function(key) {
+  findAll: function(type) {
     // External `get` method, returns a serialized Backbone object
-    var item = this.getObject(key);
+    var item = this.findAllObjects(type);
     return item ? item.serialized() : item;
   },
 
-  findObject: function(key, kwargs) {
+  findObject: function(type, kwargs) {
     // find a specific item within a collection
-    var item = this.getObject(key);
+    var item = this.findAllObjects(type);
     if (!(item && item.length)) {
       // no match, or not a collection
       return null;
     }
-    // if there is a key match, and is a collection
+    // if there is a type match, and is a collection
     return item.findWhere(kwargs);
 
   },
 
-  find: function(key, kwargs) {
-    var item = this.findObject(key, kwargs);
+  find: function(type, kwargs) {
+    var item = this.findObject(type, kwargs);
     return item ? item.serialized() : item;
   }
+};
+
+Store.prototype.add = function(type, object) {
+  // POST/PUT request for `object` in `type`
+  log('store:add', type, object);
+};
+
+Store.prototype.update = function(type, object) {
+  // POST/PUT request for `object` in `type`
+  log('store:update', type, object);
+};
+
+Store.prototype.remove = function(type, object) {
+  // DELETE request for `object` in `type`
+  log('store:delete', type, object);
 };
 
 module.exports = new Store();

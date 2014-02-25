@@ -130,7 +130,7 @@ var TeamDetail = React.createClass({
     // NOTE: If we had realtime, we could rely on our memory storage only
     // Because we don't, we need data from both local and remote storage.
     if (this.props.team.url !== nextProps.team.url) {
-      this.team = store.getObject('teams', {'url': nextProps.team.url});
+      this.team = store.findObject('teams', {'url': nextProps.team.url});
       this.getDiscussions();
       this.fetchDiscussions();
     }

@@ -42,4 +42,16 @@
     font-size: 0.8em;
     border-radius: 5px;
   }
+  .message-actions {
+    text-align: right;
+    > span a, > a {
+      margin-right: 10px;
+    }
+  }
+  .votes {
+    &.up-vote .up-vote,
+    &.down-vote .down-vote {
+      font-weight: bold;
+    }
+  }
 }

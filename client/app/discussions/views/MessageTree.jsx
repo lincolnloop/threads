@@ -24,7 +24,7 @@ var MessageTreeView = React.createClass({
       'raw_body': this.refs.reply.refs.comment.getRawValue(),
       'parent': this.props.message.url,
       'read': true,
-      'user': store.get('user')
+      'user': store.findAll('user')
     };
     Backbone.ajax({
       'url': urls.get('api:message'),

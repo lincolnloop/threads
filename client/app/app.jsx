@@ -72,7 +72,7 @@ var AppView = React.createClass({
     this.setState({
       'initialized': true,
       'authenticated': true,
-      'teams': store.get('teams')
+      'teams': store.findAll('teams')
     });
     // start history
     Backbone.history.start({pushState: true});
