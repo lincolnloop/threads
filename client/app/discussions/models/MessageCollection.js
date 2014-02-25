@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var Backbone = require('backbone');
 var Message = require('./Message');
 
@@ -10,9 +11,9 @@ var MessageCollection = Backbone.Collection.extend({
     if (this.length === 0) {
       return [];
     }
-    var lookup = {},
-      tree = [],
-      parentId = this.first().get('parent');
+    var lookup = {};
+    var tree = [];
+    var parentId = this.first().get('parent');
     this.each(function (message) {
       var msg = message.serialized();
       msg.children = [];

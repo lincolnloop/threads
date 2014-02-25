@@ -26,7 +26,6 @@ var DiscussionModel = Backbone.Model.extend({
     }
     if (children) {
       this.messages.reset(children);
-      this.messages.invoke('set', {team: this.get('team')}, {silent: true});
     }
     if (this.get('latest_message')) {
       this.set({
