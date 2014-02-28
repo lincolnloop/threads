@@ -7,6 +7,8 @@ var log = require('loglevel');
 var store = require('../../store');
 var MessageEditView = require('./MessageEdit');
 var MessageContentView = require('./MessageContent');
+var urls = require('../../urls');
+var clientconfig = require('clientconfig');
 
 require('react/addons');
 
@@ -41,16 +43,23 @@ var MessageDetail = React.createClass({
     var vote = _.find(this.state.message.votes, function(vote) { 
       return vote.user == store.findAll('user').url 
     });
-    debugger;
     if (!vote) {
       // create a new vote
+      vote = {
+        'message': this.state.message.url,
+        'value': '+1'
+      }
+      // TODO: Crossing should return a full url for some url groups
+      var url = clientconfig.apiUrl + urls.get('api:vote', {'message_id': this.state.message.id});
+      store.add('votes', vote, url);
     } else {
       if (vote.value === value ) {
-        // destroy current vote
+        store.remove('votes', vote);
       } else {
         // update current vote
       }
     }
+    /*
     if (this.userVote.value === value) {
       message.votes.remove(vote);
       vote.destroy();
@@ -58,7 +67,7 @@ var MessageDetail = React.createClass({
       vote.set('value', value);
       message.votes.add(vote, {merge: true});
       vote.save({});
-    }
+    }*/
   },
   getInitialState: function () {
     return {

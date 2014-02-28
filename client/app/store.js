@@ -1,5 +1,6 @@
 'use strict';
 
+var backbone = require('backbone');
 var RSVP = require('rsvp');
 var User = require('./auth/User');
 var fetch = require('./utils/fetch');
@@ -14,7 +15,37 @@ var Store = function() {
   // this.store.find('teams', {'url': '/api/v2/team-xpto' }); // returns team xpto in JSON
   this._store = {};
   this._schema = {
-    'votes': 'api:vote'
+    'teams': {
+      'url': 'api/v2/team/'
+      // TODO: Add Team members and invitations as oneToMany relations
+    },
+    'users': {
+      'url': 'api/v2/user/'
+      // TODO: Add Team members and invitations as oneToMany relations
+    },
+    'discussions': {
+      'url': '/api/v2/discussion/',
+      'oneToMany': {
+        'children': 'messages'
+      },
+      'foreignKey': {
+        'message': 'messages',
+        'team': 'teams'
+      }
+    },
+    'messages': {
+      'url': '/api/v2/message/',
+      'oneToMany': {
+        'votes': 'votes'
+      },
+      'foreignKey': {
+        'user': 'users',
+        'discussion': 'discussions'
+      }
+    },
+    'votes': {
+      'url': 'api:vote'
+    }
   };
 };
 
@@ -76,19 +107,42 @@ Store.prototype = {
   }
 };
 
-Store.prototype.add = function(type, object) {
+Store.prototype.add = function(type, object, url) {
   // POST/PUT request for `object` in `type`
-  log('store:add', type, object);
+  // TODO: url is a work-around for cases where the API endpoint is dynamic
+  log.info('store:add', type, object);
+  if (!this._schema[type]) {
+    throw new Error('Invalid type. Acceptable types are: ' + Object.keys(this._schema));
+  }
+  // request settings
+  var settings = {
+    'type': 'POST',
+    'url': url ? url : this._schema[type],
+    'data': object
+  };
+  return backbone.ajax(settings);
 };
 
 Store.prototype.update = function(type, object) {
   // POST/PUT request for `object` in `type`
-  log('store:update', type, object);
+  log.info('store:update', type, object);
+  if (!object.url) {
+    throw new Error('Missing object.url attribute. A url attribute is required for a PUT request.');
+  }
 };
 
 Store.prototype.remove = function(type, object) {
   // DELETE request for `object` in `type`
-  log('store:delete', type, object);
+  log.info('store:delete', type, object);
+  if (!object.url) {
+    throw new Error('Missing object.url attribute. A url attribute is required for a DELETE request.');
+  }
+  var settings = {
+    'type': 'DELETE',
+    'url': object.url,
+    'data': object
+  };
+  return backbone.ajax(settings);
 };
 
 module.exports = new Store();
