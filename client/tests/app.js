@@ -56,7 +56,7 @@ describe('AppView', function() {
       function checkRoute(route, target) {
         expect(router._events).to.have.property(route);
         expect(router._events[route]).to.have.length(1);
-        expect(router._events[route][0].callback).to.equal(target);
+        expect(router._events[route][0]).to.have.property('callback', target);
       }
 
       // Check each route
@@ -67,6 +67,41 @@ describe('AppView', function() {
       checkRoute('route:team:create', app.discussionCreate);
       checkRoute('route:discussion:detail', app.discussionDetail);
     });
+
+  });
+
+  describe('#componentDidMount()', function() {
+
+    /*
+     * TODO: This test fails because there are lingering event handlers on
+     * window, despite my best efforts to clean them up between tests. We may
+     * want to use a custom event system instead.
+     */
+
+    // it('adds event listeners for fetch results', function() {
+    //   var successEvent = document.createEvent('HTMLEvents');
+    //   successEvent.initEvent('store:fetchSuccess', true, true);
+    //   var failureEvent = document.createEvent('HTMLEvents');
+    //   failureEvent.initEvent('store:fetchFailed', true, true);
+
+    //   // It's not easy to list event handlers added with addEventListener, so
+    //   // we're going to patch the methods and trigger the events to verify that
+    //   // they are there.
+    //   sinon.spy(app, 'startSuccess');
+    //   sinon.spy(app, 'startFailed');
+
+    //   app.componentDidMount();
+
+    //   window.dispatchEvent(successEvent);
+    //   expect(app.startSuccess.called).to.be.true;
+    //   expect(app.startFailed.called).to.be.false;
+
+    //   window.dispatchEvent(failureEvent);
+    //   expect(app.startFailed.called).to.be.true;
+
+    //   app.startSuccess.restore();
+    //   app.startFailed.restore();
+    // });
 
   });
 
