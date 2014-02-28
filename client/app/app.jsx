@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
+var $ = require('jquery');
 var Backbone = require('backbone');
 var React = require('react');
 var router = require('./router');
@@ -84,7 +85,7 @@ var AppView = React.createClass({
     this.setState({
       'initialized': true,
       'authenticated': false
-    })
+    });
   },
 
   getInitialState: function() {
@@ -99,7 +100,7 @@ var AppView = React.createClass({
       // be stored in state.
       'user': {},
       'teams': []
-    }
+    };
   },
 
   componentWillMount: function() {
@@ -128,7 +129,7 @@ var AppView = React.createClass({
   // pages
   index: function() {
     log.debug('main:index');
-    this.render();
+    this.render();  // TODO: This doesn't actually do anything, does it?
   },
 
   signIn: function() {

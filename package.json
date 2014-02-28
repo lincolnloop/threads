@@ -30,7 +30,11 @@
     "node-bourbon": "~1.0.0",
     "node-neat": "~1.1.0",
     "font-awesome": "~4.0.3",
-    "grunt-contrib-copy": "~0.5.0"
+    "grunt-contrib-copy": "~0.5.0",
+    "chai": "^1.9.0",
+    "mocha": "^1.17.1",
+    "sinon": "^1.8.2",
+    "grunt-mocha": "^0.4.10"
   },
   "dependencies": {
     "underscore": "~1.6.0",

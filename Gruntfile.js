@@ -37,4 +37,9 @@ module.exports = function(grunt) {
     'connect:server:keepalive'
   ]);
 
+  grunt.registerTask('test', [
+    'build',
+    'mocha'
+  ]);
+
 };

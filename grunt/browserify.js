@@ -10,14 +10,17 @@ module.exports = {
     options: {
       alias: ['react:']  // Make React available externally for dev tools
     },
-    src: ['client/index.js'],
+    src: [
+      'client/index.js',
+      'client/tests/index.js'  // Include the tests
+    ],
     dest: 'build/<%= pkg.name %>.js'
   },
   production: {
     options: {
       debug: false
     },
-    src: '<%= browserify.dev.src %>',
+    src: ['client/index.js'],
     dest: '.tmp/<%= pkg.name %>.js'
   }
 };
