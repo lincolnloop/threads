@@ -10,11 +10,12 @@ module.exports = {
     options: {
       alias: ['react:']  // Make React available externally for dev tools
     },
-    src: [
-      'client/index.js',
-      'client/tests/index.js'  // Include the tests
-    ],
+    src: ['client/index.js',],
     dest: 'build/<%= pkg.name %>.js'
+  },
+  test: {
+    src: ['client/tests/index.js',],
+    dest: 'build/tests.js'
   },
   production: {
     options: {

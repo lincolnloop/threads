@@ -1,15 +1,31 @@
-/* global describe, it, expect, beforeEach */
+/* global describe, it, expect, before, after, beforeEach, afterEach, sinon */
 'use strict';
 
 var AppView = require('../app/app');
 
 describe('AppView', function() {
 
-  var app;
+  var app, xhr, requests;
+
+  before(function () {
+    // Monkey-patch xhr for testing
+    xhr = sinon.useFakeXMLHttpRequest();
+    requests = [];
+    xhr.onCreate = function (req) { requests.push(req); };
+  });
+
+  after(function () {
+    xhr.restore();
+  });
 
   beforeEach(function() {
     // Refresh with a new instance before each test
     app = AppView();
+  });
+
+  afterEach(function() {
+    // Clean up
+    requests = [];
   });
 
   describe('#getInitialState()', function() {
