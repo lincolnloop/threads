@@ -43,13 +43,29 @@ describe('AppView', function() {
   describe('#componentWillMount()', function() {
 
     it('sets up routes that trigger different app states', function() {
-      // var router = require('./router');
+      var router = require('../app/router');
 
-      // TODO: Test before
+      // Initially, there should be no events
+      expect(router).to.not.have.property('_events');
 
       app.componentWillMount();
 
-      // TODO: Test after
+      // Now, the events should be established
+      expect(router).to.have.property('_events');
+
+      function checkRoute(route, target) {
+        expect(router._events).to.have.property(route);
+        expect(router._events[route]).to.have.length(1);
+        expect(router._events[route][0].callback).to.equal(target);
+      }
+
+      // Check each route
+      checkRoute('route:index', app.index);
+      checkRoute('route:signIn', app.signIn);
+      checkRoute('route:signOut', app.signOut);
+      checkRoute('route:team:detail', app.teamDetail);
+      checkRoute('route:team:create', app.discussionCreate);
+      checkRoute('route:discussion:detail', app.discussionDetail);
     });
 
   });
