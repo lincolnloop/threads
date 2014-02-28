@@ -4,7 +4,7 @@ module.exports = {
   options: {livereload: true},
   js: {
     files: ['package.json', '<%= jshint.src %>', 'client/**/*.jsx'],
-    tasks: ['browserify:dev', 'jshint']
+    tasks: ['browserify:dev', 'browserify:test', 'jshint']
   },
   html: {
     files: ['src/**/*.html.tpl'],

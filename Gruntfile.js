@@ -18,6 +18,7 @@ module.exports = function(grunt) {
     'jshint',
     'clean:dev',
     'browserify:dev',
+    'browserify:test',
     'sass:dev',
     'template:dev',
     'copy'
@@ -35,6 +36,11 @@ module.exports = function(grunt) {
 
   grunt.registerTask('serve', [
     'connect:server:keepalive'
+  ]);
+
+  grunt.registerTask('test', [
+    'browserify:test',
+    'mocha'
   ]);
 
 };
