@@ -5,6 +5,7 @@ var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var store = require('../../store');
+var gravatar = require('../../utils/gravatar');
 var MessageEditView = require('./MessageEdit');
 var MessageContentView = require('./MessageContent');
 var urls = require('../../urls');
@@ -79,7 +80,7 @@ var MessageDetail = React.createClass({
     log.debug('MessageDetailView:render');
     // shortcuts
     var message = this.state.message;
-    var user = store.find('users', {url: message.user});
+    var user = store.find('users', message.user);
     var div = React.DOM.div;
     var img = React.DOM.img;
     // Get the correct MessageView based on `editing` state
@@ -90,11 +91,12 @@ var MessageDetail = React.createClass({
       'message-unread': !message.read,
       'message-collapsed': message.collapsed
     });
+    var avatar = gravatar.get(user.email)
     return (
       div({'className': 'message-container'},
         div({'className': classes},
           div({'className': 'avatar'},
-            img({'src': user.gravatar})
+            img({'src': avatar})
           ),
           div({'className': 'username', 'children': user.name}),
           div({'className': 'date', 'children': message.date_created}),

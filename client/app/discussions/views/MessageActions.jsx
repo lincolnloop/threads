@@ -10,9 +10,8 @@ var MessageActionsView = React.createClass({
 
   render: function() {
     var message = this.props.message;
-    var user = store.findAll('user');
     var voteStatus = _.find(message.votes, function(vote) {
-      return vote.user === user.url;
+      return vote.user === localStorage.getItem('user');
     });
     return (
       React.DOM.div(
@@ -31,7 +30,7 @@ var MessageActionsView = React.createClass({
     // Edit View
     var EditView = React.DOM.a({onClick: this.props.handleEditClick, children: 'edit'});
     // Show the Edit View only if the user is the comment author
-    return this.props.message.user ===  store.findAll('user').url ? EditView : function(){}
+    return this.props.message.user ===  localStorage.getItem('user') ? EditView : function(){}
   }
 
 });

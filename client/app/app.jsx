@@ -146,7 +146,7 @@ var AppView = React.createClass({
 
   teamDetail: function(teamSlug) {
     log.debug('team:detail');
-    var team = store.find('teams', {slug: teamSlug});
+    var team = store.findObject('teams', {slug: teamSlug}).serialized();
     // content > team discussion list view
     // TODO: We need to bootstrap teams on load
     var content = React.addons.TransitionGroup({
@@ -170,7 +170,7 @@ var AppView = React.createClass({
 
   discussionCreate: function (teamSlug) {
     log.debug('DiscussionRouter:create');
-    var team = store.find('teams', {slug: teamSlug});
+    var team = store.findObject('teams', {slug: teamSlug}).serialized();
     // content > create view
     var content = React.addons.TransitionGroup({
       'transitionName': 'content',
@@ -194,7 +194,7 @@ var AppView = React.createClass({
 
   discussionDetail: function(teamSlug, discussionId) {
     log.debug('discussion:detail');
-    var team = store.find('teams', {'slug': teamSlug});
+    var team = store.findObject('teams', {slug: teamSlug}).serialized();
     var discussionUrl = urls.get('api:discussionChange', {
       'discussion_id': discussionId
     });

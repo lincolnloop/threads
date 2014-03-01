@@ -5,7 +5,8 @@ var backbone = require('backbone');
 var log = require('loglevel');
 
 var Syndicat = function(schema) {
-  // Session/memory data storage container class.
+  // Session/browser key/value store with remote sync capabilities.
+  // 
   //
   // API examples - reading data
   // this.store.findAll('teams'); // returns the teams list in JSON
@@ -18,20 +19,42 @@ var Syndicat = function(schema) {
   this._schema = schema;
   // memory data storage
   this._store = {};
+  // get absolute uri for api endpoint
+  this._getURI = function(type) {
+    if (!this._schema[type] || !this._schema[type].url) {
+      throw new Error('Invalid type. Acceptable types are: ' + Object.keys(this._schema));
+    }
+
+    return this._schema.apiUrl + this._schema[type].url;
+  },
 
   // ------------------------------
   // Internal data sync methods
   // ------------------------------
-  this._set = function(type, object, responseType, xhr) {
-    console.log(type, object, responseType, xhr);
+  this._set = function(type, response, responseType, xhr) {
+    console.log(type, response, responseType, xhr);
     // Adds or Updates an item of `type` in this._store.
     //
     // type: schema key/store (teams, users)
-    // object: object to store in local cache
+    // response: response to store in local cache
     // responseType: success/fail
     // xhr: XHR response object
 
-    // TODO
+    // initialize store for this type (if needed)
+    // and store it under `store` for easy access.
+    var store = this._store[type] ? this._store[type] : this._store[type] = {};
+
+    // check if response is an array, or just a simple object
+    if (!Array.isArray(response)) {
+      // isArray === false, set response as an array
+      response = [response];
+    }
+
+    response.forEach(function(item) {
+      // TODO: compare objects and trigger change events
+      store[item.url] = item;
+    }.bind(this));
+    console.log(store);
   };
 
   this._remove = function(type, key, responseType, xhr) {
@@ -49,17 +72,35 @@ var Syndicat = function(schema) {
   // ------------------------------
   // Public data sync methods
   // ------------------------------
+  this.get = function(type, params, options) {
+    // GET request for `type` with optional `params`
+    //
+    // type: schema key/store (teams, users)
+    // params: extra queryString params (?team=xpto&user=xyz)
+    // options: extra options
+    // -  url: url override
+    log.info('store:get', type, params);
+    // request settings
+    var settings = {
+      'type': 'GET',
+      'url': options && options.url ? options.url : this._getURI(type),
+      'data': params
+    };
+    return backbone.ajax(settings).always(_.partial(this._set, type).bind(this));
+  };
+
   this.add = function(type, object, options) {
     // POST/PUT request for `object` in `type`
-    // TODO: url is a work-around for cases where the API endpoint is dynamic
+    //
+    // type: schema key/store (teams, users)
+    // object: object to update local and remote
+    // options: extra options
+    // -  url: url override
     log.info('store:add', type, object);
-    if (!this._schema[type]) {
-      throw new Error('Invalid type. Acceptable types are: ' + Object.keys(this._schema));
-    }
     // request settings
     var settings = {
       'type': 'POST',
-      'url': options && options.url ? options.url : this._schema[type],
+      'url': options && options.url ? options.url : this._getURI(type),
       'data': object
     };
     return backbone.ajax(settings).always(_.partial(this._set, type).bind(this));
@@ -67,6 +108,11 @@ var Syndicat = function(schema) {
 
   this.update = function(type, object, options) {
     // POST/PUT request for `object` in `type`
+    //
+    // type: schema key/store (teams, users)
+    // object: object to update local and remote
+    // options: extra options
+    // -  url: url override
     log.info('store:update', type, object, options);
     if (!object.url) {
       throw new Error('Missing object.url attribute. A url attribute is required for a PUT request.');
@@ -121,9 +167,19 @@ var Syndicat = function(schema) {
 
   };
 
-  this.find = function(type, kwargs) {
-    var item = this.findObject(type, kwargs);
-    return item ? item.serialized() : item;
+  this.find = function(type, query) {
+    // find items within the store. (THAT ARE NOT STORE IN BACKBONE COLLECTIONS)
+    var store = this._store[type];
+    if (!store || !Object.keys(store).length) {
+      return undefined;
+    }
+    if (Object.prototype.toString.call(query) === '[object Object]') {
+      // if query is an object, assume it specifies filters.
+
+    } else if (Object.prototype.toString.call(query) === '[object String]') {
+      // if query is a String, assume it stores the key/url value
+      return store[query];
+    }
   };
 };
 

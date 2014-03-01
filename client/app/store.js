@@ -1,17 +1,17 @@
 'use strict';
 
 var RSVP = require('rsvp');
-var User = require('./auth/User');
 var fetch = require('./utils/fetch');
 var Syndicat = require('./Syndicat');
 
 var store = new Syndicat({
+  'apiUrl': 'http://localhost:8000',
   'teams': {
-    'url': 'api/v2/team/'
+    'url': '/api/v2/team/'
     // TODO: Add Team members and invitations as oneToMany relations
   },
   'users': {
-    'url': 'api/v2/user/'
+    'url': '/api/v2/user/'
   },
   'discussions': {
     'url': '/api/v2/discussion/',
@@ -46,13 +46,14 @@ store.fetch = function() {
   RSVP.hash({
     'userUri': fetch.userUri(),
     'teams': fetch.teams(),
-    'users': fetch.users()
+    'users': this.get('users')
   }).then(function(results) {
     // TODO: use setters and getters
     this._store.teams = results.teams;
-    this._store.users = results.users;
-    this._store.user = results.users.get(results.userUri);
-    this._store.anonUser = new User({
+    // TODO: Move this somewhere else
+    // We don't need to set/fetch this data if it already exists
+    localStorage.setItem('user', results.userUri);
+    localStorage.setItem('anonUser', {
       'email': 'nobody@gingerhq.com',
       'name': 'Deleted User'
     });
