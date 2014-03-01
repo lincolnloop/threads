@@ -68,7 +68,7 @@ var AppView = React.createClass({
     $('body').toggleClass('show-nav');
   },
 
-  startSucess: function() {
+  startSuccess: function() {
     // Initial data fetch success > refresh app
     this.setState({
       'initialized': true,
@@ -113,16 +113,13 @@ var AppView = React.createClass({
     router.on('route:team:detail', this.teamDetail);
     router.on('route:team:create', this.discussionCreate);
     router.on('route:discussion:detail', this.discussionDetail);
-
-    // bind bootstrap event
-    this.events.on('start', this.start);
   },
 
   componentDidMount: function() {
     // fetch initial data
     // TODO: enable event triggering on store object
-    window.addEventListener('store:fetchSuccess', this.startSucess);
-    window.addEventListener('store:fetchFailed', this.startFail);
+    window.addEventListener('store:fetchSuccess', this.startSuccess);
+    window.addEventListener('store:fetchFailed', this.startFailed);
     store.fetch();
   },
 
