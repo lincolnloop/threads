@@ -42,7 +42,7 @@ var MessageDetail = React.createClass({
     var message = this.state.message;
     // find if user already has a vote
     var vote = _.find(this.state.message.votes, function(vote) { 
-      return vote.user == store.findAll('user').url 
+      return vote.user == localStorage.getItem('user');
     });
     if (!vote) {
       // create a new vote
