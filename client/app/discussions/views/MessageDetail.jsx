@@ -51,7 +51,7 @@ var MessageDetail = React.createClass({
       }
       // TODO: Crossing should return a full url for some url groups
       var url = clientconfig.apiUrl + urls.get('api:vote', {'message_id': this.state.message.id});
-      store.add('votes', vote, url);
+      store.add('votes', vote, {'url': url});
     } else {
       if (vote.value === value ) {
         store.remove('votes', vote);

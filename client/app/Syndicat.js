@@ -2,13 +2,12 @@
 
 var _ = require('underscore');
 var backbone = require('backbone');
-var User = require('./auth/User');
 var log = require('loglevel');
 
 var Syndicat = function(schema) {
   // Session/memory data storage container class.
   //
-  // API examples:
+  // API examples - reading data
   // this.store.findAll('teams'); // returns the teams list in JSON
   // this.store.find('teams', {'url': '/api/v2/team-xpto' }); // returns team xpto in JSON
 
@@ -24,6 +23,7 @@ var Syndicat = function(schema) {
   // Internal data sync methods
   // ------------------------------
   this._set = function(type, object, responseType, xhr) {
+    console.log(type, object, responseType, xhr);
     // Adds or Updates an item of `type` in this._store.
     //
     // type: schema key/store (teams, users)
@@ -32,9 +32,10 @@ var Syndicat = function(schema) {
     // xhr: XHR response object
 
     // TODO
-  },
+  };
 
   this._remove = function(type, key, responseType, xhr) {
+    console.log(type, key, responseType, xhr);
     // Removes an item of `type` from this._store.
     //
     // type: schema key/store (teams, users)
@@ -43,12 +44,12 @@ var Syndicat = function(schema) {
     // xhr: XHR response object
 
     // TODO
-  },
+  };
 
   // ------------------------------
   // Public data sync methods
   // ------------------------------
-  add: function(type, object, url) {
+  this.add = function(type, object, options) {
     // POST/PUT request for `object` in `type`
     // TODO: url is a work-around for cases where the API endpoint is dynamic
     log.info('store:add', type, object);
@@ -58,15 +59,15 @@ var Syndicat = function(schema) {
     // request settings
     var settings = {
       'type': 'POST',
-      'url': url ? url : this._schema[type],
+      'url': options && options.url ? options.url : this._schema[type],
       'data': object
     };
     return backbone.ajax(settings).always(_.partial(this._set, type).bind(this));
-  },
+  };
 
-  update: function(type, object) {
+  this.update = function(type, object, options) {
     // POST/PUT request for `object` in `type`
-    log.info('store:update', type, object);
+    log.info('store:update', type, object, options);
     if (!object.url) {
       throw new Error('Missing object.url attribute. A url attribute is required for a PUT request.');
     }
@@ -76,11 +77,11 @@ var Syndicat = function(schema) {
       'data': object
     };
     return backbone.ajax(settings).always(_.partial(this._set, type).bind(this));
-  },
+  };
 
-  remove: function(type, object) {
+  this.remove = function(type, object, options) {
     // DELETE request for `object` in `type`
-    log.info('store:delete', type, object);
+    log.info('store:delete', type, object, options);
     if (!object.url) {
       throw new Error('Missing object.url attribute. A url attribute is required for a DELETE request.');
     }
@@ -90,25 +91,25 @@ var Syndicat = function(schema) {
       'data': object
     };
     return backbone.ajax(settings).always(_.partial(this._remove, type).bind(this));
-  },
+  };
 
   // ------------------------------
   // Public query methods
   // ------------------------------
-  findAllObjects: function(type) {
+  this.findAllObjects = function(type) {
     // TODO: `getObject` method, returns a Backbone object
     // we should not need this as a `public` method, 
     // but it will have to do for now.
     return this._store[type] ? this._store[type]: undefined;
-  },
+  };
 
-  findAll: function(type) {
+  this.findAll = function(type) {
     // External `get` method, returns a serialized Backbone object
     var item = this.findAllObjects(type);
     return item ? item.serialized() : item;
-  },
+  };
 
-  findObject: function(type, kwargs) {
+  this.findObject = function(type, kwargs) {
     // find a specific item within a collection
     var item = this.findAllObjects(type);
     if (!(item && item.length)) {
@@ -118,12 +119,12 @@ var Syndicat = function(schema) {
     // if there is a type match, and is a collection
     return item.findWhere(kwargs);
 
-  },
+  };
 
-  find: function(type, kwargs) {
+  this.find = function(type, kwargs) {
     var item = this.findObject(type, kwargs);
     return item ? item.serialized() : item;
-  }
+  };
 };
 
 module.exports = Syndicat;

@@ -1,12 +1,9 @@
 'use strict';
 
-var _ = require('underscore');
-var backbone = require('backbone');
 var RSVP = require('rsvp');
 var User = require('./auth/User');
 var fetch = require('./utils/fetch');
 var Syndicat = require('./Syndicat');
-var log = require('loglevel');
 
 var store = new Syndicat({
   'teams': {
@@ -41,7 +38,7 @@ var store = new Syndicat({
   }
 });
 
-store.prototype.fetch = function() {
+store.fetch = function() {
   // method to fetch initial data.
   // We handle this outside the store module itself and
   // on the store instance, because it's very app-specific.
