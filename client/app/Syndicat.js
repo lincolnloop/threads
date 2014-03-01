@@ -1,6 +1,8 @@
 'use strict';
 
+
 var _ = require('underscore');
+// TODO: backbone dependency is temporary until we find a better ajax lib
 var backbone = require('backbone');
 var log = require('loglevel');
 
