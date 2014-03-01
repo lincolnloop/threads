@@ -4,7 +4,6 @@ var RSVP = require('rsvp');
 var config = require('./config');
 var urls = require('../urls');
 var TeamCollection = require('../teams/TeamCollection');
-var UserCollection = require('../auth/UserCollection');
 
 
 var userUri = function() {
@@ -64,34 +63,5 @@ var teams = function() {
   return promise;
 };
 
-
-var users = function() {
-  /*
-   * Return a promise for the collection of the current user's user list
-   */
-  var userCollection = new UserCollection();
-
-  var promise = new RSVP.Promise(function(resolve, reject) {
-
-    var statusCallback = function(collection, response, options) {
-      if (options.xhr.status === 200) {
-        resolve(userCollection);
-      } else {
-        reject(Error('There was a server error fetching user list data'));
-      }
-    };
-
-    userCollection.fetch({
-      success: statusCallback,
-      error: statusCallback
-    });
-
-  });
-
-  return promise;
-};
-
-
 exports.userUri = userUri;
 exports.teams = teams;
-exports.users = users;

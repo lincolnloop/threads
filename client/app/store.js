@@ -6,6 +6,7 @@ var Syndicat = require('./Syndicat');
 
 var store = new Syndicat({
   'apiUrl': 'http://localhost:8000',
+  'idAttribute': 'url',
   'teams': {
     'url': '/api/v2/team/'
     // TODO: Add Team members and invitations as oneToMany relations

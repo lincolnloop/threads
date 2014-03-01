@@ -52,7 +52,7 @@ var Syndicat = function(schema) {
 
     response.forEach(function(item) {
       // TODO: compare objects and trigger change events
-      store[item.url] = item;
+      store[item[this._schema.idAttribute]] = item;
     }.bind(this));
     console.log(store);
   };
@@ -175,7 +175,7 @@ var Syndicat = function(schema) {
     }
     if (Object.prototype.toString.call(query) === '[object Object]') {
       // if query is an object, assume it specifies filters.
-
+      // TODO
     } else if (Object.prototype.toString.call(query) === '[object String]') {
       // if query is a String, assume it stores the key/url value
       return store[query];
