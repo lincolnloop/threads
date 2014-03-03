@@ -8,7 +8,7 @@ var Organization = React.createClass({
   render: function() {
     log.debug('Organization:render');
     return (
-      <div className="org-group" key={this.props.name}>
+      <div className="org-group">
         <h3>{this.props.name}</h3>
         <ul>
             {this.props.teams.map(Team)}

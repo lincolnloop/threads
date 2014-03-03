@@ -7,9 +7,12 @@ var Organization = require('./Organization');
 var OrganizationList = React.createClass({
   render: function() {
     return (
-      <div className="team-list">
-        {this.props.organizations.map(Organization)}
-      </div>
+      React.DOM.div(
+        {'className': 'team-list'},
+        this.props.organizations.map(function(org) {
+          Organization(_.extend({key: org.name}, org))
+        })
+      )
     );
   }
 });
