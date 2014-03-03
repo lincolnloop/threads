@@ -89,6 +89,16 @@ var MessageTreeView = React.createClass({
       )
     );
   },
+  componentWillUpdate: function() {
+    console.log('componentWillUpdate');
+    console.profile();
+    console.time('MessageTree Render');
+  },
+  componentDidUpdate: function() {
+    console.log('componentDidUpdate');
+    console.profileEnd();
+    console.timeEnd('MessageTree Render');
+  },
   componentWillReceiveProps: function(nextProps) {
     // update replies state
     this.setState({replies: nextProps.discussion.message.children});

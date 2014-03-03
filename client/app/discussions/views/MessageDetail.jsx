@@ -120,7 +120,8 @@ var MessageDetail = React.createClass({
     );
   },
   shouldComponentUpdate: function (nextProps, nextState) {
-    log.debug('shouldComponentUpdate');
+    // for performance testing reasons
+    return true;
     return !(_.isEqual(this.state, nextState) &&
          this.state.message.url === nextProps.message.url &&
          this.state.message.body === nextProps.message.body &&
