@@ -39,4 +39,4 @@ module.exports = [
     "organization":"Lincoln Loop",
     "post_email":"test-sandbox@example.com"
   }
-]
+];

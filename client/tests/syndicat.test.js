@@ -1,4 +1,4 @@
-/* global describe, it, beforeEach */
+/* global describe, it, before */
 'use strict';
 
 var expect = require('chai').expect;
@@ -70,7 +70,7 @@ describe('Syndicat Tests', function() {
   });
 
   describe('#_set', function() {
-    
+
     it('loads simple models correctly', function() {
       expect(Object.keys(store._store['teams'])).to.have.length(1);
     });
@@ -97,7 +97,7 @@ describe('Syndicat Tests', function() {
     it('can find teams', function() {
       expect(
         store.find('teams', '/api/v2/team/9/').name
-      ).to.equal('Test Sandbox')
+      ).to.equal('Test Sandbox');
     });
 
   });

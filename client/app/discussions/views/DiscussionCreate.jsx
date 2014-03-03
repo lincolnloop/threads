@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var Discussion = require('../models/Discussion.js');
+var Discussion = require('../models/Discussion');
 var MarkdownText = require('./../../components/MarkdownText');
 var router = require('../../router');
 

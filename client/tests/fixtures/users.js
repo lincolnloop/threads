@@ -14,4 +14,4 @@ module.exports = [
     "name": "Brandon Konkle",
     "email": "brandon@lincolnloop.com"
   }
-]
+];
