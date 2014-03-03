@@ -10,7 +10,7 @@ var OrganizationList = React.createClass({
       React.DOM.div(
         {'className': 'team-list'},
         this.props.organizations.map(function(org) {
-          Organization(_.extend({key: org.name}, org))
+          return Organization(_.extend({key: org.name}, org))
         })
       )
     );
