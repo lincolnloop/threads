@@ -1,6 +1,7 @@
 /* global describe, it, expect, before, after, beforeEach, afterEach, sinon */
 'use strict';
 
+var React = require('react');
 var AppView = require('../app/app');
 var store = require('../app/store');
 
@@ -112,6 +113,32 @@ describe('AppView', function() {
       expect(store.fetch.called).to.be.true;
 
       store.fetch.restore();
+    });
+
+  });
+
+  describe('#render()', function() {
+
+    beforeEach(function() {
+      // Mount the component so that the state is available to the render
+      // method
+      React.renderComponent(app, document.getElementById('main'));
+    });
+
+    afterEach(function() {
+      // Unmount the component to clean up between each test
+      React.unmountComponentAtNode(document.getElementById('main'));
+    });
+
+    it('initially renders with no sidebar', function() {
+      var dom = app.render();
+
+      expect(dom.props.className).to.equal('main');
+      expect(dom.props.children).to.have.length(2);
+
+      var sidebar = dom.props.children[0];
+      expect(sidebar.props.id).to.equal('sidebar');
+      expect(sidebar.props.children).to.be.empty;
     });
 
   });
