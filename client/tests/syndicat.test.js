@@ -43,7 +43,10 @@ describe('Syndicat Tests', function() {
       'foreignKey': {
         'message': 'messages',
         'team': 'teams'
-      }
+      },
+      parse: function(data) {
+        return data.results;
+      },
     },
     'messages': {
       'url': '/api/v2/message/',
@@ -81,6 +84,10 @@ describe('Syndicat Tests', function() {
         store._store.teams['/api/v2/team/9/'].members
           .indexOf('/api/v2/team/9/member/f31abb30271cdecae75a6227128c8fd9/')
       ).to.not.equal(-1);
+    });
+
+    it ('can parse responses that have meta attributes (e.g paginated)', function() {
+      expect(store._store['discussions']).to.have.length(4);
     });
 
   });

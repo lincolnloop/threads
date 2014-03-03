@@ -19,6 +19,9 @@ var store = new Syndicat({
     'oneToMany': {
       'children': 'messages'
     },
+    parse: function(data) {
+      return data.results;
+    },
     'foreignKey': {
       'message': 'messages',
       'team': 'teams'
