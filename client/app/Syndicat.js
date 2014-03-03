@@ -8,7 +8,7 @@ var log = require('loglevel');
 
 var Syndicat = function(schema) {
   // Session/browser key/value store with remote sync capabilities.
-  // 
+  //
   //
   // API examples - reading data
   // this.store.findAll('teams'); // returns the teams list in JSON
@@ -33,7 +33,7 @@ var Syndicat = function(schema) {
   // ------------------------------
   // Internal data sync methods
   // ------------------------------
-  this._set = function(type, response, responseType, xhr) {
+  this._set = function(type, response) {
     //console.log(type, response, responseType, xhr);
     // Adds or Updates an item of `type` in this._store.
     //
@@ -61,12 +61,12 @@ var Syndicat = function(schema) {
         var relationItems = item[attr];
         // check if item has an attr that is defined as a relation
         if (relationItems) {
-          // check if attr value is an array, 
+          // check if attr value is an array,
           // if it's not empty, and if the content is an object and not a string
           if (Object.prototype.toString.call(relationItems) === '[object Array]' &&
             relationItems.length > 0 &&
             Object.prototype.toString.call(relationItems[0]) === '[object Object]') {
-            // if relationItems is a list of objects, 
+            // if relationItems is a list of objects,
             // populate the relation `table` with this data
             this._set(relationType, relationItems);
             // and replace the list of objects within `item`
@@ -171,7 +171,7 @@ var Syndicat = function(schema) {
   // ------------------------------
   this.findAllObjects = function(type) {
     // TODO: `getObject` method, returns a Backbone object
-    // we should not need this as a `public` method, 
+    // we should not need this as a `public` method,
     // but it will have to do for now.
     return this._store[type] ? this._store[type]: undefined;
   };

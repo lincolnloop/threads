@@ -2,6 +2,7 @@
 'use strict';
 
 var AppView = require('../app/app');
+var store = require('../app/store');
 
 describe('AppView', function() {
 
@@ -102,6 +103,16 @@ describe('AppView', function() {
     //   app.startSuccess.restore();
     //   app.startFailed.restore();
     // });
+
+    it('triggers a fetch on the store', function() {
+      sinon.spy(store, 'fetch');
+
+      app.componentDidMount();
+
+      expect(store.fetch.called).to.be.true;
+
+      store.fetch.restore();
+    });
 
   });
 
