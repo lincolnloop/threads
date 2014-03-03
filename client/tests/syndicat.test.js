@@ -61,7 +61,9 @@ describe('Syndicat Tests', function() {
     store = new Syndicat(schema);
     // TODO: get a better API in place without needing AJAX requests
     // to populate the store.
+    store._set('users', userFixtures);
     store._set('teams', teamFixtures);
+    store._set('discussions', discussionFixtures);
   });
 
   describe('#_set', function() {
