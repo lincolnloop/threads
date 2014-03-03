@@ -20,7 +20,7 @@ var store = new Syndicat({
       'children': 'messages'
     },
     parse: function(data) {
-      return data.results;
+      return data.results ? data.results : data;
     },
     'foreignKey': {
       'message': 'messages',

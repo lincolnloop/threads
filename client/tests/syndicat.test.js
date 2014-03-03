@@ -86,8 +86,11 @@ describe('Syndicat Tests', function() {
       ).to.not.equal(-1);
     });
 
-    it ('can parse responses that have meta attributes (e.g paginated)', function() {
-      expect(store._store['discussions']).to.have.length(4);
+    it ('uses data parsers when they are defined', function() {
+      // discussions have a non-standard data structure due to pagintation,
+      // so the schema provides a `parse` method.
+      // for storage purposes we only want the objects, not the meta data.
+      expect(Object.keys(store._store['discussions'])).to.have.length(4);
     });
 
   });

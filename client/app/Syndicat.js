@@ -45,11 +45,14 @@ var Syndicat = function(schema) {
     // initialize store for this type (if needed)
     // and store it under `store` for easy access.
     var store = this._store[type] ? this._store[type] : this._store[type] = {};
+    var schema = this._schema[type];
 
     // check if response is an array, or just a simple object
     if (!Array.isArray(response)) {
-      // isArray === false, set response as an array
-      response = [response];
+      // isArray === false, try to parse response into an Array
+      // schema.parse translates non-standard data into a list
+      // format than can be stored.
+      response = schema.parse ? schema.parse(response) : [response];
     }
 
     response.forEach(function(item) {

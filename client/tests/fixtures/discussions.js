@@ -1,5 +1,4 @@
-module.exports = [
-{
+module.exports = {
   "next":2,
   "results":[
     {
@@ -127,4 +126,3 @@ module.exports = [
     }
   ]
 }
-]
