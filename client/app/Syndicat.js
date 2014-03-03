@@ -21,12 +21,15 @@ var Syndicat = function(schema) {
   this._schema = schema;
   // memory data storage
   this._store = {};
+
+  // --------------------------
+  // Internal utils methods
+  // --------------------------
   // get absolute uri for api endpoint
   this._getURI = function(type) {
     if (!this._schema[type] || !this._schema[type].url) {
       throw new Error('Invalid type. Acceptable types are: ' + Object.keys(this._schema));
     }
-
     return this._schema.apiUrl + this._schema[type].url;
   },
 
