@@ -34,7 +34,7 @@ var Syndicat = function(schema) {
   // Internal data sync methods
   // ------------------------------
   this._set = function(type, response, responseType, xhr) {
-    console.log(type, response, responseType, xhr);
+    //console.log(type, response, responseType, xhr);
     // Adds or Updates an item of `type` in this._store.
     //
     // type: schema key/store (teams, users)
@@ -53,10 +53,32 @@ var Syndicat = function(schema) {
     }
 
     response.forEach(function(item) {
+      // handle oneToMany relations
+      _.each(this._schema[type].oneToMany, function(relationType, attr) {
+        var relationItems = item[attr];
+        // check if item has an attr that is defined as a relation
+        if (relationItems) {
+          // check if attr value is an array, 
+          // if it's not empty, and if the content is an object and not a string
+          if (Object.prototype.toString.call(relationItems) === '[object Array]' &&
+            relationItems.length > 0 &&
+            Object.prototype.toString.call(relationItems[0]) === '[object Object]') {
+            // if relationItems is a list of objects, 
+            // populate the relation `table` with this data
+            this._set(relationType, relationItems);
+            // and replace the list of objects within `item`
+            // by a list of `id's
+            item[attr] = _.map(relationItems, function(relationItem) {
+              return relationItem[this._schema.idAttribute];
+            }.bind(this));
+          }
+        }
+      }.bind(this));
+
       // TODO: compare objects and trigger change events
       store[item[this._schema.idAttribute]] = item;
+
     }.bind(this));
-    console.log(store);
   };
 
   this._remove = function(type, key, responseType, xhr) {
@@ -170,7 +192,7 @@ var Syndicat = function(schema) {
   };
 
   this.find = function(type, query) {
-    // find items within the store. (THAT ARE NOT STORE IN BACKBONE COLLECTIONS)
+    // find items within the store. (THAT ARE NOT STORED IN BACKBONE COLLECTIONS)
     var store = this._store[type];
     if (!store || !Object.keys(store).length) {
       return undefined;

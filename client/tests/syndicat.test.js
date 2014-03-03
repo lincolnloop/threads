@@ -1,0 +1,96 @@
+/* global describe, it, beforeEach */
+'use strict';
+
+var expect = require('chai').expect;
+var Syndicat = require('../app/Syndicat');
+
+// fixtures
+var teamFixtures = require('./fixtures/teams');
+var userFixtures = require('./fixtures/users');
+var discussionFixtures = require('./fixtures/discussions');
+
+describe('Syndicat Tests', function() {
+
+  var store;
+
+  var schema = {
+    // TODO: Mock API
+    'apiUrl': 'http://localhost:8000',
+    'idAttribute': 'url',
+    'teams': {
+      'url': '/api/v2/team/',
+      'oneToMany': {
+        'members': 'members'
+      }
+    },
+    'users': {
+      'url': '/api/v2/user/'
+    },
+    'members': {
+      'foreignKey': {
+        'user': 'users'
+      }
+    },
+    'attachments': {
+      'url': '/api/v2/attachment/',
+      'foreignKey': {
+        'user': 'users',
+        'message': 'messages'
+      }
+    },
+    'discussions': {
+      'url': '/api/v2/discussion/',
+      'foreignKey': {
+        'message': 'messages',
+        'team': 'teams'
+      }
+    },
+    'messages': {
+      'url': '/api/v2/message/',
+      'oneToMany': {
+        'attachments': 'attachments'
+      },
+      'foreignKey': {
+        'user': 'users',
+        'discussion': 'discussions'
+      }
+    }
+  };
+
+  before(function() {
+    store = new Syndicat(schema);
+    // TODO: get a better API in place without needing AJAX requests
+    // to populate the store.
+    store._set('teams', teamFixtures);
+  });
+
+  describe('#_set', function() {
+    
+    it('loads simple models correctly', function() {
+      expect(Object.keys(store._store['teams'])).to.have.length(1);
+    });
+
+    it('populates tables based on one-to-many relations', function() {
+      expect(Object.keys(store._store['members'])).to.have.length(3);
+    });
+
+    it ('replaces objects by id\'s in one-to-many relations', function() {
+      expect(
+        store._store.teams['/api/v2/team/9/'].members
+          .indexOf('/api/v2/team/9/member/f31abb30271cdecae75a6227128c8fd9/')
+      ).to.not.equal(-1);
+    });
+
+  });
+
+  describe('#find()', function() {
+
+    it('can find teams', function() {
+      expect(
+        store.find('teams', '/api/v2/team/9/').name
+      ).to.equal('Test Sandbox')
+    });
+
+  });
+
+});

@@ -8,6 +8,9 @@
   },
   "version": "0.1.0",
   "main": "./client/index.js",
+  "scripts": {
+    "test:syndicat": "./node_modules/.bin/mocha --reporter spec --ui tdd client/tests/syndicat.test.js"
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-uglify": "~0.3.2",
