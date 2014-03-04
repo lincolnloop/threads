@@ -1,18 +1,20 @@
 'use strict';
 var gulp = require('gulp');
 
-require('./gulp/build');
-require('./gulp/build-tests');
+require('./gulp/app');
 require('./gulp/clean');
+require('./gulp/fonts');
 require('./gulp/jshint');
 require('./gulp/sass');
 require('./gulp/template');
+require('./gulp/tests');
 
 gulp.task('default', [
   'jshint',
   'clean',
-  'build',
-  'build-tests',
+  'app',
+  'tests',
   'sass',
-  'template'
+  'template',
+  'fonts'
 ]);

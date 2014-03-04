@@ -3,7 +3,7 @@ var browserify = require('gulp-browserify');
 var gulp = require('gulp');
 var rename = require('gulp-rename');
 
-gulp.task('build-tests', function() {
+gulp.task('tests', function() {
   return gulp.src('client/tests/index.js', {read: false})
 
     // Browserify it

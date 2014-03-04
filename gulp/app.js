@@ -6,7 +6,7 @@ var pkg = require('../package.json');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 
-gulp.task('build', function() {
+gulp.task('app', function() {
   return gulp.src('client/index.js', {read: false})
 
     // Browserify it
