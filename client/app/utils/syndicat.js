@@ -208,7 +208,7 @@ var Syndicat = function(schema) {
       return store;
     } else if (Object.prototype.toString.call(query) === '[object Object]') {
       // if query is an object, assume it specifies filters.
-      // TODO
+      return _.findWhere(store, query);
     } else if (Object.prototype.toString.call(query) === '[object String]') {
       // if query is a String, assume it stores the key/url value
       return store[query];
