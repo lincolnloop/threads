@@ -7,13 +7,7 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 
 gulp.task('build', function() {
-  var sources = ['client/index.js'];
-  if (!gutil.env.production) {
-    // If this isn't a production build, include the tests
-    sources = sources.concat('client/tests/index.js');
-  }
-
-  return gulp.src(sources, {read: false})
+  return gulp.src('client/index.js', {read: false})
 
     // Browserify it
     .pipe(browserify({
