@@ -47,7 +47,8 @@
     "gulp-rename": "^1.1.0",
     "gulp-browserify": "^0.4.6",
     "gulp-sass": "^0.7.1",
-    "gulp-template": "^0.1.1"
+    "gulp-template": "^0.1.1",
+    "gulp-livereload": "^1.2.0"
   },
   "dependencies": {
     "underscore": "~1.6.0",
