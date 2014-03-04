@@ -2,10 +2,10 @@
 
 var _ = require('underscore');
 var React = require('react');
-var Team = require('./Team');
+var TeamView = require('./team');
 var log = require('loglevel');
 
-var Organization = React.createClass({
+var OrganizationView = React.createClass({
   render: function() {
     log.debug('Organization:render');
     return (
@@ -13,7 +13,7 @@ var Organization = React.createClass({
         React.DOM.h3({}, this.props.name),
         React.DOM.ul({},
           this.props.teams.map(function(team) {
-            return Team(_.extend({'key': team.slug}, team));
+            return TeamView(_.extend({'key': team.slug}, team));
           })
         )
       )
@@ -21,4 +21,4 @@ var Organization = React.createClass({
   }
 });
 
-module.exports = Organization;
+module.exports = OrganizationView;

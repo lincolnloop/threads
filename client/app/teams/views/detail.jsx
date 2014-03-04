@@ -1,14 +1,12 @@
 'use strict';
 
-var _ = require('underscore');
-var Backbone = require('backbone');
 // TODO: Shim or fork inViewport to this is supported
-var inViewport = require('in-viewport');
+// var inViewport = require('in-viewport');
 var React = require('react');
 var log = require('loglevel');
 var urls = require('../../urls');
 var store = require('../../store');
-var DiscussionList = require('../../discussions/views/DiscussionList');
+var DiscussionListView = require('../../discussions/views/list');
 
 
 var TeamDetail = React.createClass({
@@ -25,7 +23,7 @@ var TeamDetail = React.createClass({
       <div className="team-detail">
         <h2>{team.name}</h2>
         <a className="button btn-create-discussion" href={createDiscussionUrl}>New Discussion</a>
-          <DiscussionList discussions={this.state.discussions} ref="discussions" />
+          <DiscussionListView discussions={this.state.discussions} ref="discussions" />
       </div>
     );
   },
@@ -71,8 +69,8 @@ var TeamDetail = React.createClass({
         'page': this.team.discussions.meta.next,
         'limit': limit
       },
-      success: function (collection, response) {
-        log.debug(collection.length)
+      success: function (collection) {
+        log.debug(collection.length);
         // triggers the display of any out-of-order discussions that are now in order
         // enables endless scroller on the last one
         this.setState({
@@ -99,7 +97,7 @@ var TeamDetail = React.createClass({
       discussions: [],
       // last discussion element
       lastItemEl: undefined
-    }
+    };
   },
 
   componentWillMount: function() {

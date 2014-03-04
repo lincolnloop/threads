@@ -22,15 +22,15 @@ var Discussion = require('./discussions/models/discussion');
 var Nav = require('./nav');
 
 // auth
-var SignInView = require('./auth/views/SignIn');
+var SignInView = require('./auth/views/sign-in');
 
 // team views
-var OrganizationList = require('./teams/views/OrganizationList');
-var TeamDetailView = require('./teams/views/TeamDetail');
+var OrganizationList = require('./teams/views/organization-list');
+var TeamDetailView = require('./teams/views/detail');
 
 // discussion views
-var DiscussionDetailView = require('./discussions/views/DiscussionDetail');
-var DiscussionCreateView = require('./discussions/views/DiscussionCreate');
+var DiscussionDetailView = require('./discussions/views/detail');
+var DiscussionCreateView = require('./discussions/views/create');
 
 
 var AppView = React.createClass({

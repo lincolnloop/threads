@@ -2,19 +2,19 @@
 
 var _ = require('underscore');
 var React = require('react');
-var Organization = require('./Organization');
+var OrganizationView = require('./organization');
 
-var OrganizationList = React.createClass({
+var OrganizationListView = React.createClass({
   render: function() {
     return (
       React.DOM.div(
         {'className': 'team-list'},
         this.props.organizations.map(function(org) {
-          return Organization(_.extend({key: org.name}, org))
+          return OrganizationView(_.extend({key: org.name}, org));
         })
       )
     );
   }
 });
 
-module.exports = OrganizationList;
+module.exports = OrganizationListView;

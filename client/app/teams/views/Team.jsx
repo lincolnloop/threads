@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Team = React.createClass({
+var TeamView = React.createClass({
   render: function () {
     var unread = this.props.unread ? this.props.unread : '';
     return (
@@ -16,4 +16,4 @@ var Team = React.createClass({
   }
 });
 
-module.exports = Team;
+module.exports = TeamView;

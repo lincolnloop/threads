@@ -3,7 +3,7 @@
 var RSVP = require('rsvp');
 var config = require('./config');
 var urls = require('../urls');
-var TeamCollection = require('../teams/TeamCollection');
+var TeamCollection = require('../teams/models/TeamCollection');
 
 
 var userUri = function() {

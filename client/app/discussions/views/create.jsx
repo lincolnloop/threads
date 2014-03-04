@@ -2,7 +2,7 @@
 
 var React = require('react');
 var Discussion = require('../models/Discussion');
-var MarkdownText = require('./../../components/MarkdownText');
+var MarkdownView = require('../../messages/views/markdown');
 var router = require('../../router');
 
 
@@ -13,7 +13,7 @@ var DiscussionCreateView = React.createClass({
       <form className="discussion-create" onSubmit={this.submit}>
         <h2>New Discussion</h2>
         <input type="text" placeholder="What are we talking about?" ref="title" required />
-        <MarkdownText placeholder="Comment.." ref="comment" required />
+        <MarkdownView placeholder="Comment.." ref="comment" required />
         <input type="submit" />
       </form>
     );

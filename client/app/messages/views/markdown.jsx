@@ -2,8 +2,8 @@
 
 var $ = require('jquery');
 var React = require('react');
-var urls = require('../urls');
-var config = require('../utils/config');
+var urls = require('../../urls');
+var config = require('../../utils/config');
 
 var MarkdownView = React.createClass({
   getInitialState: function () {

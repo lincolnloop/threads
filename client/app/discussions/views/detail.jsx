@@ -12,7 +12,7 @@ var Discussion = require('../models/Discussion');
 // --------------------
 // Views
 // --------------------
-var MessageTreeView = require('./MessageTree');
+var MessageTreeView = require('../../messages/views/tree');
 
 
 var DiscussionDetailView = React.createClass({
@@ -41,7 +41,7 @@ var DiscussionDetailView = React.createClass({
     }
     this.discussion.fetch({
       reset: true,
-      success: function (model, response) {
+      success: function (model) {
         this.setState({
           'discussion': model.setRelationships().serialized()
         });
@@ -52,7 +52,7 @@ var DiscussionDetailView = React.createClass({
   getInitialState: function() {
     return {
       discussion: {}
-    }
+    };
   },
 
   componentWillMount: function() {
@@ -61,7 +61,7 @@ var DiscussionDetailView = React.createClass({
                       new Discussion({'url': this.props.discussionUrl});
     return {
       discussion: this.discussion.serialized()
-    }
+    };
   },
 
   componentDidMount: function() {

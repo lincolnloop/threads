@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var MessageActionsView = require('./actions');
-var VotesListView = require('./voteslist');
+var VotesListView = require('./votes-list');
 
 var MessageContentView = React.createClass({
 
