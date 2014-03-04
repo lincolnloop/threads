@@ -2,7 +2,7 @@
 
 var RSVP = require('rsvp');
 var fetch = require('./utils/fetch');
-var Syndicat = require('./Syndicat');
+var Syndicat = require('./utils/syndicat');
 
 var store = new Syndicat({
   'apiUrl': 'http://localhost:8000',
