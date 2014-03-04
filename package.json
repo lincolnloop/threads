@@ -37,7 +37,17 @@
     "chai": "^1.9.0",
     "mocha": "^1.17.1",
     "sinon": "^1.8.2",
-    "grunt-mocha": "^0.4.10"
+    "grunt-mocha": "^0.4.10",
+    "gulp": "^3.5.5",
+    "gulp-jshint": "^1.5.0",
+    "jshint-stylish": "^0.1.5",
+    "gulp-util": "^2.2.14",
+    "gulp-clean": "^0.2.4",
+    "gulp-uglify": "^0.2.1",
+    "gulp-rename": "^1.1.0",
+    "gulp-browserify": "^0.4.6",
+    "gulp-sass": "^0.7.1",
+    "gulp-template": "^0.1.1"
   },
   "dependencies": {
     "underscore": "~1.6.0",
