@@ -4,4 +4,5 @@
 // tests/index.html file, with a "mocha" div present.
 if (document.getElementById('mocha')) {
   require('./app.js');
+  require('./syndicat.js');
 }

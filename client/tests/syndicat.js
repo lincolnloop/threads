@@ -2,7 +2,7 @@
 'use strict';
 
 var expect = require('chai').expect;
-var Syndicat = require('../app/Syndicat');
+var Syndicat = require('../app/utils/syndicat');
 
 // fixtures
 var teamFixtures = require('./fixtures/teams');
