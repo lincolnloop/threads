@@ -1,9 +1,8 @@
 'use strict';
 
 var _ = require('underscore');
-var React = require('react');
-var MessageActionsView = require('./MessageActions');
-var VotesListView = require('./VotesList');
+var MessageActionsView = require('./actions');
+var VotesListView = require('./voteslist');
 
 var MessageContentView = React.createClass({
 
@@ -29,7 +28,7 @@ var MessageContentView = React.createClass({
     );
   },
 
-  shouldComponentUpdate: function (nextProps, nextState) {
+  shouldComponentUpdate: function (nextProps) {
     return this.props.message.body !== nextProps.message.body;
   }
 

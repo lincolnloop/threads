@@ -5,9 +5,8 @@ var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var urls = require('../../urls');
-var store = require('../../store');
-var MessageDetailView = require('./MessageDetail');
-var MessageReplyView = require('./MessageReply');
+var MessageDetailView = require('./detail');
+var MessageReplyView = require('./reply');
 
 var MessageTreeView = React.createClass({
   changeState: function (key, value) {
@@ -105,19 +104,18 @@ var MessageTreeView = React.createClass({
     // update replies state
     this.setState({replies: nextProps.message.children});
   },
-  shouldComponentUpdate: function(nextProps, nextState) {
-    // maybe we don't need this
-    return true;
+  // maybe we don't need this
+  // shouldComponentUpdate: function(nextProps, nextState) {
 
-    // Only update component if:
-    // 1. we're replying to it
-    // 2. we stopped replying (which means it has a new children)
-    // TODO: Realtime needs to be handled differently
-    if (nextState.replying !== this.state.replying) {
-      return true;
-    }
-    return false;
-  }
+  //   // Only update component if:
+  //   // 1. we're replying to it
+  //   // 2. we stopped replying (which means it has a new children)
+  //   // TODO: Realtime needs to be handled differently
+  //   if (nextState.replying !== this.state.replying) {
+  //     return true;
+  //   }
+  //   return false;
+  // }
 });
 
 module.exports = MessageTreeView;

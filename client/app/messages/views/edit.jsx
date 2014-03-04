@@ -1,13 +1,13 @@
 'use strict';
 
 var React = require('react');
-var MarkdownText = require('../../components/MarkdownText');
+var MarkdownView = require('./markdown');
 
 var MessageEditView = React.createClass({
   render: function() {
     return (
       <form className="message-content message-content-edit" onSubmit={this.props.handleEditSubmit}>
-        <MarkdownText placeholder="Comment.."
+        <MarkdownView placeholder="Comment.."
                       ref="comment"
                       defaultValue={this.props.message.raw_body}
                       required />

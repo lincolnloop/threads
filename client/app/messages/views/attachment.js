@@ -6,7 +6,7 @@ var Backbone = require('backbone');
 var urls = require('../../urls');
 var log = require('loglevel');
 
-var Attachment = Backbone.Model.extend({
+var AttachmentView = Backbone.Model.extend({
 
   idAttribute: 'url',
   maxFilenameLength: 18,
@@ -92,4 +92,4 @@ var Attachment = Backbone.Model.extend({
   }
 });
 
-module.exports = Attachment;
+module.exports = AttachmentView;

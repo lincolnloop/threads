@@ -6,14 +6,14 @@ var React = require('react');
 var log = require('loglevel');
 var store = require('../../store');
 var gravatar = require('../../utils/gravatar');
-var MessageEditView = require('./MessageEdit');
-var MessageContentView = require('./MessageContent');
+var MessageEditView = require('./edit');
+var MessageContentView = require('./content');
 var urls = require('../../urls');
 var clientconfig = require('clientconfig');
 
 require('react/addons');
 
-var MessageDetail = React.createClass({
+var MessageDetailView = React.createClass({
   changeState: function (key, value) {
     // callback helper for `editing` state changes
     // usage:
@@ -41,7 +41,7 @@ var MessageDetail = React.createClass({
   handleVote: function(value) {
     var message = this.state.message;
     // find if user already has a vote
-    var vote = _.find(this.state.message.votes, function(vote) { 
+    var vote = _.find(this.state.message.votes, function(vote) {
       return vote.user == localStorage.getItem('user');
     });
     if (!vote) {
@@ -129,4 +129,4 @@ var MessageDetail = React.createClass({
   }
 });
 
-module.exports = MessageDetail;
+module.exports = MessageDetailView;

@@ -11,7 +11,7 @@
   "loopfunc": true,
   "newcap": false,
   "noarg": true,
-  "quotmark": true,
+  "quotmark": false,
   "regexp": true,
   "scripturl": true,
   "smarttabs": true,

@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('underscore');
 var React = require('react');
 
 var store = require('../../store');

@@ -5,7 +5,7 @@ var React = require('react');
 var urls = require('../urls');
 var config = require('../utils/config');
 
-var MarkdownText = React.createClass({
+var MarkdownView = React.createClass({
   getInitialState: function () {
     return {
       previewValue: null,
@@ -78,4 +78,4 @@ var MarkdownText = React.createClass({
   }
 });
 
-module.exports = MarkdownText;
+module.exports = MarkdownView;

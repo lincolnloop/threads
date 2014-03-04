@@ -2,13 +2,13 @@
 
 var _ = require('underscore');
 var React = require('react');
-var log = require('loglevel');
-var store = require('../../store');
 
 var VotesView = React.createClass({
+
   getInitialState: function() {
     return {vote: this.props.vote};
   },
+
   render: function() {
     var hasUpVote = this.state.vote === '+1';
     var hasDownVote = this.state.vote === '-1';
@@ -26,5 +26,7 @@ var VotesView = React.createClass({
       </span>
     );
   }
+
 });
+
 module.exports = VotesView;

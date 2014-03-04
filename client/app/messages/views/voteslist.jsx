@@ -20,10 +20,10 @@ var VotesListView = React.createClass({
         }
         nodes.push(React.DOM.a({
           'children': user.name
-        }))
+        }));
         // add `like this` words after last like
         if (counter === list.length - 1) {
-          nodes.push(React.DOM.span({'children': ' like this'}))
+          nodes.push(React.DOM.span({'children': ' like this'}));
         }
         return nodes;
       })

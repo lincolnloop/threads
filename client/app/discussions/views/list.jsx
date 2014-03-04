@@ -1,9 +1,9 @@
 'use strict';
 
 var React = require('react');
-var Discussion = require('./Discussion');
+var Discussion = require('./item');
 
-var DiscussionList = React.createClass({
+var DiscussionListView = React.createClass({
   render: function() {
     return (
       <ul className="discussion-list" ref="list">
@@ -13,4 +13,4 @@ var DiscussionList = React.createClass({
   }
 });
 
-module.exports = DiscussionList;
+module.exports = DiscussionListView;

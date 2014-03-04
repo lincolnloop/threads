@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var React = require('react');
-var VotesButtonsView = require('./VoteButtons');
+var VotesView = require('./votes');
 var log = require('loglevel');
 var store = require('../../store');
 
@@ -16,7 +16,7 @@ var MessageActionsView = React.createClass({
     return (
       React.DOM.div(
         {className: 'message-actions'},
-        VotesButtonsView({
+        VotesView({
           'vote': voteStatus ? voteStatus.value : null,
           'handleVote': this.props.handleVote
         }),

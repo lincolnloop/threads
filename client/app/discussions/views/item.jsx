@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var Discussion = React.createClass({
+var DiscussionItemView = React.createClass({
   render: function() {
     return (
         <li key={this.props.url}>
@@ -15,4 +15,4 @@ var Discussion = React.createClass({
   }
 });
 
-module.exports = Discussion;
+module.exports = DiscussionItemView;
