@@ -37,6 +37,7 @@ var Syndicat = function(schema) {
   // Internal data sync methods
   // ------------------------------
   this._set = function(type, response) {
+    console.log('Syndicat:set');
     //console.log(type, response, responseType, xhr);
     // Adds or Updates an item of `type` in this._store.
     //
@@ -203,7 +204,9 @@ var Syndicat = function(schema) {
     if (!store || !Object.keys(store).length) {
       return undefined;
     }
-    if (Object.prototype.toString.call(query) === '[object Object]') {
+    if (query === undefined) {
+      return store;
+    } else if (Object.prototype.toString.call(query) === '[object Object]') {
       // if query is an object, assume it specifies filters.
       // TODO
     } else if (Object.prototype.toString.call(query) === '[object String]') {
