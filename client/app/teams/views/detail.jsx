@@ -1,12 +1,13 @@
 'use strict';
 
-// TODO: Shim or fork inViewport to this is supported
-// var inViewport = require('in-viewport');
 var React = require('react');
 var log = require('loglevel');
 var urls = require('../../urls');
 var store = require('../../store');
 var DiscussionListView = require('../../discussions/views/list');
+
+// TODO: Shim or fork inViewport to this is supported
+require('in-viewport');
 
 
 var TeamDetail = React.createClass({

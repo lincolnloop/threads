@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('underscore');
 var $ = require('jquery');
 var Backbone = require('backbone');
 var React = require('react');
@@ -9,11 +8,6 @@ var urls = require('./urls');
 var store = require('./store');
 var log = require('loglevel');
 var Events = require('./utils/mixins').Events;
-
-// --------------------
-// Models
-// --------------------
-var Discussion = require('./discussions/models/discussion');
 
 // --------------------
 // Views
@@ -79,7 +73,7 @@ var AppView = React.createClass({
     Backbone.history.start({pushState: true});
   },
 
-  startFailed: function(reason) {
+  startFailed: function() {
     // Initial data fetch failed.
     // For now, we just assume sign in error.
     this.setState({
