@@ -38,7 +38,6 @@
     "sinon": "^1.8.2"
   },
   "dependencies": {
-    "async": "~0.2.9",
     "backbone": "~1.1.0",
     "clientconfig": "0.0.4",
     "crossing": "~0.1.2",

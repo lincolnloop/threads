@@ -3,27 +3,38 @@ var _ = require('underscore');
 var browserify = require('gulp-browserify');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var libs = require('./vendor').libs;
-var pkg = require('../package.json');
 var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 
-gulp.task('app', function() {
+var libs = [
+  'backbone',
+  'clientconfig',
+  'crossing',
+  'fastclick',
+  'in-viewport',
+  'jquery',
+  'loglevel',
+  'MD5',
+  'react',
+  'rsvp',
+  'underscore',
+];
+
+gulp.task('vendor', function() {
   var production = (process.env.NODE_ENV === 'production');
 
-  return gulp.src('client/index.js', {read: false})
+  // Use React as the entry point, since it doesn't work without one
+  return gulp.src('./node_modules/react/react.js', {read: false})
 
     // Browserify it
     .pipe(browserify({
-      debug: !production,  // If not production, add source maps
-      transform: ['reactify'],
-      extensions: ['.jsx']
+      debug: false,  // Don't provide source maps for vendor libs
     }))
 
     .on('prebundle', function(bundle) {
-      // The following requirements are loaded from the vendor bundle
+      // Require vendor libraries and make them available outside the bundle
       _.each(libs, function(lib) {
-        bundle.external(lib);
+        bundle.require(lib);
       });
     })
 
@@ -31,9 +42,11 @@ gulp.task('app', function() {
     .pipe(production ? uglify() : gutil.noop())
 
     // Give the destination file a name, adding '.min' if this is production
-    .pipe(rename(pkg.name + (production ? '.min' : '') + '.js'))
+    .pipe(rename('vendor' + (production ? '.min' : '') + '.js'))
 
     // Save to the dist directory if production, or to the build directory
     .pipe(gulp.dest(production ? 'dist/' : 'build/'));
 
 });
+
+exports.libs = libs;
