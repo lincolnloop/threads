@@ -8,7 +8,7 @@ require('./gulp/clean');
 require('./gulp/fonts');
 require('./gulp/jshint');
 require('./gulp/sass');
-require('./gulp/template');
+require('./gulp/serve');
 require('./gulp/tests');
 
 gulp.task('build', [
@@ -17,16 +17,15 @@ gulp.task('build', [
   'app',
   'tests',
   'sass',
-  'template',
   'fonts'
 ]);
 
-gulp.task('default', ['build'], function() {
+gulp.task('default', ['build', 'serve'], function() {
   var server = livereload();
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 
-  gulp.watch('client/**/{*.js,*.jsx}', function(event) {
+  gulp.watch('{client,server}/**/{*.js,*.jsx}', function(event) {
     gulp.start('build', function() {
       server.changed(event.path);
     });

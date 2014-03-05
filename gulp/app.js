@@ -7,11 +7,13 @@ var rename = require('gulp-rename');
 var uglify = require('gulp-uglify');
 
 gulp.task('app', function() {
+  var production = (process.env.NODE_ENV === 'production');
+
   return gulp.src('client/index.js', {read: false})
 
     // Browserify it
     .pipe(browserify({
-      debug: !gutil.env.production,  // If not production, add source maps
+      debug: !production,  // If not production, add source maps
       transform: ['reactify'],
       extensions: ['.jsx']
     }))
@@ -22,12 +24,12 @@ gulp.task('app', function() {
     })
 
     // If this is a production build, minify it
-    .pipe(gutil.env.production ? uglify() : gutil.noop())
+    .pipe(production ? uglify() : gutil.noop())
 
     // Give the destination file a name, adding '.min' if this is production
-    .pipe(rename(pkg.name + (gutil.env.production ? '.min' : '') + '.js'))
+    .pipe(rename(pkg.name + (production ? '.min' : '') + '.js'))
 
     // Save to the dist directory if production, or to the build directory
-    .pipe(gulp.dest(gutil.env.production ? 'dist/' : 'build/'));
+    .pipe(gulp.dest(production ? 'dist/' : 'build/'));
 
 });
