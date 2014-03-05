@@ -54,7 +54,7 @@ var MessageTreeView = React.createClass({
     }
     if (replies && replies.length) {
       repliesView = React.DOM.div({className: "message-children"},
-          this.state.replies.map(function(message) {
+          _.map(replies, function(message) {
           // recursively using JSX causes issues. Falling back to regular JS.
           return MessageTreeView({
             'key': message.url,

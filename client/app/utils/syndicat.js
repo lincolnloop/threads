@@ -60,8 +60,7 @@ var Syndicat = function(schema) {
     }
 
     if (Object.prototype.toString.call(response) === '[object Object]') {
-      store[response[this._schema.idAttribute]] = response;
-      return;
+      response = [response];
     }
     response.forEach(function(item) {
       // handle oneToMany relations
@@ -185,7 +184,7 @@ var Syndicat = function(schema) {
     }
     if (query === undefined) {
       // query is empty, no object is returned
-      return store;
+      return _.map(store, function(item) { return item; });
     } else if (Object.prototype.toString.call(query) === '[object Object]') {
       // if query is an object, assume it specifies filters.
       return _.filter(store, function(item) { return _.findWhere([item], query); });

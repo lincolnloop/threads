@@ -1,12 +1,14 @@
 'use strict';
 
+var _ = require('underscore');
 var React = require('react');
 var store = require('../../store');
 
 var VotesListView = React.createClass({
   render: function () {
     return React.DOM.span({'className': 'votes-list'},
-      this.props.votes.map(function(vote, counter, list) {
+      _.map(this.props.votes, function(voteId, counter, list) {
+        var vote = store.find('votes', voteId);
         var user = store.find('users', vote.user);
         var nodes = [];
         // add a comma separator between users (if appliable)
@@ -26,7 +28,7 @@ var VotesListView = React.createClass({
           nodes.push(React.DOM.span({'children': ' like this'}));
         }
         return nodes;
-      })
+      }.bind(this))
     );
   }
 });

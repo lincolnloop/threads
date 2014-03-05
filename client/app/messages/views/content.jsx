@@ -7,6 +7,7 @@ var VotesListView = require('./votes-list');
 var MessageContentView = React.createClass({
 
   render: function() {
+    console.log(this.props.message.votes);
     return (
       React.DOM.div(
         {'className': 'message-content'},
