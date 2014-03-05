@@ -20,12 +20,12 @@ gulp.task('build', [
   'fonts'
 ]);
 
-gulp.task('default', ['build'], function() {
+gulp.task('default', ['build', 'serve'], function() {
   var server = livereload();
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 
-  gulp.watch('client/**/{*.js,*.jsx}', function(event) {
+  gulp.watch('{client,server}/**/{*.js,*.jsx}', function(event) {
     gulp.start('build', function() {
       server.changed(event.path);
     });
