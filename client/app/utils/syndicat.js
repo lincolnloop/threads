@@ -31,10 +31,6 @@ var Syndicat = function(schema) {
     }
     return this._schema.apiUrl + this._schema[type].url;
   },
-  // if `obj[attr]` is an object with relation defined in schema, replace it by an id
-  // and store the original object as an object of `type`.
-  this._transform = function(obj, attr, type) {
-  },
 
   // ------------------------------
   // Internal data sync methods
