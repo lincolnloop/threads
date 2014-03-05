@@ -18,7 +18,6 @@ var MessageTreeView = require('../../messages/views/tree');
 var DiscussionDetailView = React.createClass({
 
   render: function() {
-    var team = store.find('teams', this.props.team.url);
     var message = this.state.discussion.message;
     return (
       <div className="discussion-detail">
@@ -32,22 +31,21 @@ var DiscussionDetailView = React.createClass({
     );
   },
 
-  fetchDiscussion: function() {
-    // Fetches discussion detail from the remote API
-    // and updates the component state.
-    if (this.discussion.fetched) {
-      // Do nothing if the discussion was already fetched
-      // NOTE: This only works if we have realtime updates (!)
-      return false;
+  setDiscussion: function() {
+    console.log('setDiscussion');
+    var discussion = store.find('discussions', this.props.discussion);
+    if (!discussion) {
+      discussion = {};
     }
-    this.discussion.fetch({
-      reset: true,
-      success: function (model) {
-        this.setState({
-          'discussion': model.setRelationships().serialized()
-        });
-      }.bind(this)
-    });
+    this.setState({
+      'discussion': discussion
+    })
+  },
+
+  fetchDiscussion: function() {
+    // Fetches discussion data from the remote API
+    // and updates the component state.
+    store.get('discussions', {}, {'url': this.props.discussion}).then(this.setDiscussion);
   },
 
   getInitialState: function() {
@@ -57,11 +55,7 @@ var DiscussionDetailView = React.createClass({
   },
 
   componentWillMount: function() {
-    this.discussion = this.team.discussions.get(this.props.discussionUrl) ||
-                      new Discussion({'url': this.props.discussionUrl});
-    return {
-      discussion: this.discussion.serialized()
-    };
+    this.setDiscussion();
   },
 
   componentDidMount: function() {

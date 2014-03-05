@@ -59,6 +59,10 @@ var Syndicat = function(schema) {
       response = schema.parse ? schema.parse(response) : [response];
     }
 
+    if (Object.prototype.toString.call(response) === '[object Object]') {
+      store[response[this._schema.idAttribute]] = response;
+      return;
+    }
     response.forEach(function(item) {
       // handle oneToMany relations
       _.each(this._schema[type].oneToMany, function(relationType, attr) {

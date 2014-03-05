@@ -201,7 +201,7 @@ var AppView = React.createClass({
       'component': React.DOM.div,
       'children': DiscussionDetailView({
         'team': team,
-        'discussionUrl': discussionUrl,
+        'discussion': discussionUrl,
         'key': 'discussion-detail' + discussionUrl
       })
     });
