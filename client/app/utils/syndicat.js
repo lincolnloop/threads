@@ -31,12 +31,15 @@ var Syndicat = function(schema) {
     }
     return this._schema.apiUrl + this._schema[type].url;
   },
+  // if `obj[attr]` is an object with relation defined in schema, replace it by an id
+  // and store the original object as an object of `type`.
+  this._transform = function(obj, attr, type) {
+  },
 
   // ------------------------------
   // Internal data sync methods
   // ------------------------------
   this._set = function(type, response) {
-    console.log('Syndicat:set');
     //console.log(type, response, responseType, xhr);
     // Adds or Updates an item of `type` in this._store.
     //
@@ -61,31 +64,50 @@ var Syndicat = function(schema) {
     if (Object.prototype.toString.call(response) === '[object Object]') {
       response = [response];
     }
-    response.forEach(function(item) {
+    _.each(response, function(obj) {
       // handle oneToMany relations
-      _.each(this._schema[type].oneToMany, function(relationType, attr) {
-        var relationItems = item[attr];
-        // check if item has an attr that is defined as a relation
-        if (relationItems) {
+      _.each(this._schema[type].oneToMany, function(relatedType, relatedAttr) {
+        var related = obj[relatedAttr];
+        // check if obj has a `relatedAttr` that is defined as a relation
+        if (related) {
           // check if attr value is an array,
           // if it's not empty, and if the content is an object and not a string
-          if (Object.prototype.toString.call(relationItems) === '[object Array]' &&
-            relationItems.length > 0 &&
-            Object.prototype.toString.call(relationItems[0]) === '[object Object]') {
-            // if relationItems is a list of objects,
+          if (Object.prototype.toString.call(related) === '[object Array]' &&
+            related.length > 0 &&
+            Object.prototype.toString.call(related[0]) === '[object Object]') {
+            // if related is a list of objects,
             // populate the relation `table` with this data
-            this._set(relationType, relationItems);
-            // and replace the list of objects within `item`
+            this._set(relatedType, related);
+            // and replace the list of objects within `obj`
             // by a list of `id's
-            item[attr] = _.map(relationItems, function(relationItem) {
-              return relationItem[this._schema.idAttribute];
+            obj[relatedAttr] = _.map(related, function(item) {
+              return item[this._schema.idAttribute];
             }.bind(this));
           }
         }
       }.bind(this));
 
-      // TODO: compare objects and trigger change events
-      store[item[this._schema.idAttribute]] = item;
+      // handle foreignKey relations
+      _.each(this._schema[type].foreignKey, function(relatedType, relatedAttr) {
+        var related = obj[relatedAttr];
+        // check if obj has a `relatedAttr` that is defined as a relation
+        if (related) {
+          // check if `obj[relatedAttr]` value is an object (FK should not be arrays),
+          // if it's not empty, and if the content is an object and not a string
+          if (Object.prototype.toString.call(related) === '[object Object]') {
+            // if related is an object,
+            // populate the relation `table` with this data
+            this._set(relatedType, [related]);
+            // and replace the list of objects within `item`
+            // by a list of `id's
+            obj[relatedAttr] = related[this._schema.idAttribute];
+          }
+        }
+      }.bind(this));
+
+      // store the object under this._store['type']['id']
+      store[obj[this._schema.idAttribute]] = obj;
+      // TODO: compare the previous object and trigger change events
 
     }.bind(this));
   };

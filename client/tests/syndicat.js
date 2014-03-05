@@ -86,6 +86,12 @@ describe('Syndicat Tests', function() {
       ).to.not.equal(-1);
     });
 
+    it ('replaces objects by id\'s in foreign-key relations', function() {
+      expect(
+        store._store.discussions['/api/v2/discussion/595/'].message
+      ).to.equal('/api/v2/message/3798/');
+    });
+
     it ('uses data parsers when they are defined', function() {
       // discussions have a non-standard data structure due to pagintation,
       // so the schema provides a `parse` method.
