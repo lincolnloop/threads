@@ -8,7 +8,7 @@ require('./gulp/clean');
 require('./gulp/fonts');
 require('./gulp/jshint');
 require('./gulp/sass');
-require('./gulp/template');
+require('./gulp/serve');
 require('./gulp/tests');
 
 gulp.task('build', [
@@ -17,7 +17,6 @@ gulp.task('build', [
   'app',
   'tests',
   'sass',
-  'template',
   'fonts'
 ]);
 

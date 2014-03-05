@@ -9,7 +9,6 @@ var app = express();
 app.engine('hbs', hbs.express3());
 
 app.configure(function () {
-  app.set('port', process.env.PORT || 8080);
   app.set('views', __dirname + '/views');
   app.set('view engine', 'hbs');
   app.use(express.favicon());
