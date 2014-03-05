@@ -9,7 +9,7 @@
   "version": "0.1.0",
   "main": "./client/index.js",
   "scripts": {
-    "test:syndicat": "./node_modules/.bin/mocha --reporter spec --ui tdd client/tests/syndicat.test.js"
+    "test:syndicat": "./node_modules/.bin/mocha --reporter spec --ui tdd client/tests/syndicat.js"
   },
   "devDependencies": {
     "grunt": "~0.4.2",

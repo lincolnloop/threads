@@ -14,7 +14,6 @@ var Discussion = require('../models/Discussion');
 // --------------------
 var MessageTreeView = require('../../messages/views/tree');
 
-
 var DiscussionDetailView = React.createClass({
 
   render: function() {
