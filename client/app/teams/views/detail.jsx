@@ -89,10 +89,6 @@ var TeamDetail = React.createClass({
     this.setDiscussions();
   },
 
-  componentWillUpdate: function() {
-    // mark the last item in the list as a prop
-  },
-
   componentDidMount: function() {
     // fetch an updated list of discussions on load
     this.fetchDiscussions();
@@ -102,6 +98,7 @@ var TeamDetail = React.createClass({
     // endless scroll setup
     var lastItemEl = this.getLastDiscussionNode();
     // can't call inViewport directly because it's not a CommonJS module
+    // TODO: Endless scrolling/pagination
     //window.inViewport(lastItemEl, this.fetchDiscussionsPagination);
   },
 
