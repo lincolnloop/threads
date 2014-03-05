@@ -32,7 +32,7 @@ var AppView = React.createClass({
 
   render: function() {
     log.debug('AppView:render', this.state);
-    var teams = store.find('teams');
+    var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
 
     if (this.state.initialized && !this.state.authenticated) {

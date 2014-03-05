@@ -18,15 +18,20 @@ var MessageTreeView = require('../../messages/views/tree');
 var DiscussionDetailView = React.createClass({
 
   render: function() {
+    console.log('DiscussionDetailView:render', message);
     var message = this.state.discussion.message;
+    var MessageTree = function() {};
+    if (message) {
+      MessageTree = MessageTreeView({
+        'key': message ? message.cid : 'empty-message',
+        'message': message,
+        'discussion': this.state.discussion
+      });
+    }
     return (
       <div className="discussion-detail">
         <h2>{this.state.discussion.title}</h2>
-        {MessageTreeView({
-          'key': message ? message.cid : 'empty-message',
-          'message': message,
-          'discussion': this.state.discussion
-        })}
+        {MessageTree}
       </div>
     );
   },

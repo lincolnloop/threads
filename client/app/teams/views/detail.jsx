@@ -27,7 +27,7 @@ var TeamDetail = React.createClass({
   },
 
   setDiscussions: function() {
-    var discussions = store.find('discussions', {'team': this.props.team.url}) || [];
+    var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
     this.setState({
       'discussions': discussions
     });

@@ -177,49 +177,35 @@ var Syndicat = function(schema) {
   // ------------------------------
   // Public query methods
   // ------------------------------
-  this.findAllObjects = function(type) {
-    // TODO: `getObject` method, returns a Backbone object
-    // we should not need this as a `public` method,
-    // but it will have to do for now.
-    return this._store[type] ? this._store[type]: undefined;
-  };
-
-  this.findAll = function(type) {
-    // External `get` method, returns a serialized Backbone object
-    var item = this.findAllObjects(type);
-    return item ? item.serialized() : item;
-  };
-
-  this.findObject = function(type, kwargs) {
-    // find a specific item within a collection
-    var item = this.findAllObjects(type);
-    if (!(item && item.length)) {
-      // no match, or not a collection
-      return null;
+  this.findAll = function(type, query) {
+    // find a list of items within the store. (THAT ARE NOT STORED IN BACKBONE COLLECTIONS)
+    var store = this._store[type];
+    if (!store || !Object.keys(store).length) {
+      return [];
     }
-    // if there is a type match, and is a collection
-    return item.findWhere(kwargs);
-
+    if (query === undefined) {
+      // query is empty, no object is returned
+      return store;
+    } else if (Object.prototype.toString.call(query) === '[object Object]') {
+      // if query is an object, assume it specifies filters.
+      return _.filter(store, function(item) { return _.findWhere([item], query); });
+    } else {
+      throw new Error('Invalid query for findAll.');
+    }
   };
 
   this.find = function(type, query) {
-    // find items within the store. (THAT ARE NOT STORED IN BACKBONE COLLECTIONS)
+    // find a specific within the store. (THAT ARE NOT STORED IN BACKBONE COLLECTIONS)
     var store = this._store[type];
     if (!store || !Object.keys(store).length) {
       return undefined;
     }
     if (query === undefined) {
-      // return a list
-      return _.map(store, function(obj){ return obj; });
+      // query is empty, no object is returned
+      return  undefined;
     } else if (Object.prototype.toString.call(query) === '[object Object]') {
-      // if query is an object, assume it specifies filters.
-      var results = _.filter(store, function(item) { return _.findWhere([item], query); });
-      if (results.length === 0) {
-        results = undefined;
-      } else if (results.length === 1) {
-        results = results[0];
-      }
-      return results;
+      // if query is an object, return the first match for the query
+      return _.findWhere(store, query);
     } else if (Object.prototype.toString.call(query) === '[object String]') {
       // if query is a String, assume it stores the key/url value
       return store[query];

@@ -5,6 +5,7 @@ var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var urls = require('../../urls');
+var store = require('../../store');
 var MessageDetailView = require('./detail');
 var MessageReplyView = require('./reply');
 
@@ -40,24 +41,18 @@ var MessageTreeView = React.createClass({
     return false;
   },
   getInitialState: function() {
-    var replies = [];
-    if (this.props.message && this.props.message.children) {
-      replies = this.props.message.children;
-    }
     return {
-      'replying': false,
-      'replies': replies
+      'replying': false
     };
   },
   render: function() {
     log.debug('MessageTree:render');
+    var replies = store.findAll('messages', {'parent': this.props.message.url});
     var repliesView = function(){};
-    // Get the ReplyView (or an empty render) based on `replying` state
-    var ReplyView = this.state.replying ? MessageReplyView : function(){};
     if (!this.props.message) {
       return (<span />);
     }
-    if (this.state.replies.length) {
+    if (replies && replies.length) {
       repliesView = React.DOM.div({className: "message-children"},
           this.state.replies.map(function(message) {
           // recursively using JSX causes issues. Falling back to regular JS.
@@ -70,6 +65,8 @@ var MessageTreeView = React.createClass({
         }.bind(this))
       );
     }
+    // Get the ReplyView (or an empty render) based on `replying` state
+    var ReplyView = this.state.replying ? MessageReplyView : function(){};
     return (
       React.DOM.div({'className': 'message'},
         MessageDetailView({
@@ -87,23 +84,7 @@ var MessageTreeView = React.createClass({
         repliesView
       )
     );
-  },
-  componentWillUpdate: function() {
-    var profileLabel = 'MessageTree: ' + this.props.message.url;
-    console.log('componentWillUpdate');
-    console.profile(profileLabel);
-    console.time(profileLabel);
-  },
-  componentDidUpdate: function() {
-    var profileLabel = 'MessageTree: ' + this.props.message.url;
-    console.log('componentDidUpdate');
-    console.timeEnd(profileLabel);
-    console.profileEnd(profileLabel);
-  },
-  componentWillReceiveProps: function(nextProps) {
-    // update replies state
-    this.setState({replies: nextProps.message.children});
-  },
+  }
   // maybe we don't need this
   // shouldComponentUpdate: function(nextProps, nextState) {
 
