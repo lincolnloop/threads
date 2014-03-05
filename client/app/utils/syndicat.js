@@ -205,10 +205,17 @@ var Syndicat = function(schema) {
       return undefined;
     }
     if (query === undefined) {
-      return store;
+      // return a list
+      return _.map(store, function(obj){ return obj; });
     } else if (Object.prototype.toString.call(query) === '[object Object]') {
       // if query is an object, assume it specifies filters.
-      return _.findWhere(store, query);
+      var results = _.filter(store, function(item) { return _.findWhere([item], query); });
+      if (results.length === 0) {
+        results = undefined;
+      } else if (results.length === 1) {
+        results = results[0];
+      }
+      return results;
     } else if (Object.prototype.toString.call(query) === '[object String]') {
       // if query is a String, assume it stores the key/url value
       return store[query];

@@ -18,6 +18,7 @@ var MessageTreeView = require('../../messages/views/tree');
 var DiscussionDetailView = React.createClass({
 
   render: function() {
+    var team = store.find('teams', this.props.team.url);
     var message = this.state.discussion.message;
     return (
       <div className="discussion-detail">
@@ -56,7 +57,6 @@ var DiscussionDetailView = React.createClass({
   },
 
   componentWillMount: function() {
-    this.team = store.findObject('teams', {url: this.props.team.url});
     this.discussion = this.team.discussions.get(this.props.discussionUrl) ||
                       new Discussion({'url': this.props.discussionUrl});
     return {

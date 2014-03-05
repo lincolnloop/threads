@@ -29,7 +29,6 @@ var DiscussionCreateView = require('./discussions/views/create');
 
 
 var AppView = React.createClass({
-  mixins: [Events],
 
   render: function() {
     log.debug('AppView:render', this.state);
