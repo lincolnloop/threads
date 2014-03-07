@@ -47,7 +47,7 @@ var MessageTreeView = React.createClass({
   },
   render: function() {
     log.debug('MessageTree:render');
-    var replies = store.findAll('messages', {'parent': this.props.message.url});
+    var replies = store.findAll('messages', {'parent': this.props.message});
     var repliesView = function(){};
     if (!this.props.message) {
       return (<span />);

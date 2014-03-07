@@ -79,7 +79,7 @@ var MessageDetailView = React.createClass({
   render: function () {
     log.debug('MessageDetailView:render');
     // shortcuts
-    var message = this.state.message;
+    var message = store.find('messages', this.state.message);
     var user = store.find('users', message.user);
     var div = React.DOM.div;
     var img = React.DOM.img;
@@ -91,7 +91,7 @@ var MessageDetailView = React.createClass({
       'message-unread': !message.read,
       'message-collapsed': message.collapsed
     });
-    var avatar = gravatar.get(user.email)
+    var avatar = gravatar.get(user.email);
     return (
       div({'className': 'message-container'},
         div({'className': classes},
