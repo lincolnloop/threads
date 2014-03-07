@@ -23,31 +23,24 @@ var MessageDetailView = React.createClass({
     this.setState(state);
   },
   update: function() {
-    // update message from current value
-    var rawValue = this.refs.message.refs.comment.getRawValue();
-    var data = _.extend(_.clone(this.state.message), {'raw_body': rawValue});
-    // TODO: replace with an AJAX mixin
-    Backbone.ajax({
-      'url': this.state.message.url,
-      'type': 'PUT',
-      'data': data,
-      success: function(message) {
-        var updatedMessage = _.extend(_.clone(this.state.message), message);
-        this.setState({'message': updatedMessage, 'editing': false});
-      }.bind(this)
-    });
+    var data = {
+      'url': this.props.message,
+      'raw_body': this.refs.message.refs.comment.getRawValue()
+    }
+    store.update('messages', data).then(function() {
+      this.setState({'editing': false})
+    }.bind(this));
     return false;
   },
   handleVote: function(value) {
-    var message = this.state.message;
     // find if user already has a vote
-    var vote = _.find(this.state.message.votes, function(vote) {
+    var vote = store.find('votes', this.state.message.votes, function(vote) {
       return vote.user == localStorage.getItem('user');
     });
     if (!vote) {
       // create a new vote
       vote = {
-        'message': this.state.message.url,
+        'message': this.state.message,
         'value': '+1'
       }
       // TODO: Crossing should return a full url for some url groups
@@ -72,17 +65,15 @@ var MessageDetailView = React.createClass({
   },
   getInitialState: function () {
     return {
-      'editing': false,
-      'message': this.props.message
+      'editing': false
     };
   },
   render: function () {
-    log.debug('MessageDetailView:render');
+    log.debug('MessageDetailView:render', this.props.message);
     // shortcuts
-    var message = store.find('messages', this.state.message);
+    var message = this.props.message;
     var user = store.find('users', message.user);
     var div = React.DOM.div;
-    var img = React.DOM.img;
     // Get the correct MessageView based on `editing` state
     var MessageView = this.state.editing ? MessageEditView : MessageContentView;
     // main message classes
@@ -96,7 +87,7 @@ var MessageDetailView = React.createClass({
       div({'className': 'message-container'},
         div({'className': classes},
           div({'className': 'avatar'},
-            img({'src': avatar})
+            React.DOM.img({'src': avatar})
           ),
           div({'className': 'username', 'children': user.name}),
           div({'className': 'date', 'children': message.date_created}),
@@ -118,14 +109,6 @@ var MessageDetailView = React.createClass({
         )
       )
     );
-  },
-  shouldComponentUpdate: function (nextProps, nextState) {
-    // for performance testing reasons
-    return true;
-    return !(_.isEqual(this.state, nextState) &&
-         this.state.message.url === nextProps.message.url &&
-         this.state.message.body === nextProps.message.body &&
-         _.isEqual(this.state.message.votes, nextProps.message.votes));
   }
 });
 
