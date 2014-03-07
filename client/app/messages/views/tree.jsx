@@ -46,7 +46,6 @@ var MessageTreeView = React.createClass({
     };
   },
   render: function() {
-    log.debug('MessageTree:render', this.props.message);
     var replies = store.findAll('messages', {'parent': this.props.message.url});
     var repliesView = function(){};
     if (!this.props.message) {

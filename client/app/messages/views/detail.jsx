@@ -3,7 +3,6 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
-var log = require('loglevel');
 var store = require('../../store');
 var gravatar = require('../../utils/gravatar');
 var MessageEditView = require('./edit');
@@ -53,15 +52,6 @@ var MessageDetailView = React.createClass({
         // update current vote
       }
     }
-    /*
-    if (this.userVote.value === value) {
-      message.votes.remove(vote);
-      vote.destroy();
-    } else {
-      vote.set('value', value);
-      message.votes.add(vote, {merge: true});
-      vote.save({});
-    }*/
   },
   getInitialState: function () {
     return {
@@ -69,7 +59,6 @@ var MessageDetailView = React.createClass({
     };
   },
   render: function () {
-    log.debug('MessageDetailView:render', this.props.message);
     // shortcuts
     var message = this.props.message;
     var user = store.find('users', message.user);

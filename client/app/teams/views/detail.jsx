@@ -55,7 +55,6 @@ var TeamDetail = React.createClass({
         'limit': limit
       },
       success: function (collection) {
-        log.debug(collection.length);
         // triggers the display of any out-of-order discussions that are now in order
         // enables endless scroller on the last one
         this.setState({

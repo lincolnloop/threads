@@ -17,7 +17,6 @@ var MessageTreeView = require('../../messages/views/tree');
 var DiscussionDetailView = React.createClass({
 
   render: function() {
-    console.log('DiscussionDetailView:render', message);
     var message = store.find('messages', this.state.discussion.message);
     var MessageTree = function() {};
     if (message) {
