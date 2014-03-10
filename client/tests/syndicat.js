@@ -103,7 +103,7 @@ describe('Syndicat Tests', function() {
 
   describe('#find()', function() {
 
-    it('can find teams', function() {
+    it('can find by id', function() {
       expect(
         store.find('teams', '/api/v2/team/9/').name
       ).to.equal('Test Sandbox');
