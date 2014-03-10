@@ -1,10 +1,9 @@
 'use strict';
 
 var React = require('react');
-var Discussion = require('../models/Discussion');
 var MarkdownView = require('../../messages/views/markdown');
 var router = require('../../router');
-
+var store = require('../../store');
 
 var DiscussionCreateView = React.createClass({
 
@@ -21,12 +20,18 @@ var DiscussionCreateView = React.createClass({
 
   submit: function (evt) {
     var title = this.refs.title.getDOMNode().value;
-    var discussion = new Discussion({
-      title: title,
-      message: {
-        'raw_body': this.refs.comment.getRawValue()
+    store.add('discussions', {
+      'title': title,
+      'message': {
+        'raw_body': this.refs.comment.getRawValue(),
+        'user': localStorage.getItem('user')
       },
-      team: this.props.team
+      'team': this.props.team
+    });
+    return false;
+    /*
+    var discussion = new Discussion({
+      
     });
     evt.preventDefault();
     // save the newly created discussion instance
@@ -42,6 +47,7 @@ var DiscussionCreateView = React.createClass({
           {'trigger': true});
       }.bind(this)
     });
+*/
   }
 
 });

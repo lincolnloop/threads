@@ -152,7 +152,8 @@ var Syndicat = function(schema) {
     var settings = {
       'type': 'POST',
       'url': options && options.url ? options.url : this._getURI(type),
-      'data': object
+      'data': JSON.stringify(object),
+      'contentType': 'application/json'
     };
     return backbone.ajax(settings).always(_.partial(this._set, type).bind(this));
   };

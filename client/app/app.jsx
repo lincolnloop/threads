@@ -173,8 +173,8 @@ var AppView = React.createClass({
       'transitionName': 'content',
       'component': React.DOM.div,
       'children': DiscussionCreateView({
-        'team': team.get('url'),
-        'key': 'create-' + team.get('slug')
+        'team': team.url,
+        'key': 'create-' + team.slug
       })
     });
     // TODO: Move topNav to it's own *catch all* route
@@ -182,7 +182,7 @@ var AppView = React.createClass({
     this.setState({
       'content': content,
       'topNav': Nav({
-        'title': team.get('name'),
+        'title': team.name,
         'toggleTeamNav': this.toggleTeamNav,
         'team': team
       })
