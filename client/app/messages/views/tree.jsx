@@ -26,18 +26,9 @@ var MessageTreeView = React.createClass({
       'read': true,
       'user': localStorage.getItem('user')
     };
-    Backbone.ajax({
-      'url': urls.get('api:message'),
-      'type': 'POST',
-      'data': data,
-      success: function(reply) {
-        var replies = _.clone(this.state.replies);
-        replies.push(reply);
-        this.setState({'replies': replies, 'replying': false});
-      }.bind(this)
-    });
-    // save a reply
-    log.debug('save reply');
+    store.add('messages', data).then(function() {
+      this.setState({'replying': false});
+    }.bind(this));
     return false;
   },
   getInitialState: function() {
