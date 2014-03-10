@@ -172,7 +172,8 @@ var Syndicat = function(schema) {
     var settings = {
       'type': 'PUT',
       'url': object.url,
-      'data': object
+      'data': JSON.stringify(object),
+      'contentType': 'application/json'
     };
     return backbone.ajax(settings).always(_.partial(this._set, type).bind(this));
   };
@@ -186,7 +187,8 @@ var Syndicat = function(schema) {
     var settings = {
       'type': 'DELETE',
       'url': object.url,
-      'data': object
+      'data': JSON.stringify(object),
+      'contentType': 'application/json'
     };
     return backbone.ajax(settings).always(_.partial(this._remove, type).bind(this));
   };

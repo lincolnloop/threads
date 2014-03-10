@@ -24,11 +24,11 @@ var MessageDetailView = React.createClass({
   },
   update: function() {
     var data = {
-      'url': this.props.message,
+      'url': this.props.message.url,
       'raw_body': this.refs.message.refs.comment.getRawValue()
     }
     store.update('messages', data).then(function() {
-      this.setState({'editing': false})
+      this.setState({'editing': false});
     }.bind(this));
     return false;
   },
