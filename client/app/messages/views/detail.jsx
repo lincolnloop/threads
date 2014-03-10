@@ -33,9 +33,15 @@ var MessageDetailView = React.createClass({
   },
   handleVote: function(value) {
     // find if user already has a vote
-    var vote = store.find('votes', this.state.message.votes, function(vote) {
-      return vote.user == localStorage.getItem('user');
-    });
+    var vote = _.find(this.props.message.votes, function(voteId) {
+      // clone vote so we don't change the store object when doing vote.user = 'user';
+      // TODO: The store should handle this.
+      return store.find('votes', {
+        'url': voteId, 
+        'user': localStorage.getItem('user')
+      });
+    }.bind(this));
+
     if (!vote) {
       // create a new vote
       vote = {
@@ -43,13 +49,18 @@ var MessageDetailView = React.createClass({
         'value': '+1'
       }
       // TODO: Crossing should return a full url for some url groups
-      var url = clientconfig.apiUrl + urls.get('api:vote', {'message_id': this.state.message.id});
+      var url = clientconfig.apiUrl + urls.get('api:vote', {'message_id': this.props.message.id});
       store.add('votes', vote, {'url': url});
     } else {
-      if (vote.value === value ) {
+      var vote = store.find('votes', vote);
+      if (vote.value === value) {
         store.remove('votes', vote);
       } else {
         // update current vote
+        store.update('votes', {
+          'url': vote,
+          'value': value
+        });
       }
     }
   },
@@ -61,6 +72,13 @@ var MessageDetailView = React.createClass({
   render: function () {
     // shortcuts
     var message = this.props.message;
+    var votes = _.map(this.props.message.votes, function(voteId) {
+      // clone vote so we don't change the store object when doing vote.user = 'user';
+      // TODO: The store should handle this.
+      var vote = _.clone(store.find('votes', voteId));
+      vote.user = store.find('users', vote.user);
+      return vote;
+    });
     var user = store.find('users', message.user);
     var div = React.DOM.div;
     // Get the correct MessageView based on `editing` state
@@ -83,6 +101,7 @@ var MessageDetailView = React.createClass({
           MessageView({
             'ref': 'message',
             'message': message,
+            'votes': votes,
             // TODO: we only need the discussion here because of votes
             // and that should not rely on the discussion at all
             'discussion': this.props.discussion,

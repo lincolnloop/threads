@@ -15,8 +15,8 @@ var MessageContentView = React.createClass({
           'dangerouslySetInnerHTML': {__html: this.props.message.body}
         }),
         // TODO: Split upvotes and downvotes
-        !this.props.message.votes.length ? function() {} : VotesListView({
-            'votes': this.props.message.votes
+        !this.props.votes.length ? function() {} : VotesListView({
+            'votes': this.props.votes
           }),
         MessageActionsView({
           'handleReplyClick': this.props.handleReplyClick,

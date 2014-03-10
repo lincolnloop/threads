@@ -54,6 +54,13 @@ var MessageTreeView = React.createClass({
     if (replies && replies.length) {
       repliesView = React.DOM.div({className: "message-children"},
           _.map(replies, function(message) {
+            var votes = _.map(this.props.message.votes, function(voteId) {
+              // clone vote so we don't change the store object when doing vote.user = 'user';
+              // TODO: The store should handle this.
+              var vote = _.clone(store.find('votes', voteId));
+              vote.user = store.find('users', vote.user);
+              return vote;
+            });
           // recursively using JSX causes issues. Falling back to regular JS.
           return MessageTreeView({
             'key': message.url,
