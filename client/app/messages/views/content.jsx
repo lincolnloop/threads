@@ -14,7 +14,6 @@ var MessageContentView = React.createClass({
           'className': 'content',
           'dangerouslySetInnerHTML': {__html: this.props.message.body}
         }),
-        // TODO: Split upvotes and downvotes
         !this.props.votes.length ? function() {} : VotesListView({
             'votes': this.props.votes
           }),
@@ -26,10 +25,6 @@ var MessageContentView = React.createClass({
         })
       )
     );
-  },
-
-  shouldComponentUpdate: function (nextProps) {
-    return this.props.message.body !== nextProps.message.body;
   }
 
 });

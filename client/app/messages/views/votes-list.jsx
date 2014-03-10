@@ -5,6 +5,7 @@ var React = require('react');
 
 var VotesListView = React.createClass({
   render: function () {
+    console.log('VotesListView', this.props.votes);
     // votes should be objects that contain all the needed context
     return React.DOM.span({'className': 'votes-list'},
       _.map(this.props.votes, function(vote, counter, list) {

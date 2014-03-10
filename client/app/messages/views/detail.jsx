@@ -9,6 +9,7 @@ var MessageEditView = require('./edit');
 var MessageContentView = require('./content');
 var urls = require('../../urls');
 var clientconfig = require('clientconfig');
+var log = require('loglevel');
 
 require('react/addons');
 
@@ -32,8 +33,9 @@ var MessageDetailView = React.createClass({
     return false;
   },
   handleVote: function(value) {
+    var message = store.find('messages', this.props.message.url);
     // find if user already has a vote
-    var vote = _.find(this.props.message.votes, function(voteId) {
+    var vote = _.find(message.votes, function(voteId) {
       // clone vote so we don't change the store object when doing vote.user = 'user';
       // TODO: The store should handle this.
       return store.find('votes', {
@@ -45,24 +47,46 @@ var MessageDetailView = React.createClass({
     if (!vote) {
       // create a new vote
       vote = {
-        'message': this.state.message,
+        'message': this.props.message.url,
         'value': '+1'
       }
       // TODO: Crossing should return a full url for some url groups
       var url = clientconfig.apiUrl + urls.get('api:vote', {'message_id': this.props.message.id});
-      store.add('votes', vote, {'url': url});
+      store.add('votes', vote, {'url': url}).then(function() {
+          return store.get('messages', null, {'url': this.props.message.url});
+        }.bind(this)).then(function() {
+          this.forceUpdate();
+        }.bind(this));
     } else {
       var vote = store.find('votes', vote);
       if (vote.value === value) {
-        store.remove('votes', vote);
+        store.remove('votes', vote).then(function() {
+          return store.get('messages', null, {'url': this.props.message.url});
+        }.bind(this)).then(function() {
+          this.forceUpdate();
+        }.bind(this));
       } else {
         // update current vote
         store.update('votes', {
           'url': vote,
           'value': value
-        });
+        }).then(function() {
+          this.forceUpdate();
+        }.bind(this));
       }
     }
+  },
+  updateVotes: function() {
+    var message = store.find('messages', this.props.message.url);
+    var votes = _.map(message.votes, function(voteId) {
+      // clone vote so we don't change the store object when doing vote.user = 'user';
+      // TODO: The store should handle this.
+      // TODO: Split upvotes and downvotes
+      var vote = _.clone(store.find('votes', voteId));
+      vote.user = store.find('users', vote.user);
+      return vote;
+    });
+    this.setState({'votes': votes});
   },
   getInitialState: function () {
     return {
@@ -71,14 +95,16 @@ var MessageDetailView = React.createClass({
   },
   render: function () {
     // shortcuts
-    var message = this.props.message;
-    var votes = _.map(this.props.message.votes, function(voteId) {
+    var message = store.find('messages', this.props.message.url);
+    var votes = _.map(message.votes, function(voteId) {
       // clone vote so we don't change the store object when doing vote.user = 'user';
       // TODO: The store should handle this.
+      // TODO: Split upvotes and downvotes
       var vote = _.clone(store.find('votes', voteId));
       vote.user = store.find('users', vote.user);
       return vote;
     });
+    log.debug('message:detail:render', votes);
     var user = store.find('users', message.user);
     var div = React.DOM.div;
     // Get the correct MessageView based on `editing` state
