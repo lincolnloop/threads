@@ -9,19 +9,19 @@
   "version": "0.1.0",
   "main": "./client/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec --ui bdd client/tests/syndicat.js"
+    "test": "mocha --reporter spec --ui bdd client/tests/syndicat.js"
   },
   "testling": {
     "harness": "mocha-bdd",
     "files": "client/tests/syndicat.js",
     "browsers": [
-      "ie/6..latest",
-      "chrome/22..latest",
-      "firefox/16..latest",
+      "ie/latest",
+      "chrome/latest",
+      "firefox/latest",
       "safari/latest",
-      "opera/11.0..latest",
-      "iphone/6",
-      "ipad/6",
+      "opera/latest",
+      "iphone/latest",
+      "ipad/latest",
       "android-browser/latest"
     ]
   },
