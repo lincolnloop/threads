@@ -9,7 +9,6 @@ var DiscussionListView = require('../../discussions/views/list');
 // TODO: Shim or fork inViewport to this is supported
 require('in-viewport');
 
-
 var TeamDetail = React.createClass({
 
   render: function() {
