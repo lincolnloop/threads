@@ -49,11 +49,9 @@ store.fetch = function() {
   // Get common data using RSVP.hash() to manage multiple promises.
   RSVP.hash({
     'userUri': fetch.userUri(),
-    'teams': fetch.teams(),
+    'teams': this.get('teams'),
     'users': this.get('users')
   }).then(function(results) {
-    // TODO: use setters and getters
-    this._store.teams = results.teams;
     // TODO: Move this somewhere else
     // We don't need to set/fetch this data if it already exists
     localStorage.setItem('user', results.userUri);
@@ -71,4 +69,5 @@ store.fetch = function() {
   }.bind(this));
 };
 
-module.exports = store;
+// TODO: remove window.store once it is stable
+module.exports = window.store = store;

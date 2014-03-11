@@ -86,6 +86,12 @@ describe('Syndicat Tests', function() {
       ).to.not.equal(-1);
     });
 
+    it ('replaces objects by id\'s in foreign-key relations', function() {
+      expect(
+        store._store.discussions['/api/v2/discussion/595/'].message
+      ).to.equal('/api/v2/message/3798/');
+    });
+
     it ('uses data parsers when they are defined', function() {
       // discussions have a non-standard data structure due to pagintation,
       // so the schema provides a `parse` method.
@@ -95,12 +101,35 @@ describe('Syndicat Tests', function() {
 
   });
 
+  describe('#findAll()', function() {
+
+    it('can find a list of type', function() {
+      expect(
+        store.findAll('discussions')
+      ).to.have.length(4);
+    });
+
+
+    it('can find a list of type with filters', function() {
+      expect(
+        store.findAll('discussions', {'intro': 'unicode'})
+      ).to.have.length(1);
+    });
+
+  });
+
   describe('#find()', function() {
 
-    it('can find teams', function() {
+    it('can find an object by id', function() {
       expect(
         store.find('teams', '/api/v2/team/9/').name
       ).to.equal('Test Sandbox');
+    });
+
+    it('can find an object with filters', function() {
+      expect(
+        store.find('discussions', {'intro': 'unicode'}).title
+      ).to.equal('unicode');
     });
 
   });

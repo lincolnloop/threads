@@ -26,7 +26,14 @@ module.exports = {
         "permalink":"/test-sandbox/595/bleep-bloop/",
         "read":true,
         "user":"/api/v2/user/66238278d2ce670dcb448f96258dc732/",
-        "votes":[]
+        "votes":[
+          {
+            "url": "/api/v2/message/3252/vote/60617b03-1663-4595-a90e-a8197fe668af/",
+            "user": "/api/v2/user/c17ec52b925fc0fe2f4eadf1f10b0bf7/",
+            "value": "+1",
+            "date_created": "2011-10-20T16:29:07.639"
+          }
+        ]
       }
     },
     {

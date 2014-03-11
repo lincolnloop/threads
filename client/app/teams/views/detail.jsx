@@ -9,15 +9,11 @@ var DiscussionListView = require('../../discussions/views/list');
 // TODO: Shim or fork inViewport to this is supported
 require('in-viewport');
 
-
 var TeamDetail = React.createClass({
 
   render: function() {
     var team = this.props.team;
-    var createDiscussionUrl;
-    // get create discussion url
-    // TODO: figure out a better, maybe one-liner, API
-    createDiscussionUrl = '/' + urls.get('discussion:create:team', {
+    var createDiscussionUrl = urls.get('discussion:create:team', {
       team_slug: team.slug
     });
     return (
@@ -29,30 +25,17 @@ var TeamDetail = React.createClass({
     );
   },
 
-  getDiscussions: function() {
-    // Gets discussion data from our in-memory storage
-    // and updates the component state.
+  setDiscussions: function() {
+    var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
     this.setState({
-      discussions: this.team.discussions.serialized()
+      'discussions': discussions
     });
   },
 
   fetchDiscussions: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
-    if (this.team.discussions.fetched) {
-      // Do nothing if the initial discussions were already fetched
-      // NOTE: This only works if we have realtime updates (!)
-      return false;
-    }
-    this.team.discussions.fetch({
-      remove: false,
-      success: function (collection, response) {
-        this.setState({
-          discussions: response.results
-        });
-      }.bind(this)
-    });
+    store.get('discussions', {'team__slug': this.props.team.slug}).then(this.setDiscussions);
   },
 
   fetchDiscussionsPagination: function() {
@@ -71,7 +54,6 @@ var TeamDetail = React.createClass({
         'limit': limit
       },
       success: function (collection) {
-        log.debug(collection.length);
         // triggers the display of any out-of-order discussions that are now in order
         // enables endless scroller on the last one
         this.setState({
@@ -93,23 +75,16 @@ var TeamDetail = React.createClass({
   getInitialState: function() {
     // We don't need teams stored in state
     // since they don't really change that much (for now).
-    this.team = store.findObject('teams', {url: this.props.team.url});
     return {
-      discussions: [],
       // last discussion element
-      lastItemEl: undefined
+      lastItemEl: undefined,
+      // pageSize = 20
+      page: 1
     };
   },
 
   componentWillMount: function() {
-    // Get in-memory discussions on first load.
-    // React recommends doing AJAX calls on componentDidMount,
-    // so we keep these separate.
-    this.getDiscussions(this.props.team.url);
-  },
-
-  componentWillUpdate: function() {
-    // mark the last item in the list as a prop
+    this.setDiscussions();
   },
 
   componentDidMount: function() {
@@ -121,7 +96,8 @@ var TeamDetail = React.createClass({
     // endless scroll setup
     var lastItemEl = this.getLastDiscussionNode();
     // can't call inViewport directly because it's not a CommonJS module
-    window.inViewport(lastItemEl, this.fetchDiscussionsPagination);
+    // TODO: Endless scrolling/pagination
+    //window.inViewport(lastItemEl, this.fetchDiscussionsPagination);
   },
 
   componentWillReceiveProps: function(nextProps) {
@@ -129,8 +105,6 @@ var TeamDetail = React.createClass({
     // NOTE: If we had realtime, we could rely on our memory storage only
     // Because we don't, we need data from both local and remote storage.
     if (this.props.team.url !== nextProps.team.url) {
-      this.team = store.findObject('teams', {'url': nextProps.team.url});
-      this.getDiscussions();
       this.fetchDiscussions();
     }
   },

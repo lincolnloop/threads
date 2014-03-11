@@ -5,6 +5,7 @@ var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var urls = require('../../urls');
+var store = require('../../store');
 var MessageDetailView = require('./detail');
 var MessageReplyView = require('./reply');
 
@@ -25,41 +26,32 @@ var MessageTreeView = React.createClass({
       'read': true,
       'user': localStorage.getItem('user')
     };
-    Backbone.ajax({
-      'url': urls.get('api:message'),
-      'type': 'POST',
-      'data': data,
-      success: function(reply) {
-        var replies = _.clone(this.state.replies);
-        replies.push(reply);
-        this.setState({'replies': replies, 'replying': false});
-      }.bind(this)
-    });
-    // save a reply
-    log.debug('save reply');
+    store.add('messages', data).then(function() {
+      this.setState({'replying': false});
+    }.bind(this));
     return false;
   },
   getInitialState: function() {
-    var replies = [];
-    if (this.props.message && this.props.message.children) {
-      replies = this.props.message.children;
-    }
     return {
-      'replying': false,
-      'replies': replies
+      'replying': false
     };
   },
   render: function() {
-    log.debug('MessageTree:render');
+    var replies = store.findAll('messages', {'parent': this.props.message.url});
     var repliesView = function(){};
-    // Get the ReplyView (or an empty render) based on `replying` state
-    var ReplyView = this.state.replying ? MessageReplyView : function(){};
     if (!this.props.message) {
       return (<span />);
     }
-    if (this.state.replies.length) {
+    if (replies && replies.length) {
       repliesView = React.DOM.div({className: "message-children"},
-          this.state.replies.map(function(message) {
+          _.map(replies, function(message) {
+            var votes = _.map(this.props.message.votes, function(voteId) {
+              // clone vote so we don't change the store object when doing vote.user = 'user';
+              // TODO: The store should handle this.
+              var vote = _.clone(store.find('votes', voteId));
+              vote.user = store.find('users', vote.user);
+              return vote;
+            });
           // recursively using JSX causes issues. Falling back to regular JS.
           return MessageTreeView({
             'key': message.url,
@@ -70,6 +62,8 @@ var MessageTreeView = React.createClass({
         }.bind(this))
       );
     }
+    // Get the ReplyView (or an empty render) based on `replying` state
+    var ReplyView = this.state.replying ? MessageReplyView : function(){};
     return (
       React.DOM.div({'className': 'message'},
         MessageDetailView({
@@ -87,23 +81,7 @@ var MessageTreeView = React.createClass({
         repliesView
       )
     );
-  },
-  componentWillUpdate: function() {
-    var profileLabel = 'MessageTree: ' + this.props.message.url;
-    console.log('componentWillUpdate');
-    console.profile(profileLabel);
-    console.time(profileLabel);
-  },
-  componentDidUpdate: function() {
-    var profileLabel = 'MessageTree: ' + this.props.message.url;
-    console.log('componentDidUpdate');
-    console.timeEnd(profileLabel);
-    console.profileEnd(profileLabel);
-  },
-  componentWillReceiveProps: function(nextProps) {
-    // update replies state
-    this.setState({replies: nextProps.message.children});
-  },
+  }
   // maybe we don't need this
   // shouldComponentUpdate: function(nextProps, nextState) {
 

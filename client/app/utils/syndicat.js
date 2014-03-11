@@ -1,6 +1,5 @@
 'use strict';
 
-
 var _ = require('underscore');
 // TODO: backbone dependency is temporary until we find a better ajax lib
 var backbone = require('backbone');
@@ -58,31 +57,53 @@ var Syndicat = function(schema) {
       response = schema.parse ? schema.parse(response) : [response];
     }
 
-    response.forEach(function(item) {
+    if (Object.prototype.toString.call(response) === '[object Object]') {
+      response = [response];
+    }
+    _.each(response, function(obj) {
       // handle oneToMany relations
-      _.each(this._schema[type].oneToMany, function(relationType, attr) {
-        var relationItems = item[attr];
-        // check if item has an attr that is defined as a relation
-        if (relationItems) {
+      _.each(this._schema[type].oneToMany, function(relatedType, relatedAttr) {
+        var related = obj[relatedAttr];
+        // check if obj has a `relatedAttr` that is defined as a relation
+        if (related) {
           // check if attr value is an array,
           // if it's not empty, and if the content is an object and not a string
-          if (Object.prototype.toString.call(relationItems) === '[object Array]' &&
-            relationItems.length > 0 &&
-            Object.prototype.toString.call(relationItems[0]) === '[object Object]') {
-            // if relationItems is a list of objects,
+          if (Object.prototype.toString.call(related) === '[object Array]' &&
+            related.length > 0 &&
+            Object.prototype.toString.call(related[0]) === '[object Object]') {
+            // if related is a list of objects,
             // populate the relation `table` with this data
-            this._set(relationType, relationItems);
-            // and replace the list of objects within `item`
+            this._set(relatedType, related);
+            // and replace the list of objects within `obj`
             // by a list of `id's
-            item[attr] = _.map(relationItems, function(relationItem) {
-              return relationItem[this._schema.idAttribute];
+            obj[relatedAttr] = _.map(related, function(item) {
+              return item[this._schema.idAttribute];
             }.bind(this));
           }
         }
       }.bind(this));
 
-      // TODO: compare objects and trigger change events
-      store[item[this._schema.idAttribute]] = item;
+      // handle foreignKey relations
+      _.each(this._schema[type].foreignKey, function(relatedType, relatedAttr) {
+        var related = obj[relatedAttr];
+        // check if obj has a `relatedAttr` that is defined as a relation
+        if (related) {
+          // check if `obj[relatedAttr]` value is an object (FK should not be arrays),
+          // if it's not empty, and if the content is an object and not a string
+          if (Object.prototype.toString.call(related) === '[object Object]') {
+            // if related is an object,
+            // populate the relation `table` with this data
+            this._set(relatedType, [related]);
+            // and replace the list of objects within `item`
+            // by a list of `id's
+            obj[relatedAttr] = related[this._schema.idAttribute];
+          }
+        }
+      }.bind(this));
+
+      // store the object under this._store['type']['id']
+      store[obj[this._schema.idAttribute]] = obj;
+      // TODO: compare the previous object and trigger change events
 
     }.bind(this));
   };
@@ -131,7 +152,8 @@ var Syndicat = function(schema) {
     var settings = {
       'type': 'POST',
       'url': options && options.url ? options.url : this._getURI(type),
-      'data': object
+      'data': JSON.stringify(object),
+      'contentType': 'application/json'
     };
     return backbone.ajax(settings).always(_.partial(this._set, type).bind(this));
   };
@@ -150,7 +172,8 @@ var Syndicat = function(schema) {
     var settings = {
       'type': 'PUT',
       'url': object.url,
-      'data': object
+      'data': JSON.stringify(object),
+      'contentType': 'application/json'
     };
     return backbone.ajax(settings).always(_.partial(this._set, type).bind(this));
   };
@@ -164,7 +187,8 @@ var Syndicat = function(schema) {
     var settings = {
       'type': 'DELETE',
       'url': object.url,
-      'data': object
+      'data': JSON.stringify(object),
+      'contentType': 'application/json'
     };
     return backbone.ajax(settings).always(_.partial(this._remove, type).bind(this));
   };
@@ -172,40 +196,35 @@ var Syndicat = function(schema) {
   // ------------------------------
   // Public query methods
   // ------------------------------
-  this.findAllObjects = function(type) {
-    // TODO: `getObject` method, returns a Backbone object
-    // we should not need this as a `public` method,
-    // but it will have to do for now.
-    return this._store[type] ? this._store[type]: undefined;
-  };
-
-  this.findAll = function(type) {
-    // External `get` method, returns a serialized Backbone object
-    var item = this.findAllObjects(type);
-    return item ? item.serialized() : item;
-  };
-
-  this.findObject = function(type, kwargs) {
-    // find a specific item within a collection
-    var item = this.findAllObjects(type);
-    if (!(item && item.length)) {
-      // no match, or not a collection
-      return null;
+  this.findAll = function(type, query) {
+    // find a list of items within the store. (THAT ARE NOT STORED IN BACKBONE COLLECTIONS)
+    var store = this._store[type];
+    if (!store || !Object.keys(store).length) {
+      return [];
     }
-    // if there is a type match, and is a collection
-    return item.findWhere(kwargs);
-
+    if (query === undefined) {
+      // query is empty, no object is returned
+      return _.map(store, function(item) { return item; });
+    } else if (Object.prototype.toString.call(query) === '[object Object]') {
+      // if query is an object, assume it specifies filters.
+      return _.filter(store, function(item) { return _.findWhere([item], query); });
+    } else {
+      throw new Error('Invalid query for findAll.');
+    }
   };
 
   this.find = function(type, query) {
-    // find items within the store. (THAT ARE NOT STORED IN BACKBONE COLLECTIONS)
+    // find a specific within the store. (THAT ARE NOT STORED IN BACKBONE COLLECTIONS)
     var store = this._store[type];
     if (!store || !Object.keys(store).length) {
       return undefined;
     }
-    if (Object.prototype.toString.call(query) === '[object Object]') {
-      // if query is an object, assume it specifies filters.
-      // TODO
+    if (query === undefined) {
+      // query is empty, no object is returned
+      return  undefined;
+    } else if (Object.prototype.toString.call(query) === '[object Object]') {
+      // if query is an object, return the first match for the query
+      return _.findWhere(store, query);
     } else if (Object.prototype.toString.call(query) === '[object String]') {
       // if query is a String, assume it stores the key/url value
       return store[query];

@@ -1,10 +1,10 @@
 'use strict';
 
 var React = require('react');
-var Discussion = require('../models/Discussion');
 var MarkdownView = require('../../messages/views/markdown');
 var router = require('../../router');
-
+var store = require('../../store');
+var urls = require('../../urls');
 
 var DiscussionCreateView = React.createClass({
 
@@ -21,27 +21,23 @@ var DiscussionCreateView = React.createClass({
 
   submit: function (evt) {
     var title = this.refs.title.getDOMNode().value;
-    var discussion = new Discussion({
-      title: title,
-      message: {
-        'raw_body': this.refs.comment.getRawValue()
+    store.add('discussions', {
+      'title': title,
+      'message': {
+        'raw_body': this.refs.comment.getRawValue(),
+        'user': localStorage.getItem('user')
       },
-      team: this.props.team
+      'team': this.props.team
+    }).then(function(response) {
+      var team = store.find('teams', response.team);
+      var url = urls.get('discussion:detail', {
+        'team_slug': team.slug,
+        'discussion_id': response.id,
+        'slug': response.slug
+      });
+      router.navigate(url, {'trigger': true});
     });
-    evt.preventDefault();
-    // save the newly created discussion instance
-    // and redirect on success
-    discussion.save({}, {
-      success: function (discussion) {
-        // get discussion list from local storage
-        var discussions = window.data.teams.get(this.props.team).discussions;
-        // add discussion to local storage
-        discussions.add(discussion);
-        // redirect to discussion detail page
-        router.navigate(discussion.get('message').permalink,
-          {'trigger': true});
-      }.bind(this)
-    });
+    return false;
   }
 
 });

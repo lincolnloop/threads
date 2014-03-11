@@ -21,6 +21,7 @@ var SignInView = require('./auth/views/sign-in');
 // team views
 var OrganizationList = require('./teams/views/organization-list');
 var TeamDetailView = require('./teams/views/detail');
+var teamUtils = require('./teams/utils');
 
 // discussion views
 var DiscussionDetailView = require('./discussions/views/detail');
@@ -28,10 +29,11 @@ var DiscussionCreateView = require('./discussions/views/create');
 
 
 var AppView = React.createClass({
-  mixins: [Events],
 
   render: function() {
     log.debug('AppView:render', this.state);
+    var teams = store.findAll('teams');
+    var organizations = teamUtils.groupByOrganizations(teams);
 
     if (this.state.initialized && !this.state.authenticated) {
       // Show the SignIn view
@@ -43,7 +45,7 @@ var AppView = React.createClass({
     var orgList = '';
     if (this.state.initialized) {
       orgList = (
-        <OrganizationList organizations={this.state.teams} />
+        <OrganizationList organizations={organizations} />
       );
     }
 
@@ -66,8 +68,7 @@ var AppView = React.createClass({
     // Initial data fetch success > refresh app
     this.setState({
       'initialized': true,
-      'authenticated': true,
-      'teams': store.findAll('teams')
+      'authenticated': true
     });
     // start history
     Backbone.history.start({pushState: true});
@@ -120,7 +121,9 @@ var AppView = React.createClass({
   // pages
   index: function() {
     log.debug('main:index');
-    this.render();  // TODO: This doesn't actually do anything, does it?
+    this.setState({
+      'content': React.DOM.div()
+    })
   },
 
   signIn: function() {
@@ -140,7 +143,7 @@ var AppView = React.createClass({
 
   teamDetail: function(teamSlug) {
     log.debug('team:detail');
-    var team = store.findObject('teams', {slug: teamSlug}).serialized();
+    var team = store.find('teams', {slug: teamSlug});
     // content > team discussion list view
     // TODO: We need to bootstrap teams on load
     var content = React.addons.TransitionGroup({
@@ -164,14 +167,14 @@ var AppView = React.createClass({
 
   discussionCreate: function (teamSlug) {
     log.debug('DiscussionRouter:create');
-    var team = store.findObject('teams', {slug: teamSlug}).serialized();
+    var team = store.find('teams', {slug: teamSlug});
     // content > create view
     var content = React.addons.TransitionGroup({
       'transitionName': 'content',
       'component': React.DOM.div,
       'children': DiscussionCreateView({
-        'team': team.get('url'),
-        'key': 'create-' + team.get('slug')
+        'team': team.url,
+        'key': 'create-' + team.slug
       })
     });
     // TODO: Move topNav to it's own *catch all* route
@@ -179,7 +182,7 @@ var AppView = React.createClass({
     this.setState({
       'content': content,
       'topNav': Nav({
-        'title': team.get('name'),
+        'title': team.name,
         'toggleTeamNav': this.toggleTeamNav,
         'team': team
       })
@@ -188,7 +191,7 @@ var AppView = React.createClass({
 
   discussionDetail: function(teamSlug, discussionId) {
     log.debug('discussion:detail');
-    var team = store.findObject('teams', {slug: teamSlug}).serialized();
+    var team = store.find('teams', {slug: teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
       'discussion_id': discussionId
     });
@@ -198,7 +201,7 @@ var AppView = React.createClass({
       'component': React.DOM.div,
       'children': DiscussionDetailView({
         'team': team,
-        'discussionUrl': discussionUrl,
+        'discussion': discussionUrl,
         'key': 'discussion-detail' + discussionUrl
       })
     });
