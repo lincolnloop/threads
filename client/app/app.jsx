@@ -7,7 +7,7 @@ var router = require('./router');
 var urls = require('./urls');
 var store = require('./store');
 var log = require('loglevel');
-var Events = require('./utils/mixins').Events;
+var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 
 // --------------------
 // Views
@@ -123,7 +123,7 @@ var AppView = React.createClass({
     log.debug('main:index');
     this.setState({
       'content': React.DOM.div()
-    })
+    });
   },
 
   signIn: function() {
@@ -146,7 +146,7 @@ var AppView = React.createClass({
     var team = store.find('teams', {slug: teamSlug});
     // content > team discussion list view
     // TODO: We need to bootstrap teams on load
-    var content = React.addons.TransitionGroup({
+    var content = CSSTransitionGroup({
       'transitionName': 'content',
       'component': React.DOM.div,
       'children': TeamDetailView({
@@ -169,7 +169,7 @@ var AppView = React.createClass({
     log.debug('DiscussionRouter:create');
     var team = store.find('teams', {slug: teamSlug});
     // content > create view
-    var content = React.addons.TransitionGroup({
+    var content = CSSTransitionGroup({
       'transitionName': 'content',
       'component': React.DOM.div,
       'children': DiscussionCreateView({
@@ -196,7 +196,7 @@ var AppView = React.createClass({
       'discussion_id': discussionId
     });
     // content > discussion detail view
-    var content = React.addons.TransitionGroup({
+    var content = CSSTransitionGroup({
       'transitionName': 'content',
       'component': React.DOM.div,
       'children': DiscussionDetailView({

@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var React = require('react');
+var classSet = require('react/lib/cx');
 
 var VotesView = React.createClass({
 
@@ -11,7 +12,7 @@ var VotesView = React.createClass({
 
   render: function() {
     var hasUpVote = this.state.vote === '+1';
-    var classNames = React.addons.classSet({
+    var classNames = classSet({
       'votes': true,
       'up-vote': hasUpVote
     });

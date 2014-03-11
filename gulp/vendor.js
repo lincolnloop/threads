@@ -16,6 +16,8 @@ var libs = [
   'loglevel',
   'MD5',
   'react',
+  'react/lib/ReactCSSTransitionGroup',
+  'react/lib/cx',
   'rsvp',
   'underscore',
 ];
@@ -23,8 +25,8 @@ var libs = [
 gulp.task('vendor', function() {
   var production = (process.env.NODE_ENV === 'production');
 
-  // Use React as the entry point, since it doesn't work without one
-  return gulp.src('./node_modules/react/react.js', {read: false})
+  // A dummy entry point for browserify
+  return gulp.src('./gulp/noop.js', {read: false})
 
     // Browserify it
     .pipe(browserify({
@@ -33,13 +35,9 @@ gulp.task('vendor', function() {
 
     .on('prebundle', function(bundle) {
       // Require vendor libraries and make them available outside the bundle.
-      // Omit React because we need to use the version with addons.
-      _.each(_.without(libs, 'react'), function(lib) {
+      _.each(libs, function(lib) {
         bundle.require(lib);
       });
-
-      // Export React with Addons as simply "react"
-      bundle.require('react/addons', {expose: 'react'});
     })
 
     // If this is a production build, minify it

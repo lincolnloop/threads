@@ -10,6 +10,7 @@ var MessageContentView = require('./content');
 var urls = require('../../urls');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
+var classSet = require('react/lib/cx');
 
 var MessageDetailView = React.createClass({
   changeState: function (key, value) {
@@ -108,7 +109,7 @@ var MessageDetailView = React.createClass({
     // Get the correct MessageView based on `editing` state
     var MessageView = this.state.editing ? MessageEditView : MessageContentView;
     // main message classes
-    var classes = React.addons.classSet({
+    var classes = classSet({
       'message-detail': true,
       'message-unread': !message.read,
       'message-collapsed': message.collapsed
