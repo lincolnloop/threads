@@ -9,7 +9,7 @@
   "version": "0.1.0",
   "main": "./client/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec --ui bdd client/tests/syndicat.js"
+    "test": "mocha --reporter spec --ui bdd client/tests/syndicat.js"
   },
   "testling": {
     "harness": "mocha-bdd",
