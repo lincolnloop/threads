@@ -9,10 +9,10 @@
   "version": "0.1.0",
   "main": "./client/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec --ui tdd client/tests/syndicat.js"
+    "test": "./node_modules/.bin/mocha --reporter spec --ui bdd client/tests/syndicat.js"
   },
   "testling": {
-    "harness": "mocha-tdd",
+    "harness": "mocha-bdd",
     "files": "client/tests/syndicat.js",
     "browsers": [
       "ie/6..latest",
