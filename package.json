@@ -26,19 +26,19 @@
     ]
   },
   "devDependencies": {
-    "browserify": "^3.32.0",
+    "browserify": "^3.32.1",
     "browserify-shim": "^3.3.1",
     "chai": "^1.9.0",
-    "express": "^3.4.8",
+    "express": "^3.5.0",
     "express-hbs": "^0.7.9",
     "font-awesome": "~4.0.3",
     "gulp": "^3.5.5",
-    "gulp-browserify": "^0.4.6",
+    "gulp-browserify": "^0.5.0",
     "gulp-clean": "^0.2.4",
     "gulp-connect": "^1.0.6",
     "gulp-jshint": "^1.5.0",
     "gulp-livereload": "^1.2.0",
-    "gulp-rename": "^1.1.0",
+    "gulp-rename": "^1.2.0",
     "gulp-sass": "^0.7.1",
     "gulp-template": "^0.1.1",
     "gulp-uglify": "^0.2.1",
@@ -49,10 +49,9 @@
     "node-neat": "~1.1.0",
     "reactify": "^0.9.1",
     "request": "~2.34.0",
-    "sinon": "^1.8.2"
+    "sinon": "^1.9.0"
   },
   "dependencies": {
-    "async": "~0.2.9",
     "backbone": "~1.1.0",
     "clientconfig": "0.0.4",
     "crossing": "~0.1.2",

@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = require('backbone');
 var React = require('react');
 var store = require('../../store');
 var gravatar = require('../../utils/gravatar');
@@ -10,8 +9,7 @@ var MessageContentView = require('./content');
 var urls = require('../../urls');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
-
-require('react/addons');
+var classSet = require('react/lib/cx');
 
 var MessageDetailView = React.createClass({
   changeState: function (key, value) {
@@ -26,7 +24,7 @@ var MessageDetailView = React.createClass({
     var data = {
       'url': this.props.message.url,
       'raw_body': this.refs.message.refs.comment.getRawValue()
-    }
+    };
     store.update('messages', data).then(function() {
       this.setState({'editing': false});
     }.bind(this));
@@ -39,7 +37,7 @@ var MessageDetailView = React.createClass({
       // clone vote so we don't change the store object when doing vote.user = 'user';
       // TODO: The store should handle this.
       return store.find('votes', {
-        'url': voteId, 
+        'url': voteId,
         'user': localStorage.getItem('user')
       });
     }.bind(this));
@@ -110,7 +108,7 @@ var MessageDetailView = React.createClass({
     // Get the correct MessageView based on `editing` state
     var MessageView = this.state.editing ? MessageEditView : MessageContentView;
     // main message classes
-    var classes = React.addons.classSet({
+    var classes = classSet({
       'message-detail': true,
       'message-unread': !message.read,
       'message-collapsed': message.collapsed

@@ -6,5 +6,5 @@ var gutil = require('gulp-util');
 gulp.task('serve', function() {
   var port = process.env.PORT || 8080;
   gutil.log(gutil.colors.bgGreen('Express listening on port ' + port + '...'));
-  app.listen(port);
+  app.start(port);
 });

@@ -1,6 +1,8 @@
 'use strict';
+var _ = require('underscore');
 var browserify = require('gulp-browserify');
 var gulp = require('gulp');
+var libs = require('./vendor').libs;
 var rename = require('gulp-rename');
 
 gulp.task('tests', function() {
@@ -13,9 +15,11 @@ gulp.task('tests', function() {
       extensions: ['.jsx']
     }))
 
-    .on('prebundle', function(bundler) {
-      // Make React available externally for dev tools
-      bundler.require('react');
+    .on('prebundle', function(bundle) {
+      // The following requirements are loaded from the vendor bundle
+      _.each(libs, function(lib) {
+        bundle.external(lib);
+      });
     })
 
     // Rename the destination file
