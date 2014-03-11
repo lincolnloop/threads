@@ -11,8 +11,6 @@ var urls = require('../../urls');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
 
-require('react/addons');
-
 var MessageDetailView = React.createClass({
   changeState: function (key, value) {
     // callback helper for `editing` state changes
@@ -39,7 +37,7 @@ var MessageDetailView = React.createClass({
       // clone vote so we don't change the store object when doing vote.user = 'user';
       // TODO: The store should handle this.
       return store.find('votes', {
-        'url': voteId, 
+        'url': voteId,
         'user': localStorage.getItem('user')
       });
     }.bind(this));

@@ -32,10 +32,14 @@ gulp.task('vendor', function() {
     }))
 
     .on('prebundle', function(bundle) {
-      // Require vendor libraries and make them available outside the bundle
-      _.each(libs, function(lib) {
+      // Require vendor libraries and make them available outside the bundle.
+      // Omit React because we need to use the version with addons.
+      _.each(_.without(libs, 'react'), function(lib) {
         bundle.require(lib);
       });
+
+      // Export React with Addons as simply "react"
+      bundle.require('react/addons', {expose: 'react'});
     })
 
     // If this is a production build, minify it
