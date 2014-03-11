@@ -12,6 +12,7 @@
     "test": "./node_modules/.bin/mocha --reporter spec --ui tdd client/tests/syndicat.js"
   },
   "testling": {
+    "harness": "mocha-tdd",
     "files": "client/tests/syndicat.js",
     "browsers": [
       "ie/6..latest",
