@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = require('backbone');
 var React = require('react');
 var store = require('../../store');
 var gravatar = require('../../utils/gravatar');
@@ -25,7 +24,7 @@ var MessageDetailView = React.createClass({
     var data = {
       'url': this.props.message.url,
       'raw_body': this.refs.message.refs.comment.getRawValue()
-    }
+    };
     store.update('messages', data).then(function() {
       this.setState({'editing': false});
     }.bind(this));
