@@ -10,8 +10,8 @@ var AppRouter = Backbone.Router.extend({
   */
   routes: {
     '': 'index',
-    'sign-in': 'signIn',
-    'sign-out': 'signOut',
+    'sign-in/': 'signIn',
+    'sign-out/': 'signOut',
     ':team/': 'team:detail',
     'discussion/create/:teamSlug/': 'team:create',
     ':teamSlug/:discussionId/:discussionSlug/': 'discussion:detail'

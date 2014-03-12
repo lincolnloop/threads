@@ -41,6 +41,8 @@ urls.load({
   'message:create': '/msg/<discussion_id>/',
   'team:detail': '/<slug>/',
   'team:edit': '/<slug>/edit/',
+  'signIn': '/sign-in/',
+  'signOut': '/sign-out/',
   'welcome': '/welcome/',
   'redirect': '/goto/?url=<url>',
   'loginRedirect': '/accounts/login/?next=<next>&logged_out=1'

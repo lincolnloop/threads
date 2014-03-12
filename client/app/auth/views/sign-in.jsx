@@ -14,12 +14,12 @@ var SignInView = React.createClass({
   addKey: function (apiKey) {
     localStorage.apiKey = apiKey;
   },
-  login: function (event) {
+  login: function (evt) {
     //
     // Store the API key in local storage,
     // and call success callback (app.fetchData)
     //
-    event.preventDefault();
+    evt.preventDefault();
     var apiKey = document.getElementById('api-key').value;
     if (apiKey.length !== 40) {
       this.setState({error: 'Invalid API Key'});

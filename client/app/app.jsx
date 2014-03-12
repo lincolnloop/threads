@@ -1,6 +1,7 @@
 'use strict';
 
 var $ = require('jquery');
+var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
 var router = require('./router');
@@ -34,24 +35,17 @@ var AppView = React.createClass({
     log.debug('AppView:render', this.state);
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
+    var orgListView = '';
 
-    if (this.state.initialized && !this.state.authenticated) {
-      // Show the SignIn view
-      return (
-        <SignInView success={this.refreshData} />
-      );
-    }
-
-    var orgList = '';
-    if (this.state.initialized) {
-      orgList = (
+    if (organizations && organizations.length) {
+      orgListView = (
         <OrganizationList organizations={organizations} />
       );
     }
 
     return (
       <div className="main">
-        <nav id="sidebar">{orgList}</nav>
+        <nav id="sidebar">{orgListView}</nav>
         <div id="content">
           {this.state.content}
         </div>
@@ -65,22 +59,17 @@ var AppView = React.createClass({
   },
 
   startSuccess: function() {
-    // Initial data fetch success > refresh app
-    this.setState({
-      'initialized': true,
-      'authenticated': true
-    });
     // start history
     Backbone.history.start({pushState: true});
   },
 
   startFailed: function() {
+    console.log('startFailed');
     // Initial data fetch failed.
     // For now, we just assume sign in error.
-    this.setState({
-      'initialized': true,
-      'authenticated': false
-    });
+    // redirect to sign-in page
+    // TODO: Handle querystring
+    this.signIn();
   },
 
   getInitialState: function() {
@@ -89,8 +78,6 @@ var AppView = React.createClass({
         'toggleTeamNav': this.toggleTeamNav
       }),
       'content': '',
-      'initialized': false,
-      'authenticated': false,
       // TODO: Collection and User instances should not
       // be stored in state.
       'user': {},
@@ -127,10 +114,11 @@ var AppView = React.createClass({
   },
 
   signIn: function() {
-    log.debug('main:signIn');
     // content > sign in view
     this.setState({
-      'content': SignInView({}),
+      'content': SignInView({
+        'success': this.startSuccess
+      }),
       'topNav': Nav({
         'title': 'Sign In'
       })
