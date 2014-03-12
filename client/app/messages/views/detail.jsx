@@ -56,7 +56,7 @@ var MessageDetailView = React.createClass({
           this.forceUpdate();
         }.bind(this));
     } else {
-      var vote = store.find('votes', vote);
+      vote = store.find('votes', vote);
       if (vote.value === value) {
         store.remove('votes', vote).then(function() {
           return store.get('messages', null, {'url': this.props.message.url});
@@ -66,7 +66,7 @@ var MessageDetailView = React.createClass({
       } else {
         // update current vote
         store.update('votes', {
-          'url': vote,
+          'url': vote.url,
           'value': value
         }).then(function() {
           this.forceUpdate();
@@ -101,6 +101,10 @@ var MessageDetailView = React.createClass({
       var vote = _.clone(store.find('votes', voteId));
       vote.user = store.find('users', vote.user);
       return vote;
+    });
+    // show only upvotes
+    votes = _.filter(votes, function(vote) {
+      return vote.value === '+1';
     });
     log.debug('message:detail:render', votes);
     var user = store.find('users', message.user);

@@ -14,7 +14,8 @@ var MessageActionsView = React.createClass({
     var hasUpVoted = _.find(message.votes, function(vote) {
       return store.find('votes', {
         'url': vote,
-        'user': localStorage.getItem('user')
+        'user': localStorage.getItem('user'),
+        'value': '+1'
       });
     });
     return (
