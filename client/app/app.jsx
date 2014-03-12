@@ -117,7 +117,7 @@ var AppView = React.createClass({
     // content > sign in view
     this.setState({
       'content': SignInView({
-        'success': this.startSuccess
+        'success': store.fetch.bind(store)
       }),
       'topNav': Nav({
         'title': 'Sign In'
