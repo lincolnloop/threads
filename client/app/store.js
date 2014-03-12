@@ -2,9 +2,9 @@
 
 var RSVP = require('rsvp');
 var fetch = require('./utils/fetch');
-var Syndicat = require('./utils/syndicat');
+var Amygdala = require('amygdala');
 
-var store = new Syndicat({
+var store = new Amygdala({
   'apiUrl': 'http://localhost:8000',
   'idAttribute': 'url',
   'teams': {
