@@ -15,9 +15,9 @@ Install libsass. On Mac OS X:
 
     $ brew install libsass
 
-If you don't have it installed already, install the grunt cli package globally.
+If you don't have it installed already, install the gulp cli package globally.
 
-    $ npm install -g grunt
+    $ npm install -g gulp
 
 Install local dependencies:
 
@@ -31,9 +31,9 @@ First, create a *config/local.js* file by copying *config/local.example.js* and
 making any desired changes.
 
 To build the app, start a development server on port 8080, and rebuild
-automatically on changes, simply run grunt's default task:
+automatically on changes, simply run gulp's default task:
 
-    $ grunt
+    $ gulp
 
 The frontend of threads will automatically look for a backend (API) connection
 on the host specified in the `apiUrl` config parameter in your
@@ -45,4 +45,4 @@ Production Build
 
 To build a bundle for production:
 
-    $ grunt dist && rsync -avz dist/* gingerhq.com:/var/www/next.gingerhq.com
+    $ gulp build && rsync -avz dist/* gingerhq.com:/var/www/next.gingerhq.com
