@@ -45,4 +45,4 @@ Production Build
 
 To build a bundle for production:
 
-    $ gulp build && rsync -avz dist/* gingerhq.com:/var/www/next.gingerhq.com
+    $ gulp build && rsync -avz build/* gingerhq.com:/var/www/next.gingerhq.com
