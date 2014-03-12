@@ -11,14 +11,17 @@ var MessageActionsView = React.createClass({
   render: function() {
     var message = this.props.message;
     // TODO: This needs to query the store, not the message
-    var voteStatus = _.find(message.votes, function(vote) {
-      return vote.user === localStorage.getItem('user');
+    var hasUpVoted = _.find(message.votes, function(vote) {
+      return store.find('votes', {
+        'url': vote,
+        'user': localStorage.getItem('user')
+      });
     });
     return (
       React.DOM.div(
         {className: 'message-actions'},
         VotesView({
-          'vote': voteStatus ? voteStatus.value : null,
+          'hasUpVoted': hasUpVoted,
           'handleVote': this.props.handleVote
         }),
         React.DOM.a({onClick: this.props.handleReplyClick, children: 'reply'}),

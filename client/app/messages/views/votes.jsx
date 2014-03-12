@@ -6,17 +6,12 @@ var classSet = require('react/lib/cx');
 
 var VotesView = React.createClass({
 
-  getInitialState: function() {
-    return {vote: this.props.vote};
-  },
-
   render: function() {
-    var hasUpVote = this.state.vote === '+1';
     var classNames = classSet({
       'votes': true,
-      'up-vote': hasUpVote
+      'up-vote': this.props.hasUpVoted
     });
-    var likeText = hasUpVote ? 'liked' : 'like';
+    var likeText = this.props.hasUpVoted ? 'liked' : 'like';
     return (
       <span className={classNames}>
         <a className="up-vote" onClick={_.partial(this.props.handleVote, '+1')}>{likeText}</a>
