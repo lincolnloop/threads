@@ -3,9 +3,10 @@
 var RSVP = require('rsvp');
 var fetch = require('./utils/fetch');
 var Amygdala = require('amygdala');
+var config = require('./utils/config');
 
 var store = new Amygdala({
-  'apiUrl': 'http://localhost:8000',
+  'apiUrl': config.apiUrl,
   'idAttribute': 'url',
   'teams': {
     'url': '/api/v2/team/'
