@@ -4,7 +4,7 @@ var _ = require('underscore');
 var React = require('react');
 var VotesView = require('./votes');
 var log = require('loglevel');
-var store = require('../../store');
+var store = require('../store');
 
 var MessageActionsView = React.createClass({
 

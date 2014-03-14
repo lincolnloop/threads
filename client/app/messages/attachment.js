@@ -3,7 +3,7 @@
 var _ = require('underscore');
 var $ = require('jquery');
 var Backbone = require('backbone');
-var urls = require('../../urls');
+var urls = require('../urls');
 var log = require('loglevel');
 
 var AttachmentView = Backbone.Model.extend({

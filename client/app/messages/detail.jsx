@@ -2,11 +2,11 @@
 
 var _ = require('underscore');
 var React = require('react');
-var store = require('../../store');
-var gravatar = require('../../utils/gravatar');
+var store = require('../store');
+var gravatar = require('../utils/gravatar');
 var MessageEditView = require('./edit');
 var MessageContentView = require('./content');
-var urls = require('../../urls');
+var urls = require('../urls');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
 var classSet = require('react/lib/cx');

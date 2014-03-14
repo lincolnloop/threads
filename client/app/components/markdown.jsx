@@ -1,9 +1,12 @@
 'use strict';
 
+// This is stored under app/components because it can/will
+// be a reusable component in the near future (published to npm)
+// with no need for AJAX previews.
 var $ = require('jquery');
 var React = require('react');
-var urls = require('../../urls');
-var config = require('../../utils/config');
+var urls = require('../urls');
+var config = require('../utils/config');
 
 var MarkdownView = React.createClass({
   getInitialState: function () {

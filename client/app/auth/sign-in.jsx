@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var config = require('../../utils/config');
+var config = require('../utils/config');
 
 var SignInView = React.createClass({
   //

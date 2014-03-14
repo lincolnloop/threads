@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var urls = require('../../urls');
+var urls = require('../urls');
 
 var TeamView = React.createClass({
   render: function () {

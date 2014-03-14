@@ -2,12 +2,12 @@
 
 var React = require('react');
 
-var store = require('../../store');
+var store = require('../store');
 
 // --------------------
 // Views
 // --------------------
-var MessageTreeView = require('../../messages/views/tree');
+var MessageTreeView = require('../messages/tree');
 
 var DiscussionDetailView = React.createClass({
 

@@ -1,8 +1,8 @@
 'use strict';
 
 var React = require('react');
-var urls = require('../../urls');
-var store = require('../../store');
+var urls = require('../urls');
+var store = require('../store');
 
 var DiscussionItemView = React.createClass({
   render: function() {

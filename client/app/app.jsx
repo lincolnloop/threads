@@ -17,16 +17,16 @@ var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 var Nav = require('./nav');
 
 // auth
-var SignInView = require('./auth/views/sign-in');
+var SignInView = require('./auth/sign-in');
 
 // team views
-var OrganizationList = require('./teams/views/organization-list');
-var TeamDetailView = require('./teams/views/detail');
+var OrganizationList = require('./teams/organization-list');
+var TeamDetailView = require('./teams/detail');
 var teamUtils = require('./teams/utils');
 
 // discussion views
-var DiscussionDetailView = require('./discussions/views/detail');
-var DiscussionCreateView = require('./discussions/views/create');
+var DiscussionDetailView = require('./discussions/detail');
+var DiscussionCreateView = require('./discussions/create');
 
 
 var AppView = React.createClass({

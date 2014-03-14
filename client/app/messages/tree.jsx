@@ -4,8 +4,8 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
-var urls = require('../../urls');
-var store = require('../../store');
+var urls = require('../urls');
+var store = require('../store');
 var MessageDetailView = require('./detail');
 var MessageReplyView = require('./reply');
 

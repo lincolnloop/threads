@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var MarkdownView = require('./markdown');
+var MarkdownView = require('../components/markdown');
 
 var MessageEditView = React.createClass({
   render: function() {

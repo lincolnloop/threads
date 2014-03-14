@@ -1,10 +1,10 @@
 'use strict';
 
 var React = require('react');
-var MarkdownView = require('../../messages/views/markdown');
-var router = require('../../router');
-var store = require('../../store');
-var urls = require('../../urls');
+var MarkdownView = require('../components/markdown');
+var router = require('../router');
+var store = require('../store');
+var urls = require('../urls');
 
 var DiscussionCreateView = React.createClass({
 
