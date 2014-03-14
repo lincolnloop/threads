@@ -30,7 +30,6 @@ var DiscussionDetailView = React.createClass({
   },
 
   setDiscussion: function() {
-    console.log('setDiscussion');
     var discussion = store.find('discussions', this.props.discussion);
     if (!discussion) {
       discussion = {};
