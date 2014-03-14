@@ -5,11 +5,6 @@ var React = require('react');
 var store = require('../../store');
 
 // --------------------
-// Models
-// --------------------
-var Discussion = require('../models/Discussion');
-
-// --------------------
 // Views
 // --------------------
 var MessageTreeView = require('../../messages/views/tree');
