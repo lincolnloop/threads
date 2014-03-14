@@ -1,6 +1,6 @@
 {
   "bitwise": true,
-  "curly": false,
+  "curly": true,
   "eqeqeq": true,
   "esnext": true,
   "expr": true,
@@ -17,7 +17,7 @@
   "smarttabs": true,
   "strict": true,
   "sub": true,
-  "trailing": false,
+  "trailing": true,
   "undef": true,
   "unused": true,
 
