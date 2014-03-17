@@ -14,7 +14,7 @@ var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 // Views
 // --------------------
 // common
-var Nav = require('./nav');
+var Nav = require('./components/nav');
 
 // auth
 var SignInView = require('./auth/sign-in');
