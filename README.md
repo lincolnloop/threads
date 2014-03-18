@@ -51,7 +51,7 @@ To build the docs install [wintersmith](http://wintersmith.io/) globally:
 
 If you want to edit them without having to build on every change, just run:
 
-    $ wintersmiths preview
+    $ wintersmith preview
 
 Production Build
 ----------------
