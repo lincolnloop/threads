@@ -1,0 +1,23 @@
+{
+  "locals": {
+    "url": "http://localhost:8080",
+    "name": "Threads Documentation",
+    "owner": "Lincoln Loop",
+    "description": "Docs for Threads"
+  },
+  "require": {
+    "moment": "moment",
+    "_": "underscore",
+    "typogr": "typogr"
+  },
+  "jade": {
+    "pretty": true
+  },
+  "markdown": {
+    "smartLists": true,
+    "smartypants": true
+  },
+  "output": "../build/docs",
+  "baseUrl": "/docs/",
+  "port": "8088"
+}
