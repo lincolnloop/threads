@@ -40,6 +40,19 @@ on the host specified in the `apiUrl` config parameter in your
 *config/local.js*.
 
 
+Bulding the Docs
+----------------
+
+To build the docs install [wintersmith](http://wintersmith.io/) globally:
+
+    $ npm install -g wintersmith
+    $ cd docs/
+    $ wintersmith build
+
+If you want to edit them without having to build on every change, just run:
+
+    $ wintersmiths preview
+
 Production Build
 ----------------
 
