@@ -14,7 +14,7 @@ For an always up-to-date project structure, [check the repository](https://githu
 
 The root directory holds configuration files for `Gulp`, `Sass/compass`, `npm` as well as an example .env file where any local configuration should be set.
 
-```
+```bash
 .
 ├── gulpfile.js
 ├── package.json
@@ -33,7 +33,7 @@ The base [gulp](http://gulpjs.com/) configuration file. We use this file to defi
 
 We store every individual *gulp* task in it's own file on this directory.
 
-```
+```bash
 .
 ├── app.js
 ├── clean.js
@@ -48,7 +48,7 @@ We store every individual *gulp* task in it's own file on this directory.
 ```
 
 ## ./client
-```
+```bash
 .
 ├── index.js
 ├── app
@@ -70,7 +70,7 @@ This is the app's entry point. Everything that needs to be run on page load (exc
 
 We recommend grouping your app by functionality rather than by module type. This is a principle that derives from our component-based approach, and we try to keep each *app* as self-contained as possible and have as little as possible dependencies to other apps.
 
-```
+```bash
 .
 ├── app.jsx
 ├── auth
@@ -177,7 +177,7 @@ Uses [Amygdala](https://www.npmjs.org/package/amygdala) library, and is the modu
 
 The `./client/utils` directory is where you store project-specific utilities that are shared by all apps. 
 
-```
+```bash
 .
 ├── config.js
 ├── fetch.js
@@ -189,7 +189,8 @@ The `./client/utils` directory is where you store project-specific utilities tha
 
 Similar to `utils` above, the `./client/components` directory is where you store you're project-specific, reusable React components.
 
-```.
+```bash
+.
 ├── markdown.jsx
 └── nav.jsx
 ```
@@ -199,7 +200,7 @@ Similar to `utils` above, the `./client/components` directory is where you store
 
 ## ./client/app/discussions
 
-```
+```bash
 .
 ├── create.jsx
 ├── detail.jsx
@@ -216,7 +217,7 @@ The naming convention is relatively loose, but we try to keep it descriptive.
 
 TBD
 
-```
+```bash
 .
 ├── _settings.scss
 ├── app.scss
@@ -235,7 +236,7 @@ TBD
 
 Static files directory. All our JavaScript and CSS is compiled, so this is the directory where static files like static html pages or documents should be kept.
 
-```
+```bash
 .
 ├── 404.html
 └── robots.txt
