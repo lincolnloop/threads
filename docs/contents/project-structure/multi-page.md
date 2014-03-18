@@ -18,29 +18,29 @@ It's not that you can't do the same with Browserify, but Browserify is not a mod
 
 
 
-#### Integration with server-side projects
+### Integration with Django server-side projects
 
-In our example app, we have no server-side code at all, but our typical project usually has Django in the mix, which has it's own way of serving static files. The thing is, our JS and CSS are not static, and we shouldn't serve that whole directory. For that reason we're naming it `assets`, and pointing Django's STATIC_ROOT at the directory that contains the output from our `Grunt build` task.
+In our example app, we have no server-side code at all, but our typical project usually has Django in the mix, which has it's own way of serving static files. The thing is, our JS and CSS are not static (they are compiled/combined), and we shouldn't serve that whole directory. For that reason we're keeping the name `client` (as opposed the usual `static`), and pointing Django's STATIC_ROOT at the directory that contains the output from our `gulp build` task.
 
 Here's an example project root directory to serve as a guide:
 
 ```
 .
-├── Gruntfile.js
+├── gulpfile.js
 ├── Makefile
 ├── Procfile
-├── assets
+├── client
 ├── README.md
 ├── config.rb
 ├── docs
 ├── fabfile.py
 ├── package.json
-├── ginger
-├── grunt
+├── appname
+├── gulp
 ├── realtime
 ├── requirements
 ├── scripts
 └── setup.py
 ```
 
-The same `Gruntfile.js`, `config.rb` and `package.json` files and the `grunt` folder we have on the single-page app are stored in the root folder, but instead of naming the project directory `src`, we're naming it `assets` (the server-side code is stored on the `ginger` folder).
+The same `gulpfile.js`, and `package.json` files and the `gulp` folder we have on the single-page app are kept, and the same goes for the `client` directory. Server-side code is stored in `appname` folder for Django import convenience purposes.
