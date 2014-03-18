@@ -1,7 +1,7 @@
 ---
-title: index
+title: Lincoln Loop's Frontend Best Practices
 date: 2014-17-03 18:00
-template: index.jade
+template: page.jade
 ---
 
-hello world!
+Wecome to Lincoln Loop's Frontend Best Practices documentation.

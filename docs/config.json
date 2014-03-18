@@ -1,9 +1,9 @@
 {
   "locals": {
     "url": "http://localhost:8080",
-    "name": "Threads Documentation",
+    "name": "Frontend Best Practices",
     "owner": "Lincoln Loop",
-    "description": "Docs for Threads"
+    "description": "Lincoln Loop's Frontend Best Practices"
   },
   "require": {
     "moment": "moment",
