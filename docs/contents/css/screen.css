@@ -1,0 +1,101 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 50px;
+}
+
+/*
+ * Header
+ */
+.navbar-brand {
+  float: right;
+}
+
+/*
+ * Layout
+ */
+
+/* main */
+.main {
+  padding: 50px;
+}
+.main h1 {
+  margin-top: 0;
+}
+
+/* Sidebar */
+
+.sidebar {
+  padding-top: 50px;
+}
+
+/* Hide for mobile, show later */
+.sidebar {
+  font-family: 'proxima-nova', 'open sans', helvetica, arial, sans-serif;
+  letter-spacing: 0.05em;
+}
+@media (min-width: 768px) {
+  .sidebar {
+    border-right: 1px solid #eee;
+    text-align: right;
+  }
+}
+
+/* sidebar heading */
+.sidebar h2 {
+  padding-right: 5px;
+  font-size: 1.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+/* sidebar items */
+.nav-sidebar a,
+.nav-sidebar span {
+  color: #999;
+}
+
+/* sidebar item disabled */
+.nav-sidebar>li>span {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: line-through;
+}
+/* sidebar item active */
+.nav-sidebar>li>a.active {
+  color: #444;
+  background-color: #EEE;
+}
+
+/* Sidebar navigation */
+/* This "hack" allows us to increase the "click" area around the nav items */
+.nav-sidebar {
+  margin-right: -26px; /* 20px padding + 1px border */
+  margin-bottom: 2.8em;
+  margin-left: -20px;
+}
+.nav-sidebar > li > a,
+.nav-sidebar > li > span {
+  padding-right: 35px;
+  padding-left: 20px;
+}
+
+/* content */
+.content {
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+.content h2 {
+  font-weight: 600;
+}
+.content h2,
+.content h3 {
+  margin: 1.2em 0 0.8em;
+}
+.content p {
+  margin-bottom: 1.6em;
+  line-height: 1.6em;
+  color: #555;
+  font-size: 1.1em;
+}

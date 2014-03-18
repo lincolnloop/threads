@@ -7,11 +7,12 @@ html(lang='en')
     include includes/header
     div.container-fluid
       div.row
-        include includes/sidebar
-        div(class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main")
+        div(class="col-sm-4 col-md-3 sidebar")
+          include includes/sidebar
+        div(class="col-sm-8 col-md-9 main")
           block page-title
             h1.page-header Example Title
           block content
             p Example content
     div.container-fluid
-      //include includes/footer
+  include includes/foot
