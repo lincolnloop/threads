@@ -4,6 +4,7 @@ var gulp = require('gulp');
 require('./gulp/app');
 require('./gulp/clean');
 require('./gulp/fonts');
+require('./gulp/help');
 require('./gulp/jshint');
 require('./gulp/sass');
 require('./gulp/serve');
