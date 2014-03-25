@@ -27,8 +27,11 @@ Install local dependencies:
 Local Development
 -----------------
 
-First, create a *config/local.js* file by copying *config/local.example.js* and
+First, create a `config/local.js` file by copying `config/local.example.js` and
 making any desired changes.
+
+    $ cp config/local.example.js config/local.js
+    $ $EDITOR config/local.js
 
 To build the app, start a development server on port 8080, and rebuild
 automatically on changes, simply run gulp's default task:
@@ -37,7 +40,11 @@ automatically on changes, simply run gulp's default task:
 
 The frontend of threads will automatically look for a backend (API) connection
 on the host specified in the `apiUrl` config parameter in your
-*config/local.js*.
+`config/local.js`.
+
+View a list of the gulp tasks with:
+
+    $ gulp help
 
 
 Bulding the Docs
