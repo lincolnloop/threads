@@ -9,11 +9,38 @@
     <title>Threads Pattern Library</title>
 
     <link rel="stylesheet" href="{{ css }}">
-    <link rel="stylesheet" href="{{ patterns_css }}">
+    <style>
+    .pattern {
+        clear: both;
+        overflow: hidden;
+    }
+    .pattern .display {
+        width: 65%;
+        float: left;
+    }
+    .pattern .source {
+        width: 30%;
+        float: right;
+    }
+    .pattern .source textarea {
+        width: 90%;
+    }
+    </style>
   </head>
   <body>
     <div id="main">
       <h1>Threads Pattern Library</h1>
+      <div class="pattern">
+        <h2>Message</h2>
+        <div class="display">
+        {{> message}}
+        </div>
+        <div class="source">
+          <textarea>
+            
+          </textarea>
+        </div>
+      </div>
     </div>
   </body>
 </html>
