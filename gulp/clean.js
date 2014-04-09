@@ -7,7 +7,7 @@ gulp.task('clean', function() {
 
   // If this is a production build, clean the dist folder. Otherwise, clean the
   // build folder.
-  var sources = production ? ['dist/*'] : ['build/*'];
+  var sources = production ? ['dist'] : ['build/*'];
 
   return gulp.src(sources, {read: false})
     .pipe(clean());

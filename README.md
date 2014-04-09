@@ -63,6 +63,6 @@ If you want to edit them without having to build on every change, just run:
 Production Build
 ----------------
 
-To build a bundle for production:
+To deploy on production:
 
-    $ gulp build && rsync -avz build/* gingerhq.com:/var/www/next.gingerhq.com
+    $ npm run deploy
