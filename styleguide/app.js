@@ -12,6 +12,9 @@ var start = function(port) {
 
   app.configure(function () {
     app.set('views', __dirname + '/views');
+    app.engine('hbs', hbs.express3({
+      partialsDir: __dirname + '/views/partials'
+    }));
     app.set('view engine', 'hbs');
     app.use(express.favicon());
     app.use(express.logger('dev'));
@@ -20,8 +23,6 @@ var start = function(port) {
     app.use(app.router);
     app.use(express.static(path.join(__dirname, '..', 'build')));
   });
-
-  hbs.registerPartials(__dirname + '/views/partials');
 
   app.configure('development', function () {
     app.use(express.errorHandler());
