@@ -7,6 +7,7 @@ require('./gulp/fonts');
 require('./gulp/help');
 require('./gulp/jshint');
 require('./gulp/sass');
+require('./gulp/html');
 require('./gulp/serve');
 require('./gulp/tests');
 require('./gulp/vendor');
@@ -19,7 +20,8 @@ gulp.task('build', [
   'tests',
   'vendor',
   'sass',
-  'fonts'
+  'fonts',
+  'html'
 ]);
 
 gulp.task('default', ['build'], function() {

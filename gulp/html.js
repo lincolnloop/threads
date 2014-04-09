@@ -1,17 +1,21 @@
 'use strict';
 var gulp = require('gulp');
+var rename = require('gulp-rename');
+var handlebars = require('gulp-compile-handlebars');
 var pkg = require('../package.json');
 
-gulp.task('sass', function () {
+gulp.task('html', function () {
   var production = (process.env.NODE_ENV === 'production');
+  var data = {
+    'css': pkg.name + (production ? '.min' : '') + '.css',
+    'app': pkg.name + (production ? '.min' : '') + '.js',
+    'vendor': 'vendor' + (production ? '.min' : '') + '.js'
+  };
 
   return gulp.src('server/views/index.hbs')
 
     // parse through handlebars templates
-    .pipe(sass({
-      'includePaths': neat,
-      'outputStyle': production ? 'compressed' : 'expanded'
-    }))
+    .pipe(handlebars(data))
 
     // Save it as index.html
     .pipe(rename('index.html'))

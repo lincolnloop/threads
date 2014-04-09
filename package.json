@@ -8,6 +8,11 @@
   },
   "version": "0.1.0",
   "main": "./client/index.js",
+  "scripts": {
+    "build": "NODE_ENV=production gulp build",
+    "rsync": "rsync -avz dist/* gingerhq.com:/var/www/next.gingerhq.com",
+    "deploy": "npm run build && npm run rsync"
+  },
   "devDependencies": {
     "browserify": "^3.33.0",
     "browserify-shim": "^3.3.2",
@@ -33,7 +38,8 @@
     "node-neat": "~1.1.0",
     "reactify": "^0.10.0",
     "request": "~2.34.0",
-    "sinon": "^1.9.0"
+    "sinon": "^1.9.0",
+    "gulp-compile-handlebars": "^0.2.0"
   },
   "dependencies": {
     "backbone": "~1.1.0",
