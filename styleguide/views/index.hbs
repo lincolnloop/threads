@@ -30,17 +30,47 @@
   <body>
     <div id="main">
       <h1>Threads Pattern Library</h1>
+
+      <div class="pattern">
+        <h2>Nav Header</h2>
+        <div class="display">
+        {{> nav-header}}
+        </div>
+        <div class="source">
+          <textarea>{{> nav-header}}</textarea>
+        </div>
+      </div>
+
+      <div class="pattern">
+        <h2>Nav Item</h2>
+        <div class="display">
+        {{> nav-item}}
+        </div>
+        <div class="source">
+          <textarea>{{> nav-item}}</textarea>
+        </div>
+      </div>
+
       <div class="pattern">
         <h2>Message</h2>
         <div class="display">
         {{> message}}
         </div>
         <div class="source">
-          <textarea>
-            {{> message}}
-          </textarea>
+          <textarea>{{> message}}</textarea>
         </div>
       </div>
+
+      <div class="pattern">
+        <h2>Message Tree</h2>
+        <div class="display">
+        {{> message-tree}}
+        </div>
+        <div class="source">
+          <textarea>{{> message-tree}}</textarea>
+        </div>
+      </div>
+
     </div>
   </body>
 </html>

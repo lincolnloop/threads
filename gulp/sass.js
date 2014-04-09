@@ -13,7 +13,8 @@ gulp.task('sass', function () {
     // Precompile with libsass, including the neat library
     .pipe(sass({
       'includePaths': neat,
-      'outputStyle': production ? 'compressed' : 'expanded'
+      'outputStyle': production ? 'compressed' : 'expanded',
+      'sourceComments': 'map'
     }))
 
     // Give the destination file a name, adding '.min' if this is production

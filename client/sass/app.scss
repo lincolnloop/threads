@@ -3,8 +3,21 @@
 @import "neat";
 @import "bitters/bitters";
 @import "animations";
-@import "components/discussion";
+// --------------------------
+// Color
+// --------------------------
+$dark: rgb(24,29,33);
+$darkLight: rgb(33,55,66);
+$gray: rgb(150,150,150);
+$white: rgb(220,220,220);
+$blueLight: rgba(214,235,255,0.3);
+$yellow: rgb(217,133,16);
+// base components
 @import "components/message";
+@import "components/nav-header";
+@import "components/nav-item";
+// list components
+@import "components/discussion";
 
 $mobile: new-breakpoint(min-width 0px 8);
 $tablet: new-breakpoint(min-width 660px 12);
@@ -18,16 +31,6 @@ a {
 }
 
 // --------------------------
-// Color
-// --------------------------
-$dark: rgb(24,29,33);
-$darkLight: rgb(33,55,66);
-$gray: rgb(150,150,150);
-$white: rgb(220,220,220);
-$blueLight: rgba(214,235,255,0.3);
-$yellow: rgb(217,133,16);
-
-// --------------------------
 // Main Structure
 // --------------------------
 html, body, #main, .main {
@@ -35,42 +38,6 @@ html, body, #main, .main {
 }
 
 #main {
-
-  #top-nav {
-    display: none;
-    background: $dark;
-    padding: 10px;
-  }
-
-  #sidebar {
-    height: 100%;
-    background: $dark;
-    ul {
-      border-top: 1px solid $darkLight;
-    }
-    li {
-      border-bottom: 1px solid $darkLight;
-      &.active {
-        background: $yellow;
-        a {
-          color: $white;
-        }
-      }
-    }
-    h3 {
-      font-size: 1.2em;
-      color: $yellow;
-      text-transform: uppercase;
-    }
-    h3, a {
-      display: block;
-      font-weight: bold;
-      padding: 10px 10px 10px 30px;
-    }
-    a {
-      color: $white;
-    }
-  }
 
   @include media($mobile) {
     #sidebar {
