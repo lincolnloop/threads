@@ -28,17 +28,17 @@ var teamUtils = require('./teams/utils');
 var DiscussionDetailView = require('./discussions/detail.jsx');
 var DiscussionCreateView = require('./discussions/create.jsx');
 
-
 var AppView = React.createClass({
 
   updateUI: function(options) {
+    // helper method to handle which css transitions should ocurr
+    // and trigger setState to re-render the UI
     var transition = options.navLevel > this.state.navLevel ? 'right-to-left' : 'left-to-right';
     var content = CSSTransitionGroup({
       'transitionName': transition,
       'component': React.DOM.div,
       'children': options.content
     });
-
     this.setState({
       'content': content,
       'topNav': options.topNav,
@@ -47,8 +47,6 @@ var AppView = React.createClass({
   },
 
   render: function() {
-    log.debug('AppView:render', this.state);
-
     return (
       <div className="main">
         <nav id="top-nav">{this.state.topNav}</nav>
@@ -159,7 +157,8 @@ var AppView = React.createClass({
       'key': teamSlug
     });
     var navView = TopNav({
-      'title': team.name
+      'title': team.name,
+      'backLink': '/'
     });
 
     this.updateUI({
@@ -179,7 +178,8 @@ var AppView = React.createClass({
     });
     var navView = TopNav({
       'title': team.name,
-      'team': team
+      'team': team,
+      'backLink': urls.get('team:detail', {'slug': teamSlug})
     });
 
     this.updateUI({
@@ -203,7 +203,8 @@ var AppView = React.createClass({
     });
     var navView = TopNav({
       'title': team.name,
-      'team': team
+      'team': team,
+      'backLink': urls.get('team:detail', {'slug': teamSlug})
     });
 
     this.updateUI({
