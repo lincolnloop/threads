@@ -31,22 +31,29 @@ var DiscussionCreateView = require('./discussions/create.jsx');
 
 var AppView = React.createClass({
 
+  updateUI: function(options) {
+    var transition = options.navLevel > this.state.navLevel ? 'right-to-left' : 'left-to-right';
+    var content = CSSTransitionGroup({
+      'transitionName': transition,
+      'component': React.DOM.div,
+      'children': options.content
+    });
+
+    log.debug(transition, content);
+
+    this.setState({
+      'content': content,
+      'topNav': options.topNav,
+      'navLevel': options.navLevel
+    });
+  },
+
   render: function() {
     log.debug('AppView:render', this.state);
-    var teams = store.findAll('teams');
-    var organizations = teamUtils.groupByOrganizations(teams);
-    var orgListView = '';
-
-    if (organizations && organizations.length) {
-      orgListView = (
-        <OrganizationList organizations={organizations} />
-      );
-    }
 
     return (
       <div className="main">
         <nav id="top-nav">{this.state.topNav}</nav>
-        <nav id="sidebar">{orgListView}</nav>
         <div id="content">
           {this.state.content}
         </div>
@@ -108,21 +115,36 @@ var AppView = React.createClass({
 
   // pages
   index: function() {
-    log.debug('main:index');
-    this.setState({
-      'content': React.DOM.div()
+    var teams = store.findAll('teams');
+    var organizations = teamUtils.groupByOrganizations(teams);
+    var orgListView = '';
+
+    if (organizations && organizations.length) {
+      orgListView = OrganizationList({
+        organizations: organizations
+      });
+    }
+
+    this.updateUI({
+      'content': orgListView,
+      'topNav': '',
+      'navLevel': 0
     });
   },
 
   signIn: function() {
     // content > sign in view
-    this.setState({
-      'content': SignInView({
-        'success': store.fetch.bind(store)
-      }),
-      'topNav': TopNav({
-        'title': 'Sign In'
-      })
+    var contentView = SignInView({
+      'success': store.fetch.bind(store)
+    });
+    var navView = TopNav({
+      'title': 'Sign In'
+    });
+
+    this.updateUI({
+      'content': contentView,
+      'topNav': navView,
+      'navLevel': 0
     });
   },
 
@@ -132,25 +154,23 @@ var AppView = React.createClass({
 
   teamDetail: function(teamSlug) {
     log.debug('team:detail');
+    var navLevel = 1;
     var team = store.find('teams', {slug: teamSlug});
     // content > team discussion list view
     // TODO: We need to bootstrap teams on load
-    var content = CSSTransitionGroup({
-      'transitionName': 'content',
-      'component': React.DOM.div,
-      'children': TeamDetailView({
-        'team': team,
-        'key': teamSlug
-      })
+    var contentView = TeamDetailView({
+      'team': team,
+      'key': teamSlug
     });
-    // TODO: Move topNav to it's own *catch all* route
-    // to keep it DRY.
-    this.setState({
-      'content':  content,
-      'topNav': TopNav({
-        'title': team.name,
-        'toggleTeamNav': this.toggleTeamNav
-      })
+    var navView = TopNav({
+      'title': team.name,
+      'toggleTeamNav': this.toggleTeamNav
+    });
+
+    this.updateUI({
+      'content': contentView,
+      'topNav': navView,
+      'navLevel': 5
     });
   },
 
@@ -158,23 +178,20 @@ var AppView = React.createClass({
     log.debug('DiscussionRouter:create');
     var team = store.find('teams', {slug: teamSlug});
     // content > create view
-    var content = CSSTransitionGroup({
-      'transitionName': 'content',
-      'component': React.DOM.div,
-      'children': DiscussionCreateView({
-        'team': team.url,
-        'key': 'create-' + team.slug
-      })
+    var contentView = DiscussionCreateView({
+      'team': team.url,
+      'key': 'create-' + team.slug
     });
-    // TODO: Move topNav to it's own *catch all* route
-    // to keep it DRY.
-    this.setState({
-      'content': content,
-      'topNav': TopNav({
-        'title': team.name,
-        'toggleTeamNav': this.toggleTeamNav,
-        'team': team
-      })
+    var navView = TopNav({
+      'title': team.name,
+      'toggleTeamNav': this.toggleTeamNav,
+      'team': team
+    });
+
+    this.updateUI({
+      'content': contentView,
+      'topNav': navView,
+      'navLevel': 10
     });
   },
 
@@ -185,24 +202,21 @@ var AppView = React.createClass({
       'discussion_id': discussionId
     });
     // content > discussion detail view
-    var content = CSSTransitionGroup({
-      'transitionName': 'content',
-      'component': React.DOM.div,
-      'children': DiscussionDetailView({
-        'team': team,
-        'discussion': discussionUrl,
-        'key': 'discussion-detail' + discussionUrl
-      })
+    var contentView = DiscussionDetailView({
+      'team': team,
+      'discussion': discussionUrl,
+      'key': 'discussion-detail' + discussionUrl
     });
-    // TODO: Move topNav to it's own *catch all* route
-    // to keep it DRY.
-    this.setState({
-      'content': content,
-      'topNav': TopNav({
-        'title': team.name,
-        'toggleTeamNav': this.toggleTeamNav,
-        'team': team
-      })
+    var navView = TopNav({
+      'title': team.name,
+      'toggleTeamNav': this.toggleTeamNav,
+      'team': team
+    });
+
+    this.updateUI({
+      'content': contentView,
+      'topNav': navView,
+      'navLevel': 10
     });
   }
 });
