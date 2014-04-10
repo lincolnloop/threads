@@ -12,6 +12,8 @@ $gray: rgb(150,150,150);
 $white: rgb(220,220,220);
 $blueLight: rgba(214,235,255,0.3);
 $yellow: rgb(217,133,16);
+// layout components
+@import "components/nav-top";
 // base components
 @import "components/message";
 @import "components/nav-header";

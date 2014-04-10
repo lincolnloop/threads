@@ -1,0 +1,15 @@
+#top-nav {
+  display: block;
+  padding: 10px 10px 10px 30px;
+  border-bottom: 1px solid $darkLight;
+  font-weight: bold;
+  background: $gray;
+  text-align: center;
+
+  .action {
+    float: left;
+  }
+  .search {
+    float: right;
+  }
+}

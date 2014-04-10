@@ -45,6 +45,7 @@ var AppView = React.createClass({
 
     return (
       <div className="main">
+        <nav id="top-nav">{this.state.topNav}</nav>
         <nav id="sidebar">{orgListView}</nav>
         <div id="content">
           {this.state.content}
