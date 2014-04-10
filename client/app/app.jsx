@@ -14,19 +14,19 @@ var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 // Views
 // --------------------
 // common
-var Nav = require('./components/nav');
+var TopNav = require('./components/TopNav.jsx');
 
 // auth
-var SignInView = require('./auth/sign-in');
+var SignInView = require('./auth/sign-in.jsx');
 
 // team views
-var OrganizationList = require('./teams/organization-list');
-var TeamDetailView = require('./teams/detail');
+var OrganizationList = require('./teams/organization-list.jsx');
+var TeamDetailView = require('./teams/detail.jsx');
 var teamUtils = require('./teams/utils');
 
 // discussion views
-var DiscussionDetailView = require('./discussions/detail');
-var DiscussionCreateView = require('./discussions/create');
+var DiscussionDetailView = require('./discussions/detail.jsx');
+var DiscussionCreateView = require('./discussions/create.jsx');
 
 
 var AppView = React.createClass({
@@ -75,7 +75,7 @@ var AppView = React.createClass({
 
   getInitialState: function() {
     return {
-      'topNav': Nav({
+      'topNav': TopNav({
         'toggleTeamNav': this.toggleTeamNav
       }),
       'content': '',
@@ -120,7 +120,7 @@ var AppView = React.createClass({
       'content': SignInView({
         'success': store.fetch.bind(store)
       }),
-      'topNav': Nav({
+      'topNav': TopNav({
         'title': 'Sign In'
       })
     });
@@ -147,7 +147,7 @@ var AppView = React.createClass({
     // to keep it DRY.
     this.setState({
       'content':  content,
-      'topNav': Nav({
+      'topNav': TopNav({
         'title': team.name,
         'toggleTeamNav': this.toggleTeamNav
       })
@@ -170,7 +170,7 @@ var AppView = React.createClass({
     // to keep it DRY.
     this.setState({
       'content': content,
-      'topNav': Nav({
+      'topNav': TopNav({
         'title': team.name,
         'toggleTeamNav': this.toggleTeamNav,
         'team': team
@@ -198,7 +198,7 @@ var AppView = React.createClass({
     // to keep it DRY.
     this.setState({
       'content': content,
-      'topNav': Nav({
+      'topNav': TopNav({
         'title': team.name,
         'toggleTeamNav': this.toggleTeamNav,
         'team': team

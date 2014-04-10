@@ -4,7 +4,7 @@ var _ = require('underscore');
 var React = require('react');
 var log = require('loglevel');
 
-var NavView = React.createClass({
+var TopNavView = React.createClass({
   render: function () {
     log.debug('NavView:render');
     var actionClass = 'action';
@@ -24,4 +24,4 @@ var NavView = React.createClass({
   }
 });
 
-module.exports = NavView;
+module.exports = TopNavView;
