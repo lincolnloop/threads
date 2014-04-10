@@ -39,8 +39,6 @@ var AppView = React.createClass({
       'children': options.content
     });
 
-    log.debug(transition, content);
-
     this.setState({
       'content': content,
       'topNav': options.topNav,
@@ -61,11 +59,6 @@ var AppView = React.createClass({
     );
   },
 
-  toggleTeamNav: function() {
-    // todo: handle this through this.setState
-    $('body').toggleClass('show-nav');
-  },
-
   startSuccess: function() {
     // start history
     Backbone.history.start({pushState: true});
@@ -83,7 +76,7 @@ var AppView = React.createClass({
   getInitialState: function() {
     return {
       'topNav': TopNav({
-        'toggleTeamNav': this.toggleTeamNav
+        'title': 'Threads'
       }),
       'content': '',
       // TODO: Collection and User instances should not
@@ -117,17 +110,20 @@ var AppView = React.createClass({
   index: function() {
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
-    var orgListView = '';
+    var contentView = '';
 
     if (organizations && organizations.length) {
-      orgListView = OrganizationList({
+      contentView = OrganizationList({
         organizations: organizations
       });
     }
+    var navView = TopNav({
+      'title': 'Threads'
+    });
 
     this.updateUI({
-      'content': orgListView,
-      'topNav': '',
+      'content': contentView,
+      'topNav': navView,
       'navLevel': 0
     });
   },
@@ -163,8 +159,7 @@ var AppView = React.createClass({
       'key': teamSlug
     });
     var navView = TopNav({
-      'title': team.name,
-      'toggleTeamNav': this.toggleTeamNav
+      'title': team.name
     });
 
     this.updateUI({
@@ -184,7 +179,6 @@ var AppView = React.createClass({
     });
     var navView = TopNav({
       'title': team.name,
-      'toggleTeamNav': this.toggleTeamNav,
       'team': team
     });
 
@@ -209,7 +203,6 @@ var AppView = React.createClass({
     });
     var navView = TopNav({
       'title': team.name,
-      'toggleTeamNav': this.toggleTeamNav,
       'team': team
     });
 
