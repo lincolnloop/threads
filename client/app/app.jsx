@@ -209,7 +209,7 @@ var AppView = React.createClass({
     this.updateUI({
       'content': contentView,
       'topNav': navView,
-      'navLevel': 10
+      'navLevel': 15
     });
   }
 });
