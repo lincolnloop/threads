@@ -4,7 +4,7 @@ var _ = require('underscore');
 var React = require('react');
 var log = require('loglevel');
 
-var NavView = React.createClass({
+var TopNavView = React.createClass({
   render: function () {
     log.debug('NavView:render');
     var actionClass = 'action';
@@ -14,8 +14,7 @@ var NavView = React.createClass({
     return (
       <div className="wrapper">
         <span className={actionClass}>
-          <a className="expand" onClick={this.props.toggleTeamNav}>Teams</a>
-          <a className="back">Back</a>
+          {this.props.backLink ? <a className="back" href={this.props.backLink}>Back</a> : ''}
         </span>
         <span className="title">{this.props.title}</span>
         <a className="search">Search</a>
@@ -24,4 +23,4 @@ var NavView = React.createClass({
   }
 });
 
-module.exports = NavView;
+module.exports = TopNavView;

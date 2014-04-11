@@ -1,21 +1,40 @@
 //
 // animations
 //
-.content-enter {
+.left-to-right-enter {
   margin-left: -100%;
   width: 100%;
   transition: 0.5s;
 }
-.content-enter.content-enter-active {
+.left-to-right-enter.left-to-right-enter-active {
   margin-left: 0;
 }
-.content-leave {
+.left-to-right-leave {
   position: absolute;
-  left: 5%;
+  left: 0;
   top: 0;
   width: 100%;
   transition: 0.5s;
 }
-.content-leave.content-leave-active {
-  left: 105%;
+.left-to-right-leave.left-to-right-leave-active {
+  left: 100%;
+}
+
+.right-to-left-enter {
+  margin-left: 100%;
+  width: 100%;
+  transition: 0.5s;
+}
+.right-to-left-enter.right-to-left-enter-active {
+  margin-left: 0;
+}
+.right-to-left-leave {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  transition: 0.5s;
+}
+.right-to-left-leave.right-to-left-leave-active {
+  left: -100%;
 }

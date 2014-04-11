@@ -8,10 +8,15 @@
 // --------------------------
 $dark: rgb(24,29,33);
 $darkLight: rgb(33,55,66);
-$gray: rgb(150,150,150);
+$gray: #c4c4c4;
+$grayLight: #f7f7f8;
 $white: rgb(220,220,220);
 $blueLight: rgba(214,235,255,0.3);
 $yellow: rgb(217,133,16);
+// layout components
+@import "components/main";
+@import "components/nav-top";
+@import "components/content";
 // base components
 @import "components/message";
 @import "components/nav-header";
@@ -34,31 +39,19 @@ a {
 // Main Structure
 // --------------------------
 html, body, #main, .main {
+  position: relative;
+  width: 100%;
   height: 100%;
+}
+body {
+  overflow: hidden;
+}
+
+#sidebar {
+  display: none;
 }
 
 #main {
-
-  @include media($mobile) {
-    #sidebar {
-      @include span-columns(3);
-    }
-    #content {
-      @include span-columns(5);
-      @include omega();
-    }
-  }
-
-  @include media($tablet) {
-    #sidebar {
-      @include span-columns(4);
-    }
-    #content {
-      @include span-columns(8);
-      @include omega();
-    }
-  }
-
   .team-detail {
     .btn-create-discussion {
       float: right;
@@ -74,11 +67,5 @@ html, body, #main, .main {
         border-bottom: 1px solid #CCC;
       }
     }
-  }
-
-  #content {
-    // required for animations
-    position: relative;
-    overflow-x: hidden;
   }
 }
