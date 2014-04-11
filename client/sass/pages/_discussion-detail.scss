@@ -1,0 +1,16 @@
+.discussion-detail {
+	background:  rgba(0, 0, 0, 0.1);
+
+  h2 {
+    display: inline-block;
+    margin: 20px 0 10px 10px;
+    text-transform: uppercase;
+    font-weight: 200;
+    font-size: 1em;
+    text-overflow: ellipsis;
+  }
+}
+
+.discussion-detail > .message {
+	margin-left: 0;
+}

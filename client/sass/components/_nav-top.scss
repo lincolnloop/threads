@@ -5,10 +5,10 @@
   width: 100%;
   height: 50px;
   z-index: 2;
-  padding: 10px 10px 0 30px;
+  padding: 10px 10px 0 10px;
   border-bottom: 1px solid $gray;
   font-weight: bold;
-  background: $grayLight;
+  background: $dark-green-gray;
   text-align: center;
 
   .action {
@@ -16,5 +16,14 @@
   }
   .search {
     float: right;
+  }
+
+  .title {
+    color: #fff;
+  }
+
+  .back, .search {
+    font-size: 1.1em;
+    font-weight: 400;
   }
 }
