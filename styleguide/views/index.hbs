@@ -8,11 +8,15 @@
 
     <title>Threads Pattern Library</title>
 
+    <script type="text/javascript" src="//use.typekit.net/jkb8dbp.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
     <link rel="stylesheet" href="{{ css }}">
     <style>
 
     body {
       padding: 10px;
+      overflow: auto;
     }
 
     .pattern {
@@ -36,10 +40,11 @@
         height: 150px;
         font-style: italic;
     }
+
     </style>
   </head>
   <body>
-    <div id="main">
+    <div id="styleguide">
       <h1>Threads Pattern Library</h1>
 
       <div class="pattern">
@@ -73,12 +78,12 @@
       </div>
 
       <div class="pattern">
-        <h2>Message Tree</h2>
+        <h2>Discussion</h2>
         <div class="display">
-        {{> message-tree}}
+        {{> discussion}}
         </div>
         <div class="source">
-          <textarea>{{> message-tree}}</textarea>
+          <textarea>{{> discussion}}</textarea>
         </div>
       </div>
 

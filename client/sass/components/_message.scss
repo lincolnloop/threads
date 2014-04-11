@@ -1,52 +1,76 @@
 .message {
   padding-left: 0;
-  margin-left: 10px; 
-  border-left: 1px solid #c8c7cc;
-  background:  rgb(239, 239, 244);
+  margin-left: 2%; 
+  // border-left: 1px solid #c8c7cc;
+  background:  rgba(12, 13, 13, 0.1);
   .message-children {
     // border-bottom: 1px solid #eee;
-    margin-bottom: 10px;
+    margin-bottom: 2%;
   }
+
+  &.first-message {
+      margin-left: 0px;
+  }
+  // &:first-of-type {
+  //     margin-right: 10px; 
+  // }
 }
 
 .message-detail {
   position: relative;
   background: #eee;
-  padding: 10px 10px 10px 10px;
-  margin-bottom: 10px;
+  padding: 18px;
+  // margin-bottom: 10px;
   border-left: none;
 
   background: #fff;
-  padding: 10px 15px;
   // margin-left: -15px;
   width: 100%;
-  border-top: 1px solid #c8c7cc;
-  border-bottom: 1px solid #c8c7cc;
-  border-right: 1px solid #c8c7cc;
-  color: #000;
+  border-top: 1px solid rgba(12, 13, 13, 0.1);
+  // border-bottom: 1px solid #c8c7cc;
+  // border-right: 1px solid rgba(12, 13, 13, 0.1);
+  color: #3b3b3b;
 
   .avatar {
     position: relative;
     top: 0;
     left: 0;
     bottom: 0;
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     background: #ddd;
     text-align: center;
-    padding: 2px;
     float: left;
   }
 
+  .username, .date {
+    margin-left: 50px;
+  }
   .username {
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 0.9em;
+
   }
   .date {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    font-size: 0.9em;
+    font-size: 0.7em;
+    line-height: 2em;
+    margin-bottom: 16px;
   }
+
+  .collapse-button {
+    width: 32px;
+    height: 32px;
+    background:  rgba(0, 0, 0, 0.1);
+    float: right;
+  }
+
+  .message-content {
+    .content p {
+      font-size: 14px;
+    }
+  }
+
   .votes-list {
     display: inline-block;
     padding: 1px 6px;
@@ -56,7 +80,7 @@
     border-radius: 5px;
   }
   .message-actions {
-    text-align: right;
+    text-align: left;
     > span a, > a {
       margin-right: 10px;
     }

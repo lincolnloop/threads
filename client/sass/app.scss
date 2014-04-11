@@ -22,7 +22,9 @@ $yellow: rgb(217,133,16);
 @import "components/nav-header";
 @import "components/nav-item";
 // list components
-@import "components/discussion";
+@import "components/discussion-list-item";
+// page components
+@import "pages/discussion-detail";
 
 $mobile: new-breakpoint(min-width 0px 8);
 $tablet: new-breakpoint(min-width 660px 12);
