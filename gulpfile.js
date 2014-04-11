@@ -3,7 +3,7 @@ var gulp = require('gulp');
 
 require('./gulp/app');
 require('./gulp/clean');
-require('./gulp/fonts');
+require('./gulp/static');
 require('./gulp/help');
 require('./gulp/jshint');
 require('./gulp/sass');
@@ -20,7 +20,7 @@ gulp.task('build', [
   'tests',
   'vendor',
   'sass',
-  'fonts',
+  'static',
   'html'
 ]);
 
