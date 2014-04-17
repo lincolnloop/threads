@@ -4,7 +4,7 @@ var React = require('react');
 var log = require('loglevel');
 var urls = require('../urls');
 var store = require('../store');
-var DiscussionListView = require('../discussions/list');
+var DiscussionListView = require('../discussions/DiscussionList.jsx');
 
 // TODO: Shim or fork inViewport to this is supported
 require('in-viewport');

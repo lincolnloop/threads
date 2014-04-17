@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var React = require('react');
-var Discussion = require('./item');
+var Discussion = require('./DiscussionItem.jsx');
 
 var DiscussionListView = React.createClass({
   render: function() {

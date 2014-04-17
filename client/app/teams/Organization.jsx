@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var React = require('react');
-var TeamView = require('./team');
+var TeamView = require('./TeamItem.jsx');
 var log = require('loglevel');
 
 var OrganizationView = React.createClass({

@@ -2,8 +2,8 @@
 
 var store = require('../store');
 var TopNav = require('../components/TopNav.jsx');
-var OrganizationList = require('./organization-list.jsx');
-var TeamDetailView = require('./detail.jsx');
+var OrganizationList = require('./OrganizationList.jsx');
+var TeamDetailView = require('./TeamDetail.jsx');
 var teamUtils = require('./utils');
 
 var routes = {

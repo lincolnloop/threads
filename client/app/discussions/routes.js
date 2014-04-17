@@ -3,8 +3,8 @@
 var store = require('../store');
 var urls = require('../urls');
 var TopNav = require('../components/TopNav.jsx');
-var DiscussionDetailView = require('./detail.jsx');
-var DiscussionCreateView = require('./create.jsx');
+var DiscussionDetailView = require('./DiscussionDetail.jsx');
+var DiscussionCreateView = require('./DiscussionCreate.jsx');
 
 var routes = {
   'create': function(teamSlug) {

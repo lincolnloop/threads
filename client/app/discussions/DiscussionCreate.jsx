@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var MarkdownView = require('../components/markdown');
+var MarkdownView = require('../components/MarkdownTextarea.jsx');
 var router = require('../router');
 var store = require('../store');
 var urls = require('../urls');
