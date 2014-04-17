@@ -4,4 +4,8 @@
   border-bottom: 1px solid $darkLight;
   font-weight: bold;
   background: $dark;
+
+  &:active {
+    background: $darkLight;
+  }
 }
