@@ -25,11 +25,13 @@ var discussionRoutes = require('./discussions/routes');
 var AppView = React.createClass({
   
   route: function(view) {
+    log.info('route');
     // shortcut for route callbacks
     return _.partial(this.updateUI, view);
   },
 
   updateUI: function() {
+    log.info('updateUI');
     // Page transition helper method.
     // Determines which animation should ocurr for page changes
     // and triggers setState to re-render the UI
@@ -82,7 +84,7 @@ var AppView = React.createClass({
     // For now, we just assume sign in error.
     // redirect to sign-in page
     // TODO: Handle querystring
-    this.signIn();
+    this.updateUI(authRoutes.signIn);
   },
 
   getInitialState: function() {
