@@ -15,16 +15,32 @@
     <style>
 
     body {
-      padding: 10px;
       overflow: auto;
+    }
+
+    #styleguide h1 {
+      margin-bottom: 20px;
+      padding: 15px;
+      font-size: 24px;
+      background: #333;
+      color: #EEE;
+    }
+
+    .patterns {
+      padding: 10px;
     }
 
     .pattern {
         clear: both;
         overflow: hidden;
+        margin-bottom: 20px;
+        border-bottom: 5px solid #EEE;
     }
     .pattern h2 {
-      margin-bottom: 20px;
+      background: #EEE;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-size: 16px;
     }
 
     .pattern .display {
@@ -46,47 +62,77 @@
   <body>
     <div id="styleguide">
       <h1>Threads Pattern Library</h1>
-
-      <div class="pattern">
-        <h2>Nav Header</h2>
-        <div class="display">
-        {{> nav-header}}
+      <div class="patterns">
+        <div class="pattern">
+          <h2>Nav Header</h2>
+          <div class="display">
+          {{> nav-header}}
+          </div>
+          <div class="source">
+            <textarea>{{> nav-header}}</textarea>
+          </div>
         </div>
-        <div class="source">
-          <textarea>{{> nav-header}}</textarea>
+
+        <div class="pattern">
+          <h2>Nav Item</h2>
+          <div class="display">
+          {{> nav-item}}
+          </div>
+          <div class="source">
+            <textarea>{{> nav-item}}</textarea>
+          </div>
+        </div>
+
+        <div class="pattern">
+          <h2>Message</h2>
+          <div class="display">
+          {{> message}}
+          </div>
+          <div class="source">
+            <textarea>{{> message}}</textarea>
+          </div>
+        </div>
+
+        <div class="pattern">
+          <h2>Message Edit</h2>
+          <div class="display">
+          {{> message-edit}}
+          </div>
+          <div class="source">
+            TODO<!--<textarea>{{> message-edit}}</textarea>-->
+          </div>
+        </div>
+
+        <div class="pattern">
+          <h2>Reply</h2>
+          <div class="display">
+          {{> reply}}
+          </div>
+          <div class="source">
+            TODO<!--<textarea>{{> reply}}</textarea>-->
+          </div>
+        </div>
+
+        <div class="pattern">
+          <h2>Discussion List</h2>
+          <div class="display">
+          {{> discussion-list}}
+          </div>
+          <div class="source">
+            <textarea>{{> discussion-list}}</textarea>
+          </div>
+        </div>
+
+        <div class="pattern">
+          <h2>Discussion</h2>
+          <div class="display">
+          {{> discussion}}
+          </div>
+          <div class="source">
+            <textarea>{{> discussion}}</textarea>
+          </div>
         </div>
       </div>
-
-      <div class="pattern">
-        <h2>Nav Item</h2>
-        <div class="display">
-        {{> nav-item}}
-        </div>
-        <div class="source">
-          <textarea>{{> nav-item}}</textarea>
-        </div>
-      </div>
-
-      <div class="pattern">
-        <h2>Message</h2>
-        <div class="display">
-        {{> message}}
-        </div>
-        <div class="source">
-          <textarea>{{> message}}</textarea>
-        </div>
-      </div>
-
-      <div class="pattern">
-        <h2>Discussion</h2>
-        <div class="display">
-        {{> discussion}}
-        </div>
-        <div class="source">
-          <textarea>{{> discussion}}</textarea>
-        </div>
-      </div>
-
     </div>
   </body>
 </html>
