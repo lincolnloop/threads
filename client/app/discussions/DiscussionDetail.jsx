@@ -11,6 +11,38 @@ var MessageTreeView = require('../messages/tree');
 
 var DiscussionDetailView = React.createClass({
 
+  // --------------------
+  // Custom methods
+  // --------------------
+  fetchDiscussion: function() {
+    // Fetches discussion data from the remote API
+    // and updates the component state.
+    store.get('discussions', {}, {'url': this.props.discussion}).then(this.setDiscussion);
+  },
+
+  setDiscussion: function() {
+    var discussion = store.find('discussions', this.props.discussion);
+    if (!discussion) {
+      discussion = {};
+    }
+    this.setState({
+      'discussion': discussion
+    })
+  },
+
+  // --------------------
+  // React lifecycle
+  // --------------------
+  getInitialState: function() {
+    return {
+      discussion: {}
+    };
+  },
+
+  componentWillMount: function() {
+    this.setDiscussion();
+  },
+
   render: function() {
     var message = store.find('messages', this.state.discussion.message);
     var MessageTree = function() {};
@@ -27,32 +59,6 @@ var DiscussionDetailView = React.createClass({
         {MessageTree}
       </div>
     );
-  },
-
-  setDiscussion: function() {
-    var discussion = store.find('discussions', this.props.discussion);
-    if (!discussion) {
-      discussion = {};
-    }
-    this.setState({
-      'discussion': discussion
-    })
-  },
-
-  fetchDiscussion: function() {
-    // Fetches discussion data from the remote API
-    // and updates the component state.
-    store.get('discussions', {}, {'url': this.props.discussion}).then(this.setDiscussion);
-  },
-
-  getInitialState: function() {
-    return {
-      discussion: {}
-    };
-  },
-
-  componentWillMount: function() {
-    this.setDiscussion();
   },
 
   componentDidMount: function() {
