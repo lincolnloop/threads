@@ -13,7 +13,7 @@ var DiscussionItemView = React.createClass({
       'slug': this.props.slug
     });
     return (
-        <li>
+        <li className="nav-item">
           <a href={url}>
             {this.props.title}
             <span className="unread">{this.props.unread_count}</span>

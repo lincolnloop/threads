@@ -1,8 +1,12 @@
+// ------------------------------------------
+// Reset, base styles and vendor dependencies
+// ------------------------------------------
 @import "vendor/normalize";
 @import "bourbon";
 @import "neat";
 @import "bitters/bitters";
 @import "animations";
+
 // --------------------------
 // Color
 // --------------------------
@@ -13,25 +17,34 @@ $grayLight: #f7f7f8;
 $white: rgb(220,220,220);
 $blueLight: rgba(214,235,255,0.3);
 $yellow: rgb(217,133,16);
-// layout components
-@import "components/main";
-@import "components/nav-top";
-@import "components/content";
-// base components
-@import "components/message";
-@import "components/nav-header";
-@import "components/nav-item";
-// list components
-@import "components/discussion-list-item";
-// page components
-@import "pages/discussion-detail";
 
+// --------------------------
+// Grid
+// --------------------------
 $mobile: new-breakpoint(min-width 0px 8);
 $tablet: new-breakpoint(min-width 660px 12);
 $desktop: new-breakpoint(min-width 1160px 12);
 
 // --------------------------
-// Common
+// Components
+// --------------------------
+// layout
+@import "components/main";
+@import "components/nav-top";
+@import "components/content";
+// base
+@import "components/message";
+@import "components/nav-header";
+@import "components/nav-item";
+// list
+@import "components/discussion-list-item";
+// page
+@import "pages/home";
+@import "pages/team-detail";
+@import "pages/discussion-detail";
+
+// --------------------------
+// Common styles
 // --------------------------
 a {
   cursor: pointer;
@@ -48,26 +61,6 @@ html, body, #main, .main {
 body {
   overflow: hidden;
 }
-
 #sidebar {
   display: none;
-}
-
-#main {
-  .team-detail {
-    .btn-create-discussion {
-      float: right;
-      margin-right: 2.3%;
-    }
-    li {
-      clear: both;
-      padding-right: 2.3%;
-      a {
-        display: block;
-        font-size: 1.2em;
-        padding: 10px 0;
-        border-bottom: 1px solid #CCC;
-      }
-    }
-  }
 }
