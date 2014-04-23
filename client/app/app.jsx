@@ -72,8 +72,28 @@ var AppView = React.createClass({
     });
   },
 
+  'signIn': function() {
+    // signIn route
+    // Note: this is stored here and not in auth/routes
+    // for convenience purposes.
+    log.info('auth:signIn');
+    // content > sign in view
+    var contentView = SignInView({
+      'success': _.partial(store.fetch.bind(store), this.startSuccess, this.startFailed)
+    });
+    var navView = TopNav({
+      'title': 'Sign In'
+    });
+
+    return {
+      'content': contentView,
+      'topNav': navView,
+      'navLevel': 0
+    };
+  },
+
   startSuccess: function() {
-    log.error('startSuccess');
+    log.info('startSuccess');
     // start history
     Backbone.history.start({pushState: true});
   },
@@ -107,7 +127,7 @@ var AppView = React.createClass({
     // index
     router.route('', this.route(teamRoutes.list));
     // signIn
-    router.route('sign-in/', this.route(authRoutes.signIn));
+    router.route('sign-in/', this.route(this.signIn));
     // signOut
     router.route('sign-out/', this.route(authRoutes.signIn));
     // team detail
@@ -131,8 +151,6 @@ var AppView = React.createClass({
 
   componentDidMount: function() {
     // fetch initial data
-    // TODO: enable event triggering on store object
-    window.addEventListener('store:fetchSuccess', this.startSuccess);
     store.fetch(this.startSuccess, this.startFailed);
   }
 });
