@@ -131,6 +131,8 @@ var AppView = React.createClass({
 
   componentDidMount: function() {
     // fetch initial data
+    // TODO: enable event triggering on store object
+    window.addEventListener('store:fetchSuccess', this.startSuccess);
     store.fetch(this.startSuccess, this.startFailed);
   }
 });

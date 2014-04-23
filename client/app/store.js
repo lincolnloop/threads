@@ -63,7 +63,9 @@ store.fetch = function(successCallback, errorCallback) {
       'email': 'nobody@gingerhq.com',
       'name': 'Deleted User'
     });
-    successCallback();
+    var evt = new CustomEvent('store:fetchSuccess');
+    // TODO: trigger event from the object itself
+    window.dispatchEvent(evt);
   }.bind(this)).catch(function(reason) {
     log.info('store.fetch.error');
     errorCallback(reason);
