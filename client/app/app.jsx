@@ -13,6 +13,7 @@ var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 // --------------------
 // common
 var TopNav = require('./components/TopNav.jsx');
+var SignInView = require('./auth/SignIn.jsx');
 
 // --------------------
 // routes
@@ -104,7 +105,7 @@ var AppView = React.createClass({
     // For now, we just assume sign in error.
     // redirect to sign-in page
     // TODO: Handle querystring
-    this.updateUI(authRoutes.signIn);
+    this.updateUI(this.signIn);
   },
 
   getInitialState: function() {
