@@ -1,6 +1,7 @@
 .message {
   padding-left: 0;
   margin-left: 2%; 
+  @include transition (all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
   // border-left: 1px solid #c8c7cc;
   background:  rgba(12, 13, 13, 0.1);
   .message-children {
@@ -19,7 +20,7 @@
 .message-detail {
   position: relative;
   background: #eee;
-  padding: 18px;
+  padding: 22px;
   // margin-bottom: 10px;
   border-left: none;
 
@@ -68,6 +69,7 @@
   .message-content {
     .content p {
       font-size: 14px;
+      line-height: 22px;
     }
   }
 
