@@ -4,7 +4,6 @@ var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
-var router = require('./router');
 var store = require('./store');
 var log = require('loglevel');
 var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
@@ -74,11 +73,12 @@ var AppView = React.createClass({
   },
 
   startSuccess: function() {
+    log.error('startSuccess');
     // start history
     Backbone.history.start({pushState: true});
   },
 
-  startFailed: function() {
+  startFailed: function(error) {
     log.error('startFailed');
     // Initial data fetch failed.
     // For now, we just assume sign in error.
@@ -98,15 +98,24 @@ var AppView = React.createClass({
   },
 
   componentWillMount: function() {
+    log.info('app.jsx:componentWillMount');
+    var router = new Backbone.Router();
     //
     // Route view binding
     //
-    router.on('route:index', this.route(teamRoutes.list));
-    router.on('route:signIn', this.route(authRoutes.signIn));
-    router.on('route:signOut', this.route(authRoutes.signIn));
-    router.on('route:team:detail', this.route(teamRoutes.detail));
-    router.on('route:team:create', this.route(discussionRoutes.create));
-    router.on('route:discussion:detail', this.route(discussionRoutes.detail));
+
+    // index
+    router.route('', this.route(teamRoutes.list));
+    // signIn
+    router.route('sign-in/', this.route(authRoutes.signIn));
+    // signOut
+    router.route('sign-out/', this.route(authRoutes.signIn));
+    // team detail
+    router.route(':team/', this.route(teamRoutes.detail));
+    // team discussion create
+    router.route('discussion/create/:teamSlug/', this.route(discussionRoutes.create));
+    // discussion detail
+    router.route(':teamSlug/:discussionId/:discussionSlug/', this.route(discussionRoutes.detail));
   },
 
   render: function() {
@@ -122,10 +131,7 @@ var AppView = React.createClass({
 
   componentDidMount: function() {
     // fetch initial data
-    // TODO: enable event triggering on store object
-    window.addEventListener('store:fetchSuccess', this.startSuccess);
-    window.addEventListener('store:fetchFailed', this.startFailed);
-    store.fetch();
+    store.fetch(this.startSuccess, this.startFailed);
   }
 });
 

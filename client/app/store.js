@@ -4,6 +4,7 @@ var RSVP = require('rsvp');
 var fetch = require('./utils/fetch');
 var Amygdala = require('amygdala');
 var config = require('./utils/config');
+var log = require('loglevel');
 
 var store = new Amygdala({
   'apiUrl': config.apiUrl,
@@ -43,7 +44,8 @@ var store = new Amygdala({
   }
 });
 
-store.fetch = function() {
+store.fetch = function(successCallback, errorCallback) {
+  log.info('store.fetch');
   // method to fetch initial data.
   // We handle this outside the store module itself and
   // on the store instance, because it's very app-specific.
@@ -53,6 +55,7 @@ store.fetch = function() {
     'teams': this.get('teams'),
     'users': this.get('users')
   }).then(function(results) {
+    log.info('store.fetch.then');
     // TODO: Move this somewhere else
     // We don't need to set/fetch this data if it already exists
     localStorage.setItem('user', results.userUri);
@@ -60,13 +63,10 @@ store.fetch = function() {
       'email': 'nobody@gingerhq.com',
       'name': 'Deleted User'
     });
-    var evt = new CustomEvent('store:fetchSuccess');
-    // TODO: trigger event from the object itself
-    window.dispatchEvent(evt);
+    successCallback();
   }.bind(this)).catch(function(reason) {
-    var evt = new CustomEvent('store:fetchFailed', reason);
-    // TODO: trigger event from the object itself
-    window.dispatchEvent(evt);
+    log.info('store.fetch.error');
+    errorCallback(reason);
   }.bind(this));
 };
 

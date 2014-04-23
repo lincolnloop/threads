@@ -7,6 +7,7 @@ var SignInView = require('./SignIn.jsx');
 
 var routes = {
   'signIn': function() {
+    log.info('auth:signIn');
     // content > sign in view
     var contentView = SignInView({
       'success': store.fetch.bind(store)
@@ -23,7 +24,7 @@ var routes = {
   },
 
   'signOut': function() {
-    log.debug('main:signOut');
+    log.info('auth:signOut');
   }
 };
 
