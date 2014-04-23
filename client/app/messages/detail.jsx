@@ -124,6 +124,7 @@ var MessageDetailView = React.createClass({
           div({'className': 'avatar'},
             React.DOM.img({'src': avatar})
           ),
+          React.DOM.a({'className': 'collapse-button', 'children': 'Collapse'}),
           div({'className': 'username', 'children': user.name}),
           div({'className': 'date', 'children': message.date_created}),
           MessageView({
