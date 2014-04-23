@@ -10,7 +10,7 @@
   "main": "./client/index.js",
   "scripts": {
     "dist": "NODE_ENV=production gulp build",
-    "rsync": "rsync -avz dist/* gingerhq.com:/var/www/next.gingerhq.com",
+    "rsync": "rsync -avz dist/* gingerhq.com:/var/www/next.gingerhq.com; ssh gingerhq.com \"sudo chown -R :devs /var/www/next.gingerhq.com; sudo chmod -R g+w /var/www/next.gingerhq.com\"",
     "deploy": "npm run dist && npm run rsync && NODE_ENV=production gulp clean"
   },
   "devDependencies": {
