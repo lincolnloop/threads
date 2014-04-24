@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var React = require('react');
 var store = require('../store');
+var config = require('../utils/config');
 var gravatar = require('../utils/gravatar');
 var MessageEditView = require('./edit');
 var MessageContentView = require('./content');
@@ -10,6 +11,7 @@ var urls = require('../urls');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
 var classSet = require('react/lib/cx');
+var Backbone = require('backbone');
 
 var MessageDetailView = React.createClass({
   changeState: function (key, value) {
@@ -29,6 +31,21 @@ var MessageDetailView = React.createClass({
       this.setState({'editing': false});
     }.bind(this));
     return false;
+  },
+  handleCollapse: function() {
+    // toggle collapse
+    var collapsed = this.state.collapsed ? false : true;
+    // set state to refresh the UI
+    this.setState({
+      'collapsed': collapsed
+    });
+    // update the message with the new collapsed state
+    Backbone.ajax({
+      'type': 'PUT',
+      'url': config.apiUrl + urls.get('api:message:collapseExpand', {
+        'message_id': this.props.message.id
+      })
+    })
   },
   handleVote: function(value) {
     var message = store.find('messages', this.props.message.url);
@@ -86,10 +103,15 @@ var MessageDetailView = React.createClass({
     });
     this.setState({'votes': votes});
   },
-  getInitialState: function () {
+  getInitialState: function() {
     return {
-      'editing': false
+      'editing': false,
+      'collapsed': false
     };
+  },
+  componentWillMount: function() {
+    var message = store.find('messages', this.props.message.url);
+    this.setState({'collapsed': message.collapsed});
   },
   render: function () {
     // shortcuts
@@ -115,7 +137,7 @@ var MessageDetailView = React.createClass({
     var classes = classSet({
       'message-detail': true,
       'message-unread': !message.read,
-      'message-collapsed': message.collapsed
+      'message-collapsed': this.state.collapsed
     });
     var avatar = gravatar.get(user.email);
     return (
@@ -124,7 +146,11 @@ var MessageDetailView = React.createClass({
           div({'className': 'avatar'},
             React.DOM.img({'src': avatar})
           ),
-          React.DOM.a({'className': 'collapse-button', 'children': 'Collapse'}),
+          React.DOM.a({
+            'className': 'collapse-button',
+            'children': 'Collapse',
+            'onClick': this.handleCollapse
+          }),
           div({'className': 'username', 'children': user.name}),
           div({'className': 'date', 'children': message.date_created}),
           MessageView({
