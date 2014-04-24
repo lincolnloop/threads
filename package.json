@@ -53,6 +53,7 @@
     "react": "^0.10.0-rc1",
     "rsvp": "~3.0.4",
     "underscore": "~1.6.0",
-    "amygdala": "0.0.4"
+    "amygdala": "0.0.4",
+    "moment": "^2.6.0"
   }
 }

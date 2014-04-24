@@ -2,6 +2,8 @@
 
 var _ = require('underscore');
 var React = require('react');
+var Backbone = require('backbone');
+var moment = require('moment');
 var store = require('../store');
 var gravatar = require('../utils/gravatar');
 var MessageEditView = require('./edit');
@@ -10,7 +12,6 @@ var urls = require('../urls');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
 var classSet = require('react/lib/cx');
-var Backbone = require('backbone');
 
 var MessageDetailView = React.createClass({
   changeState: function (key, value) {
@@ -130,7 +131,7 @@ var MessageDetailView = React.createClass({
             'onClick': this.props.handleCollapse
           }),
           div({'className': 'username', 'children': user.name}),
-          div({'className': 'date', 'children': message.date_created}),
+          div({'className': 'date', 'children': moment(message.date_created).fromNow()}),
           MessageView({
             'ref': 'message',
             'message': message,
