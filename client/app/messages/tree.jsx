@@ -4,8 +4,10 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
+var config = require('../utils/config');
 var urls = require('../urls');
 var store = require('../store');
+var classSet = require('react/lib/cx');
 var MessageDetailView = require('./detail');
 var MessageReplyView = require('./reply');
 
@@ -31,13 +33,36 @@ var MessageTreeView = React.createClass({
     }.bind(this));
     return false;
   },
+  handleCollapse: function() {
+    // toggle collapse
+    var collapsed = this.state.collapsed ? false : true;
+    // set state to refresh the UI
+    this.setState({
+      'collapsed': collapsed
+    });
+    // update the message with the new collapsed state
+    Backbone.ajax({
+      'type': 'PUT',
+      'url': config.apiUrl + urls.get('api:message:collapseExpand', {
+        'message_id': this.props.message.id
+      })
+    })
+  },
   getInitialState: function() {
     return {
-      'replying': false
+      'replying': false,
+      'collapsed': false
     };
+  },
+  componentWillMount: function() {
+    this.setState({'collapsed': this.props.message.collapsed});
   },
   render: function() {
     var replies = store.findAll('messages', {'parent': this.props.message.url});
+    var classes = classSet({
+      'message': true,
+      'message-collapsed': this.state.collapsed
+    });
     var repliesView = function(){};
     if (!this.props.message) {
       return (<span />);
@@ -65,12 +90,13 @@ var MessageTreeView = React.createClass({
     // Get the ReplyView (or an empty render) based on `replying` state
     var ReplyView = this.state.replying ? MessageReplyView : function(){};
     return (
-      React.DOM.div({'className': 'message'},
+      React.DOM.div({'className': classes},
         MessageDetailView({
           'key': this.props.discussion.url,
           'message': this.props.message,
           'discussion': this.props.discussion,
-          'handleReplyClick': _.partial(this.changeState, 'replying', true)
+          'handleReplyClick': _.partial(this.changeState, 'replying', true),
+          'handleCollapse': this.handleCollapse
         }),
         ReplyView({
           'ref': 'reply',
