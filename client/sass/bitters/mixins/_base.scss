@@ -2,7 +2,7 @@
 
 
 @mixin calcNoRepeat($property, $expression) {
-#{$property}: no-repeat -moz-calc(#{$expression});
-#{$property}: no-repeat -webkit-calc(#{$expression});
-#{$property}: no-repeat calc(#{$expression});
+  #{$property}: no-repeat -moz-calc(#{$expression});
+  #{$property}: no-repeat -webkit-calc(#{$expression});
+  #{$property}: no-repeat calc(#{$expression});
 }

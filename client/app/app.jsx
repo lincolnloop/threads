@@ -100,7 +100,7 @@ var AppView = React.createClass({
   },
 
   startFailed: function(error) {
-    log.error('startFailed', error);
+    log.error('start:failed', error);
     // Initial data fetch failed.
     // For now, we just assume sign in error.
     // redirect to sign-in page
