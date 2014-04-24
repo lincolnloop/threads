@@ -1,5 +1,6 @@
 'use strict';
 
+var log = require('loglevel');
 var store = require('../store');
 var TopNav = require('../components/TopNav.jsx');
 var OrganizationList = require('./OrganizationList.jsx');
@@ -8,6 +9,7 @@ var teamUtils = require('./utils');
 
 var routes = {
   'list': function() {
+    log.info('team:list');
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
     var contentView = '';
@@ -29,6 +31,7 @@ var routes = {
   },
 
   'detail': function(teamSlug) {
+    log.info('team:detail');
     var team = store.find('teams', {'slug': teamSlug});
     // content > team discussion list view
     // TODO: We need to bootstrap teams on load

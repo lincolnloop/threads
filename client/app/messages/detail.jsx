@@ -10,6 +10,7 @@ var urls = require('../urls');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
 var classSet = require('react/lib/cx');
+var Backbone = require('backbone');
 
 var MessageDetailView = React.createClass({
   changeState: function (key, value) {
@@ -86,7 +87,7 @@ var MessageDetailView = React.createClass({
     });
     this.setState({'votes': votes});
   },
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       'editing': false
     };
@@ -114,8 +115,7 @@ var MessageDetailView = React.createClass({
     // main message classes
     var classes = classSet({
       'message-detail': true,
-      'message-unread': !message.read,
-      'message-collapsed': message.collapsed
+      'message-unread': !message.read
     });
     var avatar = gravatar.get(user.email);
     return (
@@ -124,7 +124,11 @@ var MessageDetailView = React.createClass({
           div({'className': 'avatar'},
             React.DOM.img({'src': avatar})
           ),
-          React.DOM.a({'className': 'collapse-button', 'children': 'Collapse'}),
+          React.DOM.a({
+            'className': 'collapse-button',
+            'children': 'Collapse',
+            'onClick': this.props.handleCollapse
+          }),
           div({'className': 'username', 'children': user.name}),
           div({'className': 'date', 'children': message.date_created}),
           MessageView({
