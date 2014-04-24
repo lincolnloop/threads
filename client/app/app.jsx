@@ -116,6 +116,10 @@ var AppView = React.createClass({
         <div id="content">
           {this.state.content}
         </div>
+        <nav id="bottom-nav">
+                <a className="button btn-create-discussion" href="">New Discussion</a>
+
+        </nav>
       </div>
     );
   },

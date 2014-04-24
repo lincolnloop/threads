@@ -14,7 +14,11 @@ var TopNavView = React.createClass({
     return (
       <div className="wrapper">
         <span className={actionClass}>
-          {this.props.backLink ? <a className="back" href={this.props.backLink}>Back</a> : ''}
+
+          {this.props.backLink ? <a className="back" href={this.props.backLink}>
+            <i className="icon icon-back"></i><span>Back</span>
+          </a> : ''}
+
         </span>
         <span className="title">{this.props.title}</span>
         <a className="search">Search</a>

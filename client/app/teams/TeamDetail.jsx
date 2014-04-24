@@ -19,8 +19,7 @@ var TeamDetail = React.createClass({
     return (
       <div className="team-detail">
         <h2>{team.name}</h2>
-        <a className="button btn-create-discussion" href={createDiscussionUrl}>New Discussion</a>
-          <DiscussionListView discussions={this.state.discussions} ref="discussions" />
+        <DiscussionListView discussions={this.state.discussions} ref="discussions" />
       </div>
     );
   },
