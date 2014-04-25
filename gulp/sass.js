@@ -1,5 +1,6 @@
 'use strict';
 var gulp = require('gulp');
+var gutil = require('gulp-util');
 var neat = require('node-neat').includePaths;
 var pkg = require('../package.json');
 var rename = require('gulp-rename');
@@ -16,6 +17,8 @@ gulp.task('sass', function () {
       'outputStyle': production ? 'compressed' : 'expanded',
       'sourceComments': 'map'
     }))
+    // error logging
+    .on('error', gutil.log)
 
     // Give the destination file a name, adding '.min' if this is production
     .pipe(rename(pkg.name + (production ? '.min' : '') + '.css'))
