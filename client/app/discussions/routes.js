@@ -1,5 +1,6 @@
 'use strict';
 
+var React = require('react');
 var store = require('../store');
 var urls = require('../urls');
 var TopNav = require('../components/TopNav.jsx');
@@ -19,10 +20,17 @@ var routes = {
       'team': team,
       'backLink': urls.get('team:detail', {'slug': teamSlug})
     });
+    var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
+      React.DOM.a({
+        'href': '/',
+        'children': 'Dashboard'
+      })
+    );
 
     return {
       'content': contentView,
       'topNav': navView,
+      'bottomNav': bottomNav,
       'navLevel': 10
     };
   },
@@ -43,10 +51,17 @@ var routes = {
       'team': team,
       'backLink': urls.get('team:detail', {'slug': teamSlug})
     });
+    var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
+      React.DOM.a({
+        'href': '/',
+        'children': 'Dashboard'
+      })
+    );
 
     return {
       'content': contentView,
       'topNav': navView,
+      'bottomNav': bottomNav,
       'navLevel': 15
     };
   }

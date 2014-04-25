@@ -5,6 +5,7 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
 var store = require('./store');
+var router = require('./router');
 var log = require('loglevel');
 var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 
@@ -69,6 +70,7 @@ var AppView = React.createClass({
     this.setState({
       'content': content,
       'topNav': options.topNav,
+      'bottomNav': options.bottomNav ? options.bottomNav : function(){},
       'navLevel': options.navLevel
     });
   },
@@ -111,6 +113,7 @@ var AppView = React.createClass({
   getInitialState: function() {
     return {
       'topNav': '',
+      'bottomNav': '',
       'content': '',
       'navLevel': 0,
       'user': {},
@@ -120,23 +123,15 @@ var AppView = React.createClass({
 
   componentWillMount: function() {
     log.info('app.jsx:componentWillMount');
-    var router = new Backbone.Router();
     //
     // Route view binding
     //
-
-    // index
-    router.route('', this.route(teamRoutes.list));
-    // signIn
-    router.route('sign-in/', this.route(this.signIn));
-    // signOut
-    router.route('sign-out/', this.route(authRoutes.signIn));
-    // team detail
-    router.route(':team/', this.route(teamRoutes.detail));
-    // team discussion create
-    router.route('discussion/create/:teamSlug/', this.route(discussionRoutes.create));
-    // discussion detail
-    router.route(':teamSlug/:discussionId/:discussionSlug/', this.route(discussionRoutes.detail));
+    router.on('route:index', this.route(teamRoutes.list));
+    router.on('route:signIn', this.route(this.signIn));
+    router.on('route:signOut', this.route(authRoutes.signOut));
+    router.on('route:team:detail', this.route(teamRoutes.detail));
+    router.on('route:team:create', this.route(discussionRoutes.create));
+    router.on('route:discussion:detail', this.route(discussionRoutes.detail));
   },
 
   render: function() {
@@ -146,10 +141,7 @@ var AppView = React.createClass({
         <div id="content">
           {this.state.content}
         </div>
-        <nav id="bottom-nav">
-                <a className="button btn-create-discussion" href="">New Discussion</a>
-
-        </nav>
+        {this.state.bottomNav}
       </div>
     );
   },

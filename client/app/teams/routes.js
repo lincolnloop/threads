@@ -2,6 +2,8 @@
 
 var log = require('loglevel');
 var store = require('../store');
+var urls = require('../urls');
+var React = require('react');
 var TopNav = require('../components/TopNav.jsx');
 var OrganizationList = require('./OrganizationList.jsx');
 var TeamDetailView = require('./TeamDetail.jsx');
@@ -43,10 +45,16 @@ var routes = {
       'title': team.name,
       'backLink': '/'
     });
-
+    var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
+      React.DOM.a({
+        'href': urls.get('discussion:create:team', {'team_slug': teamSlug}),
+        'children': 'New Discussion'
+      })
+    );
     return {
       'content': contentView,
       'topNav': navView,
+      'bottomNav': bottomNav,
       'navLevel': 5
     };
   }
