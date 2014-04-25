@@ -19,7 +19,7 @@ gulp.task('app', function() {
       transform: ['reactify'],
       extensions: ['.jsx']
     }))
-
+    .on('error', gutil.log)
     .on('prebundle', function(bundle) {
       // The following requirements are loaded from the vendor bundle
       _.each(libs, function(lib) {
