@@ -14,7 +14,9 @@ var AppRouter = Backbone.Router.extend({
     'sign-out/': 'signOut',
     ':team/': 'team:detail',
     'discussion/create/:teamSlug/': 'team:create',
-    ':teamSlug/:discussionId/:discussionSlug/': 'discussion:detail'
+    ':teamSlug/:discussionId/:discussionSlug/': 'discussion:detail',
+    ':teamSlug/:discussionId/:discussionSlug/:messageId/edit/': 'message:edit',
+    ':teamSlug/:discussionId/:discussionSlug/:messageId/reply/': 'message:reply'
   }
 });
 

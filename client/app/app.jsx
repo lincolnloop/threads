@@ -33,6 +33,10 @@ var AppView = React.createClass({
 
   updateUI: function() {
     log.info('updateUI');
+    // NOTE: This is more complicated than it should be.
+    // We should figure out a way to make it simpler, 
+    // but still follow DRY principles.
+    //
     // Page transition helper method.
     // Determines which animation should ocurr for page changes
     // and triggers setState to re-render the UI

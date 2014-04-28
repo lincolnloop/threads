@@ -10,11 +10,15 @@ var DiscussionCreateView = React.createClass({
 
   render: function () {
     return (
-      <form className="discussion-create" onSubmit={this.submit}>
-        <h2>New Discussion</h2>
-        <input type="text" placeholder="What are we talking about?" ref="title" required />
-        <MarkdownView placeholder="Comment.." ref="comment" required />
-        <input type="submit" />
+      <form className="discussion-create form-view" onSubmit={this.submit}>
+        <div className="form-view-actions">
+          <a href={this.props.cancelLink} className="btn btn-cancel ">Cancel</a>
+          <button type="submit" className="btn btn-submit">Create</button>
+        </div>
+        <div className="form-view-fields">
+          <input type="text" placeholder="What are we talking about?" ref="title" required />
+          <MarkdownView placeholder="Comment.." ref="comment" required />
+        </div>
       </form>
     );
   },

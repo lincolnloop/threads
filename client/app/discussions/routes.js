@@ -10,15 +10,17 @@ var DiscussionCreateView = require('./DiscussionCreate.jsx');
 var routes = {
   'create': function(teamSlug) {
     var team = store.find('teams', {'slug': teamSlug});
+    var backUrl = urls.get('team:detail', {'slug': teamSlug});
     // content > create view
     var contentView = DiscussionCreateView({
+      'cancelLink': backUrl,
       'team': team.url,
       'key': 'create-' + team.slug
     });
     var navView = TopNav({
       'title': team.name,
       'team': team,
-      'backLink': urls.get('team:detail', {'slug': teamSlug})
+      'backLink': backUrl
     });
     var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
       React.DOM.a({
