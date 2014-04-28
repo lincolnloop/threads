@@ -6,7 +6,7 @@ var MarkdownView = require('../components/MarkdownTextarea');
 var MessageEditView = React.createClass({
   render: function() {
     return (
-      <form className="message-content" onSubmit={this.props.handleEditSubmit}>
+      <form className="form-view" onSubmit={this.props.handleEditSubmit}>
         <MarkdownView placeholder="Comment.."
                       ref="comment"
                       defaultValue={this.props.message.raw_body}

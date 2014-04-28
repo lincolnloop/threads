@@ -11,19 +11,6 @@ require('in-viewport');
 
 var TeamDetail = React.createClass({
 
-  render: function() {
-    var team = this.props.team;
-    var createDiscussionUrl = urls.get('discussion:create:team', {
-      team_slug: team.slug
-    });
-    return (
-      <div className="team-detail">
-        <h2>{team.name}</h2>
-        <DiscussionListView discussions={this.state.discussions} ref="discussions" />
-      </div>
-    );
-  },
-
   setDiscussions: function() {
     var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
     this.setState({
@@ -84,6 +71,19 @@ var TeamDetail = React.createClass({
 
   componentWillMount: function() {
     this.setDiscussions();
+  },
+
+  render: function() {
+    var team = this.props.team;
+    var createDiscussionUrl = urls.get('discussion:create:team', {
+      team_slug: team.slug
+    });
+    return (
+      <div className="team-detail">
+        <h2>{team.name}</h2>
+        <DiscussionListView discussions={this.state.discussions} ref="discussions" />
+      </div>
+    );
   },
 
   componentDidMount: function() {

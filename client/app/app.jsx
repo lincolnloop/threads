@@ -22,6 +22,7 @@ var SignInView = require('./auth/SignIn.jsx');
 var authRoutes = require('./auth/routes');
 var teamRoutes = require('./teams/routes');
 var discussionRoutes = require('./discussions/routes');
+var messageRoutes = require('./messages/routes');
 
 var AppView = React.createClass({
   
@@ -136,6 +137,8 @@ var AppView = React.createClass({
     router.on('route:team:detail', this.route(teamRoutes.detail));
     router.on('route:team:create', this.route(discussionRoutes.create));
     router.on('route:discussion:detail', this.route(discussionRoutes.detail));
+    router.on('route:message:edit', this.route(messageRoutes.edit));
+    router.on('route:message:reply', this.route(messageRoutes.edit));
   },
 
   render: function() {

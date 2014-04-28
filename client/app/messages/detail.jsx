@@ -22,16 +22,6 @@ var MessageDetailView = React.createClass({
     state[key] = value;
     this.setState(state);
   },
-  update: function() {
-    var data = {
-      'url': this.props.message.url,
-      'raw_body': this.refs.message.refs.comment.getRawValue()
-    };
-    store.update('messages', data).then(function() {
-      this.setState({'editing': false});
-    }.bind(this));
-    return false;
-  },
   handleVote: function(value) {
     var message = store.find('messages', this.props.message.url);
     // find if user already has a vote
@@ -111,8 +101,6 @@ var MessageDetailView = React.createClass({
     log.debug('message:detail:render', votes);
     var user = store.find('users', message.user);
     var div = React.DOM.div;
-    // Get the correct MessageView based on `editing` state
-    var MessageView = this.state.editing ? MessageEditView : MessageContentView;
     // main message classes
     var classes = classSet({
       'message-detail': true,
@@ -132,18 +120,16 @@ var MessageDetailView = React.createClass({
           }),
           div({'className': 'username', 'children': user.name}),
           div({'className': 'date', 'children': moment(message.date_created).fromNow()}),
-          MessageView({
+          MessageContentView({
             'ref': 'message',
             'message': message,
             'votes': votes,
             // TODO: we only need the discussion here because of votes
             // and that should not rely on the discussion at all
             'discussion': this.props.discussion,
-            'handleEditClick': _.partial(this.changeState, 'editing', true),
             // TODO: consider moving this outside of the message.
             // Replies are part of the MessageTree component, not the Message.
             'handleReplyClick': this.props.handleReplyClick,
-            'handleEditSubmit': this.update,
             'handleEditCancelClick': _.partial(this.changeState, 'editing', false),
             // voting
             'handleVote': this.handleVote,
