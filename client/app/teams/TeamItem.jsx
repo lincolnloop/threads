@@ -2,6 +2,7 @@
 
 var React = require('react');
 var urls = require('../urls');
+var classSet = require('react/lib/cx');
 
 var TeamView = React.createClass({
   render: function () {
@@ -11,13 +12,14 @@ var TeamView = React.createClass({
     });
     var classes = classSet({
       'unread-item': true,
-      'unread': this.props.unread !== 0 ? true : false
+      'unread': this.props.unread !== '' ? true : false
     });
     return (
       <li key={this.props.slug} className="nav-item">
         <a href={url}>
-          {this.props.name}{' '}
-          <span className="unread-count">{unread}</span>
+          <div className="item-content">{this.props.name}{' '}<span className={classes}>
+              <span className="unread-count">{this.props.unread}</span>
+            </span></div>
         </a>
       </li>
     );
@@ -25,6 +27,3 @@ var TeamView = React.createClass({
 });
 
 module.exports = TeamView;
-
-
-
