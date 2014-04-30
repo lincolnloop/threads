@@ -6,7 +6,13 @@ var urls = require('../urls');
 var TeamView = React.createClass({
   render: function () {
     var unread = this.props.unread ? this.props.unread : '';
-    var url = urls.get('team:detail', {'slug': this.props.slug});
+    var url = urls.get('team:detail', {
+      'slug': this.props.slug
+    });
+    var classes = classSet({
+      'unread-item': true,
+      'unread': this.props.unread !== 0 ? true : false
+    });
     return (
       <li key={this.props.slug} className="nav-item">
         <a href={url}>
@@ -19,3 +25,6 @@ var TeamView = React.createClass({
 });
 
 module.exports = TeamView;
+
+
+
