@@ -1,7 +1,7 @@
 .nav-header {
   display: block;
-  padding: 10px 10px 10px 15px;
-  margin-top: 24px;
+  padding: 34px 10px 10px 15px;
+  // margin-top: 24px;
   border-bottom: 1px solid #c8c7cc;
   font-weight: bold;
   font-size: 14px;
@@ -9,5 +9,6 @@
   text-transform: uppercase;
   line-height: 1;
   color: #6d6d72;
+  background-image: url('../static/light-grey-pattern.jpg');
   
 }

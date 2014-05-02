@@ -1,9 +1,20 @@
 .markdown-textarea {
   position: relative;
 
-  .preview {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+  textarea {
+    height: 500px;
   }
+  .preview {
+    display: none;
+    // position: absolute;
+    // top: 5px;
+    // right: 5px;
+  }
+}
+
+
+
+
+.btn-preview {
+  margin-right: 10px;
 }
