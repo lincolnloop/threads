@@ -20,10 +20,9 @@ var DiscussionItemView = React.createClass({
     return (
         <li className="nav-item">
           <a href={url}>
-            <span className={classes}>
+            <div className="item-content">{this.props.title}<span className={classes}>
               <span className="unread-count">{this.props.unread_count}</span>
-            </span>
-            <div className="item-content">{this.props.title}</div>
+            </span></div>
           </a>
         </li>
     );

@@ -25,7 +25,7 @@ var MessageActionsView = React.createClass({
           'hasUpVoted': hasUpVoted,
           'handleVote': this.props.handleVote
         }),
-        React.DOM.a({onClick: this.props.handleReplyClick, children: 'reply'}),
+        React.DOM.a({onClick: this.props.handleReplyClick, className: 'reply', children: 'reply'}),
         this.getEditView()
       )
     );

@@ -8,7 +8,7 @@ var OrganizationListView = React.createClass({
   render: function() {
     return (
       React.DOM.div(
-        {'className': 'team-list'},
+        {'className': 'team-list content-view'},
         this.props.organizations.map(function(org) {
           return OrganizationView(_.extend({key: org.name}, org));
         })

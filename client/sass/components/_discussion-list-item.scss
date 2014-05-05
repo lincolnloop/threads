@@ -1,11 +1,11 @@
-.discussion-list {
+
   .nav-item {
 
     a {
 
-      @include display-box;
-      @include box-align(center);
-      @include box-pack(justify);
+      // @include display-box;
+      // @include box-align(center);
+      // @include box-pack(justify);
       min-height: 44px;
 
       padding: 0px;
@@ -17,11 +17,7 @@
       -webkit-touch-callout: none;
 
       .item-content {
-        @include box-flex(1);
-        @include box-align(center);
-        @include box-orient(horizontal);
-        @include box-pack(justify);
-        
+        position: relative;
         width: 100%;
         padding-top: 8px;
         padding-bottom: 7px;
@@ -30,7 +26,7 @@
         border-bottom: 1px solid #c8c7cc;
         color: #3b3b3b;
 
-        padding-right: 35px;
+        padding-right: 66px;
         // background: no-repeat -webkit-calc(100% - 15px) center;
         // background: no-repeat -moz-calc(100% - 15px) center;
         background: no-repeat calc(100% - 15px) center;
@@ -44,11 +40,11 @@
       }
     }
     .unread-item {
+      position: absolute;
+      right: 27px;
       display: inline-block;
-      width: 40px;
-      height: 40px;
-      margin-left: 4px;
-      padding: 7px 5px;
+      // width: 40px;
+      // height: 40px;
       text-align: center;
 
       .unread-count {
@@ -63,9 +59,11 @@
       }
 
       &.unread .unread-count {
-        background: $blue;
-        font-size: 0.7em;
+        background: #ff733f;
+        font-size: 0.7em; 
+        padding: 0 9px 0 9px;
+        margin: 4px;
+        line-height: 20px; 
       }
     }
   }
-}

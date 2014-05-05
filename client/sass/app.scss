@@ -8,18 +8,6 @@
 @import "animations";
 
 // --------------------------
-// Color
-// --------------------------
-$dark: rgb(24,29,33);
-$darkLight: rgb(33,55,66);
-$gray: #c4c4c4;
-$grayLight: #f7f7f8;
-$white: rgb(220,220,220);
-$blueLight: rgba(214,235,255,0.3);
-$yellow: rgb(217,133,16);
-$blue: #007aff;
-
-// --------------------------
 // Grid
 // --------------------------
 $mobile: new-breakpoint(min-width 0px 8);
@@ -45,6 +33,7 @@ $desktop: new-breakpoint(min-width 1160px 12);
 @import "pages/team-detail";
 @import "pages/discussion-detail";
 @import "pages/form-view";
+@import "pages/team-view";
 // icons
 @import "components/icons";
 
