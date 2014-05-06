@@ -9,17 +9,8 @@ var urls = require('../urls');
 var store = require('../store');
 var classSet = require('react/lib/cx');
 var MessageDetailView = require('./detail');
-var MessageReplyView = require('./reply');
 
 var MessageTreeView = React.createClass({
-  changeState: function (key, value) {
-    // callback helper for `replying` state changes
-    // usage:
-    // _.partial(this.changeState, '<replying>', true|false)
-    var state = {};
-    state[key] = value;
-    this.setState(state);
-  },
   handleCollapse: function() {
     // toggle collapse
     var collapsed = this.state.collapsed ? false : true;
@@ -79,7 +70,6 @@ var MessageTreeView = React.createClass({
           'key': this.props.discussion.url,
           'message': this.props.message,
           'discussion': this.props.discussion,
-          'handleReplyClick': _.partial(this.changeState, 'replying', true),
           'handleCollapse': this.handleCollapse
         }),
         // TODO: Create a separate list view out of this

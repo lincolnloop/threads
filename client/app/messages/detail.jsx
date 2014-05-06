@@ -6,7 +6,6 @@ var Backbone = require('backbone');
 var moment = require('moment');
 var store = require('../store');
 var gravatar = require('../utils/gravatar');
-var MessageEditView = require('./edit');
 var MessageContentView = require('./content');
 var urls = require('../urls');
 var clientconfig = require('clientconfig');
@@ -14,14 +13,6 @@ var log = require('loglevel');
 var classSet = require('react/lib/cx');
 
 var MessageDetailView = React.createClass({
-  changeState: function (key, value) {
-    // callback helper for `editing` state changes
-    // usage:
-    // _.partial(this.changeState, '<editing>', true|false)
-    var state = {};
-    state[key] = value;
-    this.setState(state);
-  },
   handleVote: function(value) {
     var message = store.find('messages', this.props.message.url);
     // find if user already has a vote
@@ -78,11 +69,6 @@ var MessageDetailView = React.createClass({
     });
     this.setState({'votes': votes});
   },
-  getInitialState: function() {
-    return {
-      'editing': false
-    };
-  },
   render: function () {
     // shortcuts
     var message = store.find('messages', this.props.message.url);
@@ -98,7 +84,6 @@ var MessageDetailView = React.createClass({
     votes = _.filter(votes, function(vote) {
       return vote.value === '+1';
     });
-    log.debug('message:detail:render', votes);
     var user = store.find('users', message.user);
     var div = React.DOM.div;
     // main message classes
@@ -127,10 +112,6 @@ var MessageDetailView = React.createClass({
             // TODO: we only need the discussion here because of votes
             // and that should not rely on the discussion at all
             'discussion': this.props.discussion,
-            // TODO: consider moving this outside of the message.
-            // Replies are part of the MessageTree component, not the Message.
-            'handleReplyClick': this.props.handleReplyClick,
-            'handleEditCancelClick': _.partial(this.changeState, 'editing', false),
             // voting
             'handleVote': this.handleVote,
           })
