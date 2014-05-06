@@ -39,30 +39,35 @@ var routes = {
 
   detail: function(teamSlug) {
     log.info('team:detail');
+    // fetch data
     var deferred = Q.defer();
-    var team = store.find('teams', {'slug': teamSlug});
-    // content > team discussion list view
-    // TODO: We need to bootstrap teams on load
-    var contentView = TeamDetailView({
-      'team': team,
-      'key': teamSlug
-    });
-    var navView = TopNav({
-      'title': team.name,
-      'backLink': '/'
-    });
-    var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
-      React.DOM.a({
-        'href': urls.get('discussion:create:team', {'team_slug': teamSlug}),
-        'children': 'New Discussion'
-      })
-    );
 
-    deferred.resolve({
-      'content': contentView,
-      'topNav': navView,
-      'bottomNav': bottomNav,
-      'navLevel': 5
+    store.get('discussions', {'team__slug': teamSlug}).then(function(response) {
+      // TODO: Error handling
+      var team = store.find('teams', {'slug': teamSlug});
+      var discussions = response.results;
+      var contentView = TeamDetailView({
+        'team': team,
+        'key': teamSlug,
+        'discussions': discussions
+      });
+      var navView = TopNav({
+        'title': team.name,
+        'backLink': '/'
+      });
+      var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
+        React.DOM.a({
+          'href': urls.get('discussion:create:team', {'team_slug': teamSlug}),
+          'children': 'New Discussion'
+        })
+      );
+
+      deferred.resolve({
+        'content': contentView,
+        'topNav': navView,
+        'bottomNav': bottomNav,
+        'navLevel': 5
+      });
     });
 
     return deferred.promise;

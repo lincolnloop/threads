@@ -6,22 +6,21 @@ var urls = require('../urls');
 var store = require('../store');
 var DiscussionListView = require('../discussions/DiscussionList.jsx');
 
-// TODO: Shim or fork inViewport to this is supported
+// TODO: Shim or fork inViewport so this is supported
 require('in-viewport');
 
 var TeamDetail = React.createClass({
 
-  setDiscussions: function() {
-    var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
-    this.setState({
-      'discussions': discussions
-    });
-  },
-
   fetchDiscussions: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
-    store.get('discussions', {'team__slug': this.props.team.slug}).then(this.setDiscussions);
+    store.get('discussions', {'team__slug': this.props.team.slug}).then(function() {
+      // TODO: Limit results to 20 * page number
+      var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
+      this.setState({
+        'discussions': discussions
+      });
+    }.bind(this));
   },
 
   fetchDiscussionsPagination: function() {
@@ -70,7 +69,7 @@ var TeamDetail = React.createClass({
   },
 
   componentWillMount: function() {
-    this.setDiscussions();
+    this.setState({'discussions': this.props.discussions});
   },
 
   render: function() {
@@ -84,11 +83,6 @@ var TeamDetail = React.createClass({
         <DiscussionListView discussions={this.state.discussions} ref="discussions" />
       </div>
     );
-  },
-
-  componentDidMount: function() {
-    // fetch an updated list of discussions on load
-    this.fetchDiscussions();
   },
 
   componentDidUpdate: function() {
