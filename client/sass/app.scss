@@ -27,6 +27,9 @@ $desktop: new-breakpoint(min-width 1160px 12);
 @import "components/markdown-textarea";
 @import "components/nav-header";
 @import "components/nav-item";
+// elements
+@import "refills/accordion";
+@import "refills/accordion-tabs";
 // list
 @import "components/discussion-list-item";
 // page
