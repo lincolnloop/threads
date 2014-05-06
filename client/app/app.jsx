@@ -49,16 +49,11 @@ var AppView = React.createClass({
     // so extract it from the *arguments* list
     // and invoke the view with the remaining arguments
     // that come from the url router (e.g. teamSlug, discussionId, etc...)
-    var options = {};
     var view = Array.prototype.shift.apply(arguments);
     log.debug('app:updateUI', view, arguments);
-    try {
       // each controller-view should return a list of React views
       // and the `navLevel` of the view as an object.
-      options = view.apply(null, arguments);
-    } catch(e) {
-      log.error(e);
-    }
+    var options = view.apply(null, arguments);
     // Animation is calculated based on the current and next values of 
     // *navLevel* (`this.state.navLevel` and `options.navLevel` respectively)
     // If the next `navLevel` is higher than the current `navLevel`, 
