@@ -15,8 +15,10 @@ var AppRouter = Backbone.Router.extend({
     ':team/': 'team:detail',
     'discussion/create/:teamSlug/': 'team:create',
     ':teamSlug/:discussionId/:discussionSlug/': 'discussion:detail',
+    ':teamSlug/:discussionId/:discussionSlug/#:messageId': 'discussion:detail',
     ':teamSlug/:discussionId/:discussionSlug/:messageId/edit/': 'message:edit',
-    ':teamSlug/:discussionId/:discussionSlug/:messageId/reply/': 'message:reply'
+    ':teamSlug/:discussionId/:discussionSlug/:messageId/reply/': 'message:reply',
+    'discussion:detail:message': 'discussion:detail'
   }
 });
 

@@ -138,7 +138,7 @@ var AppView = React.createClass({
     router.on('route:team:create', this.route(discussionRoutes.create));
     router.on('route:discussion:detail', this.route(discussionRoutes.detail));
     router.on('route:message:edit', this.route(messageRoutes.edit));
-    router.on('route:message:reply', this.route(messageRoutes.edit));
+    router.on('route:message:reply', this.route(messageRoutes.reply));
   },
 
   render: function() {

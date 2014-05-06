@@ -20,19 +20,6 @@ var MessageTreeView = React.createClass({
     state[key] = value;
     this.setState(state);
   },
-  addReply: function () {
-    // setup new message data
-    var data = {
-      'raw_body': this.refs.reply.refs.comment.getRawValue(),
-      'parent': this.props.message.url,
-      'read': true,
-      'user': localStorage.getItem('user')
-    };
-    store.add('messages', data).then(function() {
-      this.setState({'replying': false});
-    }.bind(this));
-    return false;
-  },
   handleCollapse: function() {
     // toggle collapse
     var collapsed = this.state.collapsed ? false : true;
@@ -50,7 +37,6 @@ var MessageTreeView = React.createClass({
   },
   getInitialState: function() {
     return {
-      'replying': false,
       'collapsed': false
     };
   },
@@ -87,8 +73,6 @@ var MessageTreeView = React.createClass({
         }.bind(this))
       );
     }
-    // Get the ReplyView (or an empty render) based on `replying` state
-    var ReplyView = this.state.replying ? MessageReplyView : function(){};
     return (
       React.DOM.div({'className': classes},
         MessageDetailView({
@@ -97,11 +81,6 @@ var MessageTreeView = React.createClass({
           'discussion': this.props.discussion,
           'handleReplyClick': _.partial(this.changeState, 'replying', true),
           'handleCollapse': this.handleCollapse
-        }),
-        ReplyView({
-          'ref': 'reply',
-          'handleReplySubmit': this.addReply,
-          'handleReplyCancel': _.partial(this.changeState, 'replying', false)
         }),
         // TODO: Create a separate list view out of this
         repliesView

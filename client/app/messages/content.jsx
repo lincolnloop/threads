@@ -22,6 +22,7 @@ var MessageContentView = React.createClass({
       });
     });
     var canEdit = this.props.message.user ===  localStorage.getItem('user');
+
     return (
       React.DOM.div(
         {'className': 'message-content'},
