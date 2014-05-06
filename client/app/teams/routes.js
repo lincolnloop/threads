@@ -4,14 +4,17 @@ var log = require('loglevel');
 var store = require('../store');
 var urls = require('../urls');
 var React = require('react');
+var Q = require('Q');
 var TopNav = require('../components/TopNav.jsx');
 var OrganizationList = require('./OrganizationList.jsx');
 var TeamDetailView = require('./TeamDetail.jsx');
 var teamUtils = require('./utils');
 
 var routes = {
-  'list': function() {
+
+  list: function() {
     log.info('team:list');
+    var deferred = Q.defer();
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
     var contentView = '';
@@ -25,15 +28,18 @@ var routes = {
       'title': 'Threads'
     });
 
-    return {
+    deferred.resolve({
       'content': contentView,
       'topNav': navView,
       'navLevel': 0
-    };
+    });
+
+    return deferred.promise;
   },
 
-  'detail': function(teamSlug) {
+  detail: function(teamSlug) {
     log.info('team:detail');
+    var deferred = Q.defer();
     var team = store.find('teams', {'slug': teamSlug});
     // content > team discussion list view
     // TODO: We need to bootstrap teams on load
@@ -51,12 +57,15 @@ var routes = {
         'children': 'New Discussion'
       })
     );
-    return {
+
+    deferred.resolve({
       'content': contentView,
       'topNav': navView,
       'bottomNav': bottomNav,
       'navLevel': 5
-    };
+    });
+
+    return deferred.promise;
   }
 };
 

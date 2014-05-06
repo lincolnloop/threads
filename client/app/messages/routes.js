@@ -1,6 +1,7 @@
 'use strict';
 
 var log = require('loglevel');
+var Q = require('Q');
 var store = require('../store');
 var urls = require('../urls');
 var TopNav = require('../components/TopNav.jsx');
@@ -10,6 +11,7 @@ var MessageReplyView = require('./MessageReply.jsx');
 var routes = {
   edit: function(teamSlug, discussionId, discussionSlug, messageId) {
     log.info('MessageEdit');
+    var deferred = Q.defer();
     var team = store.find('teams', {'slug': teamSlug});
     // content > discussion detail view
     var contentView = MessageEditView({
@@ -21,15 +23,18 @@ var routes = {
       'backLink': urls.get('discussion:detail:message', urls.resolve(window.location.pathname).kwargs)
     });
 
-    return {
+    deferred.resolve({
       'content': contentView,
       'topNav': navView,
       'navLevel': 20
-    };
+    });
+
+    return deferred.promise;
   },
 
   reply: function(teamSlug, discussionId, discussionSlug, messageId) {
     log.info('MessageReply');
+    var deferred = Q.defer();
     var team = store.find('teams', {'slug': teamSlug});
     // content > discussion detail view
     var contentView = MessageReplyView({
@@ -41,11 +46,13 @@ var routes = {
       'backLink': urls.get('discussion:detail:message', urls.resolve(window.location.pathname).kwargs)
     });
 
-    return {
+    deferred.resolve({
       'content': contentView,
       'topNav': navView,
       'navLevel': 20
-    };
+    });
+
+    return deferred.promise;
   }
 };
 
