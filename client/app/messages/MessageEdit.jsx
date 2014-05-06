@@ -1,6 +1,8 @@
 'use strict';
 
+var _ = require('underscore');
 var React = require('react');
+var Backbone = require('backbone');
 var log = require('loglevel');
 var urls = require('../urls');
 var MarkdownView = require('../components/MarkdownTextarea');
@@ -13,8 +15,12 @@ var MessageEditView = React.createClass({
       'url': this.state.message.url,
       'raw_body': this.refs.comment.getRawValue()
     };
-    store.update('messages', data).then(function() {
-      log.info('redirect to message');
+    store.update('messages', data).then(function(message) {
+      log.info('MessageEdit:success');
+      // redirect
+      var kwargs = urls.resolve(window.location.pathname).kwargs;
+      var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
+      Backbone.history.navigate(url, {'trigger': true});
     }.bind(this));
     return false;
   },

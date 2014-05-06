@@ -17,7 +17,7 @@ var MessageReplyView = React.createClass({
       'user': localStorage.getItem('user')
     };
     store.add('messages', data).then(function(message) {
-      log.info('MessageReply:redirect');
+      log.info('MessageEdit:success');
       // redirect
       var kwargs = urls.resolve(window.location.pathname).kwargs;
       var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
