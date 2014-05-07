@@ -33,10 +33,12 @@ making any desired changes.
     $ cp config/local.example.js config/local.js
     $ $EDITOR config/local.js
 
-To build the app, start a development server on port 8080, and rebuild
+To build the app, start a development server on port 8000, and rebuild
 automatically on changes, simply run gulp's default task:
 
     $ gulp
+    $ # for port override:
+    $ PORT=8000 gulp
 
 The frontend of threads will automatically look for a backend (API) connection
 on the host specified in the `apiUrl` config parameter in your
