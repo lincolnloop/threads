@@ -3,7 +3,7 @@
 var $ = require('jquery');
 var _ = require('underscore');
 var Backbone = require('backbone');
-var Q = require('Q');
+var Q = require('q');
 var React = require('react');
 var classSet = require('react/lib/cx');
 var store = require('./store');
@@ -27,7 +27,7 @@ var discussionRoutes = require('./discussions/routes');
 var messageRoutes = require('./messages/routes');
 
 var AppView = React.createClass({
-  
+
   'signIn': function() {
     // signIn route
     // Note: this is stored here and not in auth/routes
@@ -63,9 +63,9 @@ var AppView = React.createClass({
     // For now, we just assume sign in error.
     // redirect to sign-in page
     // TODO: Handle querystring
-    this.signIn.then(this.refresh);
+    this.route(this.signIn)();
   },
-  
+
   route: function(view) {
     log.info('app.route');
 

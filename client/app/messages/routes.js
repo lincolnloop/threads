@@ -1,7 +1,7 @@
 'use strict';
 
 var log = require('loglevel');
-var Q = require('Q');
+var Q = require('q');
 var store = require('../store');
 var urls = require('../urls');
 var TopNav = require('../components/TopNav.jsx');

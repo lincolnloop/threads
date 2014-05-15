@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var Q = require('Q');
+var Q = require('q');
 var store = require('../store');
 var urls = require('../urls');
 var TopNav = require('../components/TopNav.jsx');

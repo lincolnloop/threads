@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var React = require('react');
-var OrganizationView = require('./organization');
+var OrganizationView = require('./Organization.jsx');
 
 var OrganizationListView = React.createClass({
   render: function() {

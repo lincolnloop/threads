@@ -1,7 +1,7 @@
 'use strict';
 
 var log = require('loglevel');
-var Q = require('Q');
+var Q = require('q');
 
 var routes = {
   'signOut': function() {
