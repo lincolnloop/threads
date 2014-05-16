@@ -28,44 +28,6 @@ var messageRoutes = require('./messages/routes');
 
 var AppView = React.createClass({
 
-  'signIn': function() {
-    // signIn route
-    // Note: this is stored here and not in auth/routes
-    // for convenience purposes.
-    log.info('auth:signIn');
-    var deferred = Q.defer();
-    // content > sign in view
-    var contentView = SignInView({
-      'success': _.partial(store.fetch.bind(store), this.startSuccess, this.startFailed)
-    });
-    var navView = TopNav({
-      'title': 'Sign In'
-    });
-
-    deferred.resolve({
-      'content': contentView,
-      'topNav': navView,
-      'navLevel': 0
-    });
-
-    return deferred.promise;
-  },
-
-  startSuccess: function() {
-    log.info('startSuccess');
-    // start history
-    Backbone.history.start({pushState: true});
-  },
-
-  startFailed: function(error) {
-    log.error('start:failed', error);
-    // Initial data fetch failed.
-    // For now, we just assume sign in error.
-    // redirect to sign-in page
-    // TODO: Handle querystring
-    this.route(this.signIn)();
-  },
-
   route: function(view) {
     log.info('app.route');
 
@@ -139,6 +101,10 @@ var AppView = React.createClass({
     router.on('route:discussion:detail', this.route(discussionRoutes.detail));
     router.on('route:message:edit', this.route(messageRoutes.edit));
     router.on('route:message:reply', this.route(messageRoutes.reply));
+
+    router.on('route', function(name, args) {
+      log.info('route >> ', name, args);
+    });
   },
 
   render: function() {
@@ -155,11 +121,6 @@ var AppView = React.createClass({
         {this.state.bottomNav}
       </div>
     );
-  },
-
-  componentDidMount: function() {
-    // fetch initial data
-    store.fetch(this.startSuccess, this.startFailed);
   }
 });
 

@@ -1,8 +1,6 @@
 'use strict';
 
-var Backbone = require('backbone');
 var React = require('react');
-
 var Q = require('q');
 var store = require('../store');
 var urls = require('../urls');
@@ -10,14 +8,7 @@ var TopNav = require('../components/TopNav.jsx');
 var DiscussionDetailView = require('./DiscussionDetail.jsx');
 var DiscussionCreateView = require('./DiscussionCreate.jsx');
 
-var DiscussionRouter = Backbone.Router.extend({
-
-  routes: {
-    'discussion/create/:teamSlug/': 'create',
-    ':teamSlug/:discussionId/:discussionSlug/': 'discussion:detail',
-    ':teamSlug/:discussionId/:discussionSlug/#:messageId': 'discussion:detail'
-  },
-
+var routes = {
   'create': function(teamSlug) {
     var deferred = Q.defer();
     var team = store.find('teams', {'slug': teamSlug});
@@ -85,4 +76,4 @@ var DiscussionRouter = Backbone.Router.extend({
   }
 };
 
-module.exports = DiscussionRouter;
+module.exports = routes;

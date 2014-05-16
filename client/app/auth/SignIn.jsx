@@ -11,7 +11,7 @@ var SignInView = React.createClass({
   // and stores the token in local storage.
   //
   fetch: function() {
-    store.fetch(this.fetchSuccess, this.fetchFailed);
+    store.fetch(this.props.success, this.fetchFailed);
   },
 
   fetchFailed: function(error) {
@@ -19,13 +19,6 @@ var SignInView = React.createClass({
       'displayForm': true,
       'error': error
     })
-  },
-
-  fetchSuccess: function() {
-    // start the backbone router
-    Backbone.history.start({
-      'pushState': true
-    });
   },
 
   handleSubmit: function (evt) {

@@ -2,6 +2,14 @@
 
 var Backbone = require('backbone');
 
+// --------------------
+// routers
+// --------------------
+//var authRoutes = require('./auth/routes');
+//var teamRoutes = require('./teams/routes');
+//var discussionRoutes = require('./discussions/routes');
+//var messageRoutes = require('./messages/routes');
+
 var AppRouter = Backbone.Router.extend({
   /*
    * Main App Router
@@ -9,16 +17,15 @@ var AppRouter = Backbone.Router.extend({
    * No routes are handled here directly, but on the AppView instead.
   */
   routes: {
-    '': 'index',
-    'sign-in/': 'signIn',
-    'sign-out/': 'signOut',
-    ':team/': 'team:detail',
-    'discussion/create/:teamSlug/': 'team:create',
-    ':teamSlug/:discussionId/:discussionSlug/': 'discussion:detail',
-    ':teamSlug/:discussionId/:discussionSlug/#:messageId': 'discussion:detail',
-    ':teamSlug/:discussionId/:discussionSlug/:messageId/edit/': 'message:edit',
-    ':teamSlug/:discussionId/:discussionSlug/:messageId/reply/': 'message:reply',
-    'discussion:detail:message': 'discussion:detail'
+    '': 'index'
+  },
+
+  initialize: function() {
+      // new TeamRouter();
+  },
+
+  index: function() {
+    // TODO
   }
 });
 

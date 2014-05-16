@@ -5,8 +5,9 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 var React = require('react');
 var FastClick = require('fastclick');
-var AppView = require('./app/app');
 var log = require('loglevel');
+var AppView = require('./app/app');
+var router = require('./app/router');
 var config = require('./app/utils/config');
 
 var SignInView = require('./app/auth/SignIn.jsx');
@@ -57,4 +58,11 @@ $(document).ajaxStart(function () {
 // ----------------
 //React.renderComponent(AppView(), document.getElementById('main'));
 
-React.renderComponent(SignInView(), document.getElementById('main'));
+React.renderComponent(SignInView({
+  'success': function() {
+    Backbone.history.start({
+      'pushState': true
+    });
+    React.renderComponent(AppView(), document.getElementById('main'))
+  }
+}), document.getElementById('main'));
