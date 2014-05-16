@@ -9,6 +9,7 @@ var AppView = require('./app/app');
 var log = require('loglevel');
 var config = require('./app/utils/config');
 
+var SignInView = require('./app/auth/SignIn.jsx');
 
 // Configure logging
 if (config.debug) {
@@ -54,4 +55,6 @@ $(document).ajaxStart(function () {
 
 // Kick off the app
 // ----------------
-React.renderComponent(AppView(), document.getElementById('main'));
+//React.renderComponent(AppView(), document.getElementById('main'));
+
+React.renderComponent(SignInView(), document.getElementById('main'));
