@@ -6,8 +6,7 @@ var Backbone = require('backbone');
 var React = require('react');
 var FastClick = require('fastclick');
 var log = require('loglevel');
-var AppView = require('./app/app');
-var AppRouter = require('./app/router');
+var AppRouter = require('./app/AppRouter');
 var config = require('./app/utils/config');
 
 var SignInView = require('./app/auth/SignIn.jsx');
@@ -56,10 +55,10 @@ $(document).ajaxStart(function () {
 
 // Kick off the app
 // ----------------
-//React.renderComponent(AppView(), document.getElementById('main'));
-
 React.renderComponent(SignInView({
   success: function() {
+    // on SignIn.success, 
+    // start the app (for real)
     new AppRouter();
     Backbone.history.start({
       'pushState': true

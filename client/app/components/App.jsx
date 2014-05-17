@@ -16,12 +16,12 @@ var AppView = React.createClass({
   render: function() {
     log.info('AppView:render', this.state.transition);
     return (
-      <div className="app">
+      <section className="app">
         <CSSTransitionGroup transitionName={this.state.transition}
                           component={React.DOM.div}>
           {this.props.children}
         </CSSTransitionGroup>
-      </div>
+      </section>
     );
   },
 

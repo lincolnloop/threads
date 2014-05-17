@@ -1,22 +1,11 @@
 'use strict';
 
 var Backbone = require('backbone');
-var log = require('loglevel');
-var React = require('react');
-var AppView = require('../app');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
 var OrganizationList = require('./OrganizationList.jsx');
 var TeamDetailView = require('./TeamDetail.jsx');
 var teamUtils = require('./utils');
-
-// --------------------
-// routers
-// --------------------
-//var authRoutes = require('./auth/routes');
-//var teamRoutes = require('./teams/routes');
-//var discussionRoutes = require('./discussions/routes');
-//var messageRoutes = require('./messages/routes');
 
 var TeamRouter = Backbone.Router.extend({
   /*
