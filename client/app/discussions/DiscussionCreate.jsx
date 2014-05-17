@@ -1,10 +1,11 @@
 'use strict';
 
-var React = require('react');
 var Backbone = require('backbone');
-var MarkdownView = require('../components/MarkdownTextarea.jsx');
+var React = require('react');
 var store = require('../store');
 var urls = require('../urls');
+var MarkdownView = require('../components/MarkdownTextarea.jsx');
+var Header = require('../components/Header.jsx');
 
 var DiscussionCreateView = React.createClass({
 
@@ -39,11 +40,11 @@ var DiscussionCreateView = React.createClass({
       })
     );
 */
-    var back = urls.get('team:detail', {'slug': teamSlug});
+    var back = urls.get('team:detail', {'slug': this.props.team.slug});
     return (
-      <div>
-        <Header title={team.name} back={back} />
-        <form className="discussion-create form-view" onSubmit={this.handleSubmit}>
+      <div className="discussion-create">
+        <Header title={this.props.team.name} back={back} />
+        <form className="content form-view" onSubmit={this.handleSubmit}>
           <div className="form-view-actions">
             <a href={back} className="btn btn-cancel ">Cancel</a>
             <button type="button" className="btn btn-preview">Preview</button>

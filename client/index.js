@@ -58,7 +58,9 @@ $(document).ajaxStart(function () {
 new AppRouter();
 React.renderComponent(SignInView({
   success: function() {
-    // on SignIn.success, 
-    // start the app (for real)
+    log.info('signIn.fetch.done');
+    Backbone.history.start({
+      'pushState': true
+    });
   }
 }), document.getElementById('main'));

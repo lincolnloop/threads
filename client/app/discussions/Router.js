@@ -17,6 +17,7 @@ var DiscussionRouter = Backbone.Router.extend({
   },
 
   create: function(teamSlug) {
+    log.info('DiscussionRouter:detail');
     var team = store.find('teams', {'slug': teamSlug});
 
     return dispatcher.render(
