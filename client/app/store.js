@@ -1,6 +1,7 @@
 'use strict';
 
 var RSVP = require('rsvp');
+var Backbone = require('backbone');
 var fetch = require('./utils/fetch');
 var Amygdala = require('amygdala');
 var config = require('./utils/config');
@@ -64,6 +65,9 @@ store.fetch = function(successCallback, errorCallback) {
       'name': 'Deleted User'
     });
     successCallback();
+    Backbone.history.start({
+      'pushState': true
+    });
   }.bind(this)).catch(function(reason) {
     log.debug('store.fetch.error', reason);
     errorCallback(reason);

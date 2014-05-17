@@ -1,5 +1,6 @@
 'use strict';
 
+var log = require('loglevel');
 var Backbone = require('backbone');
 
 // --------------------

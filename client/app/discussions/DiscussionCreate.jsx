@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var Backbone = require('Backbone');
+var Backbone = require('backbone');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
 var store = require('../store');
 var urls = require('../urls');

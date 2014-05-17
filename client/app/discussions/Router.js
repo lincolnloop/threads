@@ -1,7 +1,7 @@
 'use strict';
 
 var Backbone = require('backbone');
-
+var log = require('loglevel');
 var store = require('../store');
 var urls = require('../urls');
 var dispatcher = require('../dispatcher');
@@ -21,7 +21,7 @@ var DiscussionRouter = Backbone.Router.extend({
 
     return dispatcher.render(
       DiscussionCreateView({
-        'team': team.url,
+        'team': team,
         'key': 'create-' + team.slug,
         'navLevel': 10
       })
@@ -29,6 +29,7 @@ var DiscussionRouter = Backbone.Router.extend({
   },
 
   'detail': function(teamSlug, discussionId) {
+    log.info('DiscussionRouter:detail');
     var team = store.find('teams', {'slug': teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
       'discussion_id': discussionId

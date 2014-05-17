@@ -3,7 +3,7 @@
 var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
-var AppView = require('./components/app.jsx');
+var AppView = require('./components/App.jsx');
 
 var dispatcher = {
   // view dispatcher, shortcut for React.renderComponent

@@ -30,11 +30,10 @@ var AppRouter = Backbone.Router.extend({
 
   initialize: function() {
     router.on('route', function(name, args) {
-      
-      switch: 
       log.info('route >> ', name, args);
     });
   }
+  /*
     router.on('route:index', this.route(teamRoutes.list));
     //router.on('route:index', this.route(teamRoutes.list));
     router.on('route:signIn', this.route(this.signIn));
@@ -44,6 +43,7 @@ var AppRouter = Backbone.Router.extend({
     router.on('route:discussion:detail', this.route(discussionRoutes.detail));
     router.on('route:message:edit', this.route(messageRoutes.edit));
     router.on('route:message:reply', this.route(messageRoutes.reply));
+*/
 });
 
 module.exports = new AppRouter();

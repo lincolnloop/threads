@@ -55,13 +55,10 @@ $(document).ajaxStart(function () {
 
 // Kick off the app
 // ----------------
+new AppRouter();
 React.renderComponent(SignInView({
   success: function() {
     // on SignIn.success, 
     // start the app (for real)
-    new AppRouter();
-    Backbone.history.start({
-      'pushState': true
-    });
   }
 }), document.getElementById('main'));
