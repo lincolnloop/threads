@@ -2,17 +2,20 @@
 
 var _ = require('underscore');
 var React = require('react');
+var Header = require('../components/Header.jsx');
 var OrganizationView = require('./Organization.jsx');
 
 var OrganizationListView = React.createClass({
   render: function() {
     return (
-      React.DOM.div(
-        {'className': 'team-list content-view'},
-        this.props.organizations.map(function(org) {
-          return OrganizationView(_.extend({key: org.name}, org));
-        })
-      )
+      <div>
+        <Header title="Threads" />
+        <div className="team-list content-view">
+          {this.props.organizations.map(function(org) {
+            return OrganizationView(_.extend({key: org.name}, org));
+          })}
+        </div>
+      </div>
     );
   }
 });

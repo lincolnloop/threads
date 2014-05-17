@@ -65,7 +65,7 @@ store.fetch = function(successCallback, errorCallback) {
     });
     successCallback();
   }.bind(this)).catch(function(reason) {
-    log.info('store.fetch.error');
+    log.debug('store.fetch.error', reason);
     errorCallback(reason);
   }.bind(this));
 };

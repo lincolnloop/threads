@@ -3,8 +3,12 @@
 var Backbone = require('backbone');
 var log = require('loglevel');
 var React = require('react');
+var AppView = require('../app');
+var dispatcher = require('../dispatcher');
 var store = require('../store');
-var urls = require('../urls');
+var OrganizationList = require('./OrganizationList.jsx');
+var TeamDetailView = require('./TeamDetail.jsx');
+var teamUtils = require('./utils');
 
 // --------------------
 // routers
@@ -21,37 +25,38 @@ var TeamRouter = Backbone.Router.extend({
    * No routes are handled here directly, but on the AppView instead.
   */
   routes: {
-    '': 'list'
-  },
-
-  initialize: function() {
-      // new TeamRouter();
+    '': 'list',
+    ':team/': 'detail'
   },
 
   list: function() {
-    // TODO
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
-    var contentView = '';
 
-    if (organizations && organizations.length) {
-      contentView = OrganizationList({
-        organizations: organizations
-      });
-    }
-    var navView = TopNav({
-      'title': 'Threads'
-    });
-
-    deferred.resolve({
-      'content': contentView,
-      'topNav': navView,
-      'navLevel': 0
-    });
+    return dispatcher.render(
+      OrganizationList({
+        'organizations': organizations,
+        'navLevel': 0
+      })
+    );
   },
 
-  detail: function() {
-
+  detail: function(teamSlug) {
+    // fetch data
+    store.get('discussions', {'team__slug': teamSlug}).then(function(response) {
+      // TODO: Error handling
+      var team = store.find('teams', {'slug': teamSlug});
+      var discussions = response.results;
+      
+      return dispatcher.render(
+        TeamDetailView({
+          'team': team,
+          'key': teamSlug,
+          'discussions': discussions,
+          'navLevel': 5
+        })
+      );
+    });
   }
 });
 
