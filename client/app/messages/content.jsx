@@ -27,7 +27,6 @@ var MessageContentView = React.createClass({
       React.DOM.div(
         {'className': 'message-content'},
         React.DOM.div({
-          'className': 'content',
           'dangerouslySetInnerHTML': {__html: message.body}
         }),
         !this.props.votes.length ? function() {} : VotesListView({
