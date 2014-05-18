@@ -1,49 +1,51 @@
 'use strict';
 
 var Backbone = require('backbone');
+var log = require('loglevel');
+var dispatcher = require('../dispatcher');
+var store = require('../store');
+var urls = require('../urls');
+var MessageEditView = require('./MessageEdit.jsx');
+var MessageReplyView = require('./MessageReply.jsx');
 
-// --------------------
-// routes
-// --------------------
-var authRoutes = require('./auth/routes');
-var teamRoutes = require('./teams/routes');
-var discussionRoutes = require('./discussions/routes');
-var messageRoutes = require('./messages/routes');
+var MessageRouter = Backbone.Router.extend({
 
-var AppRouter = Backbone.Router.extend({
-  /*
-   * Main App Router
-   * Handles all route definitions, as a url:key object
-   * No routes are handled here directly, but on the AppView instead.
-  */
-  routes: {
-    '': 'index',
-    'sign-out/': 'signOut',
-    ':team/': 'team:detail',
-    'discussion/create/:teamSlug/': 'team:create',
-    ':teamSlug/:discussionId/:discussionSlug/': 'discussion:detail',
-    ':teamSlug/:discussionId/:discussionSlug/#:messageId': 'discussion:detail',
-    ':teamSlug/:discussionId/:discussionSlug/:messageId/edit/': 'message:edit',
-    ':teamSlug/:discussionId/:discussionSlug/:messageId/reply/': 'message:reply',
-    'discussion:detail:message': 'discussion:detail'
+    routes: {
+    ':teamSlug/:discussionId/:discussionSlug/:messageId/edit/': 'edit',
+    ':teamSlug/:discussionId/:discussionSlug/:messageId/reply/': 'reply'
   },
 
-  initialize: function() {
-    router.on('route', function(name, args) {
-      log.info('route >> ', name, args);
+  edit: function(teamSlug, discussionId, discussionSlug, messageId) {
+    // content > discussion detail view
+    var contentView = MessageEditView({
+      'message_id': messageId
     });
+    /*
+    var navView = TopNav({
+      'title': team.name,
+      'team': 'Edit message',
+      'backLink': urls.get('discussion:detail:message', urls.resolve(window.location.pathname).kwargs)
+    });*/
+
+    return dispatcher.render(
+      MessageEditView({
+        'message_id': messageId,
+        'navLevel': 20
+      })
+    );
+  },
+
+  reply: function(teamSlug, discussionId, discussionSlug, messageId) {
+    log.info('MessageReply');
+    var team = store.find('teams', {'slug': teamSlug});
+
+    return dispatcher.render(
+      MessageReplyView({
+        'parent_url': urls.get('api:messageChange', {'message_id': messageId}),
+        'navLevel': 20
+      })
+    );
   }
-  /*
-    router.on('route:index', this.route(teamRoutes.list));
-    //router.on('route:index', this.route(teamRoutes.list));
-    router.on('route:signIn', this.route(this.signIn));
-    router.on('route:signOut', this.route(authRoutes.signOut));
-    router.on('route:team:detail', this.route(teamRoutes.detail));
-    router.on('route:team:create', this.route(discussionRoutes.create));
-    router.on('route:discussion:detail', this.route(discussionRoutes.detail));
-    router.on('route:message:edit', this.route(messageRoutes.edit));
-    router.on('route:message:reply', this.route(messageRoutes.reply));
-*/
 });
 
-module.exports = new AppRouter();
+module.exports = MessageRouter;
