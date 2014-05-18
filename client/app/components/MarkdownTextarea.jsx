@@ -4,6 +4,7 @@
 // be a reusable component in the near future (published to npm)
 // with no need for AJAX previews.
 var $ = require('jquery');
+var classSet = require('react/lib/cx');
 var React = require('react');
 var urls = require('../urls');
 var config = require('../utils/config');
@@ -13,6 +14,13 @@ var MarkdownView = React.createClass({
   getRawValue: function() {
     // Get raw value for the textarea
     return this.refs.textarea.getDOMNode().value.trim();
+  },
+
+  getTabClass: function(isActive) {
+    return classSet({
+      'tab-header-and-content': true,
+      'is-active': !!isActive
+    });
   },
 
   preview: function() {
@@ -49,18 +57,18 @@ var MarkdownView = React.createClass({
     return (
       <div className="markdown-textarea">
         <ul className="accordion-tabs">
-          <li className="tab-header-and-content">
-            <a onClick={this.stopPreview} className="tab-link is-active">Write</a>
-            <section className="is-open">
-              <textarea ref="textarea" 
+          <li className={this.getTabClass(!this.state.previewValue)}>
+            <a onClick={this.stopPreview} className="tab-link">Write</a>
+            <section>
+              <textarea ref="textarea"
                         placeholder={this.props.placeholder}
                         defaultValue={this.state.rawValue}
                         required={!!this.props.required} />
             </section>
           </li>
-          <li className="tab-header-and-content">
+          <li className={this.getTabClass(this.state.previewValue)}>
             <a onClick={this.preview} className="tab-link">Preview</a>
-            <section className="is-open">
+            <section>
               <div className="preview-content"
                    dangerouslySetInnerHTML={{'__html': this.state.previewValue}}>
               </div>

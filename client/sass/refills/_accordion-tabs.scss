@@ -37,6 +37,22 @@
         border-bottom-right-radius: 0;
       }
     }
+
+    &.is-active a.tab-link {
+      background-color: $tab-active-background;
+      border-bottom: 0;
+
+      @include media($tab-mode) {
+        background-color: $tab-active-background;
+        border: $tab-border;
+        border-bottom: 1px solid $tab-active-background;
+        margin-bottom: -1px;
+      }
+    }
+
+    &.is-active section {
+      display: block;
+    }
   }
 
   li.tab-header-and-content a.tab-link {
@@ -60,18 +76,6 @@
 
     &:focus { 
       outline: none; 
-    }
-
-    &.is-active {
-      background-color: $tab-active-background;
-      border-bottom: 0;
-
-      @include media($tab-mode) {
-        background-color: $tab-active-background;
-        border: $tab-border;
-        border-bottom: 1px solid $tab-active-background;
-        margin-bottom: -1px;
-      }
     }
   }
 
