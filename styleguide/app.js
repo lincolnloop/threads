@@ -34,7 +34,7 @@ var start = function(port) {
 
   // Dispatch the index route unless the request is in one of the excluded paths
   app.get(/^(?!(\/threads\.css|\/threads\.js|\/vendor\.js|\/fonts\/|\/client\/)).*$/, routes.index);
-
+  console.log('styleguide opening at http://127.0.0.1:8088');
   app.listen(port);
 };
 

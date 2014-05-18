@@ -6,6 +6,7 @@ var Backbone = require('backbone');
 var log = require('loglevel');
 var urls = require('../urls');
 var MarkdownView = require('../components/MarkdownTextarea');
+var Header = require('../components/Header.jsx');
 
 var MessageReplyView = React.createClass({
 
@@ -27,18 +28,23 @@ var MessageReplyView = React.createClass({
   },
 
   render: function() {
+    var back = urls.get('discussion:detail:message', urls.resolve(window.location.pathname).kwargs);
     return (
-      <form className="form-view" onSubmit={this.handleSubmit}>
-        <div className="form-view-actions">
-          <a href={this.props.cancelLink} className="btn btn-cancel">Cancel</a>
-          <button type="submit" className="btn btn-submit">Reply</button>
-        </div>
-        <div className="form-view-fields">
-          <MarkdownView placeholder="Comment.."
-                        ref="comment"
-                        required />
-        </div>
-      </form>
+      <div className="message-reply">
+        <Header title="Reply to message"
+                back={back} />
+        <form className="form-view content" onSubmit={this.handleSubmit}>
+            <div className="form-view-actions">
+            <a href={back} className="btn btn-cancel">Cancel</a>
+            <button type="submit" className="btn btn-submit">Reply</button>
+            </div>
+            <div className="form-view-fields">
+            <MarkdownView placeholder="Comment.."
+                            ref="comment"
+                            required />
+            </div>
+        </form>
+      </div>
     );
   }
 });

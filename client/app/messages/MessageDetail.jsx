@@ -1,16 +1,17 @@
 'use strict';
 
 var _ = require('underscore');
-var React = require('react');
 var Backbone = require('backbone');
-var moment = require('moment');
-var store = require('../store');
-var gravatar = require('../utils/gravatar');
-var MessageContentView = require('./content');
-var urls = require('../urls');
+var classSet = require('react/lib/cx');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
-var classSet = require('react/lib/cx');
+var moment = require('moment');
+var React = require('react');
+var gravatar = require('../utils/gravatar');
+var store = require('../store');
+var urls = require('../urls');
+var VotesListView = require('./votes-list');
+var VotesView = require('./votes');
 
 var MessageDetailView = React.createClass({
   handleVote: function(value) {
@@ -92,6 +93,16 @@ var MessageDetailView = React.createClass({
       'message-unread': !message.read
     });
     var avatar = gravatar.get(user.email);
+    var urlKeys = _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs);
+    // TODO: This needs to query the store, not the message
+    var hasUpVoted = _.find(message.votes, function(vote) {
+      return store.find('votes', {
+        'url': vote,
+        'user': localStorage.getItem('user'),
+        'value': '+1'
+      });
+    });
+    var canEdit = this.props.message.user === localStorage.getItem('user');
     return (
       div({'className': 'message-container'},
         div({'className': classes},
@@ -105,6 +116,31 @@ var MessageDetailView = React.createClass({
           }),
           div({'className': 'username', 'children': user.name}),
           div({'className': 'date', 'children': moment(message.date_created).fromNow()}),
+            React.DOM.div(
+                {'className': 'message-content'},
+                React.DOM.div({
+                'dangerouslySetInnerHTML': {__html: message.body}
+                }),
+                !votes.length ? function() {} : VotesListView({
+                    'votes': votes
+                }),
+                React.DOM.div(
+                {'className': 'message-actions'},
+                VotesView({
+                    'hasUpVoted': hasUpVoted,
+                    'handleVote': this.handleVote
+                }),
+                React.DOM.a({
+                    'href': urls.get('message:reply', urlKeys),
+                    'children': 'reply'
+                }),
+                canEdit ? React.DOM.a({
+                    'href': urls.get('message:edit', urlKeys),
+                    'children': 'edit'
+                }) : ''
+                )
+            )
+            /*
           MessageContentView({
             'ref': 'message',
             'message': message,
@@ -114,7 +150,7 @@ var MessageDetailView = React.createClass({
             'discussion': this.props.discussion,
             // voting
             'handleVote': this.handleVote,
-          })
+          })*/
         )
       )
     );

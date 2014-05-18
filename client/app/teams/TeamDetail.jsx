@@ -4,6 +4,7 @@ var React = require('react');
 var log = require('loglevel');
 var urls = require('../urls');
 var store = require('../store');
+var Header = require('../components/Header.jsx');
 var DiscussionListView = require('../discussions/DiscussionList.jsx');
 
 // TODO: Shim or fork inViewport so this is supported
@@ -77,10 +78,21 @@ var TeamDetail = React.createClass({
     var createDiscussionUrl = urls.get('discussion:create:team', {
       team_slug: team.slug
     });
+    /*
+      var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
+        React.DOM.a({
+          'href': urls.get('discussion:create:team', {'team_slug': teamSlug}),
+          'children': 'New Discussion'
+        })
+      );
+    */
     return (
-      <div className="team-detail content-view">
-        <h2>{team.name}</h2>
-        <DiscussionListView discussions={this.state.discussions} ref="discussions" />
+      <div>
+        <Header title={team.name} back="/" />
+        <div className="team-detail content">
+          <h2>{team.name}</h2>
+          <DiscussionListView discussions={this.state.discussions} ref="discussions" />
+        </div>
       </div>
     );
   },

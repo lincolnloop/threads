@@ -1,46 +1,68 @@
 'use strict';
 
+var Backbone = require('backbone');
 var React = require('react');
 var config = require('../utils/config');
+var store = require('../store');
 
 var SignInView = React.createClass({
   //
   // Handles the sign-in/token form
   // and stores the token in local storage.
   //
-  getInitialState: function () {
-    return {error: null};
+  fetch: function() {
+    store.fetch(this.props.success, this.fetchFailed);
   },
-  addKey: function (apiKey) {
-    localStorage.apiKey = apiKey;
+
+  fetchFailed: function(error) {
+    this.setState({
+      'displayForm': true,
+      'error': error
+    })
   },
-  login: function (evt) {
+
+  handleSubmit: function (evt) {
     //
     // Store the API key in local storage,
-    // and call success callback (app.fetchData)
+    // and attempt to fetch initial data
     //
-    evt.preventDefault();
-    var apiKey = document.getElementById('api-key').value;
+    var apiKey = this.refs.apiKey.getDOMNode().value;
     if (apiKey.length !== 40) {
-      this.setState({error: 'Invalid API Key'});
+      this.setState({
+        'displayForm': true,
+        'error': 'Invalid API Key'
+      });
     } else {
-      this.addKey(apiKey);
-      // maps to app.fetchData and is binded in app.authenticate.
-      this.props.success();
+      // store the key
+      localStorage.apiKey = apiKey;
+      this.fetch();
     }
+    return false;
   },
+
+  getInitialState: function () {
+    return {
+      'displayForm': false,
+      'error': null
+    };
+  },
+
   render: function() {
     var apiLink = config.apiUrl + '/accounts/api-access/';
     return (
       <div className="sign-in">
-        <form onSubmit={this.login}>
+      {this.state.displayForm ? <form onSubmit={this.handleSubmit}>
           <label htmlFor="api-key">API Key (<a href={apiLink} target="_blank">obtain key</a>):</label>
-          <input type="text" id="api-key" className={this.state.error ? "error" : ""} />
+          <input type="text" ref="apiKey" id="api-key" className={this.state.error ? "error" : ""} />
           {this.state.error ? <div className="error">{this.state.error}</div> : ""}
           <input type="submit" />
-        </form>
+        </form> : function(){}}
       </div>
     );
+  },
+
+  componentDidMount: function() {
+    this.fetch();
   }
 });
 

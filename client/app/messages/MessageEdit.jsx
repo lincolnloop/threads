@@ -6,15 +6,17 @@ var Backbone = require('backbone');
 var log = require('loglevel');
 var urls = require('../urls');
 var MarkdownView = require('../components/MarkdownTextarea');
+var Header = require('../components/Header.jsx');
 
 var MessageEditView = React.createClass({
 
   handleSubmit: function() {
     // handle message edit submit
-    var data = {
-      'url': this.state.message.url,
+    // clone the current message object
+    // and extend it with the new body value
+    var data = _.extend(_.clone(this.state.message), {
       'raw_body': this.refs.comment.getRawValue()
-    };
+    });
     store.update('messages', data).then(function(message) {
       log.info('MessageEdit:success');
       // redirect
@@ -45,24 +47,29 @@ var MessageEditView = React.createClass({
   },
 
   render: function() {
+    var back = urls.get('discussion:detail:message', urls.resolve(window.location.pathname).kwargs);
     if (this.state.message === null) {
       return (
         <div>loading..</div>
       )
     }
     return (
-      <form className="form-view" onSubmit={this.handleSubmit}>
-        <div className="form-view-actions">
-          <a href={this.props.cancelLink} className="btn btn-cancel">Cancel</a>
-          <button type="submit" className="btn btn-submit">Update</button>
-        </div>
-        <div className="form-view-fields">
-          <MarkdownView placeholder="Comment.."
-                        ref="comment"
-                        defaultValue={this.state.message.raw_body}
-                        required />
-        </div>
-      </form>
+      <div className="message-reply">
+        <Header title="Edit message"
+                back={back} />
+        <form className="content form-view" onSubmit={this.handleSubmit}>
+            <div className="form-view-actions">
+            <a href={back} className="btn btn-cancel">Cancel</a>
+            <button type="submit" className="btn btn-submit">Update</button>
+            </div>
+            <div className="form-view-fields">
+            <MarkdownView placeholder="Comment.."
+                            ref="comment"
+                            defaultValue={this.state.message.raw_body}
+                            required />
+            </div>
+        </form>
+      </div>
     );
   },
 

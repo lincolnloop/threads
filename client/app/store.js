@@ -1,6 +1,6 @@
 'use strict';
 
-var RSVP = require('rsvp');
+var Q = require('q');
 var fetch = require('./utils/fetch');
 var Amygdala = require('amygdala');
 var config = require('./utils/config');
@@ -49,25 +49,19 @@ store.fetch = function(successCallback, errorCallback) {
   // method to fetch initial data.
   // We handle this outside the store module itself and
   // on the store instance, because it's very app-specific.
-  // Get common data using RSVP.hash() to manage multiple promises.
-  RSVP.hash({
-    'userUri': fetch.userUri(),
-    'teams': this.get('teams'),
-    'users': this.get('users')
-  }).then(function(results) {
+  // Get common data using Q.all to manage multiple promises.
+  Q.all([
+    fetch.userUri(), this.get('teams'), this.get('users')
+  ]).then(function(results) {
     log.info('store.fetch.then');
     // TODO: Move this somewhere else
     // We don't need to set/fetch this data if it already exists
-    localStorage.setItem('user', results.userUri);
+    localStorage.setItem('user', results[0]);
     localStorage.setItem('anonUser', {
       'email': 'nobody@gingerhq.com',
       'name': 'Deleted User'
     });
-    successCallback();
-  }.bind(this)).catch(function(reason) {
-    log.info('store.fetch.error');
-    errorCallback(reason);
-  }.bind(this));
+  }, errorCallback).done(successCallback);
 };
 
 // TODO: remove window.store once it is stable

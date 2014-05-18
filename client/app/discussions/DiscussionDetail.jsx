@@ -3,6 +3,8 @@
 var React = require('react');
 
 var store = require('../store');
+var urls = require('../urls');
+var Header = require('../components/Header.jsx');
 
 // --------------------
 // Views
@@ -55,8 +57,11 @@ var DiscussionDetailView = React.createClass({
     }
     return (
       <div className="discussion-detail">
-        <h2>{this.state.discussion.title}</h2>
-        {MessageTree}
+        <Header title={this.props.team.name} back={urls.get('team:detail', {'slug': this.props.team.slug})} />
+        <div className="content">
+          <h2>{this.state.discussion.title}</h2>
+          {MessageTree}
+        </div>
       </div>
     );
   },
