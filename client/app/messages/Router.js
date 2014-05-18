@@ -1,7 +1,6 @@
 'use strict';
 
 var Backbone = require('backbone');
-var log = require('loglevel');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
 var urls = require('../urls');

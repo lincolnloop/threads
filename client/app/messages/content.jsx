@@ -3,7 +3,6 @@
 var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
-var MessageActionsView = require('./actions');
 var VotesListView = require('./votes-list');
 var VotesView = require('./votes');
 var urls = require('../urls');
@@ -23,7 +22,6 @@ var MessageContentView = React.createClass({
       });
     });
     var canEdit = this.props.message.user === localStorage.getItem('user');
-    log.info('canEdit', canEdit, this.props.message.user, localStorage.getItem('user'));
     return (
       React.DOM.div(
         {'className': 'message-content'},

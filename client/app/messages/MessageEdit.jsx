@@ -12,10 +12,11 @@ var MessageEditView = React.createClass({
 
   handleSubmit: function() {
     // handle message edit submit
-    var data = {
-      'url': this.state.message.url,
+    // clone the current message object
+    // and extend it with the new body value
+    var data = _.extend(_.clone(this.state.message), {
       'raw_body': this.refs.comment.getRawValue()
-    };
+    });
     store.update('messages', data).then(function(message) {
       log.info('MessageEdit:success');
       // redirect

@@ -1,7 +1,6 @@
 'use strict';
 
 var Q = require('q');
-var Backbone = require('backbone');
 var fetch = require('./utils/fetch');
 var Amygdala = require('amygdala');
 var config = require('./utils/config');
