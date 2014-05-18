@@ -35,7 +35,7 @@ var MessageReplyView = React.createClass({
                 back={back} />
         <form className="form-view content" onSubmit={this.handleSubmit}>
             <div className="form-view-actions">
-            <a href={this.props.cancelLink} className="btn btn-cancel">Cancel</a>
+            <a href={back} className="btn btn-cancel">Cancel</a>
             <button type="submit" className="btn btn-submit">Reply</button>
             </div>
             <div className="form-view-fields">

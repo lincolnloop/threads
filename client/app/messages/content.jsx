@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
+var log = require('loglevel');
 var React = require('react');
 var MessageActionsView = require('./actions');
 var VotesListView = require('./votes-list');
@@ -21,8 +22,8 @@ var MessageContentView = React.createClass({
         'value': '+1'
       });
     });
-    var canEdit = this.props.message.user ===  localStorage.getItem('user');
-
+    var canEdit = this.props.message.user === localStorage.getItem('user');
+    log.info('canEdit', canEdit, this.props.message.user, localStorage.getItem('user'));
     return (
       React.DOM.div(
         {'className': 'message-content'},

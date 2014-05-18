@@ -26,12 +26,12 @@ var userUri = function() {
   };
 
   request.onerror = function() {
-    reject(Error('There was an error fetching user data'));
+    deferred.reject(Error('There was an error fetching user data'));
   };
 
   request.send();
 
-  return deferred;
+  return deferred.promise;
 };
 
 exports.userUri = userUri;
