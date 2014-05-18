@@ -8,7 +8,7 @@ var config = require('../utils/config');
 var urls = require('../urls');
 var store = require('../store');
 var classSet = require('react/lib/cx');
-var MessageDetailView = require('./detail');
+var MessageDetailView = require('./MessageDetail.jsx');
 
 var MessageTreeView = React.createClass({
   handleCollapse: function() {
