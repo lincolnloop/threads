@@ -1,39 +1,41 @@
 //
 // animations
 //
-.left-to-right-enter {
-  margin-left: -100%;
-  width: 100%;
-  transition: 0.5s;
-}
-.left-to-right-enter.left-to-right-enter-active {
-  margin-left: 0;
-}
-.left-to-right-leave {
+.left-to-right-enter, .left-to-right-leave,
+.right-to-left-enter, .right-to-left-leave {
   position: absolute;
-  left: 0;
   top: 0;
   width: 100%;
-  transition: 0.5s;
+  transition: all 0.5s ease;
+}
+
+// back animation enter
+.left-to-right-enter {
+  left: -100%;
+}
+.left-to-right-enter.left-to-right-enter-active {
+  left: 0;
+}
+
+// back animation leave
+.left-to-right-leave {
+  left: 0;
 }
 .left-to-right-leave.left-to-right-leave-active {
   left: 100%;
 }
 
+// forward animation enter
 .right-to-left-enter {
-  margin-left: 100%;
-  width: 100%;
-  transition: 0.5s;
+  left: 100%;
 }
 .right-to-left-enter.right-to-left-enter-active {
-  margin-left: 0;
-}
-.right-to-left-leave {
-  position: absolute;
   left: 0;
-  top: 0;
-  width: 100%;
-  transition: 0.5s;
+}
+
+// forward animation leave
+.right-to-left-leave {
+  left: 0;
 }
 .right-to-left-leave.right-to-left-leave-active {
   left: -100%;

@@ -1,9 +1,10 @@
-#content {
+.content {
   // required for animations
   position: absolute;
-  top: 50px;
+  top: 44px;
   left: 0;
   width: 100%;
   height: 100%;
   overflow: auto;
+  background-image: url('../static/light-grey-pattern.jpg');
 }

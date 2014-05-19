@@ -4,80 +4,79 @@
 // be a reusable component in the near future (published to npm)
 // with no need for AJAX previews.
 var $ = require('jquery');
+var classSet = require('react/lib/cx');
 var React = require('react');
 var urls = require('../urls');
 var config = require('../utils/config');
 
 var MarkdownView = React.createClass({
-  getInitialState: function () {
-    return {
-      previewValue: null,
-      rawValue: this.props.defaultValue ? this.props.defaultValue : null
-    };
-  },
-  render: function () {
-    // render preview and textarea separately.
-    var defaultValue = this.props.data && this.props.data.raw_body,
-      nodes = [];
-    if (this.state.previewValue) {
-      // if we have a previewValue show a preview
-      // -----------
-      // Preview div
-      nodes.push(
-        React.DOM.div({
-          className: 'preview',
-          dangerouslySetInnerHTML: {'__html': this.state.previewValue}
-        }),
-        // Preview button
-        React.DOM.a({
-          children: 'Close Preview',
-          onClick: this.stopPreview
-        })
-      )
-    } else {
-      // Otherwise show the textarea
-      nodes.push(
-        // Textarea
-        React.DOM.textarea({
-          ref: 'textarea',
-          placeholder: this.props.placeholder,
-          defaultValue: this.state.rawValue,
-          required: !!this.props.required
-        }),
-        // Stop preview button
-        React.DOM.a({
-          children: 'Preview',
-          onClick: this.preview
-        })
-      )
-    }
-    return (
-      React.DOM.div(null, nodes)
-    )
-  },
-  getRawValue: function () {
+
+  getRawValue: function() {
     // Get raw value for the textarea
     return this.refs.textarea.getDOMNode().value.trim();
   },
-  preview: function () {
+
+  getTabClass: function(isActive) {
+    return classSet({
+      'tab-header-and-content': true,
+      'is-active': !!isActive
+    });
+  },
+
+  preview: function() {
     // Fetch the preview from the server
     $.ajax({
-      type: 'POST',
-      url: config.apiUrl + urls.get('api:message:preview'),
-      contentType: 'application/json',
-      data: JSON.stringify({'raw_body': this.getRawValue()}),
-      headers: {
-        Authorization: 'Token ' + localStorage.apiKey
+      'type': 'POST',
+      'url': config.apiUrl + urls.get('api:message:preview'),
+      'contentType': 'application/json',
+      'data': JSON.stringify({'raw_body': this.getRawValue()}),
+      'headers': {
+        'Authorization': 'Token ' + localStorage.apiKey
       },
       success: function (evt) {
         // TODO: Fix the API.
         // It's returning an array for the body.
-        this.setState({previewValue: evt.body[0], rawValue: this.getRawValue()});
+        this.setState({'previewValue': evt.body[0], 'rawValue': this.getRawValue()});
       }.bind(this)
     });
   },
-  stopPreview: function () {
-    this.setState({previewValue: null});
+
+  stopPreview: function() {
+    this.setState({'previewValue': null});
+  },
+
+  getInitialState: function() {
+    return {
+      'previewValue': null,
+      'rawValue': this.props.defaultValue ? this.props.defaultValue : null
+    };
+  },
+  render: function() {
+    // render preview and textarea separately.
+    var defaultValue = this.props.data && this.props.data.raw_body;
+    return (
+      <div className="markdown-textarea">
+        <ul className="accordion-tabs">
+          <li className={this.getTabClass(!this.state.previewValue)}>
+            <a onClick={this.stopPreview} className="tab-link">Write</a>
+            <section>
+              <textarea ref="textarea"
+                        placeholder={this.props.placeholder}
+                        defaultValue={this.state.rawValue}
+                        required={!!this.props.required} />
+            </section>
+          </li>
+          <li className={this.getTabClass(this.state.previewValue)}>
+            <a onClick={this.preview} className="tab-link">Preview</a>
+            <section>
+              <div className="preview-content"
+                   dangerouslySetInnerHTML={{'__html': this.state.previewValue}}>
+              </div>
+            </section>
+          </li>
+        </ul>
+      </div>
+    )
   }
 });
 

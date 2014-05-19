@@ -80,7 +80,8 @@ select {
 }
 
 button,
-input[type="submit"] {
+input[type="submit"],
+.btn {
   @extend %button;
   @include appearance(none);
   cursor: pointer;

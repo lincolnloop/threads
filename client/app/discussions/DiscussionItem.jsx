@@ -3,6 +3,7 @@
 var React = require('react');
 var urls = require('../urls');
 var store = require('../store');
+var classSet = require('react/lib/cx');
 
 var DiscussionItemView = React.createClass({
   render: function() {
@@ -12,11 +13,16 @@ var DiscussionItemView = React.createClass({
       'discussion_id': this.props.id,
       'slug': this.props.slug
     });
+    var classes = classSet({
+      'unread-item': true,
+      'unread': this.props.unread_count !== 0 ? true : false
+    });
     return (
         <li className="nav-item">
           <a href={url}>
-            {this.props.title}
-            <span className="unread">{this.props.unread_count}</span>
+            <div className="item-content">{this.props.title}<span className={classes}>
+              <span className="unread-count">{this.props.unread_count}</span>
+            </span></div>
           </a>
         </li>
     );

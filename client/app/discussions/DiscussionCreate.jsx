@@ -1,25 +1,14 @@
 'use strict';
 
+var Backbone = require('backbone');
 var React = require('react');
-var MarkdownView = require('../components/MarkdownTextarea.jsx');
-var router = require('../router');
 var store = require('../store');
 var urls = require('../urls');
+var MarkdownView = require('../components/MarkdownTextarea.jsx');
 
 var DiscussionCreateView = React.createClass({
 
-  render: function () {
-    return (
-      <form className="discussion-create" onSubmit={this.submit}>
-        <h2>New Discussion</h2>
-        <input type="text" placeholder="What are we talking about?" ref="title" required />
-        <MarkdownView placeholder="Comment.." ref="comment" required />
-        <input type="submit" />
-      </form>
-    );
-  },
-
-  submit: function (evt) {
+  handleSubmit: function(evt) {
     var title = this.refs.title.getDOMNode().value;
     store.add('discussions', {
       'title': title,
@@ -35,11 +24,33 @@ var DiscussionCreateView = React.createClass({
         'discussion_id': response.id,
         'slug': response.slug
       });
-      router.navigate(url, {'trigger': true});
+      Backbone.history.navigate(url, {'trigger': true});
     });
     return false;
-  }
+  },
 
+  render: function () {
+    /*
+    TODO: Footer
+    var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
+      React.DOM.a({
+        'href': '/',
+        'children': 'Dashboard'
+      })
+    );
+*/
+    return (
+        <form className="form-view" onSubmit={this.handleSubmit}>
+          <div className="form-view-actions">
+            <button type="submit" className="btn btn-submit">Create</button>
+          </div>
+          <div className="form-view-fields">
+            <input type="text" placeholder="What are we talking about?" ref="title" required />
+            <MarkdownView placeholder="Comment.." ref="comment" required />
+          </div>
+        </form>
+    );
+  }
 });
 
 module.exports = DiscussionCreateView;

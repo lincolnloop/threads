@@ -5,10 +5,11 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 var React = require('react');
 var FastClick = require('fastclick');
-var AppView = require('./app/app');
 var log = require('loglevel');
+var AppRouter = require('./app/AppRouter');
 var config = require('./app/utils/config');
 
+var SignInView = require('./app/auth/SignIn.jsx');
 
 // Configure logging
 if (config.debug) {
@@ -54,4 +55,12 @@ $(document).ajaxStart(function () {
 
 // Kick off the app
 // ----------------
-React.renderComponent(AppView(), document.getElementById('main'));
+new AppRouter();
+React.renderComponent(SignInView({
+  success: function() {
+    log.info('signIn.fetch.done');
+    Backbone.history.start({
+      'pushState': true
+    });
+  }
+}), document.getElementById('main'));

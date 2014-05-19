@@ -3,6 +3,8 @@
 var React = require('react');
 
 var store = require('../store');
+var urls = require('../urls');
+var Header = require('../components/Header.jsx');
 
 // --------------------
 // Views

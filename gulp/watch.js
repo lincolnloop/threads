@@ -8,6 +8,7 @@ gulp.task('watch', function() {
 
   var js = gulp.watch('client/**/{*.js,*.jsx}', ['app', 'tests']);
   js.on('change', function(event) {
+    gulp.run('jshint');
     reloadServer.changed(event.path);
   });
 

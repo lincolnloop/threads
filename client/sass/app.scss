@@ -8,17 +8,6 @@
 @import "animations";
 
 // --------------------------
-// Color
-// --------------------------
-$dark: rgb(24,29,33);
-$darkLight: rgb(33,55,66);
-$gray: #c4c4c4;
-$grayLight: #f7f7f8;
-$white: rgb(220,220,220);
-$blueLight: rgba(214,235,255,0.3);
-$yellow: rgb(217,133,16);
-
-// --------------------------
 // Grid
 // --------------------------
 $mobile: new-breakpoint(min-width 0px 8);
@@ -31,17 +20,27 @@ $desktop: new-breakpoint(min-width 1160px 12);
 // layout
 @import "components/main";
 @import "components/nav-top";
+@import "components/nav-bottom";
 @import "components/content";
 // base
 @import "components/message";
+@import "components/markdown-textarea";
 @import "components/nav-header";
 @import "components/nav-item";
+// elements
+@import "refills/accordion";
+@import "refills/accordion-tabs";
 // list
+@import "components/discussion-list";
+@import "components/team-list";
 @import "components/discussion-list-item";
 // page
-@import "pages/home";
 @import "pages/team-detail";
 @import "pages/discussion-detail";
+@import "pages/form-view";
+@import "pages/team-view";
+// icons
+@import "components/icons";
 
 // --------------------------
 // Common styles

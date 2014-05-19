@@ -1,0 +1,12 @@
+.markdown-textarea {
+  position: relative;
+
+  textarea {
+    height: 500px;
+  }
+  .preview {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+}

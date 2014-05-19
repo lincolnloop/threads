@@ -32,7 +32,7 @@ var start = function(port) {
   app.get(/^\/patterns/, routes.patterns);
 
   // Dispatch the index route unless the request is in one of the excluded paths
-  app.get(/^(?!(\/threads\.css|\/threads\.js|\/vendor\.js|\/fonts\/|\/client\/)).*$/, routes.index);
+  app.get(/^(?!(\/threads\.css|\/threads\.js|\/vendor\.js|\/fonts\/|\/static\/|\/client\/)).*$/, routes.index);
 
   app.listen(port);
 };
