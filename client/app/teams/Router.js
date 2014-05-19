@@ -22,30 +22,27 @@ var TeamRouter = Backbone.Router.extend({
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
 
-    return dispatcher.render(
-      OrganizationList({
-        'organizations': organizations,
-        'navLevel': 0
-      })
+    return dispatcher.render({
+        'navLevel': 0,
+        'title': 'Threads',
+        'back': null
+      }, OrganizationList({'organizations': organizations})
     );
   },
 
   detail: function(teamSlug) {
     // fetch data
-    store.get('discussions', {'team__slug': teamSlug}).then(function(response) {
-      // TODO: Error handling
-      var team = store.find('teams', {'slug': teamSlug});
-      var discussions = response.results;
-      
-      return dispatcher.render(
-        TeamDetailView({
-          'team': team,
-          'key': teamSlug,
-          'discussions': discussions,
-          'navLevel': 5
-        })
-      );
-    });
+    var team = store.find('teams', {'slug': teamSlug});
+
+    return dispatcher.render({
+        'navLevel': 5,
+        'title': team.name,
+        'back': '/'
+      }, TeamDetailView({
+        'team': team,
+        'key': teamSlug
+      })
+    );
   }
 });
 

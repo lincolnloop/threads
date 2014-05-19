@@ -40,7 +40,10 @@ var store = new Amygdala({
     }
   },
   'votes': {
-    'url': 'api:vote'
+    'url': '/api/notifications/vote/'
+  },
+  'notifications': {
+    'url': '/api/v2/notifications/'
   }
 });
 

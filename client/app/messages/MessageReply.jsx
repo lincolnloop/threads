@@ -28,21 +28,17 @@ var MessageReplyView = React.createClass({
   },
 
   render: function() {
-    var back = urls.get('discussion:detail:message', urls.resolve(window.location.pathname).kwargs);
     return (
       <div className="message-reply">
-        <Header title="Reply to message"
-                back={back} />
-        <form className="form-view content" onSubmit={this.handleSubmit}>
-            <div className="form-view-actions">
-            <a href={back} className="btn btn-cancel">Cancel</a>
+        <form className="form-view" onSubmit={this.handleSubmit}>
+          <div className="form-view-actions">
             <button type="submit" className="btn btn-submit">Reply</button>
-            </div>
+          </div>
             <div className="form-view-fields">
             <MarkdownView placeholder="Comment.."
                             ref="comment"
                             required />
-            </div>
+          </div>
         </form>
       </div>
     );

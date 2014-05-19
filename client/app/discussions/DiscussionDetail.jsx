@@ -57,11 +57,8 @@ var DiscussionDetailView = React.createClass({
     }
     return (
       <div className="discussion-detail">
-        <Header title={this.props.team.name} back={urls.get('team:detail', {'slug': this.props.team.slug})} />
-        <div className="content">
-          <h2>{this.state.discussion.title}</h2>
-          {MessageTree}
-        </div>
+        <h2>{this.state.discussion.title}</h2>
+        {MessageTree}
       </div>
     );
   },

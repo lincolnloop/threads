@@ -10,7 +10,8 @@ var dispatcher = {
 
   'app': undefined,
 
-  render: function (view) {
+  render: function (props, children) {
+    var newProps = {};
     /*
      * Wrapper around React.RenderComponent.
      * > Handles unmountComponent for situations where we're rendering
@@ -24,12 +25,16 @@ var dispatcher = {
      */
     if (!this.app) {
       log.info('dispatcher.start');
-      this.app = React.renderComponent(AppView(null, view), document.getElementById('main'));
+      this.app = React.renderComponent(AppView(props, children), document.getElementById('main'));
     } else {
       log.info('dispatcher.update');
-      this.app.setProps(_.extend({
-        'children': view
-      }, view.props));
+      if (props) {
+        _.extend(newProps, props);
+      }
+      if (children) {
+        _.extend(newProps, {'children': children});
+      }
+      this.app.setProps(newProps);
     }
   }
 };

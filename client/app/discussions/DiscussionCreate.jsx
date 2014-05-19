@@ -5,7 +5,6 @@ var React = require('react');
 var store = require('../store');
 var urls = require('../urls');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
-var Header = require('../components/Header.jsx');
 
 var DiscussionCreateView = React.createClass({
 
@@ -40,14 +39,9 @@ var DiscussionCreateView = React.createClass({
       })
     );
 */
-    var back = urls.get('team:detail', {'slug': this.props.team.slug});
     return (
-      <div className="discussion-create">
-        <Header title={this.props.team.name} back={back} />
-        <form className="content form-view" onSubmit={this.handleSubmit}>
+        <form className="form-view" onSubmit={this.handleSubmit}>
           <div className="form-view-actions">
-            <a href={back} className="btn btn-cancel ">Cancel</a>
-            <button type="button" className="btn btn-preview">Preview</button>
             <button type="submit" className="btn btn-submit">Create</button>
           </div>
           <div className="form-view-fields">
@@ -55,7 +49,6 @@ var DiscussionCreateView = React.createClass({
             <MarkdownView placeholder="Comment.." ref="comment" required />
           </div>
         </form>
-      </div>
     );
   }
 });

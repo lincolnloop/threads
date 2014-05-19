@@ -3,6 +3,8 @@
 var log = require('loglevel');
 var React = require('react');
 var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
+var store = require('../store');
+var Header = require('../components/Header.jsx');
 
 var AppView = React.createClass({
 
@@ -17,12 +19,21 @@ var AppView = React.createClass({
     log.info('AppView:render', this.state.transition);
     return (
       <section className="app">
-        <CSSTransitionGroup transitionName={this.state.transition}
+        <Header title={this.props.title} back={this.props.back} />
+        <div className="content">
+          <CSSTransitionGroup transitionName={this.state.transition}
                           component={React.DOM.div}>
-          {this.props.children}
-        </CSSTransitionGroup>
+            {this.props.children}
+          </CSSTransitionGroup>
+        </div>
       </section>
     );
+  },
+
+  componentWillMount: function() {
+    store.get('notifications').then(function() {
+      log.info('fetched notifications');
+    }.bind(this));
   },
 
   componentWillReceiveProps: function(nextProps) {

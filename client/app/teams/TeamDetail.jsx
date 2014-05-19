@@ -69,10 +69,6 @@ var TeamDetail = React.createClass({
     };
   },
 
-  componentWillMount: function() {
-    this.setState({'discussions': this.props.discussions});
-  },
-
   render: function() {
     var team = this.props.team;
     var createDiscussionUrl = urls.get('discussion:create:team', {
@@ -87,14 +83,15 @@ var TeamDetail = React.createClass({
       );
     */
     return (
-      <div>
-        <Header title={team.name} back="/" />
-        <div className="team-detail content">
-          <h2>{team.name}</h2>
-          <DiscussionListView discussions={this.state.discussions} ref="discussions" />
-        </div>
+      <div className="team-detail">
+        <h2>{team.name}</h2>
+        <DiscussionListView discussions={this.state.discussions} ref="discussions" />
       </div>
     );
+  },
+
+  componentDidMount: function() {
+    this.fetchDiscussions();
   },
 
   componentDidUpdate: function() {

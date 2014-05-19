@@ -19,12 +19,16 @@ var DiscussionRouter = Backbone.Router.extend({
   create: function(teamSlug) {
     log.info('DiscussionRouter:detail');
     var team = store.find('teams', {'slug': teamSlug});
+    var back = urls.get('team:detail', {'slug': this.props.team.slug});
 
-    return dispatcher.render(
+    return dispatcher.render({
+        'navLevel': 10,
+        'title': 'Create discussion',
+        'back': back
+      },
       DiscussionCreateView({
         'team': team,
-        'key': 'create-' + team.slug,
-        'navLevel': 10
+        'key': 'create-' + team.slug
       })
     );
   },
@@ -35,13 +39,16 @@ var DiscussionRouter = Backbone.Router.extend({
     var discussionUrl = urls.get('api:discussionChange', {
       'discussion_id': discussionId
     });
-
-    return dispatcher.render(
+    var back = urls.get('team:detail', {'slug': teamSlug});
+    return dispatcher.render({
+        'navLevel': 15,
+        'title': team.name,
+        'back': back
+      },
       DiscussionDetailView({
         'team': team,
         'discussion': discussionUrl,
-        'key': 'discussion-detail' + discussionUrl,
-        'navLevel': 15
+        'key': 'discussion-detail' + discussionUrl
       })
     );
   }
