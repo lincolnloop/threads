@@ -47,6 +47,7 @@ urls.load({
   'signIn': '/sign-in/',
   'signOut': '/sign-out/',
   'welcome': '/welcome/',
+  'notifications': '/notifications/',
   'redirect': '/goto/?url=<url>',
   'loginRedirect': '/accounts/login/?next=<next>&logged_out=1'
   //'team:detail:limit': '<slug>/<limit>/',

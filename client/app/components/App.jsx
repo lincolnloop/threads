@@ -8,10 +8,15 @@ var Header = require('../components/Header.jsx');
 
 var AppView = React.createClass({
 
+  getUnreadNotificationsCount: function() {
+
+  },
+
   getInitialState: function() {
     log.info('AppView:getInitialState');
     return {
-      'transition': 'right-to-left'
+      'transition': 'right-to-left',
+      'unreadNotifications': 1
     }
   },
 
@@ -19,7 +24,9 @@ var AppView = React.createClass({
     log.info('AppView:render', this.state.transition);
     return (
       <section className="app">
-        <Header title={this.props.title} back={this.props.back} />
+        <Header title={this.props.title}
+                back={this.props.back}
+                unreadNotifications={this.state.unreadNotifications} />
         <div className="content">
           <CSSTransitionGroup transitionName={this.state.transition}
                           component={React.DOM.div}>
@@ -30,9 +37,12 @@ var AppView = React.createClass({
     );
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     store.get('notifications').then(function() {
-      log.info('fetched notifications');
+      var count = store.findAll('notifications', {'is_read': false}).length;
+      this.setState({
+        'unreadNotifications': count
+      })
     }.bind(this));
   },
 

@@ -43,7 +43,10 @@ var store = new Amygdala({
     'url': '/api/notifications/vote/'
   },
   'notifications': {
-    'url': '/api/v2/notifications/'
+    'url': '/api/v2/notifications/',
+    parse: function(data) {
+      return data.results ? data.results : data;
+    }
   }
 });
 
