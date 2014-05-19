@@ -8,7 +8,7 @@ var OrganizationView = require('./Organization.jsx');
 var OrganizationListView = React.createClass({
   render: function() {
     return (
-      <div className="team-list">
+      <div>
         {this.props.organizations.map(function(org) {
           return OrganizationView(_.extend({key: org.name}, org));
         })}
