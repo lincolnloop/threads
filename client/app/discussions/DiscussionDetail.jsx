@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-
+var loadingMixin = require('../mixins/loadingMixin');
 var store = require('../store');
 var urls = require('../urls');
 var Header = require('../components/Header.jsx');
@@ -12,6 +12,7 @@ var Header = require('../components/Header.jsx');
 var MessageTreeView = require('../messages/tree');
 
 var DiscussionDetailView = React.createClass({
+  mixins: [loadingMixin],
 
   // --------------------
   // Custom methods
@@ -28,7 +29,8 @@ var DiscussionDetailView = React.createClass({
       discussion = {};
     }
     this.setState({
-      'discussion': discussion
+      'discussion': discussion,
+      'loading': false
     })
   },
 
@@ -37,7 +39,8 @@ var DiscussionDetailView = React.createClass({
   // --------------------
   getInitialState: function() {
     return {
-      discussion: {}
+      'discussion': {},
+      'loading': true
     };
   },
 

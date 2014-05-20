@@ -2,6 +2,7 @@
 
 var React = require('react');
 var log = require('loglevel');
+var loadingMixin = require('../mixins/loadingMixin');
 var urls = require('../urls');
 var store = require('../store');
 var Header = require('../components/Header.jsx');
@@ -11,6 +12,7 @@ var DiscussionListView = require('../discussions/DiscussionList.jsx');
 require('in-viewport');
 
 var TeamDetail = React.createClass({
+  mixins: [loadingMixin],
 
   fetchDiscussions: function() {
     // Fetches discussion data from the remote API
@@ -19,7 +21,8 @@ var TeamDetail = React.createClass({
       // TODO: Limit results to 20 * page number
       var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
       this.setState({
-        'discussions': discussions
+        'discussions': discussions,
+        'loading': false
       });
     }.bind(this));
   },
@@ -65,7 +68,8 @@ var TeamDetail = React.createClass({
       // last discussion element
       lastItemEl: undefined,
       // pageSize = 20
-      page: 1
+      page: 1,
+      loading: true
     };
   },
 

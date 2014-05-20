@@ -8,10 +8,6 @@ var Header = require('../components/Header.jsx');
 
 var AppView = React.createClass({
 
-  getUnreadNotificationsCount: function() {
-
-  },
-
   getInitialState: function() {
     log.info('AppView:getInitialState');
     return {
