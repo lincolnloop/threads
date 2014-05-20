@@ -20,17 +20,19 @@ var DiscussionDetailView = React.createClass({
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
-    store.get('discussions', {}, {'url': this.props.discussion}).then(this.setDiscussion);
+    store.get('discussions', {}, {'url': this.props.discussion}).then(function() {
+      this.setState({'loading': false});
+      this.setDiscussion();
+    }.bind(this));
   },
 
-  setDiscussion: function() {
+  setDiscussion: function(options) {
     var discussion = store.find('discussions', this.props.discussion);
     if (!discussion) {
       discussion = {};
     }
     this.setState({
-      'discussion': discussion,
-      'loading': false
+      'discussion': discussion
     })
   },
 
