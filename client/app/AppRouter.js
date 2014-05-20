@@ -10,6 +10,7 @@ var Backbone = require('backbone');
 var TeamRouter = require('./teams/Router');
 var DiscussionRouter = require('./discussions/Router');
 var MessageRouter = require('./messages/Router');
+var NotificationRouter = require('./notifications/Router');
 
 var AppRouter = Backbone.Router.extend({
   /*
@@ -26,6 +27,7 @@ var AppRouter = Backbone.Router.extend({
     new TeamRouter();
     new DiscussionRouter();
     new MessageRouter();
+    new NotificationRouter();
   },
 
   index: function() {
