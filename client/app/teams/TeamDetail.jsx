@@ -87,7 +87,7 @@ var TeamDetail = React.createClass({
       );
     */
     return (
-      <div className="team-detail">
+      <div className="team-detail content-view">
         <h2>{team.name}</h2>
         <DiscussionListView discussions={this.state.discussions} ref="discussions" />
       </div>
