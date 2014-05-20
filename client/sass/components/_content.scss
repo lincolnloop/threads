@@ -7,4 +7,9 @@
   height: 100%;
   overflow: auto;
   background-image: url('../static/light-grey-pattern.jpg');
+
+  > div {
+    // animation div
+    height: 100%;
+  }
 }
