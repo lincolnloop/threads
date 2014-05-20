@@ -1,5 +1,6 @@
 'use strict';
 
+var $ = require('jquery');
 var log = require('loglevel');
 
 var loadingMixin = {
@@ -28,11 +29,14 @@ var loadingMixin = {
 
     var pageNode = this.getDOMNode();
     pageNode.removeChild(this.loadingContainer);
+    this.loadingContainer = null;
   },
 
   componentWillUnmount: function() {
-    log.info('loadingMixin:componentWillUnmount');
-    this.loadingContainer = null;
+    if (this.loadingContainer) {
+      var pageNode = this.getDOMNode();
+      pageNode.removeChild(this.loadingContainer);
+    }
   }
 };
 

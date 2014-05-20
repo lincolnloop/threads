@@ -61,7 +61,7 @@ var DiscussionDetailView = React.createClass({
       });
     }
     return (
-      <div className="discussion-detail">
+      <div className="discussion-detail content-view">
         <h2>{this.state.discussion.title}</h2>
         {MessageTree}
       </div>
