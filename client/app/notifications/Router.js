@@ -19,7 +19,7 @@ var TeamRouter = Backbone.Router.extend({
     return dispatcher.render({
         'navLevel': 25,
         'title': 'Notifications',
-        'onBack': window.history.back
+        'back': 'history'
       }, NotificationList()
     );
   }

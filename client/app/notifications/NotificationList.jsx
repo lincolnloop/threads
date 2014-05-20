@@ -15,13 +15,13 @@ var NotificationListView = React.createClass({
     return (
       <div className="notifications">
         <ul className="notifications-list">
-          {_.map(notifications, function(notification) {
+          {_.map(notifications, function(notification, key) {
             var user = store.find('users', notification.from_user);
             var classes = classSet({
               'notification-item': true,
               'unread': !notification.is_read
             });
-            return <li className={classes}>
+            return <li className={classes} key={'n-' + key}>
               <h3>
                 {user.name}&nbsp;
                 {notification.verb}&nbsp;

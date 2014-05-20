@@ -6,15 +6,27 @@ var log = require('loglevel');
 var urls = require('../urls');
 
 var Header = React.createClass({
+  historyBack: function() {
+    try {
+      window.history.back();
+    } catch(e) {
+      // redirect to /
+    }
+  },
   render: function () {
-    log.debug('NavView:render');
+    var backAttrs = {
+      'className': 'back',
+      'href': this.props.back !== 'history' ? this.props.back : null,
+      'onClick': this.props.back === 'history' ? this.historyBack : null,
+    }
     return (
       <header id="top-nav">
         <div className="wrapper">
           <span className="action">
-            {this.props.back ? <a className="back" href={this.props.back}>
-              <i className="icon icon-back"></i><span>Back</span>
-            </a> : null}
+            {this.props.back ? React.DOM.a(backAttrs,
+              React.DOM.i({'className': "icon icon-back"}),
+              React.DOM.span(null, 'Back')
+            ) : null}
           </span>
           <span className="title">{this.props.title}</span>
           <span className="action">

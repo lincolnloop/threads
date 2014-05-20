@@ -27,7 +27,7 @@ var dispatcher = {
       log.info('dispatcher.start');
       this.app = React.renderComponent(AppView(props, children), document.getElementById('main'));
     } else {
-      log.info('dispatcher.update');
+      log.info('dispatcher.update', props);
       if (props) {
         _.extend(newProps, props);
       }
