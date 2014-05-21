@@ -70,7 +70,7 @@ var MessageDetailView = React.createClass({
     });
     this.setState({'votes': votes});
   },
-  render: function () {
+  render: function() {
     // shortcuts
     var message = store.find('messages', this.props.message.url);
     var votes = _.map(message.votes, function(voteId) {
@@ -104,55 +104,25 @@ var MessageDetailView = React.createClass({
     });
     var canEdit = this.props.message.user === localStorage.getItem('user');
     return (
-      div({'className': 'message-container'},
-        div({'className': classes},
-          div({'className': 'avatar'},
-            React.DOM.img({'src': avatar})
-          ),
-          React.DOM.a({
-            'className': 'collapse-button',
-            'children': 'Collapse',
-            'onClick': this.props.handleCollapse
-          }),
-          div({'className': 'username', 'children': user.name}),
-          div({'className': 'date', 'children': moment(message.date_created).fromNow()}),
-            React.DOM.div(
-                {'className': 'message-content'},
-                React.DOM.div({
-                'dangerouslySetInnerHTML': {__html: message.body}
-                }),
-                !votes.length ? function() {} : VotesListView({
-                    'votes': votes
-                }),
-                React.DOM.div(
-                {'className': 'message-actions'},
-                VotesView({
-                    'hasUpVoted': hasUpVoted,
-                    'handleVote': this.handleVote
-                }),
-                React.DOM.a({
-                    'href': urls.get('message:reply', urlKeys),
-                    'children': 'reply'
-                }),
-                canEdit ? React.DOM.a({
-                    'href': urls.get('message:edit', urlKeys),
-                    'children': 'edit'
-                }) : ''
-                )
-            )
-            /*
-          MessageContentView({
-            'ref': 'message',
-            'message': message,
-            'votes': votes,
-            // TODO: we only need the discussion here because of votes
-            // and that should not rely on the discussion at all
-            'discussion': this.props.discussion,
-            // voting
-            'handleVote': this.handleVote,
-          })*/
-        )
-      )
+      <div className="message-container">
+        <div className={classes}>
+          <div className="avatar">
+            <img src={avatar} />
+          </div>
+          <a className="collapse-button" onClick={this.props.handleCollapse}>Collapse</a>
+          <div className="username">{user.name}</div>
+          <div className="date">{moment(message.date_created).fromNow()}</div>
+          <div className="message-content">
+            <div dangerouslySetInnerHTML={{__html: message.body}} />
+            {votes.length ? VotesListView({'votes': votes}) : null}
+            <div className="message-actions">
+              <VotesView hasUpVoted={hasUpVoted} handleVote={this.handleVote} />
+              <a href={urls.get('message:reply', urlKeys)}>reply</a>
+              {canEdit ? <a href={urls.get('message:edit', urlKeys)}>edit</a> : null}
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 });
