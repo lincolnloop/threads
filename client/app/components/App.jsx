@@ -29,6 +29,12 @@ var AppView = React.createClass({
             {this.props.children}
           </CSSTransitionGroup>
         </div>
+        {React.DOM.nav({'id': 'bottom-nav'},
+          React.DOM.a({
+            'href': '/',
+            'children': 'Dashboard'
+          })
+        )}
       </section>
     );
   },
