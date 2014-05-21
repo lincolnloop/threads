@@ -67,7 +67,8 @@ store.fetch = function(successCallback, errorCallback) {
       'email': 'nobody@gingerhq.com',
       'name': 'Deleted User'
     });
-  }, errorCallback).done(successCallback);
+    successCallback();
+  }, errorCallback).done();
 };
 
 // TODO: remove window.store once it is stable

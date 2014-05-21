@@ -10,7 +10,7 @@
 }
 .loanim-icon {
   position: absolute;
-  left: 50%;
+  left: calc(50% - 20px);
   bottom: 50%;
   width: 40px;
   height: 40px;
