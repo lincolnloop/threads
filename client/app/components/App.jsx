@@ -12,7 +12,7 @@ var AppView = React.createClass({
     log.info('AppView:getInitialState');
     return {
       'transition': 'right-to-left',
-      'unreadNotifications': 1
+      'unreadNotifications': 0
     }
   },
 
