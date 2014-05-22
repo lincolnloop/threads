@@ -85,6 +85,7 @@ var MessageDetailView = React.createClass({
     votes = _.filter(votes, function(vote) {
       return vote.value === '+1';
     });
+    var attachments = message.attachments;
     var user = store.find('users', message.user);
     var div = React.DOM.div;
     // main message classes
@@ -119,6 +120,11 @@ var MessageDetailView = React.createClass({
               <VotesView hasUpVoted={hasUpVoted} handleVote={this.handleVote} />
               <a href={urls.get('message:reply', urlKeys)}>reply</a>
               {canEdit ? <a href={urls.get('message:edit', urlKeys)}>edit</a> : null}
+              {attachments.length ? 
+                <span className="attachments">
+                  A: <a className="attachments-count">{attachments.length}</a>
+                </span> 
+              : null}
             </div>
           </div>
         </div>
