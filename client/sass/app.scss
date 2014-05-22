@@ -35,6 +35,7 @@ $desktop: new-breakpoint(min-width 1160px 12);
 @import "components/discussion-list";
 @import "components/team-list";
 @import "components/notification-list";
+@import "components/attachment-list";
 @import "components/discussion-list-item";
 // page
 @import "pages/team-detail";

@@ -12,8 +12,10 @@ var store = require('../store');
 var urls = require('../urls');
 var VotesListView = require('./votes-list');
 var VotesView = require('./votes');
+var Attachment = require('./Attachment.jsx');
 
 var MessageDetailView = React.createClass({
+
   handleVote: function(value) {
     var message = store.find('messages', this.props.message.url);
     // find if user already has a vote
@@ -58,6 +60,13 @@ var MessageDetailView = React.createClass({
       }
     }
   },
+
+  toggleAttachments: function() {
+    this.setState({
+      'expandAttachments': !this.state.expandAttachments
+    })
+  },
+
   updateVotes: function() {
     var message = store.find('messages', this.props.message.url);
     var votes = _.map(message.votes, function(voteId) {
@@ -70,6 +79,13 @@ var MessageDetailView = React.createClass({
     });
     this.setState({'votes': votes});
   },
+
+  getInitialState: function() {
+    return {
+      'expandAttachments': false
+    }
+  },
+
   render: function() {
     // shortcuts
     var message = store.find('messages', this.props.message.url);
@@ -121,13 +137,20 @@ var MessageDetailView = React.createClass({
               <a href={urls.get('message:reply', urlKeys)}>reply</a>
               {canEdit ? <a href={urls.get('message:edit', urlKeys)}>edit</a> : null}
               {attachments.length ? 
-                <span className="attachments">
-                  A: <a className="attachments-count">{attachments.length}</a>
-                </span> 
+                <a className="attachments-link" onClick={this.toggleAttachments}>
+                  A: <span className="attachments-count">{attachments.length}</span>
+                </a> 
               : null}
             </div>
           </div>
         </div>
+        {this.state.expandAttachments ? 
+          <ul className="attachment-list">
+            {_.map(attachments, function(attachment) {
+              return <Attachment attachment={attachment} />
+            })}
+          </ul>
+        : null}
       </div>
     );
   }
