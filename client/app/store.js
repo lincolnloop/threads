@@ -7,48 +7,53 @@ var config = require('./utils/config');
 var log = require('loglevel');
 
 var store = new Amygdala({
-  'apiUrl': config.apiUrl,
-  'idAttribute': 'url',
-  'teams': {
-    'url': '/api/v2/team/'
-    // TODO: Add Team members and invitations as oneToMany relations
-  },
-  'users': {
-    'url': '/api/v2/user/'
-  },
-  'discussions': {
-    'url': '/api/v2/discussion/',
-    'oneToMany': {
-      'children': 'messages'
+    'apiUrl': config.apiUrl,
+    'idAttribute': 'url',
+    'teams': {
+      'url': '/api/v2/team/'
+      // TODO: Add Team members and invitations as oneToMany relations
     },
-    parse: function(data) {
-      return data.results ? data.results : data;
+    'users': {
+      'url': '/api/v2/user/'
     },
-    'foreignKey': {
-      'message': 'messages',
-      'team': 'teams'
+    'discussions': {
+      'url': '/api/v2/discussion/',
+      'oneToMany': {
+        'children': 'messages'
+      },
+      parse: function(data) {
+        return data.results ? data.results : data;
+      },
+      'foreignKey': {
+        'message': 'messages',
+        'team': 'teams'
+      }
+    },
+    'messages': {
+      'url': '/api/v2/message/',
+      'oneToMany': {
+        'votes': 'votes'
+      },
+      'foreignKey': {
+        'user': 'users',
+        'discussion': 'discussions'
+      }
+    },
+    'votes': {
+      'url': '/api/notifications/vote/'
+    },
+    'notifications': {
+      'url': '/api/v2/notifications/',
+      parse: function(data) {
+        return data.results ? data.results : data;
+      }
     }
-  },
-  'messages': {
-    'url': '/api/v2/message/',
-    'oneToMany': {
-      'votes': 'votes'
-    },
-    'foreignKey': {
-      'user': 'users',
-      'discussion': 'discussions'
-    }
-  },
-  'votes': {
-    'url': '/api/notifications/vote/'
-  },
-  'notifications': {
-    'url': '/api/v2/notifications/',
-    parse: function(data) {
-      return data.results ? data.results : data;
+  }, {
+    'headers': {
+      'Authorization': 'Token ' + localStorage.apiKey
     }
   }
-});
+);
 
 store.fetch = function(successCallback, errorCallback) {
   log.info('store.fetch');
