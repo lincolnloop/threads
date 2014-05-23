@@ -5,6 +5,7 @@ var React = require('react');
 var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 var store = require('../store');
 var Header = require('../components/Header.jsx');
+var Footer = require('../components/Footer.jsx');
 
 var AppView = React.createClass({
 
@@ -21,20 +22,14 @@ var AppView = React.createClass({
     return (
       <section className="app">
         <Header title={this.props.title}
-                back={this.props.back}
-                unreadNotifications={this.state.unreadNotifications} />
+                back={this.props.back} />
         <div className="content">
           <CSSTransitionGroup transitionName={this.state.transition}
                           component={React.DOM.div}>
             {this.props.children}
           </CSSTransitionGroup>
         </div>
-        {React.DOM.nav({'id': 'bottom-nav'},
-          React.DOM.a({
-            'href': '/',
-            'children': 'Dashboard'
-          })
-        )}
+        <Footer unreadNotifications={this.state.unreadNotifications} />
       </section>
     );
   },
