@@ -23,8 +23,8 @@ var config = require('../utils/config');
 var MarkdownView = React.createClass({
 
   getRawValue: function() {
-    // Get raw value for the textarea
-    return this.refs.textarea.getDOMNode().value.trim();
+    var $textarea = $(this.refs.textarea.getDOMNode());
+    return $textarea.data('messageText');
   },
 
   getTabClass: function(isActive) {
@@ -103,7 +103,7 @@ var MarkdownView = React.createClass({
         var members = _.map(team.members, function(member) {
           user = store.find('users', member.user);
           return {
-            'id': user.id,
+            'id': user.url,
             'name': user.name,
             'avatar': gravatar.get(user.email),
             'type': 'user'
