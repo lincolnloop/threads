@@ -44,6 +44,7 @@ var DiscussionCreateView = React.createClass({
           <div className="form-view-fields">
             <MarkdownView placeholder="Comment.."
                           pre={titleField}
+                          teamUrl={this.props.teamUrl}
                           ref="comment"
                           required />
           </div>

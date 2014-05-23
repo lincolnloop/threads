@@ -4,9 +4,20 @@
 // be a reusable component in the near future (published to npm)
 // with no need for AJAX previews.
 var $ = require('jquery');
+// mentions input reqs
+// TODO: Fix this
+window._ = require('underscore');
+window.jQuery = $;
+require('../vendor/jquery.events.input');
+require('../vendor/jquery.elastic');
+require('../vendor/jquery.textareaHelper');
+require('../vendor/jquery.mentionsInput.custom');
+// component reqs
 var classSet = require('react/lib/cx');
 var React = require('react');
+var store = require('../store');
 var urls = require('../urls');
+var gravatar = require('../utils/gravatar');
 var config = require('../utils/config');
 
 var MarkdownView = React.createClass({
@@ -79,6 +90,31 @@ var MarkdownView = React.createClass({
         </ul>
       </div>
     )
+  },
+
+  componentDidMount: function() {
+    var $textarea = $(this.refs.textarea.getDOMNode());
+    $textarea.mentionsInput({
+      defaultTriggerChar: '@',
+      onDataRequest: function (mode, query, callback) {
+        var team = store.find('teams', this.props.teamUrl);
+        var user;
+        var data;
+        var members = _.map(team.members, function(member) {
+          user = store.find('users', member.user);
+          return {
+            'id': user.id,
+            'name': user.name,
+            'avatar': gravatar.get(user.email),
+            'type': 'user'
+          }
+        });
+        data = _.filter(members, function (user) {
+          return user.name.toLowerCase().indexOf(query.toLowerCase()) > -1;
+        });
+        callback.call(this, data);
+      }.bind(this)
+    });
   }
 });
 

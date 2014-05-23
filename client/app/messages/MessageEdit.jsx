@@ -52,6 +52,8 @@ var MessageEditView = React.createClass({
         <div>loading..</div>
       )
     }
+    var teamSlug = urls.resolve(window.location.pathname).kwargs.team_slug;
+    var team = store.find('teams', {'slug': teamSlug});
     return (
       <div className="message-reply">
         <form className="form-view" onSubmit={this.handleSubmit}>
@@ -61,6 +63,7 @@ var MessageEditView = React.createClass({
             <div className="form-view-fields">
             <MarkdownView placeholder="Comment.."
                             ref="comment"
+                            teamUrl={team.url}
                             defaultValue={this.state.message.raw_body}
                             required />
           </div>
