@@ -22,7 +22,8 @@ var AppView = React.createClass({
     return (
       <section className="app">
         <Header title={this.props.title}
-                back={this.props.back} />
+                back={this.props.back}
+                contextView={this.props.headerContextView} />
         <div className="content">
           <CSSTransitionGroup transitionName={this.state.transition}
                           component={React.DOM.div}>

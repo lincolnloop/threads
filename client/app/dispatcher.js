@@ -10,12 +10,15 @@ var dispatcher = {
 
   'app': undefined,
 
-  setProps: function(newProps) {
-    this.app.setProps(newProps);
+  setProps: function(props) {
+    log.info('app.setProps', props);
+    this.app.setProps(props);
   },
 
   render: function (props, children) {
-    var newProps = {};
+    var defaultProps = {
+      'headerContextView': null
+    };
     /*
      * Wrapper around React.RenderComponent.
      * > Handles unmountComponent for situations where we're rendering
@@ -33,12 +36,12 @@ var dispatcher = {
     } else {
       log.info('dispatcher.update', props);
       if (props) {
-        _.extend(newProps, props);
+        _.extend(defaultProps, props);
       }
       if (children) {
-        _.extend(newProps, {'children': children});
+        _.extend(defaultProps, {'children': children});
       }
-      this.setProps(newProps);
+      this.setProps(defaultProps);
     }
   }
 };

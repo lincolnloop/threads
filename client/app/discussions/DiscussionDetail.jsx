@@ -1,15 +1,16 @@
 'use strict';
 
+var _ = require('underscore');
 var React = require('react');
 var loadingMixin = require('../mixins/loadingMixin');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
 var urls = require('../urls');
-var Header = require('../components/Header.jsx');
 
 // --------------------
 // Views
 // --------------------
+var HeaderUnread = require('./HeaderUnread.jsx');
 var MessageTreeView = require('../messages/tree');
 
 var DiscussionDetailView = React.createClass({
@@ -21,14 +22,26 @@ var DiscussionDetailView = React.createClass({
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
-    store.get('discussions', {}, {'url': this.props.discussionUrl}).then(function() {
+    store.get('discussions', {}, {'url': this.props.discussionUrl}).done(function() {
+      // get the active discussion
       var discussion = store.find('discussions', this.props.discussionUrl);
-      this.setState({'loading': false});
+      // get the discussion's message and list of replies for the discussion
+      var message = store.find('messages', discussion.message);
+      var unreads = store.findAll('messages', {'root': discussion.message, 'read': false});
+      // check if the discussion's message is unread
+      unreads = !message.read ? _.union([message], unreads) : unreads;
+      // update state
       this.setState({
+        'loading': false,
         'discussion': discussion
       });
-      dispatcher.setProps({
-        'title': discussion.title
+      // update app
+      // TODO: evaluate setting the headerContextView using events
+      return dispatcher.setProps({
+        'title': discussion.title,
+        'headerContextView': HeaderUnread({
+          'unreads': unreads
+        })
       });
     }.bind(this));
   },
