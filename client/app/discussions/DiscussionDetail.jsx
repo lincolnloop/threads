@@ -2,6 +2,7 @@
 
 var React = require('react');
 var loadingMixin = require('../mixins/loadingMixin');
+var dispatcher = require('../dispatcher');
 var store = require('../store');
 var urls = require('../urls');
 var Header = require('../components/Header.jsx');
@@ -20,20 +21,16 @@ var DiscussionDetailView = React.createClass({
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
-    store.get('discussions', {}, {'url': this.props.discussion}).then(function() {
+    store.get('discussions', {}, {'url': this.props.discussionUrl}).then(function() {
+      var discussion = store.find('discussions', this.props.discussionUrl);
       this.setState({'loading': false});
-      this.setDiscussion();
+      this.setState({
+        'discussion': discussion
+      });
+      dispatcher.setProps({
+        'title': discussion.title
+      });
     }.bind(this));
-  },
-
-  setDiscussion: function(options) {
-    var discussion = store.find('discussions', this.props.discussion);
-    if (!discussion) {
-      discussion = {};
-    }
-    this.setState({
-      'discussion': discussion
-    })
   },
 
   // --------------------
@@ -47,13 +44,16 @@ var DiscussionDetailView = React.createClass({
   },
 
   componentWillMount: function() {
-    this.setDiscussion();
+    this.setState({
+      'discussion': this.props.discussion
+    });
   },
 
   render: function() {
-    var message = store.find('messages', this.state.discussion.message);
-    var MessageTree = function() {};
-    if (message) {
+    var message;
+    var MessageTree;
+    if (this.state.discussion) {
+      message = store.find('messages', this.state.discussion.message);
       MessageTree = MessageTreeView({
         'key': message ? message.cid : 'empty-message',
         'message': message,
@@ -62,7 +62,6 @@ var DiscussionDetailView = React.createClass({
     }
     return (
       <div className="discussion-detail content-view">
-        <h2>{this.state.discussion.title}</h2>
         {MessageTree}
       </div>
     );

@@ -10,6 +10,10 @@ var dispatcher = {
 
   'app': undefined,
 
+  setProps: function(newProps) {
+    this.app.setProps(newProps);
+  },
+
   render: function (props, children) {
     var newProps = {};
     /*
@@ -34,7 +38,7 @@ var dispatcher = {
       if (children) {
         _.extend(newProps, {'children': children});
       }
-      this.app.setProps(newProps);
+      this.setProps(newProps);
     }
   }
 };
