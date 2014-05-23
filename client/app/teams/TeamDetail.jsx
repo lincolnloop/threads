@@ -17,7 +17,7 @@ var TeamDetail = React.createClass({
   fetchDiscussions: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
-    store.get('discussions', {'team__slug': this.props.team.slug}).then(function() {
+    store.get('discussions', {'team__slug': this.props.team.slug}).done(function() {
       // TODO: Limit results to 20 * page number
       var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
       this.setState({

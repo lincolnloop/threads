@@ -1,11 +1,8 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = require('backbone');
 var React = require('react');
-var store = require('../store');
 var urls = require('../urls');
-var MarkdownView = require('../components/MarkdownTextarea.jsx');
 
 var HeaderUnread = React.createClass({
 

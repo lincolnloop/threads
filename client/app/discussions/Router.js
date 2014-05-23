@@ -19,21 +19,20 @@ var DiscussionRouter = Backbone.Router.extend({
   create: function(teamSlug) {
     log.info('DiscussionRouter:detail');
     var team = store.find('teams', {'slug': teamSlug});
-    var back = urls.get('team:detail', {'slug': this.props.team.slug});
-
+    var back = urls.get('team:detail', {'slug': teamSlug});
     return dispatcher.render({
         'navLevel': 10,
         'title': 'Create discussion',
         'back': back
       },
       DiscussionCreateView({
-        'team': team,
+        'teamUrl': team.url,
         'key': 'create-' + team.slug
       })
     );
   },
 
-  detail: function(teamSlug, discussionId, discussionSlug, messageId) {
+  detail: function(teamSlug, discussionId) {
     log.info('DiscussionRouter:detail');
     var team = store.find('teams', {'slug': teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
@@ -50,7 +49,6 @@ var DiscussionRouter = Backbone.Router.extend({
         'team': team,
         'discussion': discussion,
         'discussionUrl': discussionUrl,
-        'activeMessageId': messageId,
         'key': 'discussion-detail' + discussionUrl
       })
     );

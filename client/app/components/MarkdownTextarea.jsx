@@ -60,10 +60,12 @@ var MarkdownView = React.createClass({
           <li className={this.getTabClass(!this.state.previewValue)}>
             <a onClick={this.stopPreview} className="tab-link">Write</a>
             <section>
+            {this.props.pre ? this.props.pre : null}
               <textarea ref="textarea"
                         placeholder={this.props.placeholder}
                         defaultValue={this.state.rawValue}
                         required={!!this.props.required} />
+            {this.props.post ? this.props.post : null}
             </section>
           </li>
           <li className={this.getTabClass(this.state.previewValue)}>
