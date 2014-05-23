@@ -122,13 +122,20 @@ var MessageDetailView = React.createClass({
     var canEdit = this.props.message.user === localStorage.getItem('user');
     return (
       <div className="message-container">
+        <a name={message.id} />
+
         <div className={classes}>
           <div className="avatar">
             <img src={avatar} />
           </div>
           <a className="collapse-button" onClick={this.props.handleCollapse}>Collapse</a>
           <div className="username">{user.name}</div>
-          <div className="date">{moment(message.date_created).fromNow()}</div>
+          <div className="date">
+            <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624" 
+               className="permalink">
+              <time className="timeago" datetime="2014-02-06T22:02:23.791">{moment(message.date_created).fromNow()}</time>
+            </a>
+          </div>
           <div className="message-content">
             <div dangerouslySetInnerHTML={{__html: message.body}} />
             {votes.length ? VotesListView({'votes': votes}) : null}

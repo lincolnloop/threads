@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
+var log = require('loglevel');
 var React = require('react');
 var loadingMixin = require('../mixins/loadingMixin');
 var dispatcher = require('../dispatcher');
@@ -83,6 +84,14 @@ var DiscussionDetailView = React.createClass({
   componentDidMount: function() {
     // fetch discussion data from remote
     this.fetchDiscussion();
+    window.onhashchange = function() {
+      log.info('hashchange', window.location.hash);
+    }.bind(this);
+  },
+
+  componentWillUnmount: function() {
+    log.info('DiscussionDetailView:componentWillUnmount');
+    window.onhashchange = null;
   }
 
 });

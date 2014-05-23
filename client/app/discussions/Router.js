@@ -33,7 +33,7 @@ var DiscussionRouter = Backbone.Router.extend({
     );
   },
 
-  detail: function(teamSlug, discussionId) {
+  detail: function(teamSlug, discussionId, discussionSlug, messageId) {
     log.info('DiscussionRouter:detail');
     var team = store.find('teams', {'slug': teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
@@ -50,6 +50,7 @@ var DiscussionRouter = Backbone.Router.extend({
         'team': team,
         'discussion': discussion,
         'discussionUrl': discussionUrl,
+        'activeMessageId': messageId,
         'key': 'discussion-detail' + discussionUrl
       })
     );
