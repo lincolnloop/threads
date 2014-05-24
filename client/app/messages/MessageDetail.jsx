@@ -10,8 +10,7 @@ var React = require('react');
 var gravatar = require('../utils/gravatar');
 var store = require('../store');
 var urls = require('../urls');
-var VotesListView = require('./votes-list');
-var VotesView = require('./votes');
+var VotesListView = require('./VotesList.jsx');
 var Attachment = require('./Attachment.jsx');
 
 var MessageDetailView = React.createClass({
@@ -81,44 +80,30 @@ var MessageDetailView = React.createClass({
   render: function() {
     // shortcuts
     var message = store.find('messages', this.props.message.url);
-    var votes = _.map(message.votes, function(voteId) {
-      // clone vote so we don't change the store object when doing vote.user = 'user';
-      // TODO: The store should handle this.
-      // TODO: Split upvotes and downvotes
-      var vote = _.clone(store.find('votes', voteId));
-      vote.user = store.find('users', vote.user);
-      return vote;
-    });
-    // show only upvotes
-    votes = _.filter(votes, function(vote) {
-      return vote.value === '+1';
-    });
-    var attachments = message.attachments;
+    var votes = store.findAll('votes', {'message': message.url, 'value': '+1'});
     var user = store.find('users', message.user);
-    var div = React.DOM.div;
+    var attachments = message.attachments;
     // main message classes
     var classes = classSet({
       'message-detail': true,
       'message-unread': !message.read
     });
-    var avatar = gravatar.get(user.email);
     var urlKeys = _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs);
     // TODO: This needs to query the store, not the message
-    var hasUpVoted = _.find(message.votes, function(vote) {
-      return store.find('votes', {
-        'url': vote,
-        'user': localStorage.getItem('user'),
-        'value': '+1'
-      });
+    var hasUpVoted = _.find(votes, function(vote) { 
+      return vote.user === localStorage.getItem('user');
     });
     var canEdit = this.props.message.user === localStorage.getItem('user');
+    var voteClasses = classSet({
+      'votes': true,
+      'up-vote': hasUpVoted
+    });
     return (
       <div className="message-container">
         <a name={message.id} />
-
         <div className={classes}>
           <div className="avatar">
-            <img src={avatar} />
+            <img src={gravatar.get(user.email)} />
           </div>
           <a className="collapse-button" onClick={this.props.handleCollapse}>Collapse</a>
           <div className="username">{user.name}</div>
@@ -132,7 +117,9 @@ var MessageDetailView = React.createClass({
             <div dangerouslySetInnerHTML={{__html: message.body}} />
             {votes.length ? VotesListView({'votes': votes}) : null}
             <div className="message-actions">
-              <VotesView hasUpVoted={hasUpVoted} handleVote={this.handleVote} />
+              <span className={voteClasses}>
+                <a className="up-vote" onClick={this.handleVote}>{hasUpVoted ? 'liked' : 'like'}</a>
+              </span>
               <a href={urls.get('message:reply', urlKeys)}>reply</a>
               {canEdit ? <a href={urls.get('message:edit', urlKeys)}>edit</a> : null}
               {attachments.length ? 
