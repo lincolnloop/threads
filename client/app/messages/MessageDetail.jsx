@@ -17,16 +17,10 @@ var Attachment = require('./Attachment.jsx');
 var MessageDetailView = React.createClass({
 
   handleVote: function(value) {
-    var message = store.find('messages', this.props.message.url);
-    // find if user already has a vote
-    var vote = _.find(message.votes, function(voteId) {
-      // clone vote so we don't change the store object when doing vote.user = 'user';
-      // TODO: The store should handle this.
-      return store.find('votes', {
-        'url': voteId,
+    var vote =  store.find('votes', {
+        'message': this.props.message.url,
         'user': localStorage.getItem('user')
       });
-    }.bind(this));
 
     if (!vote) {
       // create a new vote
@@ -34,11 +28,9 @@ var MessageDetailView = React.createClass({
         'message': this.props.message.url,
         'value': '+1'
       }
-      // TODO: Crossing should return a full url for some url groups
-      var url = clientconfig.apiUrl + urls.get('api:vote', {'message_id': this.props.message.id});
-      store.add('votes', vote, {'url': url}).then(function() {
+      store.add('votes', vote).then(function() {
           return store.get('messages', null, {'url': this.props.message.url});
-        }.bind(this)).then(function() {
+        }.bind(this)).done(function() {
           this.forceUpdate();
         }.bind(this));
     } else {
@@ -46,7 +38,7 @@ var MessageDetailView = React.createClass({
       if (vote.value === value) {
         store.remove('votes', vote).then(function() {
           return store.get('messages', null, {'url': this.props.message.url});
-        }.bind(this)).then(function() {
+        }.bind(this)).done(function() {
           this.forceUpdate();
         }.bind(this));
       } else {
@@ -54,7 +46,7 @@ var MessageDetailView = React.createClass({
         store.update('votes', {
           'url': vote.url,
           'value': value
-        }).then(function() {
+        }).done(function() {
           this.forceUpdate();
         }.bind(this));
       }
