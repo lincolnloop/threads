@@ -5,7 +5,7 @@ var React = require('react');
 var Backbone = require('backbone');
 var log = require('loglevel');
 var urls = require('../urls');
-var MarkdownView = require('../components/MarkdownTextarea');
+var MarkdownView = require('../components/MarkdownTextarea.jsx');
 var Header = require('../components/Header.jsx');
 
 var MessageReplyView = React.createClass({

@@ -12,7 +12,7 @@ var urls = require('../urls');
 // Views
 // --------------------
 var HeaderUnread = require('./HeaderUnread.jsx');
-var MessageTreeView = require('../messages/tree');
+var MessageTreeView = require('../messages/tree.jsx');
 
 var DiscussionDetailView = React.createClass({
   mixins: [loadingMixin],

@@ -16,8 +16,7 @@ gulp.task('app', function() {
     // Browserify it
     .pipe(browserify({
       debug: !production,  // If not production, add source maps
-      transform: ['reactify'],
-      extensions: ['.jsx']
+      transform: ['reactify']
     }))
     .on('error', function(error) {
         gutil.log(error);
