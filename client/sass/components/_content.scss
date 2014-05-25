@@ -6,7 +6,8 @@
   right: 0;
   bottom: 0;
   overflow: auto;
-  background-image: url('../static/light-grey-pattern.jpg');
+  // background-image: url('../static/light-grey-pattern.jpg');
+  background: #f3f3f3;
 
   > div {
     // animation div
@@ -15,5 +16,7 @@
 
   .content-view {
     min-height: 100%;
+    width: 100%;
+    background: #f3f3f3;
   }
 }

@@ -16,8 +16,8 @@ var DiscussionCreateView = React.createClass({
         'raw_body': this.refs.comment.getRawValue(),
         'user': localStorage.getItem('user')
       },
-      'team': this.props.team
-    }).then(function(response) {
+      'team': this.props.teamUrl
+    }).done(function(response) {
       var team = store.find('teams', response.team);
       var url = urls.get('discussion:detail', {
         'team_slug': team.slug,
@@ -30,23 +30,23 @@ var DiscussionCreateView = React.createClass({
   },
 
   render: function () {
-    /*
-    TODO: Footer
-    var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
-      React.DOM.a({
-        'href': '/',
-        'children': 'Dashboard'
-      })
-    );
-*/
+    var titleField = React.DOM.input({
+      'type': 'text',
+      'placeholder': 'What are we talking about?',
+      'ref': 'title',
+      'required': true
+    });
     return (
         <form className="form-view" onSubmit={this.handleSubmit}>
           <div className="form-view-actions">
             <button type="submit" className="btn btn-submit">Create</button>
           </div>
           <div className="form-view-fields">
-            <input type="text" placeholder="What are we talking about?" ref="title" required />
-            <MarkdownView placeholder="Comment.." ref="comment" required />
+            <MarkdownView placeholder="Comment.."
+                          pre={titleField}
+                          teamUrl={this.props.teamUrl}
+                          ref="comment"
+                          required />
           </div>
         </form>
     );

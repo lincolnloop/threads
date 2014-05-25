@@ -6,6 +6,7 @@ var log = require('loglevel');
 var moment = require('moment');
 var React = require('react');
 var store = require('../store');
+var gravatar = require('../utils/gravatar');
 
 var NotificationListView = React.createClass({
 
@@ -14,20 +15,31 @@ var NotificationListView = React.createClass({
     log.info('notifications', notifications);
     return (
       <div className="notifications">
-        <ul className="notifications-list">
+        <ul className="notifications-list content-view">
           {_.map(notifications, function(notification, key) {
             var user = store.find('users', notification.from_user);
-            var classes = classSet({
+            var avatar = gravatar.get(user.email);
+            var notificationType = notification.verb.substring(0, 7);
+
+            var classList = {
               'notification-item': true,
               'unread': !notification.is_read
-            });
-            return <li className={classes} key={'n-' + key}>
-              <h3>
-                {user.name}&nbsp;
-                {notification.verb}&nbsp;
-                <a href={notification.link}>{notification.title}</a>&nbsp;
-                <span className="date">{moment(notification.date_created).fromNow()}</span>
-              </h3>
+            }
+
+            classList[notificationType] = true;
+
+            return <li className={classSet(classList)} key={'n-' + key}>
+              
+              <a href={notification.link}><div className="avatar" ><img src={avatar} /></div>
+              <div className="notification-content">
+                <span className="username">{user.name} </span>
+                <span className="user-action">{notification.verb} </span>
+                <span className="notification-title">{notification.title} </span>
+                <div className="notification-meta" >
+                  <span className="notification-type"></span>
+                  <span className="date">{moment(notification.date_created).fromNow()}.</span>
+                </div>
+              </div></a>
             </li>
           }.bind(this))}
         </ul>

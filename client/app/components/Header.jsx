@@ -30,7 +30,6 @@ var Header = React.createClass({
           </span>
           <span className="title">{this.props.title}</span>
           <span className="action">
-            <a href={urls.get('notifications')} className="notifications">{this.props.unreadNotifications}</a>
             <a className="search">Search</a>
           </span>
         </div>

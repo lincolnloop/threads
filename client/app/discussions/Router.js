@@ -19,15 +19,14 @@ var DiscussionRouter = Backbone.Router.extend({
   create: function(teamSlug) {
     log.info('DiscussionRouter:detail');
     var team = store.find('teams', {'slug': teamSlug});
-    var back = urls.get('team:detail', {'slug': this.props.team.slug});
-
+    var back = urls.get('team:detail', {'slug': teamSlug});
     return dispatcher.render({
         'navLevel': 10,
         'title': 'Create discussion',
         'back': back
       },
       DiscussionCreateView({
-        'team': team,
+        'teamUrl': team.url,
         'key': 'create-' + team.slug
       })
     );

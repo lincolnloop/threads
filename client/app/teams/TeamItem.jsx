@@ -12,7 +12,7 @@ var TeamView = React.createClass({
     });
     var classes = classSet({
       'unread-item': true,
-      'unread': this.props.unread !== '' ? true : false
+      'unread': this.props.unread !== 0 ? true : false
     });
     return (
       <li key={this.props.slug} className="nav-item">

@@ -31,6 +31,7 @@ $desktop: new-breakpoint(min-width 1160px 12);
 // elements
 @import "refills/accordion";
 @import "refills/accordion-tabs";
+@import "components/mentionsInput";
 // list
 @import "components/discussion-list";
 @import "components/team-list";

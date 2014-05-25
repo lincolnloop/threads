@@ -6,7 +6,9 @@
   position: absolute;
   top: 0;
   width: 100%;
-  transition: all 0.5s;
+  // transition: all 0.5s;
+  @include transition( all  0.5s cubic-bezier(0.25, 0.1, 0.25, 1));
+
 }
 
 // back animation enter
@@ -39,4 +41,48 @@
 }
 .right-to-left-leave.right-to-left-leave-active {
   left: -100%;
+}
+
+
+.top-to-bottom-enter, .top-to-bottom-leave,
+.bottom-to-top-enter, .bottom-to-top-leave {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  @include transition( all  0.5s cubic-bezier(0.25, 0.1, 0.25, 1));
+
+}
+
+.top-to-bottom-enter {
+  top: 100%;
+}
+
+.top-to-bottom-enter.top-to-bottom-enter-active {
+  top: 0;
+}
+
+.top-to-bottom-leave {
+  top: 0;
+}
+
+.top-to-bottom-leave.top-to-bottom-enter-active {
+  top: 100%;
+}
+
+
+
+.bottom-to-top-enter {
+  top: 100%;
+}
+
+.bottom-to-top-enter.bottom-to-top-enter-active {
+  top: 0;
+}
+
+.bottom-to-top-leave {
+  top: 0;
+}
+
+.bottom-to-top-leave.bottom-to-top-enter-active {
+  top: 100%;
 }
