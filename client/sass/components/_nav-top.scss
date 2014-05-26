@@ -37,30 +37,41 @@
     position: absolute;
     right: 10px;
     color: #FFF;
+    height: 44px;
 
     .unreads, .create {
       display: inline-block;
-      padding: 7px 10px;
+      line-height: 44px;
+
+      &:active {
+        opacity: 0.5;
+      }
     }
 
     .unreads .unreads-count {
       display: inline-block;
-      padding: 1px 10px 3px 10px;
-      border: 1px solid #FFF;
-      border-radius: 5px;
-      @include linear-gradient(#E97700, #FD4F14);
-      border: 1px solid #9C3B14;
+      padding: 2px 10px 2px 10px;
+      @include border-top-radius(40px);
+      @include border-bottom-radius(40px);
+      @include border-left-radius(40px);
+      @include border-right-radius(40px);
+      background: $orange;
       color: #FFF;
-      font-size: 16px;
-      font-weight: bold;
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 400;
     }
 
     .create {
-      margin-top: 3px;
-      padding: 2px 8px 7px 8px;
       color: #FFF;
-      font-size: 20px;
-      border: 1px solid #FFF;
+      font-size: 0;
+      width: 20px;
+      background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><polygon fill-rule='evenodd' clip-rule='evenodd' points='17,13 17,2 13,2 13,13 2,13 2,17 13,17 13,28 17,28 17,17 28,17 28,13 ' fill='#ffffff'/></svg>");
+      background-size: 100% auto;
+      background-position: center;
+      background-repeat: no-repeat;
+      
+
     }
   }
 }

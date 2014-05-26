@@ -81,7 +81,7 @@
       @include border-bottom-radius(35px);
       @include border-left-radius(35px);
       @include border-right-radius(35px);
-      background: #ff733f;
+      @include linear-gradient(#E97700, #FD4F14);
       color: #FFF;
     }
 
