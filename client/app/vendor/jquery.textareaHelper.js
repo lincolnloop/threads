@@ -1,36 +1,38 @@
 (function ($) {
   'use strict';
 
-  var caretClass   = 'textarea-helper-caret'
-    , dataKey      = 'textarea-helper'
+  var caretClass   = 'textarea-helper-caret';
+  var dataKey      = 'textarea-helper';
 
     // Styles that could influence size of the mirrored element.
-    , mirrorStyles = [ 
+  var mirrorStyles = [ 
                        // Box Styles.
-                       'box-sizing', 'height', 'width', 'padding-bottom'
-                     , 'padding-left', 'padding-right', 'padding-top'
+                      'box-sizing', 'height', 'width', 'padding-bottom',
+                      'padding-left', 'padding-right', 'padding-top',
   
                        // Font stuff.
-                     , 'font-family', 'font-size', 'font-style' 
-                     , 'font-variant', 'font-weight'
+                      'font-family', 'font-size', 'font-style',
+                      'font-variant', 'font-weight',
   
                        // Spacing etc.
-                     , 'word-spacing', 'letter-spacing', 'line-height'
-                     , 'text-decoration', 'text-indent', 'text-transform' 
+                      'word-spacing', 'letter-spacing', 'line-height',
+                      'text-decoration', 'text-indent', 'text-transform',
                      
                       // The direction.
-                     , 'direction'
+                      'direction'
                      ];
 
   var TextareaHelper = function (elem) {
-    if (elem.nodeName.toLowerCase() !== 'textarea') return;
+    if (elem.nodeName.toLowerCase() !== 'textarea') {
+      return;
+    }
     this.$text = $(elem);
-    this.$mirror = $('<div/>').css({ 'position'    : 'absolute'
-                                   , 'overflow'    : 'auto'
-                                   , 'white-space' : 'pre-wrap'
-                                   , 'word-wrap'   : 'break-word'
-                                   , 'top'         : 0
-                                   , 'left'        : -9999
+    this.$mirror = $('<div/>').css({'position'    : 'absolute',
+                                    'overflow'    : 'auto',
+                                    'white-space' : 'pre-wrap',
+                                    'word-wrap'   : 'break-word',
+                                    'top'         : 0,
+                                    'left'        : -9999
                                    }).insertAfter(this.$text);
   };
 
@@ -39,17 +41,17 @@
 
       // Copy styles.
       var styles = {};
-      for (var i = 0, style; style = mirrorStyles[i]; i++) {
-        styles[style] = this.$text.css(style);
+      for (var i = 0; i < mirrorStyles.length; i++) {
+        styles[mirrorStyles[i]] = this.$text.css(mirrorStyles[i]);
       }
       this.$mirror.css(styles).empty();
       
       // Update content and insert caret.
-      var caretPos = this.getOriginalCaretPos()
-        , str      = this.$text.val()
-        , pre      = document.createTextNode(str.substring(0, caretPos))
-        , post     = document.createTextNode(str.substring(caretPos))
-        , $car     = $('<span/>').addClass(caretClass).html('&nbsp;');
+      var caretPos = this.getOriginalCaretPos();
+      var str      = this.$text.val();
+      var pre      = document.createTextNode(str.substring(0, caretPos));
+      var post     = document.createTextNode(str.substring(caretPos));
+      var $car     = $('<span/>').addClass(caretClass).html('&nbsp;');
       this.$mirror.append(pre, $car, post)
                   .scrollTop(this.$text.scrollTop());
     };
@@ -62,8 +64,8 @@
 
     this.caretPos = function () {
       this.update();
-      var $caret =  this.$mirror.find('.' + caretClass)
-        , pos    = $caret.position();
+      var $caret =  this.$mirror.find('.' + caretClass);
+      var pos    = $caret.position();
       if (this.$text.css('direction') === 'rtl') {
         pos.right = this.$mirror.innerWidth() - pos.left - $caret.width();
         pos.left = 'auto';
@@ -87,11 +89,11 @@
       } else if (document.selection) {
         text.focus();
         var r = document.selection.createRange();
-        if (r == null) {
+        if (r === null) {
           return 0;
         }
-        var re = text.createTextRange()
-          , rc = re.duplicate();
+        var re = text.createTextRange();
+        var rc = re.duplicate();
         re.moveToBookmark(r.getBookmark());
         rc.setEndPoint('EndToStart', re);
         return rc.text.length;
@@ -103,8 +105,8 @@
   
   $.fn.textareaHelper = function (method) {
     this.each(function () {
-      var $this    = $(this)
-        , instance = $this.data(dataKey);
+      var $this    = $(this);
+      var instance = $this.data(dataKey);
       if (!instance) {
         instance = new TextareaHelper(this);
         $this.data(dataKey, instance);

@@ -25,10 +25,12 @@ var AppView = React.createClass({
                 back={this.props.back}
                 contextView={this.props.headerContextView} />
         <div className="content">
-          <CSSTransitionGroup transitionName={this.state.transition}
-                          component={React.DOM.div}>
+          {this.state.transition !== null ? 
+            <CSSTransitionGroup transitionName={this.state.transition}
+                                component={React.DOM.div}>
             {this.props.children}
-          </CSSTransitionGroup>
+            </CSSTransitionGroup> : <div>{this.props.children}</div>
+          }
         </div>
         <Footer unreadNotifications={this.state.unreadNotifications} />
       </section>
@@ -48,7 +50,7 @@ var AppView = React.createClass({
     // manage animation state
     var current = this.props.navLevel ? this.props.navLevel : 0;
     var next = nextProps.navLevel ? nextProps.navLevel : 0;
-    var animation;
+    var animation = null;
     if (nextProps.animation && nextProps.animation === 'horizontal') {
       animation = next > current ? 'right-to-left' : 'left-to-right';
     } else if (nextProps.animation === 'vertical') {
