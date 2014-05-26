@@ -49,10 +49,10 @@ var AppView = React.createClass({
     var current = this.props.navLevel ? this.props.navLevel : 0;
     var next = nextProps.navLevel ? nextProps.navLevel : 0;
     var animation;
-    if (nextProps.animation && nextProps.animation === 'vertical') {
-      animation = next > current ? 'top-to-bottom' : 'bottom-to-top';
-    } else {
+    if (nextProps.animation && nextProps.animation === 'horizontal') {
       animation = next > current ? 'right-to-left' : 'left-to-right';
+    } else if (nextProps.animation === 'vertical') {
+      animation = next > current ? 'bottom-to-top' : 'top-to-bottom';
     }
     this.setState({
       'transition': animation

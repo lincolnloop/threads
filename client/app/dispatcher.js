@@ -11,13 +11,13 @@ var dispatcher = {
   'app': undefined,
 
   setProps: function(props) {
-    log.info('app.setProps', props);
     this.app.setProps(props);
   },
 
   render: function (props, children) {
     var defaultProps = {
-      'headerContextView': null
+      'headerContextView': null,
+      'animation': 'horizontal'
     };
     /*
      * Wrapper around React.RenderComponent.

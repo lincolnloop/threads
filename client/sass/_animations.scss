@@ -43,7 +43,6 @@
   left: -100%;
 }
 
-
 .top-to-bottom-enter, .top-to-bottom-leave,
 .bottom-to-top-enter, .bottom-to-top-leave {
   position: absolute;
@@ -53,8 +52,9 @@
 
 }
 
+// slide in from top
 .top-to-bottom-enter {
-  top: 100%;
+  top: -100%;
 }
 
 .top-to-bottom-enter.top-to-bottom-enter-active {
@@ -65,12 +65,11 @@
   top: 0;
 }
 
-.top-to-bottom-leave.top-to-bottom-enter-active {
+.top-to-bottom-leave.top-to-bottom-leave-active {
   top: 100%;
 }
 
-
-
+// slide in from bottom
 .bottom-to-top-enter {
   top: 100%;
 }
@@ -83,6 +82,6 @@
   top: 0;
 }
 
-.bottom-to-top-leave.bottom-to-top-enter-active {
-  top: 100%;
+.bottom-to-top-leave.bottom-to-top-leave-active {
+  top: -100%;
 }
