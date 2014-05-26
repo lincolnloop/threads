@@ -28,6 +28,8 @@ var MessageReplyView = React.createClass({
   },
 
   render: function() {
+    var kwargs = urls.resolve(window.location.pathname).kwargs;
+    var team = store.find('teams', {'slug': kwargs.team_slug});
     return (
       <div className="message-reply">
         <form className="form-view" onSubmit={this.handleSubmit}>
@@ -36,6 +38,7 @@ var MessageReplyView = React.createClass({
           </div>
             <div className="form-view-fields">
             <MarkdownView placeholder="Comment.."
+                            teamUrl={team.url}
                             ref="comment"
                             required />
           </div>

@@ -38,12 +38,14 @@ var DiscussionDetailView = React.createClass({
       });
       // update app
       // TODO: evaluate setting the headerContextView using events
+      /*
       return dispatcher.setProps({
         'title': discussion.title,
         'headerContextView': HeaderUnread({
           'unreads': unreads
         })
       });
+*/
     }.bind(this));
   },
 

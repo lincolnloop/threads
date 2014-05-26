@@ -23,6 +23,7 @@ $desktop: new-breakpoint(min-width 1160px 12);
 @import "components/nav-bottom";
 @import "components/content";
 // base
+@import "components/mentions";
 @import "components/message";
 @import "components/markdown-textarea";
 @import "components/nav-header";
