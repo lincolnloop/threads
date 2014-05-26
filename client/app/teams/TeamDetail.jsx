@@ -2,7 +2,6 @@
 
 var React = require('react');
 var log = require('loglevel');
-var loadingMixin = require('../mixins/loadingMixin');
 var urls = require('../urls');
 var store = require('../store');
 var Header = require('../components/Header.jsx');
@@ -12,7 +11,6 @@ var DiscussionListView = require('../discussions/DiscussionList.jsx');
 require('in-viewport');
 
 var TeamDetail = React.createClass({
-  mixins: [loadingMixin],
 
   fetchDiscussions: function() {
     // Fetches discussion data from the remote API
@@ -21,8 +19,7 @@ var TeamDetail = React.createClass({
       // TODO: Limit results to 20 * page number
       var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
       this.setState({
-        'discussions': discussions,
-        'loading': false
+        'discussions': discussions
       });
     }.bind(this));
   },
@@ -68,8 +65,7 @@ var TeamDetail = React.createClass({
       // last discussion element
       lastItemEl: undefined,
       // pageSize = 20
-      page: 1,
-      loading: true
+      page: 1
     };
   },
 
@@ -78,14 +74,6 @@ var TeamDetail = React.createClass({
     var createDiscussionUrl = urls.get('discussion:create:team', {
       team_slug: team.slug
     });
-    /*
-      var bottomNav = React.DOM.nav({'id': 'bottom-nav'},
-        React.DOM.a({
-          'href': urls.get('discussion:create:team', {'team_slug': teamSlug}),
-          'children': 'New Discussion'
-        })
-      );
-    */
     return (
       <div className="team-detail content-view">
         <h2>{team.name}</h2>
