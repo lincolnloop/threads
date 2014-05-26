@@ -6,20 +6,8 @@
   height: 44px;
   z-index: 2;
   text-align: left;
-  // border-bottom: 1px solid $gray;
   font-weight: bold;
-  // background: $dark-green-gray;
-  background:#0e7dba;
-  // background: rgba(62, 70, 69, 1);
-
-  -webkit-box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), inset 1px 0 0 rgba(255,255,255,0.1);
-  -moz-box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), inset 1px 0 0 rgba(255,255,255,0.1);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), inset 1px 0 0 rgba(255,255,255,0.1);
-  background-image: -webkit-linear-gradient(bottom, rgba(0,0,0,0.38), rgba(0,0,0,0)),url(../static/nav-bottom-pattern.png);
-  background-image: -moz-linear-gradient(bottom, rgba(0,0,0,0.38), rgba(0,0,0,0)),url(../static/nav-bottom-pattern.png);
-  background-image: -ms-linear-gradient(bottom, rgba(0,0,0,0.38), rgba(0,0,0,0)),url(../static/nav-bottom-pattern.png);
-  background-image: -o-linear-gradient(bottom, rgba(0,0,0,0.38), rgba(0,0,0,0)),url(../static/nav-bottom-pattern.png);
-  background-image: linear-gradient(bottom, rgba(0,0,0,0.38), rgba(0,0,0,0)),url(../static/nav-bottom-pattern.png);
+  background:$dark-blue;
 
   ul {
     width: 100%;
@@ -36,7 +24,10 @@
 
   a {
     color: #fff;
-    text-shadow: 0 1px 0 #000000;
+    // text-shadow: 0 1px 0 #000000;
+    position: relative;
+    line-height: 44px;
+    height: 44px;
 
     &:active {
       opacity: 0.5;
@@ -46,28 +37,6 @@
   .icon {
     display: inline-block;
 
-  }
-
-  .user-notifications {
-    padding: 8px 10px 0 10px;
-
-    .notifications {
-      display: inline-block;
-    }
-
-    &.is-unread {
-      color: #ff733f;
-
-      .notifications {
-        background: #ff733f;
-        border-color: #ff733f;
-        color: #FFF;
-      }
-
-      &.is-unread:active {
-        background: #ff733f;
-      }
-    }
   }
 
   .search {
@@ -94,7 +63,39 @@
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
-    text-indent: -9999px;
+    // text-indent: -9999px;
+    font-size: 0;
+
+    .notifications {
+      display: inline-block;
+      position: absolute;
+      top: 6px;
+      right: -5px;
+      padding-left: 3px;
+      padding-right: 3px;      
+      height: 13px; 
+      font-size: 10px;
+      line-height: 12px;
+      font-weight: 600;
+      @include border-top-radius(35px);
+      @include border-bottom-radius(35px);
+      @include border-left-radius(35px);
+      @include border-right-radius(35px);
+      background: #ff733f;
+      color: #FFF;
+    }
+
+    &.is-unread {
+      color: #fff;
+
+      .notifications {
+        border-color: #ff733f;
+      }
+
+      &.is-unread:active {
+        // background: #ff733f;
+      }
+    }
   }
 
   .home {
