@@ -29,7 +29,7 @@ var AppView = React.createClass({
             <CSSTransitionGroup transitionName={this.state.transition}
                                 component={React.DOM.div}>
             {this.props.children}
-            </CSSTransitionGroup> : this.props.children
+            </CSSTransitionGroup> : <div>{this.props.children}</div>
           }
         </div>
         <Footer unreadNotifications={this.state.unreadNotifications} />
