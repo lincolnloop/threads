@@ -6,6 +6,7 @@ var urls = require('../urls');
 var store = require('../store');
 var Header = require('../components/Header.jsx');
 var DiscussionListView = require('../discussions/DiscussionList.jsx');
+var EmptyDiscussionListView = require('../discussions/EmptyDiscussionList.jsx');
 
 // TODO: Shim or fork inViewport so this is supported
 require('in-viewport');
@@ -19,7 +20,8 @@ var TeamDetail = React.createClass({
       // TODO: Limit results to 20 * page number
       var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
       this.setState({
-        'discussions': discussions
+        'discussions': discussions,
+        'fetched': true
       });
     }.bind(this));
   },
@@ -63,9 +65,11 @@ var TeamDetail = React.createClass({
     // since they don't really change that much (for now).
     return {
       // last discussion element
-      lastItemEl: undefined,
+      'lastItemEl': undefined,
       // pageSize = 20
-      page: 1
+      'page': 1,
+      // has it been remotely fetched?
+      'fetched': false
     };
   },
 
@@ -82,10 +86,14 @@ var TeamDetail = React.createClass({
     var createDiscussionUrl = urls.get('discussion:create:team', {
       team_slug: team.slug
     });
+    console.debug('TeamDetail:render', this.state.discussions, this.state.fetched);
     return (
       <div className="team-detail content-view">
         <h2>{team.name}</h2>
-        <DiscussionListView discussions={this.state.discussions} ref="discussions" />
+        {this.state.discussions.length === 0 && this.state.fetched === true ? // create first discussion
+          <EmptyDiscussionListView teamSlug={this.props.team.slug} /> : 
+          <DiscussionListView discussions={this.state.discussions} ref="discussions" />
+        }
       </div>
     );
   },
