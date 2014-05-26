@@ -69,6 +69,14 @@ var TeamDetail = React.createClass({
     };
   },
 
+  componentWillMount: function() {
+    // TODO: Limit results to 20 * page number
+    var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
+    this.setState({
+      'discussions': discussions
+    });
+  },
+
   render: function() {
     var team = this.props.team;
     var createDiscussionUrl = urls.get('discussion:create:team', {
