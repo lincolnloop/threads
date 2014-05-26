@@ -38,15 +38,17 @@ var DiscussionRouter = Backbone.Router.extend({
     var discussionUrl = urls.get('api:discussionChange', {
       'discussion_id': discussionId
     });
+    var discussion = store.find('discussions', discussionUrl);
     var back = urls.get('team:detail', {'slug': teamSlug});
     return dispatcher.render({
         'navLevel': 15,
-        'title': team.name,
+        'title': discussion ? discussion.title : team.name,
         'back': back
       },
       DiscussionDetailView({
         'team': team,
-        'discussion': discussionUrl,
+        'discussion': discussion,
+        'discussionUrl': discussionUrl,
         'key': 'discussion-detail' + discussionUrl
       })
     );

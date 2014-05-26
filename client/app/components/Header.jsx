@@ -29,9 +29,7 @@ var Header = React.createClass({
             ) : null}
           </span>
           <span className="title">{this.props.title}</span>
-          <span className="action">
-            <a className="search">Search</a>
-          </span>
+          {this.props.contextView}
         </div>
       </header>
     );
