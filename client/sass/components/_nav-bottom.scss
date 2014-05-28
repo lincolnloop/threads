@@ -82,13 +82,15 @@
       @include border-right-radius(35px);
       @include linear-gradient(#E97700, #FD4F14);
       color: #FFF;
+      opacity: 0;
+      @include transition (opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
     }
 
     &.is-unread {
-      color: $white;
 
       .notifications {
-        border-color: #ff733f;
+        color: $white;
+        opacity: 1;
       }
 
       &.is-unread:active {
@@ -106,11 +108,6 @@
     @include hide-text;
 
   }
-
-
-
-
-
 
 }
 
