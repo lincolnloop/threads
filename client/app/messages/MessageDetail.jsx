@@ -85,7 +85,7 @@ var MessageDetailView = React.createClass({
     var attachments = message.attachments;
     // main message classes
     var classes = classSet({
-      'message-detail': true,
+      'message-container': true,
       'message-unread': !message.read
     });
     var urlKeys = _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs);
@@ -95,16 +95,18 @@ var MessageDetailView = React.createClass({
     });
     var canEdit = this.props.message.user === localStorage.getItem('user');
     var voteClasses = classSet({
-      'votes': true,
-      'up-vote': hasUpVoted
+      'up-vote': true,
+      'up-voted': hasUpVoted
     });
     return (
-      <div className="message-container">
-        <a name={message.id} />
-        <div className={classes}>
+      <div className={classes}>
+
+        <div className="message-header">
+          <a name={message.id} />
           <div className="avatar">
             <img src={gravatar.get(user.email)} />
           </div>
+          <div className="cite"></div>
           <a className="collapse-button" onClick={this.props.handleCollapse}>Collapse</a>
           <div className="username">{user.name}</div>
           <div className="date">
@@ -113,30 +115,36 @@ var MessageDetailView = React.createClass({
               <time className="timeago" datetime="2014-02-06T22:02:23.791">{moment(message.date_created).fromNow()}</time>
             </a>
           </div>
-          <div className="message-content">
-            <div dangerouslySetInnerHTML={{__html: message.body}} />
-            {votes.length ? VotesListView({'votes': votes}) : null}
-            <div className="message-actions">
-              <span className={voteClasses}>
-                <a className="up-vote" onClick={this.handleVote}>{hasUpVoted ? 'liked' : 'like'}</a>
-              </span>
-              <a className="reply" href={urls.get('message:reply', urlKeys)}>reply</a>
-              {canEdit ? <a href={urls.get('message:edit', urlKeys)}>edit</a> : null}
-              {attachments.length ? 
-                <a className="attachments-link" onClick={this.toggleAttachments}>
-                  A: <span className="attachments-count">{attachments.length}</span>
-                </a> 
-              : null}
-            </div>
-          </div>
         </div>
-        {this.state.expandAttachments ? 
-          <ul className="attachment-list">
-            {_.map(attachments, function(attachment) {
-              return <Attachment attachment={attachment} />
-            })}
-          </ul>
-        : null}
+
+        <div className="message-content">
+          <div dangerouslySetInnerHTML={{__html: message.body}} />
+        </div>
+
+        <div className="message-footer">
+          {votes.length ? VotesListView({'votes': votes}) : null}
+          <div className="message-actions">
+            <a className="up-vote" onClick={this.handleVote}>{hasUpVoted ? 'liked' : 'like'}</a>
+            <a className="reply" href={urls.get('message:reply', urlKeys)}>reply</a>
+            <a className="fork" href="#">fork</a>
+            <a className="star" href="#">star</a>
+            {canEdit ? <a href={urls.get('message:edit', urlKeys)}>edit</a> : null}
+            {attachments.length ? 
+              <a className="attachments-link" onClick={this.toggleAttachments}>
+                A: <span className="attachments-count">{attachments.length}</span>
+              </a> 
+            : null}
+          </div>
+
+          {this.state.expandAttachments ? 
+            <ul className="attachment-list">
+              {_.map(attachments, function(attachment) {
+                return <Attachment attachment={attachment} />
+              })}
+            </ul>
+          : null}
+        </div>
+
       </div>
     );
   }
