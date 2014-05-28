@@ -1,3 +1,20 @@
+.form-view {
+  .message {
+    margin: 10px;
+    border: 1px solid rgba(12, 13, 13, 0.1);
+    cursor: pointer;
+
+    .expand {
+      position: absolute;
+      right: 10px;
+      top: 25px;
+      text-transform: uppercase;
+    }
+  }
+  .message-content {
+    background: #fff;
+  }
+}
 .form-view-fields {
   padding: 10px;
 }

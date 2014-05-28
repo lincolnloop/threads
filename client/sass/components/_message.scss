@@ -66,7 +66,6 @@
   .date {
     font-size: 0.7em;
     line-height: 2em;
-    margin-bottom: 16px;
   }
 
   .collapse-button {
@@ -79,6 +78,7 @@
   }
 
   .message-content {
+    margin-top: 16px;
     .content p {
       font-size: 14px;
       line-height: 22px;

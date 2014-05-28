@@ -60,10 +60,10 @@ var MessageReplyView = React.createClass({
                 </a>
               </div>
               <a className="expand">{!this.state.expand ? "Expand" : "Collapse"}</a>
+              {this.state.expand ? <div className="message-content">
+                <div dangerouslySetInnerHTML={{__html: message.body}} />
+              </div> : null}
             </div>
-            {this.state.expand ? <div className="message-content">
-              <div dangerouslySetInnerHTML={{__html: message.body}} />
-            </div> : null}
           </div> : null}
           <div className="form-view-actions">
           </div>
