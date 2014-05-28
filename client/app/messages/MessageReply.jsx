@@ -73,7 +73,6 @@ var MessageReplyView = React.createClass({
                           teamUrl={team.url}
                           ref="comment"
                           required />
-            <button type="submit" className="btn btn-submit">Reply</button>
           </div>
         </form>
       </div>
