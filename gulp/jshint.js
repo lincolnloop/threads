@@ -7,8 +7,7 @@ gulp.task('jshint', function() {
   return gulp.src([
       'gulpfile.js',
       'gulp/**/*.js',
-      'client/index.js'
-      'client/tests/**/*.js'
+      'client/index.js',
       'client/app/**/*.js'
     ])
     .pipe(jshint())
