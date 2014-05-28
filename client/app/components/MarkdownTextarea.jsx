@@ -65,6 +65,7 @@ var MarkdownView = React.createClass({
   render: function() {
     // render preview and textarea separately.
     var defaultValue = this.props.data && this.props.data.raw_body;
+    var submitLabel = this.props.submitLabel ? this.props.submitLabel : 'Submit';
     return (
       <div className="markdown-textarea">
         <ul className="accordion-tabs">
@@ -88,6 +89,7 @@ var MarkdownView = React.createClass({
             </section>
           </li>
         </ul>
+        <button type="submit" className="btn btn-submit">{submitLabel}</button>
       </div>
     )
   },

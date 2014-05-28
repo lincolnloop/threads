@@ -69,9 +69,10 @@ var MessageReplyView = React.createClass({
           </div>
             <div className="form-view-fields">
             <MarkdownView placeholder="Comment.."
-                            teamUrl={team.url}
-                            ref="comment"
-                            required />
+                          submitLabel="Reply"
+                          teamUrl={team.url}
+                          ref="comment"
+                          required />
             <button type="submit" className="btn btn-submit">Reply</button>
           </div>
         </form>

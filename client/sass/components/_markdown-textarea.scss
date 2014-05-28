@@ -4,9 +4,16 @@
   textarea {
     height: 500px;
   }
-  .preview {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+  .btn-submit {
+    display: block;
+    width: 100%;
+  }
+  @include media($tablet) {
+    .btn-submit {
+      position: absolute;
+      top: 5px;
+      right: 0;
+      width: auto;
+    }
   }
 }
