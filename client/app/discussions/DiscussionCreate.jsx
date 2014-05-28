@@ -37,16 +37,16 @@ var DiscussionCreateView = React.createClass({
       'required': true
     });
     return (
-        <form className="form-view" onSubmit={this.handleSubmit}>
-          <div className="form-view-fields">
-            <MarkdownView placeholder="Comment.."
-                          pre={titleField}
-                          submitLabel="Create"
-                          teamUrl={this.props.teamUrl}
-                          ref="comment"
-                          required />
-          </div>
-        </form>
+      <form className="form-view" onSubmit={this.handleSubmit}>
+        <div className="form-view-fields">
+          <MarkdownView placeholder="Comment.."
+                        pre={titleField}
+                        submitLabel="Create"
+                        teamUrl={this.props.teamUrl}
+                        ref="comment"
+                        required />
+        </div>
+      </form>
     );
   }
 });

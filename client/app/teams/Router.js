@@ -34,6 +34,9 @@ var TeamRouter = Backbone.Router.extend({
   detail: function(teamSlug) {
     // fetch data
     var team = store.find('teams', {'slug': teamSlug});
+    if (!team) {
+      return;
+    }
 
     return dispatcher.render({
         'navLevel': 5,

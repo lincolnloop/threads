@@ -23,7 +23,7 @@ var Footer = React.createClass({
         <li><a href={urls.get('notifications')} className={notificationClasses}>
           <span className="notifications">{this.props.unreadNotifications}</span>
         </a></li>
-        <li><a className="search icon">Search</a></li>
+        <li><a href={urls.get('search')} className="search icon">Search</a></li>
         </ul>
       </footer>
     );
