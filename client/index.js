@@ -8,6 +8,7 @@ var FastClick = require('fastclick');
 var log = require('loglevel');
 var AppRouter = require('./app/AppRouter');
 var config = require('./app/utils/config');
+var FPSCounter = require('./vendor/FPSCounter');
 
 var SignInView = require('./app/auth/SignIn.jsx');
 
@@ -16,6 +17,9 @@ if (config.debug) {
   log.setLevel('debug');
 }
 
+
+// FPS Counter
+FPSCounter.start();
 
 // Initialize FastClick
 // --------------------
