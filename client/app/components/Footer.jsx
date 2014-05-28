@@ -18,7 +18,7 @@ var Footer = React.createClass({
     return (
       <footer id="bottom-nav">
       <ul>
-        <li><a className="home icon">Home</a></li>
+        <li><a href="/" className="home icon">Home</a></li>
         <li><a className="settings icon">Settings</a></li>
         <li><a href={urls.get('notifications')} className={notificationClasses}>
           <span className="notifications">{this.props.unreadNotifications}</span>
