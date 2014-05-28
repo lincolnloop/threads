@@ -1,13 +1,20 @@
 .markdown-textarea {
   position: relative;
 
+  input {
+    border-left: none;
+    border-right: none;
+  }
+
   textarea {
     height: 500px;
   }
+
   .btn-submit {
     display: block;
     width: 100%;
   }
+
   @include media($tablet) {
     .btn-submit {
       position: absolute;
