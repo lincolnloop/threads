@@ -8,56 +8,36 @@ var Header = require('../components/Header.jsx');
 var DiscussionListView = require('../discussions/DiscussionList.jsx');
 var EmptyDiscussionListView = require('../discussions/EmptyDiscussionList.jsx');
 
-// TODO: Shim or fork inViewport so this is supported
-require('in-viewport');
-
 var TeamDetail = React.createClass({
 
-  fetchDiscussions: function() {
-    // Fetches discussion data from the remote API
-    // and updates the component state.
-    store.get('discussions', {'team__slug': this.props.team.slug}).done(function() {
-      // TODO: Limit results to 20 * page number
-      var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
-      this.setState({
-        'discussions': discussions,
-        'fetched': true
-      });
-    }.bind(this));
-  },
-
-  fetchDiscussionsPagination: function() {
+  handleLoadMore: function() {
+    log.info('TeamDetail:fetchDiscussionsPagination');
     // fetch paginated discussions from the remote API
     // and update component state
-    var limit = 5;
-    // figure out scroll position in relation to the last item on the list
-    if (!this.team.discussions.meta.next) {
-      // if there is no next discussions page, do nothing
+    if (!this.state.page) {
+      // no page means no data >> do nothing
       return;
     }
-    this.team.discussions.fetch({
-      remove: false,
-      data: {
-        'page': this.team.discussions.meta.next,
-        'limit': limit
-      },
-      success: function (collection) {
-        // triggers the display of any out-of-order discussions that are now in order
-        // enables endless scroller on the last one
-        this.setState({
-          discussions: collection.serialized()
-        });
-      }.bind(this)
-    });
-  },
-
-  getLastDiscussionNode: function() {
-    // if we have no discussions, return null
-    if (!this.state.discussions.length) {
-      return null;
-    }
-    // get <ul> node, and return the lastChild
-    return this.refs.discussions.refs.list.getDOMNode().lastChild;
+    var limit = 20;
+    var page = this.state.page + 1;
+    store.get('discussions', {
+      'team__slug': this.props.team.slug,
+      'page': page
+    }).done(function(results) {
+      // triggers the display of any out-of-order discussions that are now in order
+      // enables endless scroller on the last one
+      if (results.length && results.length === 20) {
+        this.setState({'page': page});
+      } else {
+        this.setState({'page': null});
+      }
+    }.bind(this), function(error) {
+      // there was an error with the ajax call
+      // likely ran out of pages
+      this.setState({
+        'page': null
+      })
+    }.bind(this));
   },
 
   getInitialState: function() {
@@ -67,9 +47,7 @@ var TeamDetail = React.createClass({
       // last discussion element
       'lastItemEl': undefined,
       // pageSize = 20
-      'page': 1,
-      // has it been remotely fetched?
-      'fetched': false
+      'page': 0
     };
   },
 
@@ -82,32 +60,35 @@ var TeamDetail = React.createClass({
   },
 
   render: function() {
+    log.info('TeamDetail:render');
     var team = this.props.team;
     var createDiscussionUrl = urls.get('discussion:create:team', {
       team_slug: team.slug
     });
-    console.debug('TeamDetail:render', this.state.discussions, this.state.fetched);
+    var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
     return (
       <div className="team-detail content-view">
         <h2>{team.name}</h2>
-        {this.state.discussions.length === 0 && this.state.fetched === true ? // create first discussion
-          <EmptyDiscussionListView teamSlug={this.props.team.slug} /> : 
-          <DiscussionListView discussions={this.state.discussions} ref="discussions" />
+        {discussions.length === 0 && this.state.page === null ? // create first discussion
+          <EmptyDiscussionListView teamSlug={this.props.team.slug} /> : <div>
+            <DiscussionListView discussions={discussions} ref="discussions" />
+            {this.state.page ?
+              <a onClick={this.handleLoadMore} className="load-more">Load more...</a>
+            : null}
+          </div>
         }
       </div>
     );
   },
 
   componentDidMount: function() {
-    this.fetchDiscussions();
-  },
-
-  componentDidUpdate: function() {
-    // endless scroll setup
-    var lastItemEl = this.getLastDiscussionNode();
-    // can't call inViewport directly because it's not a CommonJS module
-    // TODO: Endless scrolling/pagination
-    //window.inViewport(lastItemEl, this.fetchDiscussionsPagination);
+    store.get('discussions', {'team__slug': this.props.team.slug}).done(function(results) {
+      if (results.length && results.length === 20) {
+        this.setState({'page': 1});
+      } else {
+        this.setState({'page': null});
+      }
+    }.bind(this));
   },
 
   componentWillReceiveProps: function(nextProps) {
@@ -117,10 +98,6 @@ var TeamDetail = React.createClass({
     if (this.props.team.url !== nextProps.team.url) {
       this.fetchDiscussions();
     }
-  },
-
-  componentWillUnmount: function() {
-    // TODO: unbind inViewport's events (if there are any)
   }
 
 });

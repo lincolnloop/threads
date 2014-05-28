@@ -8,10 +8,10 @@ var $ = require('jquery');
 // TODO: Fix this
 window._ = require('underscore');
 window.jQuery = $;
-require('../vendor/jquery.events.input');
-require('../vendor/jquery.elastic');
-require('../vendor/jquery.textareaHelper');
-require('../vendor/jquery.mentionsInput.custom');
+require('../../vendor/jquery.events.input');
+require('../../vendor/jquery.elastic');
+require('../../vendor/jquery.textareaHelper');
+require('../../vendor/jquery.mentionsInput.custom');
 // component reqs
 var classSet = require('react/lib/cx');
 var React = require('react');
