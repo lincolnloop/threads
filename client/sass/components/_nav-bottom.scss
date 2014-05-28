@@ -28,6 +28,7 @@
     position: relative;
     line-height: 44px;
     height: 44px;
+    @include hide-text;
 
     &:active {
       opacity: 0.5;
@@ -45,7 +46,6 @@
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
-    text-indent: -9999px;
   }
 
   .settings {
@@ -54,7 +54,6 @@
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
-    text-indent: -9999px;
   }
 
   .user-notifications {
@@ -63,8 +62,6 @@
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
-    // text-indent: -9999px;
-    font-size: 0;
 
     .notifications {
       display: inline-block;
@@ -104,7 +101,6 @@
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
-    text-indent: -9999px;
   }
 
 

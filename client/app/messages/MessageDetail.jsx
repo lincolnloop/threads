@@ -120,7 +120,7 @@ var MessageDetailView = React.createClass({
               <span className={voteClasses}>
                 <a className="up-vote" onClick={this.handleVote}>{hasUpVoted ? 'liked' : 'like'}</a>
               </span>
-              <a href={urls.get('message:reply', urlKeys)}>reply</a>
+              <a className="reply" href={urls.get('message:reply', urlKeys)}>reply</a>
               {canEdit ? <a href={urls.get('message:edit', urlKeys)}>edit</a> : null}
               {attachments.length ? 
                 <a className="attachments-link" onClick={this.toggleAttachments}>
