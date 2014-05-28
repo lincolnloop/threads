@@ -29,6 +29,16 @@ var MessageReplyView = React.createClass({
     return false;
   },
 
+  toggleExpand: function() {
+    this.setState({'expand': !this.state.expand});
+  },
+
+  getInitialState: function() {
+    return {
+      'expand': false
+    }
+  },
+
   render: function() {
     var kwargs = urls.resolve(window.location.pathname).kwargs;
     var team = store.find('teams', {'slug': kwargs.team_slug});
@@ -38,8 +48,7 @@ var MessageReplyView = React.createClass({
       <div className="message-reply">
         <form className="form-view" onSubmit={this.handleSubmit}>
           {message ? <div className="message">
-
-            <div className="message-detail">
+            <div className="message-detail" onClick={this.toggleExpand}>
               <div className="avatar">
                 <img src={gravatar.get(author.email)} />
               </div>
@@ -50,11 +59,12 @@ var MessageReplyView = React.createClass({
                   <time className="timeago" datetime="2014-02-06T22:02:23.791">{moment(message.date_created).fromNow()}</time>
                 </a>
               </div>
+              <a className="expand">{!this.state.expand ? "Expand" : "Collapse"}</a>
             </div>
-            <div className="message-content">
+            {this.state.expand ? <div className="message-content">
               <div dangerouslySetInnerHTML={{__html: message.body}} />
-            </div>
             </div> : null}
+          </div> : null}
           <div className="form-view-actions">
             <button type="submit" className="btn btn-submit">Reply</button>
           </div>
