@@ -7,7 +7,7 @@
   position: relative;
   display: block;
   list-style: none;
-  background: #FFF;
+  background: $white;
   font-size: 12px;
   border-top: 1px solid rgba(12, 13, 13, 0.1);
   padding: 8px;
@@ -26,7 +26,7 @@
     top: 8px;
     padding-right: 30px;
     line-height: 17px;
-    color: #3b3b3b;
+    color: $gray;
     font-weight: 400;
 
 

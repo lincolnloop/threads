@@ -7,7 +7,7 @@
   z-index: 2;
   text-align: left;
   font-weight: bold;
-  background:$dark-blue;
+  background: $dark-blue;
 
   ul {
     width: 100%;
@@ -28,7 +28,6 @@
     position: relative;
     line-height: 44px;
     height: 44px;
-    @include hide-text;
 
     &:active {
       opacity: 0.5;
@@ -46,6 +45,8 @@
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
+    @include hide-text;
+
   }
 
   .settings {
@@ -54,6 +55,7 @@
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
+    @include hide-text;
   }
 
   .user-notifications {
@@ -80,13 +82,15 @@
       @include border-right-radius(35px);
       @include linear-gradient(#E97700, #FD4F14);
       color: #FFF;
+      opacity: 0;
+      @include transition (opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
     }
 
     &.is-unread {
-      color: #fff;
 
       .notifications {
-        border-color: #ff733f;
+        color: $white;
+        opacity: 1;
       }
 
       &.is-unread:active {
@@ -101,12 +105,9 @@
     background-size: 100% auto;
     background-position: center;
     background-repeat: no-repeat;
+    @include hide-text;
+
   }
-
-
-
-
-
 
 }
 
