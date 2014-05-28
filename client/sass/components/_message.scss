@@ -68,10 +68,10 @@
   .date {
     font-size: 0.7em;
     line-height: 2em;
-    margin-bottom: 16px;
   }
 
   .collapse-button {
+    display: none;
     width: 32px;
     height: 32px;
     background:  rgba(0, 0, 0, 0.1);
@@ -80,6 +80,7 @@
   }
 
   .message-content {
+    margin-top: 16px;
     .content p {
       font-size: 14px;
       line-height: 22px;
