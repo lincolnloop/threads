@@ -7,7 +7,7 @@
   z-index: 2;
   text-align: left;
   font-weight: bold;
-  background:$dark-blue;
+  background: $dark-blue;
 
   ul {
     width: 100%;
@@ -83,7 +83,7 @@
     }
 
     &.is-unread {
-      color: #fff;
+      color: $white;
 
       .notifications {
         border-color: #ff733f;
