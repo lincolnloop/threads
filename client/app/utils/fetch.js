@@ -20,7 +20,7 @@ var userUri = function() {
   request.onload = function() {
     if (request.status === 200) {
       // Resolve the promise with the 'url' attribute of the JSON response
-      deferred.resolve(request.response.url);
+      deferred.resolve(JSON.parse(request.response).url);
     } else {
       deferred.reject(Error('There was a server error fetching user data'));
     }
