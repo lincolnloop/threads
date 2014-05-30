@@ -20,6 +20,9 @@ var SearchResult = React.createClass({
             return (<div className="message-container">
               <MessageHeader user={message.user} date={message.date} />
               <MessageContent body={message.text} />
+              <div className="message-footer">
+                <a href={message.permalink}>Go to Message</a>
+              </div>
             </div>)
           }.bind(this))}
         </ul>
