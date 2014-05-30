@@ -98,6 +98,11 @@ var MessageView = React.createClass({
       'up-vote': true,
       'up-voted': hasUpVoted
     });
+    var messageAttachmentClasses = classSet({
+      'message-attachments': true,
+      'expanded': !!this.state.expandAttachments,
+      'has-attachments': !!attachments.length
+    });
     return (
       <div className={classes}>
         <a name={message.id} />
@@ -106,7 +111,7 @@ var MessageView = React.createClass({
         <MessageContent body={message.body} />
 
         <div className="message-footer">
-          <div className="message-attachments">
+          <div className={messageAttachmentClasses}>
             {attachments.length ? 
               <a className="attachments-link" onClick={this.toggleAttachments}>
                 <span className="attachments-count">{attachments.length}</span> Attachments: 

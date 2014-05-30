@@ -9,7 +9,7 @@
     padding-left: 5px;
   }
 
-  .message-attachments-list {
+  &.has-attachments .message-attachments-list {
     border-bottom: 1px solid $light-gray;
   }
 }
