@@ -110,7 +110,7 @@ var MessageDetailView = React.createClass({
           <div className="date">
             <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624" 
                className="permalink">
-              <time className="timeago" datetime="2014-02-06T22:02:23.791">{moment(message.date_created).fromNow()}</time>
+              <time className="timeago" datetime={message.date_created}>{moment(message.date_created).fromNow()}</time>
             </a>
           </div>
           <div className="message-content">
