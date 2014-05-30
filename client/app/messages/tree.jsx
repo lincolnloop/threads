@@ -8,7 +8,7 @@ var config = require('../utils/config');
 var urls = require('../urls');
 var store = require('../store');
 var classSet = require('react/lib/cx');
-var MessageDetailView = require('./MessageDetail.jsx');
+var MessageView = require('./Message.jsx');
 
 var MessageTreeView = React.createClass({
   handleCollapse: function() {
@@ -66,7 +66,7 @@ var MessageTreeView = React.createClass({
     }
     return (
       React.DOM.div({'className': classes},
-        MessageDetailView({
+        MessageView({
           'key': this.props.discussion.url,
           'message': this.props.message,
           'discussion': this.props.discussion,

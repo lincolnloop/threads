@@ -5,15 +5,15 @@ var Backbone = require('backbone');
 var classSet = require('react/lib/cx');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
-var moment = require('moment');
 var React = require('react');
-var gravatar = require('../utils/gravatar');
 var store = require('../store');
 var urls = require('../urls');
-var VotesListView = require('./VotesList.jsx');
 var Attachment = require('./Attachment.jsx');
+var MessageHeader = require('./MessageHeader.jsx');
+var MessageContent = require('./MessageContent.jsx');
+var VotesListView = require('./VotesList.jsx');
 
-var MessageDetailView = React.createClass({
+var MessageView = React.createClass({
 
   handleVote: function(value) {
     var vote =  store.find('votes', {
@@ -100,26 +100,10 @@ var MessageDetailView = React.createClass({
     });
     return (
       <div className={classes}>
+        <a name={message.id} />
 
-        <div className="message-header">
-          <a name={message.id} />
-          <div className="avatar">
-            <img src={gravatar.get(user.email)} />
-          </div>
-          <div className="cite"></div>
-          <a className="collapse-button" onClick={this.props.handleCollapse}>Collapse</a>
-          <div className="username">{user.name}</div>
-          <div className="date">
-            <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624" 
-               className="permalink">
-              <time className="timeago" datetime={message.date_created}>{moment(message.date_created).fromNow()}</time>
-            </a>
-          </div>
-        </div>
-
-        <div className="message-content">
-          <div dangerouslySetInnerHTML={{__html: message.body}} />
-        </div>
+        <MessageHeader message={message} user={user} handleCollapse={this.props.handleCollapse} />
+        <MessageContent body={message.body} />
 
         <div className="message-footer">
           <div className="message-attachments">
@@ -146,13 +130,10 @@ var MessageDetailView = React.createClass({
             <a className="star" href="#">star</a>
             {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>edit</a> : null}
           </div>
-
-
         </div>
-
       </div>
     );
   }
 });
 
-module.exports = MessageDetailView;
+module.exports = MessageView;
