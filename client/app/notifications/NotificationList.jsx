@@ -1,10 +1,12 @@
 'use strict';
 
+var $ = require('jquery');
 var _ = require('underscore');
 var classSet = require('react/lib/cx');
 var log = require('loglevel');
 var moment = require('moment');
 var React = require('react');
+var urls = require('../urls');
 var store = require('../store');
 var gravatar = require('../utils/gravatar');
 
@@ -25,11 +27,9 @@ var NotificationListView = React.createClass({
               'notification-item': true,
               'unread': !notification.is_read
             }
-
             classList[notificationType] = true;
 
-            return <li className={classSet(classList)} key={'n-' + key}>
-              
+            return (<li className={classSet(classList)} key={'n-' + key}>
               <a href={notification.link}><div className="avatar" ><img src={avatar} /></div>
               <div className="notification-content">
                 <span className="username">{user.name} </span>
@@ -40,11 +40,15 @@ var NotificationListView = React.createClass({
                   <span className="date">{moment(notification.date_created).fromNow()}.</span>
                 </div>
               </div></a>
-            </li>
+            </li>)
           }.bind(this))}
         </ul>
       </div>
     );
+  },
+
+  componentWillUnmount: function() {
+    store._post(urls.get('api:notification')).done();
   }
 
 });
