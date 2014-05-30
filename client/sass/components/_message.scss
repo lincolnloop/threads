@@ -204,6 +204,15 @@
         background-repeat: no-repeat;
       }
 
+      .edit {
+        background-color: $base-link-color;
+        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path fill='%23ffffff' d='M5.9,18l6,6L26.5,9.6l-6-6L5.9,18z M21.6,7.2L9.5,19.2L8.3,18L20.4,6L21.6,7.2z M26.5,2.3l1.2,1.2 C29,4.9,29,7,27.7,8.4l-6-6C23,1,25.1,1,26.5,2.3z M10.3,24.8l-8.9,3.9l3.9-8.9L10.3,24.8z'/></svg>");
+        background-size: 50% auto;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+
     }
   }
 }

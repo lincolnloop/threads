@@ -128,6 +128,7 @@ var MessageView = React.createClass({
             <a className="reply" href={urls.get('message:reply', urlKeys)}>reply</a>
             <a className="fork" href="#">fork</a>
             <a className="star" href="#">star</a>
+            <a className="edit" href="#">star</a>
             {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>edit</a> : null}
           </div>
         </div>
