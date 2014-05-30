@@ -3,6 +3,8 @@
 var _ = require('underscore');
 var moment = require('moment');
 var React = require('react');
+var MessageHeader = require('../messages/MessageHeader.jsx');
+var MessageContent = require('../messages/MessageContent.jsx');
 
 var SearchResult = React.createClass({
 
@@ -15,9 +17,10 @@ var SearchResult = React.createClass({
         <time className="timeago" dateTime={result.date}>{moment(result.date).fromNow()}</time>
         <ul>
           {_.map(result.messages, function(message) {
-            return (
-              <li>{message.text}</li>
-            )
+            return (<div className="message-container">
+              <MessageHeader user={message.user} date={message.date} />
+              <MessageContent body={message.text} />
+            </div>)
           }.bind(this))}
         </ul>
       </div>

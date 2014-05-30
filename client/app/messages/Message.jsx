@@ -102,7 +102,7 @@ var MessageView = React.createClass({
       <div className={classes}>
         <a name={message.id} />
 
-        <MessageHeader message={message} user={user} handleCollapse={this.props.handleCollapse} />
+        <MessageHeader date={message.date_created} user={message.user} handleCollapse={this.props.handleCollapse} />
         <MessageContent body={message.body} />
 
         <div className="message-footer">
