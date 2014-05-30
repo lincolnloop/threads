@@ -11,14 +11,12 @@ var libs = [
   'clientconfig',
   'crossing',
   'fastclick',
-  'in-viewport',
   'jquery',
   'loglevel',
   'MD5',
   'react',
   'react/lib/ReactCSSTransitionGroup',
   'react/lib/cx',
-  'rsvp',
   'underscore',
 ];
 
