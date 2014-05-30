@@ -1,5 +1,5 @@
 .message-attachments {
-   border-bottom: 1px solid $light-gray;
+   // border-bottom: 1px solid $light-gray;
 
   .attachments-link {
     display: inline-block;
@@ -7,17 +7,27 @@
     height: 44px;
     line-height: 44px;
     padding-left: 5px;
-    border-bottom: 1px solid $light-gray;
   }
 
   .message-attachments-list {
-    background: $light-gray;
+    border-bottom: 1px solid $light-gray;
   }
 }
 
 .attachment-list {
-  list-style: none;
-  .attachment-item {
+  padding: 20px 0 20px 0;
+  margin: 0;
 
+  .attachment-item {
+    list-style: none;
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    .item-icon {
+      display: inline-block;
+    }
+    .item-name {
+      display: block;
+    }
   }
 }

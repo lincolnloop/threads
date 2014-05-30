@@ -23,7 +23,8 @@ var Attachment = React.createClass({
     return (
       <li className="attachment-item">
         <a href={downloadUrl}>
-          {filename} <img src={thumbnail} alt={filename} /> 
+          <img className="item-icon" src={thumbnail} alt={filename} /> 
+          <span className="item-name">{filename} </span>
         </a>
       </li>
     );
