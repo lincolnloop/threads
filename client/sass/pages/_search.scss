@@ -2,7 +2,7 @@
   position: relative;
   .query {
     display: inline-block;
-    width: calc(100% - 100px);
+    width: calc(100% - 130px);
   }
   .team, .titles {
     display: inline-block;
@@ -19,7 +19,16 @@
       position: absolute;
       top: 10px;
       right: 10px;
-      width: 90px;
+      width: 120px;
     }
   }
+}
+
+.search-list {
+  padding: 10px;
+}
+
+.search-result {
+  border: 1px solid #FFF;
+  padding: 10px;
 }
