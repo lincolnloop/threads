@@ -4,10 +4,9 @@
     display: inline-block;
     width: calc(100% - 130px);
   }
-  .team, .titles {
+  .team, .titles, .date {
     display: inline-block;
-  }
-  .team {
+    width: auto;
     margin-right: 20px;
   }
   .btn-search {
