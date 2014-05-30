@@ -7,19 +7,19 @@ var classSet = require('react/lib/cx');
 var Attachment = React.createClass({
 
 
-   truncate : function (theString, stringLen, separator) {
-      if (theString.length <= stringLen) return theString;
-      
-      separator = separator || '...';
-      
-      var sepLen = separator.length,
-          charsToShow = stringLen - sepLen,
-          frontChars = Math.ceil(charsToShow/2),
-          backChars = Math.floor(charsToShow/2);
-      
-      return theString.substr(0, frontChars) + 
-             separator + 
-             theString.substr(theString.length - backChars);
+  truncate : function (theString, stringLen, separator) {
+    if (theString.length <= stringLen) return theString;
+    
+    separator = separator || '...';
+    
+    var sepLen = separator.length,
+      charsToShow = stringLen - sepLen,
+      frontChars = Math.ceil(charsToShow/2),
+      backChars = Math.floor(charsToShow/2);
+    
+    return theString.substr(0, frontChars) + 
+      separator + 
+      theString.substr(theString.length - backChars);
   },
 
   render: function() {
