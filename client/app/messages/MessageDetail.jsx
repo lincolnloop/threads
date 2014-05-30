@@ -122,27 +122,32 @@ var MessageDetailView = React.createClass({
         </div>
 
         <div className="message-footer">
+          <div className="message-attachments">
+            {attachments.length ? 
+              <a className="attachments-link" onClick={this.toggleAttachments}>
+                <span className="attachments-count">{attachments.length}</span> Attachments: 
+              </a> 
+            : null}
+            <div className="message-attachments-list">
+              {this.state.expandAttachments ? 
+                <ul className="attachment-list">
+                  {_.map(attachments, function(attachment) {
+                    return <Attachment attachment={attachment} />
+                  })}
+                </ul>
+              : null}
+            </div>
+          </div>
           {votes.length ? VotesListView({'votes': votes}) : null}
           <div className="message-actions">
             <a className="up-vote" onClick={this.handleVote}>{hasUpVoted ? 'liked' : 'like'}</a>
             <a className="reply" href={urls.get('message:reply', urlKeys)}>reply</a>
             <a className="fork" href="#">fork</a>
             <a className="star" href="#">star</a>
-            {canEdit ? <a href={urls.get('message:edit', urlKeys)}>edit</a> : null}
-            {attachments.length ? 
-              <a className="attachments-link" onClick={this.toggleAttachments}>
-                A: <span className="attachments-count">{attachments.length}</span>
-              </a> 
-            : null}
+            {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>edit</a> : null}
           </div>
 
-          {this.state.expandAttachments ? 
-            <ul className="attachment-list">
-              {_.map(attachments, function(attachment) {
-                return <Attachment attachment={attachment} />
-              })}
-            </ul>
-          : null}
+
         </div>
 
       </div>
