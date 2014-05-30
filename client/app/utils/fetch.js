@@ -4,15 +4,16 @@ var Q = require('q');
 var config = require('./config');
 var urls = require('../urls');
 
-
 var userUri = function() {
   /*
    * Return a promise for the user URI
    */
   var deferred = Q.defer();
   var request = new XMLHttpRequest();
-  request.open('GET', config.apiUrl + urls.get('api:refresh_tokens'));
-  request.responseType = 'json';
+  var url = config.apiUrl + urls.get('api:refresh_tokens');
+  request.open('GET', url);
+  // for some reason this fails on android/iOS default browsers
+  //request.responseType = 'json';
   request.setRequestHeader('Accept', 'application/json');
   request.setRequestHeader('Authorization', 'Token ' + localStorage.apiKey);
 
