@@ -57,13 +57,11 @@ var MessageEditView = React.createClass({
     return (
       <div className="message-reply">
         <form className="form-view" onSubmit={this.handleSubmit}>
-          <div className="form-view-actions">
-            <button type="submit" className="btn btn-submit">Update</button>
-          </div>
             <div className="form-view-fields">
             <MarkdownView placeholder="Comment.."
                             ref="comment"
                             teamUrl={team.url}
+                            submitLabel="Update"
                             defaultValue={this.state.message.raw_body}
                             required />
           </div>
