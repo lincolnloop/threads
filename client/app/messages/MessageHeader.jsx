@@ -1,5 +1,6 @@
 'use strict';
 
+var log = require('loglevel');
 var moment = require('moment');
 var React = require('react');
 var store = require('../store');
@@ -9,6 +10,9 @@ var MessageHeader = React.createClass({
 
   render: function() {
     var user = store.find('users', this.props.user);
+    if (!user) {
+      user = localStorage.getItem('anonUser');
+    }
     return (
       <div className="message-header">
         <div className="avatar">
