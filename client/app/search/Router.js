@@ -17,7 +17,8 @@ var Router = Backbone.Router.extend({
     return dispatcher.render({
         'animation': 'fade',
         'navLevel': 25,
-        'title': 'Search Threads'
+        'title': 'Search Threads',
+        'back': '/'
       }, Search()
     );
   }
