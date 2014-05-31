@@ -6,6 +6,8 @@
   right: 0;
   bottom: 44px;
   overflow: auto;
+  // TODO: this may not be a good idea
+  overflow-x: hidden;
   // background-image: url('../static/light-grey-pattern.jpg');
   background: #f3f3f3;
 
