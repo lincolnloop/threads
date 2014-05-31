@@ -13,19 +13,33 @@ var Notification = require('./Notification.jsx');
 
 var NotificationListView = React.createClass({
 
-  render: function() {
+  getInitialState: function() {
+    return {
+      'notifications': []
+    }
+  },
+
+  componentWillMount: function() {
     var notifications = store.findAll('notifications');
-    log.info('notifications', notifications);
+    this.setState({'notifications': notifications});
+  },
+
+  render: function() {
     return (
       <div className="notifications">
         <ul className="notifications-list content-view">
-          {_.map(notifications, function(notification, key) {
+          {_.map(this.state.notifications, function(notification, key) {
             return <Notification key={'n-' + key}
                                  notification={notification} />
           })}
         </ul>
       </div>
     );
+  },
+
+  componentDidMount: function() {
+    // TODO: loading indicator
+    store.get('notifications').done(this.componentWillMount.bind(this));
   },
 
   componentWillUnmount: function() {
