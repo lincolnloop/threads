@@ -28,7 +28,6 @@
   position: relative;
   border-left: none;
   background: #fff;
-  width: 100%;
   border-top: 1px solid rgba(12, 13, 13, 0.1);
   color: $gray;
   
@@ -50,9 +49,6 @@
     // }
     .avatar {
       position: relative;
-      top: 0;
-      left: 0;
-      bottom: 0;
       width: 32px;
       height: 32px;
       background: #ddd;
@@ -74,8 +70,10 @@
       line-height: 2em;
     }
 
+    // NOTE: the collapse button with display:block
+    // causes horizontal scrolling
     .collapse-button {
-      display: block;
+      display: none;
       width: 33px;
       height: 33px;
       background:  $base-link-color;
