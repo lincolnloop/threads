@@ -33,8 +33,11 @@ var SignInView = React.createClass({
         'error': 'Invalid API Key'
       });
     } else {
-      // store the key
+      // store the key in local storage
       localStorage.apiKey = apiKey;
+      // update the store headers
+      store._headers.Authorization += apiKey
+      // fetch the initial data
       this.fetch();
     }
     return false;
