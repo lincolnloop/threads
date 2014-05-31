@@ -1,6 +1,5 @@
 'use strict';
 
-var $ = require('jquery');
 var log = require('loglevel');
 
 var loadingMixin = {

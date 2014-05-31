@@ -2,7 +2,6 @@
 
 var Backbone = require('backbone');
 var dispatcher = require('../dispatcher');
-var store = require('../store');
 var urls = require('../urls');
 var MessageEditView = require('./MessageEdit.jsx');
 var MessageReplyView = require('./MessageReply.jsx');
@@ -33,7 +32,6 @@ var MessageRouter = Backbone.Router.extend({
   },
 
   reply: function(teamSlug, discussionId, discussionSlug, messageId) {
-    var team = store.find('teams', {'slug': teamSlug});
     return dispatcher.render({
         'navLevel': 20,
         'title': 'Reply to message',

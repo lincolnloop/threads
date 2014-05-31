@@ -3,7 +3,6 @@
 var Backbone = require('backbone');
 var log = require('loglevel');
 var dispatcher = require('../dispatcher');
-var store = require('../store');
 var Search = require('./Search.jsx');
 
 var Router = Backbone.Router.extend({

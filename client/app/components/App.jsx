@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
 var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
@@ -8,6 +9,16 @@ var Header = require('../components/Header.jsx');
 var Footer = require('../components/Footer.jsx');
 
 var AppView = React.createClass({
+
+  getNotifications: function() {
+    log.info('app:getNotifications');
+    store.get('notifications').then(function() {
+      var count = store.findAll('notifications', {'is_read': false}).length;
+      this.setState({
+        'unreadNotifications': count
+      })
+    }.bind(this));
+  },
 
   getInitialState: function() {
     log.info('AppView:getInitialState');
@@ -38,12 +49,8 @@ var AppView = React.createClass({
   },
 
   componentDidMount: function() {
-    store.get('notifications').then(function() {
-      var count = store.findAll('notifications', {'is_read': false}).length;
-      this.setState({
-        'unreadNotifications': count
-      })
-    }.bind(this));
+    this.getNotifications();
+    setInterval(this.getNotifications, 60000);
   },
 
   componentWillReceiveProps: function(nextProps) {
