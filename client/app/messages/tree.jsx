@@ -11,6 +11,11 @@ var classSet = require('react/lib/cx');
 var MessageView = require('./Message.jsx');
 
 var MessageTreeView = React.createClass({
+
+  isForked: function() {
+    return this.props.message.discussion && this.props.message.parent;
+  },
+
   handleCollapse: function() {
     // toggle collapse
     var collapsed = this.state.collapsed ? false : true;
@@ -26,14 +31,17 @@ var MessageTreeView = React.createClass({
       })
     })
   },
+
   getInitialState: function() {
     return {
       'collapsed': false
     };
   },
+
   componentWillMount: function() {
     this.setState({'collapsed': this.props.message.collapsed});
   },
+
   render: function() {
     var replies = store.findAll('messages', {'parent': this.props.message.url});
     var classes = classSet({
@@ -66,6 +74,7 @@ var MessageTreeView = React.createClass({
     }
     return (
       React.DOM.div({'className': classes},
+        this.isForked() ? 'FORKED' : null,
         MessageView({
           'key': this.props.discussion.url,
           'message': this.props.message,
