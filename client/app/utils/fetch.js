@@ -15,7 +15,7 @@ var userUri = function() {
   // for some reason this fails on android/iOS default browsers
   //request.responseType = 'json';
   request.setRequestHeader('Accept', 'application/json');
-  request.setRequestHeader('Authorization', 'Token ' + localStorage.apiKey);
+  request.setRequestHeader('Authorization', 'Token ' + localStorage.getItem('apiKey'));
 
   request.onload = function() {
     if (request.status === 200) {

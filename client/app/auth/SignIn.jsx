@@ -2,6 +2,7 @@
 
 var Backbone = require('backbone');
 var React = require('react');
+var log = require('loglevel');
 var config = require('../utils/config');
 var store = require('../store');
 
@@ -22,11 +23,13 @@ var SignInView = React.createClass({
   },
 
   handleSubmit: function (evt) {
+    log.info('SignIn:handleSubmit');
     //
     // Store the API key in local storage,
     // and attempt to fetch initial data
     //
     var apiKey = this.refs.apiKey.getDOMNode().value;
+    log.debug('SignIn:apiKey', this.refs.apiKey.getDOMNode(), apiKey);
     if (apiKey.length !== 40) {
       this.setState({
         'displayForm': true,
@@ -34,7 +37,7 @@ var SignInView = React.createClass({
       });
     } else {
       // store the key in local storage
-      localStorage.apiKey = apiKey;
+      localStorage.setItem('apiKey', apiKey);
       // update the store headers
       store._headers.Authorization += apiKey
       // fetch the initial data

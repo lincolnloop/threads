@@ -34,8 +34,9 @@ var Attachment = React.createClass({
       if (_.indexOf(['gif', 'png', 'doc', 'jpg'], fileType) === -1) {
         fileType = 'file';
       }
-      thumbnail = 'https://gingerhq.com/static/img/file-icons/' + fileType + '.gif';
+      thumbnail = '/static/img/file-icons/' + fileType + '.gif';
     }
+    thumbnail = 'https://gingerhq.com' + thumbnail;
     return (
       <li className="attachment-item">
         <a href={downloadUrl}>

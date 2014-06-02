@@ -6,8 +6,10 @@
   position: absolute;
   top: 0;
   width: 100%;
+  // transition: all 0.5s;
   -webkit-transform:translateZ(0);
-  @include transition( all  0.5s cubic-bezier(0.25, 0.1, 0.25, 1));
+  @include transition(all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1));
+
 }
 
 // back animation enter
