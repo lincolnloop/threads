@@ -39,7 +39,7 @@ var SignInView = React.createClass({
       // store the key in local storage
       localStorage.setItem('apiKey', apiKey);
       // update the store headers
-      store._headers.Authorization += apiKey
+      store._headers.Authorization = 'Token ' + apiKey;
       // fetch the initial data
       this.fetch();
     }
