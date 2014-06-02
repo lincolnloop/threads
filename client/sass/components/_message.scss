@@ -73,7 +73,7 @@
     // NOTE: the collapse button with display:block
     // causes horizontal scrolling
     .collapse-button {
-      display: none;
+      display: block;
       width: 33px;
       height: 33px;
       background:  $base-link-color;
@@ -85,6 +85,20 @@
       color: transparent;
       font-size: 0/0;
       text-shadow: none;
+
+      -webkit-transition-property: -webkit-transform;
+      -moz-transition-property: -moz-transform;
+      -o-transition-property: -o-transform;
+      transition-property: transform;
+      overflow:hidden;
+
+      &:hover {
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
+        transform: scale(1.1);
+      }
     }
   }
 
