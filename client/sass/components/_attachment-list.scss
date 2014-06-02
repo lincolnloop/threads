@@ -26,7 +26,7 @@
   }
 
   &.expanded .message-attachments-list {
-    height: 120px;
+    height: auto;
   }
   &.has-attachments .message-attachments-list {
     border-bottom: 1px solid $light-gray;

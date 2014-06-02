@@ -3,28 +3,13 @@
 var _ = require('underscore');
 var React = require('react');
 var classSet = require('react/lib/cx');
+var truncate = require('../utils/truncate');
 
 var Attachment = React.createClass({
 
-
-  truncate : function (theString, stringLen, separator) {
-    if (theString.length <= stringLen) return theString;
-    
-    separator = separator || '...';
-    
-    var sepLen = separator.length,
-      charsToShow = stringLen - sepLen,
-      frontChars = Math.ceil(charsToShow/2),
-      backChars = Math.floor(charsToShow/2);
-    
-    return theString.substr(0, frontChars) + 
-      separator + 
-      theString.substr(theString.length - backChars);
-  },
-
   render: function() {
     var att = this.props.attachment;
-    var filename = this.truncate(att.filename, 23);
+    var filename = truncate(att.filename, 23);
     var thumbnail = att.thumbnail;
     var fileType;
     var downloadUrl = 'https://gingerhq.com/' + att.attachment;
