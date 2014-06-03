@@ -26,7 +26,7 @@
   }
 
   &.expanded .message-attachments-list {
-    height: 120px;
+    height: auto;
   }
   &.has-attachments .message-attachments-list {
     border-bottom: 1px solid $light-gray;
@@ -34,14 +34,18 @@
 }
 
 .attachment-list {
-  padding: 20px 0 20px 0;
+  padding: 20px 0 0 0;
   margin: 0;
 
   .attachment-item {
     list-style: none;
     display: inline-block;
     width: 100px;
+    vertical-align: top;
+    line-height: 17px;
     text-align: center;
+    word-wrap: break-word;
+    margin-bottom: 15px;
     .item-icon {
       display: inline-block;
     }

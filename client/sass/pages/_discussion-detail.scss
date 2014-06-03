@@ -1,6 +1,5 @@
 .discussion-detail {
   background:  rgba(0, 0, 0, 0.1);
-  padding-bottom: 50px;
 
   h2 {
     display: inline-block;
@@ -11,8 +10,13 @@
     text-overflow: ellipsis;
     display: none;
   }
-}
+  
+  & > .message {
+    margin-left: 0;
+  }
 
-.discussion-detail > .message {
-  margin-left: 0;
+  & > .message > .message-children {
+    margin-bottom: 0;
+    padding-bottom: 2%;
+  }
 }
