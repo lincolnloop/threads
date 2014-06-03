@@ -47,3 +47,38 @@
     0% { @include transform(rotate(0deg)) }
   100% { @include transform(rotate(-15deg)) }
 }
+
+
+.bgAnim {
+  position: absolute;
+  right: 50px;
+  top: 8px;
+  //width: 42px;
+
+  .block {
+    background-color: #123849;
+    border: 1px solid #000000;
+    display: inline-block;
+    height: 28px;
+    margin-left: 3px;
+    width: 11px;
+    opacity: 0.1;
+    @include animation(1s bounceG infinite linear);
+    @include transform(scale(0.7));
+
+    &:nth-child(1) {
+      @include animation-delay(0);
+    }
+    &:nth-child(2) {
+      @include animation-delay(0.15s);
+    }
+    &:nth-child(3) {
+      @include animation-delay(0.3s);
+    }
+  }
+}
+
+@include keyframes(bounceG) {
+    0% { @include transform(scale(1)); opacity: 1; }
+  100% { @include transform(scale(0.7)); opacity: 0.1; }
+}

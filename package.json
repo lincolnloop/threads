@@ -52,6 +52,7 @@
     "moment": "^2.6.0",
     "q": "^1.0.1",
     "react": "^0.10.0-rc1",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "event-emitter": "^0.3.1"
   }
 }
