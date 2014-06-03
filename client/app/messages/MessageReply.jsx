@@ -35,7 +35,7 @@ var MessageReplyView = React.createClass({
 
   getInitialState: function() {
     return {
-      'expand': false
+      'expand': true
     }
   },
 
@@ -48,7 +48,11 @@ var MessageReplyView = React.createClass({
       <div className="message-reply">
         <form className="form-view" onSubmit={this.handleSubmit}>
           {message ? <div className="message">
-            <div className="message-detail" onClick={this.toggleExpand}>
+
+            <div className="message-container" onClick={this.toggleExpand}>
+            
+            <div className="message-header">
+              <a className="collapse-button expand">{!this.state.expand ? "Expand" : "Collapse"}</a>
               <div className="avatar">
                 <img src={gravatar.get(author.email)} />
               </div>
@@ -59,7 +63,7 @@ var MessageReplyView = React.createClass({
                   <time className="timeago" datetime="2014-02-06T22:02:23.791">{moment(message.date_created).fromNow()}</time>
                 </a>
               </div>
-              <a className="expand">{!this.state.expand ? "Expand" : "Collapse"}</a>
+            </div>
               {this.state.expand ? <div className="message-content">
                 <div dangerouslySetInnerHTML={{__html: message.body}} />
               </div> : null}

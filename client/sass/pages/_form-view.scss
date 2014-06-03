@@ -1,20 +1,41 @@
-.form-view {
-  .message {
-    margin: 10px;
-    border: 1px solid rgba(12, 13, 13, 0.1);
-    cursor: pointer;
+// .form-view {
+//   .message {
+//     margin: 0px;
+//     border: 0px solid rgba(12, 13, 13, 0.1);
+//     cursor: pointer;
 
-    .expand {
-      position: absolute;
-      right: 10px;
-      top: 25px;
-      text-transform: uppercase;
-    }
+//     .expand {
+//       position: absolute;
+//       right: 10px;
+//       top: 25px;
+//       text-transform: uppercase;
+//     }
+//   }
+//   .message-content {
+//     background: #fff;
+//   }
+// }
+// .form-view-fields {
+//   padding: 0px;
+// }
+
+.form-view {
+  padding: 10px;  
+  .message {
+    padding-left: 0;
+    margin-left: 0px;
+    // margin-right: 10px;
+    margin-top: 0px; 
+    margin-bottom: 10px;
+    background-color: #dcdcdc;
+    -moz-box-shadow: 0px 0px 1px #888;
+    -webkit-box-shadow: 0px 0px 1px #888;
+    box-shadow: 0px 0px 1px #888;
   }
-  .message-content {
-    background: #fff;
+
+  .form-view-fields {
+    -moz-box-shadow: 0px 0px 1px #888;
+    -webkit-box-shadow: 0px 0px 1px #888;
+    box-shadow: 0px 0px 1px #888;
   }
-}
-.form-view-fields {
-  padding: 10px;
 }

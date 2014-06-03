@@ -88,4 +88,5 @@ input[type="submit"],
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
+  @include transition (all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
 }
