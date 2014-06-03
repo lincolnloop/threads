@@ -17,7 +17,6 @@ if (config.debug) {
   log.setLevel('debug');
 }
 
-
 // FPS Counter
 FPSCounter.start();
 
