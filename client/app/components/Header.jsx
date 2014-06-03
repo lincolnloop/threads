@@ -44,10 +44,8 @@ var Header = React.createClass({
             ) : null}
           </span>
           <span className="title">{this.props.title}</span>
-          {this.state.loading ? <div className="bgAnim">
-              <div className="block" />
-              <div className="block" />
-              <div className="block" />
+          {this.state.loading ? <div className="loading-header">
+            <div className="loading-header-progress" />
           </div> : null}
           {this.props.contextView}
         </div>

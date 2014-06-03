@@ -49,36 +49,26 @@
 }
 
 
-.bgAnim {
+// loading header animated border style
+.loading-header {
   position: absolute;
-  right: 50px;
-  top: 8px;
-  //width: 42px;
+  left: 0;
+  height: 2px;
+  bottom: 0;
+  width: 0;
+  background-color: #ff733f;
 
-  .block {
-    background-color: #123849;
-    border: 1px solid #000000;
-    display: inline-block;
-    height: 28px;
-    margin-left: 3px;
-    width: 11px;
-    opacity: 0.1;
-    @include animation(1s bounceG infinite linear);
-    @include transform(scale(0.7));
+  @include animation(1.3s animateLoading infinite linear);
 
-    &:nth-child(1) {
-      @include animation-delay(0);
-    }
-    &:nth-child(2) {
-      @include animation-delay(0.15s);
-    }
-    &:nth-child(3) {
-      @include animation-delay(0.3s);
-    }
+  @include media($tablet) {
+    @include animation(2.3s animateLoading infinite linear);
+  }
+  @include media($desktop) {
+    @include animation(4s animateLoading infinite linear);
   }
 }
 
-@include keyframes(bounceG) {
-    0% { @include transform(scale(1)); opacity: 1; }
-  100% { @include transform(scale(0.7)); opacity: 0.1; }
+@include keyframes(animateLoading) {
+    0% { width: 0; }
+  100% { width: 120%; }
 }
