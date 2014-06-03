@@ -45,10 +45,10 @@ var DiscussionDetailView = React.createClass({
         'discussion': discussion
       });
       // update app
-      // TODO: evaluate setting the headerContextView using events
-      return dispatcher.setProps({
+
+      this.emitter.emit('header:update', {
         'title': discussion.title,
-        'headerContextView': HeaderUnread({
+        'contextView': HeaderUnread({
           'unreads': unreads
         })
       });
@@ -99,6 +99,7 @@ var DiscussionDetailView = React.createClass({
   componentWillUnmount: function() {
     log.info('DiscussionDetailView:componentWillUnmount');
     window.onhashchange = null;
+    store._put(urls.get('api:lastread', this.state.discussion.id)).done();
   }
 
 });

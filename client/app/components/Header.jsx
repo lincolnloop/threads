@@ -22,10 +22,26 @@ var Header = React.createClass({
     }
   },
 
+  update: function(options) {
+    this.setState(options);
+  },
+
   getInitialState: function() {
     return {
-      'loading': false
+      'loading': false,
+      'title': '',
+      'headerContextView': null
     }
+  },
+
+  componentWillMount: function() {
+    this.emitter.on('ajax', this.ajaxChange);
+    this.emitter.on('header:update', this.update);
+
+    this.setState({
+      'title': this.props.title,
+      'contextView': this.props.contextView
+    })
   },
 
   render: function () {
@@ -43,22 +59,23 @@ var Header = React.createClass({
               React.DOM.span(null, 'Back')
             ) : null}
           </span>
-          <span className="title">{this.props.title}</span>
+          <span className="title">{this.state.title}</span>
           {this.state.loading ? <div className="loading-header">
             <div className="loading-header-progress" />
           </div> : null}
-          {this.props.contextView}
+          {this.state.contextView}
         </div>
       </header>
     );
   },
 
-  componentWillMount: function() {
-    this.emitter.on('ajax', this.ajaxChange);
+  componentWillReceiveProps: function(nextProps) {
+    this.setState(nextProps);
   },
 
   componentWillUnmount: function() {
     this.emitter.off('ajax', this.ajaxChange);
+    this.emitter.off('header:update', this.update);
   }
 });
 
