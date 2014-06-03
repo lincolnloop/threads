@@ -2,6 +2,7 @@
 
 var React = require('react');
 var log = require('loglevel');
+var loadingMixin = require('../mixins/loadingMixin');
 var urls = require('../urls');
 var store = require('../store');
 var Header = require('../components/Header.jsx');
@@ -9,6 +10,7 @@ var DiscussionListView = require('../discussions/DiscussionList.jsx');
 var EmptyDiscussionListView = require('../discussions/EmptyDiscussionList.jsx');
 
 var TeamDetail = React.createClass({
+  mixins: [loadingMixin],
 
   handleLoadMore: function() {
     log.info('TeamDetail:fetchDiscussionsPagination');
@@ -55,7 +57,8 @@ var TeamDetail = React.createClass({
     // TODO: Limit results to 20 * page number
     var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
     this.setState({
-      'discussions': discussions
+      'discussions': discussions,
+      'loading': discussions.length ? false : true
     });
   },
 
@@ -88,6 +91,7 @@ var TeamDetail = React.createClass({
       } else {
         this.setState({'page': null});
       }
+      this.setState({'loading': false});
     }.bind(this));
   },
 

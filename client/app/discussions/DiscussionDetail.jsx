@@ -52,8 +52,7 @@ var DiscussionDetailView = React.createClass({
   // --------------------
   getInitialState: function() {
     return {
-      'discussion': {},
-      'loading': true
+      'discussion': {}
     };
   },
 

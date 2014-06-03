@@ -5,6 +5,12 @@ var log = require('loglevel');
 var loadingMixin = {
   loadingContainer: null,
 
+  getInitialState: function() {
+    return {
+      'loading': true
+    };
+  },
+
   componentDidMount: function() {
     log.info('loadingMixin:componentDidMount');
     if (this.state.loading !== true) {
