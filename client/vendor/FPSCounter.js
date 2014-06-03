@@ -11,7 +11,7 @@ var FPSCounter = {
 
     // Align top-left
     stats.domElement.style.position = 'absolute';
-    stats.domElement.style.right = '0px';
+    stats.domElement.style.left = '25%';
     stats.domElement.style.bottom = '0px';
     stats.domElement.style['z-index'] = '999';
 
