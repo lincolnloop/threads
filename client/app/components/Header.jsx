@@ -3,9 +3,17 @@
 var _ = require('underscore');
 var React = require('react');
 var log = require('loglevel');
+var eventsMixin = require('../mixins/eventsMixin');
 var urls = require('../urls');
 
 var Header = React.createClass({
+  mixins: [eventsMixin],
+
+  ajaxChange: function(options) {
+    // {'loading': true/false}
+    this.setState(options);
+  },
+
   historyBack: function() {
     try {
       window.history.back();
@@ -13,6 +21,13 @@ var Header = React.createClass({
       // redirect to /
     }
   },
+
+  getInitialState: function() {
+    return {
+      'loading': false
+    }
+  },
+
   render: function () {
     var backAttrs = {
       'className': 'back',
@@ -29,10 +44,23 @@ var Header = React.createClass({
             ) : null}
           </span>
           <span className="title">{this.props.title}</span>
+          {this.state.loading ? <div className="bgAnim">
+              <div className="block" />
+              <div className="block" />
+              <div className="block" />
+          </div> : null}
           {this.props.contextView}
         </div>
       </header>
     );
+  },
+
+  componentWillMount: function() {
+    this.emitter.on('ajax', this.ajaxChange);
+  },
+
+  componentWillUnmount: function() {
+    this.emitter.off('ajax', this.ajaxChange);
   }
 });
 

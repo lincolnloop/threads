@@ -2,6 +2,8 @@
 
 var React = require('react');
 var log = require('loglevel');
+var dispatcher = require('../dispatcher');
+var eventsMixin = require('../mixins/eventsMixin');
 var loadingMixin = require('../mixins/loadingMixin');
 var urls = require('../urls');
 var store = require('../store');
@@ -10,7 +12,7 @@ var DiscussionListView = require('../discussions/DiscussionList.jsx');
 var EmptyDiscussionListView = require('../discussions/EmptyDiscussionList.jsx');
 
 var TeamDetail = React.createClass({
-  mixins: [loadingMixin],
+  mixins: [loadingMixin, eventsMixin],
 
   handleLoadMore: function() {
     log.info('TeamDetail:fetchDiscussionsPagination');
@@ -85,12 +87,20 @@ var TeamDetail = React.createClass({
   },
 
   componentDidMount: function() {
+    // show loading animation on the header
+    this.emitter.emit('ajax', {'loading': true});
     store.get('discussions', {'team__slug': this.props.team.slug}).done(function(results) {
+      // stop loading animation on the header
+      this.emitter.emit('ajax', {'loading': false});
+      // determine if we should show "load more" button
       if (results.length && results.length === 20) {
+        // there might be more than one page (not 100% sure)
         this.setState({'page': 1});
       } else {
+        // there's only one page (100% confidence)
         this.setState({'page': null});
       }
+      // set main loading animation to false
       this.setState({'loading': false});
     }.bind(this));
   },

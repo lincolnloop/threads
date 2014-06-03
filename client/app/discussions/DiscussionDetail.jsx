@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
+var eventsMixin = require('../mixins/eventsMixin');
 var loadingMixin = require('../mixins/loadingMixin');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
@@ -15,7 +16,7 @@ var HeaderUnread = require('./HeaderUnread.jsx');
 var MessageTreeView = require('../messages/tree.jsx');
 
 var DiscussionDetailView = React.createClass({
-  mixins: [loadingMixin],
+  mixins: [loadingMixin, eventsMixin],
 
   // --------------------
   // Custom methods
@@ -23,7 +24,14 @@ var DiscussionDetailView = React.createClass({
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
+
+    // show loading animation on the header
+    this.emitter.emit('ajax', {'loading': true});
+
     store.get('discussions', {}, {'url': this.props.discussionUrl}).done(function() {
+      // stop loading animation on the header
+      this.emitter.emit('ajax', {'loading': false});
+      
       // get the active discussion
       var discussion = store.find('discussions', this.props.discussionUrl);
       // get the discussion's message and list of replies for the discussion
