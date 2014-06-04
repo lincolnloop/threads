@@ -37,27 +37,28 @@ label {
 
 textarea,
 #{$all-text-inputs} {
-  @include box-sizing(border-box);
-  @include transition(border-color);
+
   background-color: white;
-  border-radius: $form-border-radius;
-  border: 1px solid $form-border-color;
-  box-shadow: $form-box-shadow;
   font-family: $form-font-family;
   font-size: $form-font-size;
   margin-bottom: $base-line-height / 2;
   padding: ($base-line-height / 3) ($base-line-height / 3);
   resize: vertical;
   width: 100%;
+  border: none;
+  border-left: 0px solid $blue;
+  overflow: auto;
+  outline: 0;
 
-  &:hover {
-    border-color: $form-border-color-hover;
-  }
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  @include transition (border 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
+
 
   &:focus {
-    border-color: $form-border-color-focus;
-    box-shadow: $form-box-shadow-focus;
-    outline: none;
+    border-left: 5px solid $blue;
   }
 }
 

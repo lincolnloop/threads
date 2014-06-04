@@ -17,13 +17,10 @@ var SearchResult = React.createClass({
         <time className="timeago" dateTime={result.date}>{moment(result.date).fromNow()}</time>
         <ul>
           {_.map(result.messages, function(message) {
-            return (<div className="message-container">
+            return (<a href={message.permalink}><div className="message-container">
               <MessageHeader user={message.user} date={message.date} />
               <MessageContent body={message.text} />
-              <div className="message-footer">
-                <a href={message.permalink}>Go to Message</a>
-              </div>
-            </div>)
+            </div></a>)
           }.bind(this))}
         </ul>
       </div>
