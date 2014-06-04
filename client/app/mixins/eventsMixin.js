@@ -1,6 +1,6 @@
 'use strict';
 
-var log = require('loglevel');
+//var log = require('loglevel');
 var ee = require('event-emitter');
 var emitter = ee({});
 

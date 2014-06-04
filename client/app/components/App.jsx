@@ -10,21 +10,10 @@ var Footer = require('../components/Footer.jsx');
 
 var AppView = React.createClass({
 
-  getNotifications: function() {
-    log.info('app:getNotifications');
-    store.get('notifications').then(function() {
-      var count = store.findAll('notifications', {'is_read': false}).length;
-      this.setState({
-        'unreadNotifications': count
-      })
-    }.bind(this));
-  },
-
   getInitialState: function() {
     log.info('AppView:getInitialState');
     return {
       'transition': 'right-to-left',
-      'unreadNotifications': 0
     }
   },
 
@@ -46,11 +35,6 @@ var AppView = React.createClass({
         <Footer unreadNotifications={this.state.unreadNotifications} />
       </section>
     );
-  },
-
-  componentDidMount: function() {
-    this.getNotifications();
-    setInterval(this.getNotifications, 60000);
   },
 
   componentWillReceiveProps: function(nextProps) {
