@@ -14,7 +14,7 @@
   position: relative;
   outline: 0;
   margin-bottom: 10px;
-  margin-top: 10px;
+  margin-top: 0px;
   resize: none;
   @include transition (border 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
 
@@ -22,6 +22,13 @@
      -moz-box-sizing: border-box;
           box-sizing: border-box;
 
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
 
   &:focus {
     border-left: 5px solid $blue;

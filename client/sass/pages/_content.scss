@@ -1,10 +1,12 @@
 .content {
   // required for animations
   position: absolute;
-  top: 44px;
+  top: 0px;
   left: 0;
   right: 0;
-  bottom: 44px;
+  bottom: 0px;
+  padding-top: 44px;
+  padding-bottom: 44px;
   overflow: auto;
   // background-image: url('../static/light-grey-pattern.jpg');
   background: #f3f3f3;

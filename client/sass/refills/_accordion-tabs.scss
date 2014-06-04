@@ -2,8 +2,8 @@
   $tab-border-color: $base-border-color;
   $tab-border: 1px solid $tab-border-color;
   $tab-content-background: lighten($light-gray, 10);
-  $tab-active-background: $blue;
-  $tab-inactive-color: $base-body-color;
+  $tab-active-background: $white;
+  $tab-inactive-color: $light-gray;
   $tab-inactive-hover-color: darken($light-gray, 5);
   $tab-mode: $tablet;
 
@@ -42,7 +42,11 @@
     &.is-active a.tab-link {
       background-color: $tab-active-background;
       border-bottom: 0;
-      color: #fff;
+      color: $dark-gray;
+
+      -moz-box-shadow:    none;
+      -webkit-box-shadow: none;
+      box-shadow:         none;
 
       @include media($tab-mode) {
         background-color: $tab-active-background;
@@ -70,6 +74,10 @@
     border-top-right-radius: $base-border-radius;
     border-top-left-radius: $base-border-radius;
     @include transition (all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
+
+    -moz-box-shadow:    inset 2px -2px 2px $medium-gray;
+    -webkit-box-shadow: inset 2px -2px 2px $medium-gray;
+    box-shadow: inset 2px -2px 2px $medium-gray; 
 
 
     &:hover {
