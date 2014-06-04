@@ -4,9 +4,12 @@ var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var config = require('../utils/config');
+var loadingMixin = require('../mixins/loadingMixin');
 var store = require('../store');
 
 var SignInView = React.createClass({
+  mixins: [loadingMixin],
+
   //
   // Handles the sign-in/token form
   // and stores the token in local storage.
@@ -51,6 +54,10 @@ var SignInView = React.createClass({
       'displayForm': false,
       'error': null
     };
+  },
+
+  componentWillMount: function() {
+    this.setState({'loading': true});
   },
 
   render: function() {
