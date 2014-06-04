@@ -8,6 +8,7 @@ var loadingMixin = require('../mixins/loadingMixin');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
 var urls = require('../urls');
+var discussionActions = require('./discussionActions');
 
 // --------------------
 // Views
@@ -94,12 +95,12 @@ var DiscussionDetailView = React.createClass({
     window.onhashchange = function() {
       log.info('hashchange', window.location.hash);
     }.bind(this);
+    discussionActions.markAsRead(this.state.discussion);
   },
 
   componentWillUnmount: function() {
     log.info('DiscussionDetailView:componentWillUnmount');
     window.onhashchange = null;
-    store._put(urls.get('api:lastread', this.state.discussion.id)).done();
   }
 
 });
