@@ -70,7 +70,19 @@ var Header = React.createClass({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    this.setState(nextProps);
+    // update state when props change
+    // not doing this will cause the AppView updates
+    // to override any state set by the emitter.header:update event
+    if (!_.isEqual(this.props, nextProps)) {
+      this.setState(nextProps);
+    }
+  },
+
+  shouldComponentUpdate: function(nextProps, nextState) {
+    if (_.isEqual(this.props, nextProps) && _.isEqual(this.state, nextState)) {
+      return false;
+    }
+    return true;
   },
 
   componentWillUnmount: function() {
