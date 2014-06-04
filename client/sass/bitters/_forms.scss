@@ -84,9 +84,22 @@ input[type="submit"],
 .btn {
   @extend %button;
   @include appearance(none);
+  background-color: $blue;
+  border: none;
+  color: $white;
+  line-height: 44px;
   cursor: pointer;
   user-select: none;
   vertical-align: middle;
   white-space: nowrap;
   @include transition (all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
+  opacity: 1;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    background-color: $dark-blue;  
+  }
 }

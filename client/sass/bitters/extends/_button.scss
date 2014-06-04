@@ -1,5 +1,4 @@
 %button {
-  @include button(simple, $base-accent-color);
   font-size: $base-font-size;
   border-radius: 0;
 }

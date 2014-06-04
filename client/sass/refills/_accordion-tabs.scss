@@ -54,6 +54,10 @@
         border-bottom: 1px solid $tab-active-background;
         margin-bottom: -1px;
       }
+
+      &:hover {
+        opacity: 1;
+      }
     }
 
     &.is-active section {
@@ -81,7 +85,7 @@
 
 
     &:hover {
-      opacity: 0.5;
+      opacity: 0.8;
     }
 
     &:focus { 
