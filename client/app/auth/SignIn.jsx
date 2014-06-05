@@ -20,6 +20,7 @@ var SignInView = React.createClass({
 
   fetchFailed: function(error) {
     this.setState({
+      'loading': false,
       'displayForm': true,
       'error': error
     })
@@ -63,10 +64,10 @@ var SignInView = React.createClass({
   render: function() {
     var apiLink = config.apiUrl + '/accounts/api-access/';
     return (
-      <div className="sign-in">
+      <div className="sign-in content">
       {this.state.displayForm ? <form onSubmit={this.handleSubmit}>
           <label htmlFor="api-key">API Key (<a href={apiLink} target="_blank">obtain key</a>):</label>
-          <input type="text" ref="apiKey" id="api-key" className={this.state.error ? "error" : ""} />
+          <input type="text" ref="apiKey" id="api-key" className={this.state.error ? "error" : ""} placeholder="Paste your API key here.." />
           {this.state.error ? <div className="error">{this.state.error}</div> : ""}
           <input type="submit" />
         </form> : function(){}}
