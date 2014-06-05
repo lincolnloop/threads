@@ -9,11 +9,12 @@
   }
 
   .time-ago {
-    text-align: center;
+    text-align: left;
     width: 100%;
     display: inline-block;
     font-size: 11px;
-    padding-bottom: 5px
+    padding-bottom: 5px;
+    padding-left: 20px;
   }
   .result-header {
     padding: 20px;
