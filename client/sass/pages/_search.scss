@@ -1,13 +1,41 @@
 .search-view {
   position: relative;
+  h4 {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .time-ago {
+    text-align: center;
+    width: 100%;
+    display: inline-block;
+    font-size: 11px;
+    padding-bottom: 5px
+  }
+  .result-header {
+    padding: 20px;
+    background:#fff;
+    background-image: url("data:image/svg+xml;charset=utf-8,<svg version='1.0' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 300 300' enable-background='new 0 0 300 300' xml:space='preserve'><g><path fill='%23c8c7cc' d='M30,300L0,270l120-120L0,30L30,0l150,150L30,300z'/></g></svg>");
+    background-size: 15px;
+    background-position: calc(100% - 10px) center;
+    background-repeat: no-repeat;
+  }
+
+
   .query {
     display: inline-block;
-    width: calc(100% - 130px);
+    width: 100%;
   }
-  .team, .titles, .date {
+  .team, .titles {
     display: inline-block;
     width: auto;
     margin-right: 20px;
+  }
+  .date-input {
+    width: 100%;
   }
   .btn-search {
     display: block;
@@ -24,10 +52,43 @@
 }
 
 .search-list {
-  padding: 10px;
 }
 
 .search-result {
-  border: 1px solid #FFF;
-  padding: 10px;
+
+  padding-bottom: 20px;
+  ul {
+    padding: 0;
+    margin: 0;
+  }
+
+
+  .message-content {
+    margin: 0;
+    padding-bottom: 20px;
+    color: $light-gray;
+    a {
+      color: $light-gray;
+    }
+  }
+
+  .message-header {
+    padding-bottom: 10px;
+    background-image: url("data:image/svg+xml;charset=utf-8,<svg version='1.0' xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 300 300' enable-background='new 0 0 300 300' xml:space='preserve'><g><path fill='%23c8c7cc' d='M30,300L0,270l120-120L0,30L30,0l150,150L30,300z'/></g></svg>");
+    background-size: 15px;
+    background-position: calc(100% - 10px) 30px;
+    background-repeat: no-repeat;
+    color: $light-gray;
+    .avatar {
+      opacity: 0.3;
+    }
+    a {
+      color: $light-gray;
+    }
+  }
+
+  em {
+    font-weight: bold;
+    color: #848484;
+  }
 }

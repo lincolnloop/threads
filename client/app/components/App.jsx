@@ -37,6 +37,15 @@ var AppView = React.createClass({
     );
   },
 
+  componentDidUpdate: function() {
+    var contentNodes = document.getElementsByClassName('content');
+    if (contentNodes.length) {
+      // scroll document to top when doing a page transition
+      // TODO: Apply this to the new content page only
+      contentNodes[0].scrollTop = 0;
+    }
+  },
+
   componentWillReceiveProps: function(nextProps) {
     // manage animation state
     var current = this.props.navLevel ? this.props.navLevel : 0;

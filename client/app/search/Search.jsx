@@ -99,8 +99,8 @@ var SearchView = React.createClass({
           <label className="titles">
             <input type="checkbox" value="" /> Search titles only
           </label>
-          <input type="date" className="date" placeholder="Start date" />
-          <input type="date" className="date" placeholder="End date" />
+          <input type="date" className="date-input" placeholder="Start date" />
+          <input type="date" className="date-input" placeholder="End date" />
           <button type="submit" className="btn btn-search">{this.state.loading ? 'Searching...' : 'Search'}</button>
         </div>
         {this.state.results !== null ?

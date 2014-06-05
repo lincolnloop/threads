@@ -4,7 +4,7 @@
 .left-to-right-enter, .left-to-right-leave,
 .right-to-left-enter, .right-to-left-leave {
   position: absolute;
-  top: 0;
+  top: 44px;
   width: 100%;
   // transition: all 0.5s;
   -webkit-transform:translateZ(0);

@@ -111,9 +111,11 @@
       line-height: 22px;
     }
 
-    white-space: normal;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    // white-space: normal;
+    // overflow: hidden;
+    // text-overflow: ellipsis;
+    word-wrap: break-word;
+
   }
 
   .message-footer {
