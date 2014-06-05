@@ -12,9 +12,11 @@ var SearchResult = React.createClass({
     var result = this.props.result;
     return (
       <div className="search-result">
+      <time className="time-ago" dateTime={result.date}>{moment(result.date).fromNow()}</time>
+      <div className="result-header">
         <span className="team">{result.team} ></span>
         <a href={result.permalink} dangerouslySetInnerHTML={{__html: result.title}} />
-        <time className="timeago" dateTime={result.date}>{moment(result.date).fromNow()}</time>
+      </div>
         <ul>
           {_.map(result.messages, function(message) {
             return (<a href={message.permalink}><div className="message-container">
