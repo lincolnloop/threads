@@ -28,7 +28,6 @@ var dispatcher = {
       'headerContextView': null,
       'animation': 'horizontal'
     };
-    var contentNodes = document.getElementsByClassName('content');
     //
     // Wrapper around React.RenderComponent.
     // > Handles unmountComponent for situations where we're rendering
@@ -49,10 +48,6 @@ var dispatcher = {
       }
       if (children) {
         _.extend(defaultProps, {'children': children});
-      }
-      if (contentNodes.length) {
-        // scroll document to top when doing a page transition
-        contentNodes[0].scrollTop = 0;
       }
       this.setProps(defaultProps);
     }
