@@ -1,6 +1,5 @@
 'use strict';
 
-var Backbone = require('backbone');
 var log = require('loglevel');
 var store = require('../store');
 var urls = require('../urls');
@@ -8,6 +7,7 @@ var urls = require('../urls');
 var discussionActions = {
 
   'markAsRead': function(discussion) {
+    log.info('discussionActions:markAsRead');
     var team = store.find('teams', discussion.team);
     if (discussion.unread_count === 0) {
       return;

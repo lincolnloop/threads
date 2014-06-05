@@ -45,8 +45,11 @@ var DiscussionDetailView = React.createClass({
         'loading': false,
         'discussion': discussion
       });
-      // update app
 
+      // mark as read
+      discussionActions.markAsRead(this.state.discussion);
+
+      // update header
       this.emitter.emit('header:update', {
         'title': discussion.title,
         'contextView': HeaderUnread({
@@ -95,14 +98,12 @@ var DiscussionDetailView = React.createClass({
     window.onhashchange = function() {
       log.info('hashchange', window.location.hash);
     }.bind(this);
-    discussionActions.markAsRead(this.state.discussion);
   },
 
   componentWillUnmount: function() {
     log.info('DiscussionDetailView:componentWillUnmount');
     window.onhashchange = null;
   }
-
 });
 
 module.exports = DiscussionDetailView;
