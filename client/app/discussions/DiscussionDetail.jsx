@@ -8,6 +8,7 @@ var loadingMixin = require('../mixins/loadingMixin');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
 var urls = require('../urls');
+var discussionActions = require('./discussionActions');
 
 // --------------------
 // Views
@@ -44,8 +45,11 @@ var DiscussionDetailView = React.createClass({
         'loading': false,
         'discussion': discussion
       });
-      // update app
 
+      // mark as read
+      discussionActions.markAsRead(this.state.discussion);
+
+      // update header
       this.emitter.emit('header:update', {
         'title': discussion.title,
         'contextView': HeaderUnread({
@@ -99,9 +103,7 @@ var DiscussionDetailView = React.createClass({
   componentWillUnmount: function() {
     log.info('DiscussionDetailView:componentWillUnmount');
     window.onhashchange = null;
-    store._put(urls.get('api:lastread', this.state.discussion.id)).done();
   }
-
 });
 
 module.exports = DiscussionDetailView;
