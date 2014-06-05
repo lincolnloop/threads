@@ -18,7 +18,6 @@ $desktop: new-breakpoint(min-width 1160px 12);
 // Components
 // --------------------------
 // layout
-@import "components/main";
 @import "components/nav-top";
 @import "components/nav-bottom";
 // components
@@ -63,10 +62,4 @@ html, body, #main, .main {
   position: relative;
   width: 100%;
   height: 100%;
-}
-body {
-  overflow: hidden;
-}
-#sidebar {
-  display: none;
 }
