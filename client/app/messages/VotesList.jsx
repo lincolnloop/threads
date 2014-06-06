@@ -12,17 +12,19 @@ var VotesListView = React.createClass({
         var nodes = [];
         var user = store.find('users', vote.user);
         // add a comma separator between users (if appliable)
-        if (counter !== 0 && counter !== list.length) {
-          if (counter === list.length - 1) {
-            // use `and` as separator for the last user
-            nodes.push(React.DOM.span({'children': ' and '}));
-          } else {
-            nodes.push(React.DOM.span({'children': ', '}));
+        if (user) {
+          if (counter !== 0 && counter !== list.length) {
+            if (counter === list.length - 1) {
+              // use `and` as separator for the last user
+              nodes.push(React.DOM.span({'children': ' and '}));
+            } else {
+              nodes.push(React.DOM.span({'children': ', '}));
+            }
           }
+          nodes.push(React.DOM.a({
+            'children': user.name
+          }));
         }
-        nodes.push(React.DOM.a({
-          'children': user.name
-        }));
         // add `like this` words after last like
         if (counter === list.length - 1) {
           nodes.push(React.DOM.span({'children': ' like this'}));

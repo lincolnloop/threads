@@ -6,12 +6,6 @@ var livereload = require('gulp-livereload');
 gulp.task('watch', function() {
   var reloadServer = livereload();
 
-  var js = gulp.watch('client/**/{*.js,*.jsx}', ['app', 'tests']);
-  js.on('change', function(event) {
-    gulp.run('jshint');
-    reloadServer.changed(event.path);
-  });
-
   var server = gulp.watch('server/**/*.js', ['serve']);
   server.on('change', function(event) {
     reloadServer.changed(event.path);
@@ -19,6 +13,7 @@ gulp.task('watch', function() {
 
   var sass = gulp.watch('client/sass/**/*.scss', ['sass']);
   sass.on('change', function(event) {
+    gutil.log(gutil.colors.bgGreen('Reloading sass...'));
     reloadServer.changed(event.path);
   });
 
