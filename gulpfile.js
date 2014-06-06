@@ -64,6 +64,8 @@ gulp.task('watch', function() {
   });
   var dest = {
     'root': 'build/',
+    'js': 'build/threads.js',
+    'css': 'build/threads.css',
     'static': 'build/static/',
     'fonts': 'build/static/fonts'
   };
@@ -88,9 +90,8 @@ gulp.task('watch', function() {
   // build js once
   bundlejs(jsBundle, jsOpts);
   // watch builded file
-  gulp.watch('build/threads.js', function() {
-    gutil.log(gutil.colors.bgGreen('Reloading JS...'));
-    gulp.src('build/threads.js').pipe(connect.reload());
+  gulp.watch(dest.js, function() {
+    gulp.src(dest.js).pipe(connect.reload());
   });
 
   // --------------------------
@@ -112,9 +113,8 @@ gulp.task('watch', function() {
 
   // watch the build file 
   // and reload the server
-  gulp.watch('build/threads.css', function() {
-    gutil.log(gutil.colors.bgGreen('Reloading sass...'));
-    gulp.src('build/threads.css').pipe(connect.reload());
+  gulp.watch(dest.css, function() {
+    gulp.src(dest.css).pipe(connect.reload());
   });
 
   // watch the sources and rebuild
@@ -236,4 +236,4 @@ gulp.task('build', [
   'dist'
 ]);
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['watch', 'jshint', 'tests']);
