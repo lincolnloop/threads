@@ -5,6 +5,8 @@ var gutil = require('gulp-util');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
 var livereload = require('gulp-livereload');
+var source = require('vinyl-source-stream');
+var handlebars = require('gulp-compile-handlebars');
 var watchify = require('watchify');
 
 var bundle = require('./gulp/bundle');
@@ -36,22 +38,12 @@ require('./gulp/tests');
 require('./gulp/watch');
 
 // --------------------------
-// JavaScript tasks
+// JavaScript dev tasks
 // --------------------------
 gulp.task('jshint', function() {
   return gulp.src(sources.jshint)
     .pipe(jshint())
     .pipe(jshint.reporter(stylish));
-});
-
-// publish to production
-gulp.task('dist:js', function() {
-  var bundler = browserify(sources.js);
-  return bundle(bundler, {
-    'uglify': false,
-    'name': 'threads.min.js',
-    'dest': 'dist/'
-  });
 });
 
 // watch JS for changes and livereload
@@ -75,6 +67,36 @@ gulp.task('watch:js', function() {
   return bundle(bundler, opts);
 });
 
+// --------------------------
+// Deployment tasks
+// --------------------------
+gulp.task('dist', function() {
+  var timestamp = +new Date;
+  gutil.log(timestamp);
+  var dest = 'dist/';
+  var filenames = {
+    'js': 'threads.min.js',
+    'sass': 'threads.min.scss'
+  }
+
+  // javascripts
+  var bundler = browserify(sources.js);
+  return bundle(bundler, {
+    'uglify': false, // TODO: uglify is broken
+    'name': filenames.js,
+    'dest': dest
+  });
+
+  // sass
+
+  // generate html
+  gulp.src('server/views/index.hbs')
+    // parse through handlebars templates
+    .pipe(handlebars(data))
+    // save as index.html to the dist directory
+    .pipe(source('index.html'))
+    .pipe(gulp.dest(dest));
+});
 
 // --------------------------
 // Composite tasks
