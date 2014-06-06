@@ -8,7 +8,8 @@ var config = require('../utils/config');
 var urls = require('../urls');
 var store = require('../store');
 var classSet = require('react/lib/cx');
-var MessageView = require('./Message.jsx');
+var MessageItem = require('./Message.jsx');
+var ForkedMessage = require('./ForkedMessage.jsx');
 
 var MessageTreeView = React.createClass({
 
@@ -49,6 +50,7 @@ var MessageTreeView = React.createClass({
       'message-collapsed': this.state.collapsed
     });
     var repliesView = function(){};
+    var MessageView = this.isForked() ? ForkedMessage : MessageItem;
     if (!this.props.message) {
       return (<span />);
     }
@@ -80,7 +82,6 @@ var MessageTreeView = React.createClass({
           'discussion': this.props.discussion,
           'handleCollapse': this.handleCollapse
         }),
-        this.isForked() ? <div className="forked-label"><div className="forked-link">Forked</div></div> : null,
         // TODO: Create a separate list view out of this
         repliesView
       )
