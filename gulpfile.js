@@ -1,7 +1,6 @@
 'use strict';
 var gulp = require('gulp');
 var gutil = require('gulp-util');
-var livereload = require('gulp-livereload');
 var watchify = require('watchify');
 var rename = require('gulp-rename');
 var clean = require('gulp-clean');
@@ -10,7 +9,7 @@ var connect = require('gulp-connect');
 var browserify = require('browserify');
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
-var bundle = require('./gulp/bundle');
+var bundlejs = require('./gulp/bundlejs');
 // sass
 var neat = require('node-neat').includePaths;
 var sass = require('gulp-sass');
@@ -31,7 +30,9 @@ var sources = {
     'client/sass/**/*.scss'
   ],
   'sass': 'client/sass/app.scss',
-  'html': 'server/views/index.hbs'
+  'html': 'templates/index.hbs',
+  'static': 'client/static/**/*',
+  'fonts': 'node_modules/font-awesome/fonts/**/*'
 };
 
 // --------------------------
@@ -42,7 +43,7 @@ require('./gulp/help');
 require('./gulp/tests');
 
 // --------------------------
-// JavaScript dev tasks
+// JSHint
 // --------------------------
 gulp.task('jshint', function() {
   return gulp.src(sources.jshint)
@@ -55,48 +56,71 @@ gulp.task('jshint', function() {
 // Development
 // --------------------------
 gulp.task('watch', function() {
-
   // create live reload server
-  var server = connect.server({
+  connect.server({
     'root': 'build',
     'port': 8000,
     'livereload': true
   });
-  var dest = 'build/'
+  var dest = {
+    'root': 'build/',
+    'static': 'build/static/',
+    'fonts': 'build/static/fonts'
+  };
 
-  //
+  // --------------------------
   // js bundle
-  //
+  // --------------------------
   var jsBundle = watchify(sources.browserify);
   var jsOpts = {
     'debug': true,
     'name': 'threads.js',
-    'dest': dest
+    'dest': dest.root
   };
   // watch js
-  jsBundle.on('update', function(evt) {
+  jsBundle.on('update', function() {
     gutil.log(gutil.colors.bgGreen('Reloading scripts...'));
     connect.reload();
-    return bundle(jsBundle, jsOpts);
+    return bundlejs(jsBundle, jsOpts);
   });
   // linting
   gulp.watch(sources.jshint, ['jshint']);
   // build js once
-  bundle(jsBundle, jsOpts);
+  bundlejs(jsBundle, jsOpts);
   // watch builded file
   gulp.watch('build/threads.js', function() {
     gutil.log(gutil.colors.bgGreen('Reloading JS...'));
     gulp.src('build/threads.js').pipe(connect.reload());
   });
 
-  //
+  // --------------------------
   // watch css
-  //
-  gulp.watch(sources.css, function(event) {
-    //
-    // build sass
-    //
-    gulp.src(sources.sass)
+  // --------------------------
+
+  // initial build
+  gulp.src(sources.sass)
+    .pipe(sass({
+      'includePaths': neat,
+      'outputStyle': 'expanded',
+      'sourceComments': 'map'
+    }))
+    // error logging
+    .on('error', gutil.log)
+    // give it a file and save
+    .pipe(rename('threads.css'))
+    .pipe(gulp.dest(dest.root));
+
+  // watch the build file 
+  // and reload the server
+  gulp.watch('build/threads.css', function() {
+    gutil.log(gutil.colors.bgGreen('Reloading sass...'));
+    gulp.src('build/threads.css').pipe(connect.reload());
+  });
+
+  // watch the sources and rebuild
+  gulp.watch(sources.css, function() {
+    gutil.log(gutil.colors.bgGreen('Rebuilding sass...'));
+    return gulp.src(sources.sass)
       .pipe(sass({
         'includePaths': neat,
         'outputStyle': 'expanded',
@@ -106,26 +130,31 @@ gulp.task('watch', function() {
       .on('error', gutil.log)
       // give it a file and save
       .pipe(rename('threads.css'))
-      .pipe(gulp.dest(dest));
-  });
-  // watch builded file
-  gulp.watch('build/threads.css', function() {
-    gutil.log(gutil.colors.bgGreen('Reloading sass...'));
-    gulp.src('build/threads.css').pipe(connect.reload());
+      .pipe(gulp.dest(dest.root));
   });
 
-  //
+  // --------------------------
+  // Copy static files & fonts
+  // --------------------------
+  // copy all files under 
+  // client/static
+  gulp.src('client/static/**/*')
+    .pipe(gulp.dest(dest.static));
+  // font awesome
+  gulp.src(sources.fonts)
+    .pipe(gulp.dest(dest.fonts));
+
+  // --------------------------
   // index.html
-  //
+  // --------------------------
   gulp.src(sources.html)
     // parse through handlebars templates
     .pipe(handlebars({
       'css': 'threads.css',
       'js': 'threads.js'
     }))
-    // save as index.html to the dist directory
     .pipe(rename('index.html'))
-    .pipe(gulp.dest(dest));
+    .pipe(gulp.dest(dest.root));
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 });
@@ -137,7 +166,11 @@ gulp.task('dist', function() {
   // timestamp to version files
   var timestamp = +new Date();
   // destination folder
-  var dest = 'dist/';
+  var dest = {
+    'root': 'dist/',
+    'static': 'dist/static/',
+    'fonts': 'dist/static/fonts'
+  };
   // versioned filenames
   var filenames = {
     'js': 'threads.'+ timestamp +'.js',
@@ -152,10 +185,10 @@ gulp.task('dist', function() {
   // javascripts
   //
   var bundler = browserify(sources.js);
-  bundle(bundler, {
+  bundlejs(bundler, {
     'uglify': false, // TODO: uglify is broken
     'name': filenames.js,
-    'dest': dest
+    'dest': dest.root
   });
 
   //
@@ -170,7 +203,17 @@ gulp.task('dist', function() {
     .on('error', gutil.log)
     // give it a file and save
     .pipe(rename(filenames.css))
-    .pipe(gulp.dest(dest));
+    .pipe(gulp.dest(dest.root));
+
+  //
+  // Copy Static files css
+  //
+  // all files under client/static
+  gulp.src('client/static/**/*')
+    .pipe(gulp.dest(dest.static));
+  // font awesome
+  gulp.src(sources.fonts)
+    .pipe(gulp.dest(dest.fonts));
 
   //
   // index.html
@@ -180,7 +223,7 @@ gulp.task('dist', function() {
     .pipe(handlebars(filenames))
     // save as index.html to the dist directory
     .pipe(rename('index.html'))
-    .pipe(gulp.dest(dest));
+    .pipe(gulp.dest(dest.root));
 });
 
 // --------------------------
@@ -190,8 +233,7 @@ gulp.task('dist', function() {
 gulp.task('build', [
   'jshint',
   'tests',
-  'clean',
-  'static'
+  'dist'
 ]);
 
 gulp.task('default', ['watch']);
