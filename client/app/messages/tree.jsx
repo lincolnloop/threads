@@ -74,13 +74,13 @@ var MessageTreeView = React.createClass({
     }
     return (
       React.DOM.div({'className': classes},
-        this.isForked() ? 'FORKED' : null,
         MessageView({
           'key': this.props.discussion.url,
           'message': this.props.message,
           'discussion': this.props.discussion,
           'handleCollapse': this.handleCollapse
         }),
+        this.isForked() ? <div className="forked-label"><div className="forked-link">Forked</div></div> : null,
         // TODO: Create a separate list view out of this
         repliesView
       )
