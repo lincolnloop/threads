@@ -4,6 +4,8 @@ var gutil = require('gulp-util');
 var livereload = require('gulp-livereload');
 var watchify = require('watchify');
 var rename = require('gulp-rename');
+var clean = require('gulp-clean');
+var connect = require('gulp-connect');
 // javascript
 var browserify = require('browserify');
 var jshint = require('gulp-jshint');
@@ -35,10 +37,8 @@ var sources = {
 // --------------------------
 // Custom tasks
 // --------------------------
-require('./gulp/clean');
 require('./gulp/static');
 require('./gulp/help');
-require('./gulp/serve');
 require('./gulp/tests');
 
 // --------------------------
@@ -54,41 +54,78 @@ gulp.task('jshint', function() {
 // --------------------------
 // Development
 // --------------------------
-gulp.task('dev', function() {
+gulp.task('watch', function() {
 
   // create live reload server
-  var reloadServer = livereload();
+  var server = connect.server({
+    'root': 'build',
+    'port': 8000,
+    'livereload': true
+  });
+  var dest = 'build/'
 
   //
   // js bundle
   //
-  var jsbundler = watchify(sources.browserify);
-  var jsopts = {
+  var jsBundle = watchify(sources.browserify);
+  var jsOpts = {
     'debug': true,
     'name': 'threads.js',
-    'dest': 'build/'
+    'dest': dest
   };
   // watch js
-  jsbundler.on('update', function(evt) {
+  jsBundle.on('update', function(evt) {
     gutil.log(gutil.colors.bgGreen('Reloading scripts...'));
-    reloadServer.changed(evt[0]);
-    return bundle(jsbundler, jsopts);
+    connect.reload();
+    return bundle(jsBundle, jsOpts);
   });
-  // jshint
+  // linting
   gulp.watch(sources.jshint, ['jshint']);
-
-  //
-  // css bundle
-  //
-  var sass = gulp.watch(sources.css, ['sass']);
-  sass.on('change', function(event) {
-    gutil.log(gutil.colors.bgGreen('Reloading sass...'));
-    reloadServer.changed(event.path);
+  // build js once
+  bundle(jsBundle, jsOpts);
+  // watch builded file
+  gulp.watch('build/threads.js', function() {
+    gutil.log(gutil.colors.bgGreen('Reloading JS...'));
+    gulp.src('build/threads.js').pipe(connect.reload());
   });
 
-  // run once
-  // js
-  bundle(jsbundler, jsopts);
+  //
+  // watch css
+  //
+  gulp.watch(sources.css, function(event) {
+    //
+    // build sass
+    //
+    gulp.src(sources.sass)
+      .pipe(sass({
+        'includePaths': neat,
+        'outputStyle': 'expanded',
+        'sourceComments': 'map'
+      }))
+      // error logging
+      .on('error', gutil.log)
+      // give it a file and save
+      .pipe(rename('threads.css'))
+      .pipe(gulp.dest(dest));
+  });
+  // watch builded file
+  gulp.watch('build/threads.css', function() {
+    gutil.log(gutil.colors.bgGreen('Reloading sass...'));
+    gulp.src('build/threads.css').pipe(connect.reload());
+  });
+
+  //
+  // index.html
+  //
+  gulp.src(sources.html)
+    // parse through handlebars templates
+    .pipe(handlebars({
+      'css': 'threads.css',
+      'js': 'threads.js'
+    }))
+    // save as index.html to the dist directory
+    .pipe(rename('index.html'))
+    .pipe(gulp.dest(dest));
 
   gutil.log(gutil.colors.bgGreen('Watching for changes...'));
 });
@@ -104,9 +141,12 @@ gulp.task('dist', function() {
   // versioned filenames
   var filenames = {
     'js': 'threads.'+ timestamp +'.js',
-    'sass': 'threads.'+ timestamp +'.scss',
-    'html': 'index.html'
+    'css': 'threads.'+ timestamp +'.css'
   };
+
+  // clean dist dir
+  gulp.src('dist', {read: false})
+    .pipe(clean());
 
   //
   // javascripts
@@ -129,8 +169,9 @@ gulp.task('dist', function() {
     // error logging
     .on('error', gutil.log)
     // give it a file and save
-    .pipe(rename(filenames.sass))
+    .pipe(rename(filenames.css))
     .pipe(gulp.dest(dest));
+
   //
   // index.html
   //
@@ -138,7 +179,7 @@ gulp.task('dist', function() {
     // parse through handlebars templates
     .pipe(handlebars(filenames))
     // save as index.html to the dist directory
-    .pipe(rename(filenames.html))
+    .pipe(rename('index.html'))
     .pipe(gulp.dest(dest));
 });
 
@@ -153,6 +194,4 @@ gulp.task('build', [
   'static'
 ]);
 
-gulp.task('default', ['build'], function() {
-  return gulp.start('serve', 'watch');
-});
+gulp.task('default', ['watch']);
