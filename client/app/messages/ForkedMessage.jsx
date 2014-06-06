@@ -17,10 +17,12 @@ var ForkedMessageView = React.createClass({
     var message = store.find('messages', this.props.message.url);
     var user = store.find('users', message.user);
     return (
-      <div className="message-container message-forked">
-        <div className="forked-label"><div className="forked-link">Forked</div></div>
-        <MessageHeader date={message.date_created} user={message.user} handleCollapse={this.props.handleCollapse} />
-        <MessageContent body={message.body} />
+      <div className="forked-label">
+        <div className="message-container message-forked">
+          <MessageHeader date={message.date_created} user={message.user} handleCollapse={this.props.handleCollapse} />
+          <MessageContent body={message.body} />
+        </div>
+        <div className="forked-link">Forked</div>
       </div>
     );
   }
