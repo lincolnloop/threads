@@ -1,13 +1,7 @@
 .content {
   // required for animations
-  position: absolute;
-  top: 0px;
-  left: 0;
-  right: 0;
-  bottom: 44px;
+  padding-bottom: 44px;
   padding-top: 44px;
-  padding-bottom: 0px;
-  overflow: auto;
   -webkit-overflow-scrolling: touch;
   -webkit-transform:translateZ(0);
   // background-image: url('../static/light-grey-pattern.jpg');
