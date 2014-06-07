@@ -8,6 +8,7 @@
   background:  rgba(12, 13, 13, 0.1);
   
 
+  // TODO: Move this into it's own component?
   .forked-label {
     position: relative;
     padding: 20px;
@@ -37,7 +38,9 @@
       background-size: 14px 14px;
       background-position: left center;
       background-repeat: no-repeat;
-      
+    }
+    h2 {
+      display: block!important;
     }
   }
   .message-children {

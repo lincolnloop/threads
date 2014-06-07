@@ -14,7 +14,8 @@ var ForkedMessage = require('./ForkedMessage.jsx');
 var MessageTreeView = React.createClass({
 
   isForked: function() {
-    return this.props.message.discussion && this.props.message.parent;
+    return (this.props.message.discussion && this.props.message.parent && 
+      this.props.discussion.message !== this.props.message.url);
   },
 
   handleCollapse: function() {
