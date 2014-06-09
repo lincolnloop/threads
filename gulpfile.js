@@ -246,4 +246,4 @@ gulp.task('build', [
   'dist'
 ]);
 
-gulp.task('default', ['watch', 'jshint', 'tests']);
+gulp.task('default', ['watch', 'jshint']);
