@@ -10,12 +10,16 @@ var store = require('../store');
 var classSet = require('react/lib/cx');
 var MessageItem = require('./Message.jsx');
 var ForkedMessage = require('./ForkedMessage.jsx');
+var ForkedDiscussionLink = require('./ForkedDiscussionLink.jsx');
 
 var MessageTreeView = React.createClass({
 
   isForked: function() {
-    return (this.props.message.discussion && this.props.message.parent && 
-      this.props.discussion.message !== this.props.message.url);
+    return !!this.props.message.discussion && !!this.props.message.parent;
+  },
+
+  isDiscussionMessage: function() {
+    return this.props.discussion.message === this.props.message.url;
   },
 
   handleCollapse: function() {
@@ -51,7 +55,7 @@ var MessageTreeView = React.createClass({
       'message-collapsed': this.state.collapsed
     });
     var repliesView = function(){};
-    var MessageView = this.isForked() ? ForkedMessage : MessageItem;
+    var MessageView = this.isForked() && !this.isDiscussionMessage() ? ForkedMessage : MessageItem;
     if (!this.props.message) {
       return (<span />);
     }
@@ -77,6 +81,8 @@ var MessageTreeView = React.createClass({
     }
     return (
       React.DOM.div({'className': classes},
+        this.isForked() && this.isDiscussionMessage() ? 
+          <ForkedDiscussionLink parent={this.props.message.root} /> : null,
         MessageView({
           'key': this.props.discussion.url,
           'message': this.props.message,
