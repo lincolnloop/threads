@@ -72,11 +72,11 @@ gulp.task('watch', function() {
     'root': dest.root,
     'port': 8000,
     'livereload': true,
-    middleware: function(connect, opt) {
+    middleware: function(connect) {
       return [
         pushState(),
         connect.static(dest.root)
-      ]
+      ];
     }
   });
 
