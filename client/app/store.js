@@ -68,10 +68,10 @@ store.fetch = function(successCallback, errorCallback) {
     // TODO: Move this somewhere else
     // We don't need to set/fetch this data if it already exists
     localStorage.setItem('user', results[0]);
-    localStorage.setItem('anonUser', {
+    store.anonUser = {
       'email': 'nobody@gingerhq.com',
       'name': 'Deleted User'
-    });
+    };
     successCallback();
   }, errorCallback).done();
 };

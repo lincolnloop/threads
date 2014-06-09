@@ -1,20 +1,49 @@
 'use strict';
 var gulp = require('gulp');
+var gutil = require('gulp-util');
+var watchify = require('watchify');
+var rename = require('gulp-rename');
+var clean = require('gulp-clean');
+// static server
+var connect = require('gulp-connect');
+var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
+// javascript
+var browserify = require('browserify');
+var jshint = require('gulp-jshint');
+var stylish = require('jshint-stylish');
+var bundlejs = require('./gulp/bundlejs');
+// sass
+var neat = require('node-neat').includePaths;
+var sass = require('gulp-sass');
+// html
+var handlebars = require('gulp-compile-handlebars');
 
-require('./gulp/app');
-require('./gulp/clean');
+// File sources
+var sources = {
+  'browserify': './client/index.js',
+  'jshint': [
+    'gulpfile.js',
+    'gulp/**/*.js',
+    'client/index.js',
+    'client/app/**/*.js'
+  ],
+  'css': [
+    'client/sass/**/*.css',
+    'client/sass/**/*.scss'
+  ],
+  'sass': 'client/sass/app.scss',
+  'html': 'templates/index.hbs',
+  'static': 'client/static/**/*',
+  'fonts': 'node_modules/font-awesome/fonts/**/*'
+};
+
+// --------------------------
+// Custom tasks
+// --------------------------
 require('./gulp/static');
 require('./gulp/help');
-require('./gulp/jshint');
-require('./gulp/sass');
-require('./gulp/html');
-require('./gulp/serve');
 require('./gulp/tests');
-require('./gulp/vendor');
-require('./gulp/watch');
 
-<<<<<<< HEAD
-=======
 // --------------------------
 // JSHint
 // --------------------------
@@ -211,18 +240,10 @@ gulp.task('dist', function() {
 // Composite tasks
 // --------------------------
 // build task
->>>>>>> d35d69f... minor lint fixes
 gulp.task('build', [
   'jshint',
-  'clean',
-  'app',
   'tests',
-  'vendor',
-  'sass',
-  'static',
-  'html'
+  'dist'
 ]);
 
-gulp.task('default', ['build'], function() {
-  return gulp.start('serve', 'watch');
-});
+gulp.task('default', ['watch', 'jshint', 'tests']);
