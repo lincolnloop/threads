@@ -4,7 +4,9 @@ var gutil = require('gulp-util');
 var watchify = require('watchify');
 var rename = require('gulp-rename');
 var clean = require('gulp-clean');
+// static server
 var connect = require('gulp-connect');
+var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
 // javascript
 var browserify = require('browserify');
 var jshint = require('gulp-jshint');
@@ -56,12 +58,7 @@ gulp.task('jshint', function() {
 // Development
 // --------------------------
 gulp.task('watch', function() {
-  // create live reload server
-  connect.server({
-    'root': 'build',
-    'port': 8000,
-    'livereload': true
-  });
+  // destination directories
   var dest = {
     'root': 'build/',
     'js': 'build/threads.js',
@@ -69,6 +66,19 @@ gulp.task('watch', function() {
     'static': 'build/static/',
     'fonts': 'build/static/fonts'
   };
+
+  // create live reload server
+  connect.server({
+    'root': dest.root,
+    'port': 8000,
+    'livereload': true,
+    middleware: function(connect, opt) {
+      return [
+        pushState(),
+        connect.static(dest.root)
+      ]
+    }
+  });
 
   // --------------------------
   // js bundle
