@@ -174,12 +174,12 @@ gulp.task('watch', function() {
 // --------------------------
 // Deployment
 // --------------------------
-gulp.task('clean:dist', function() {
+gulp.task('clean', function() {
   // clean dist dir
   return gulp.src('dist', {'read': false, 'force': true})
     .pipe(clean());
 });
-gulp.task('dist', ['clean:dist'], function() {
+gulp.task('dist', ['clean'], function() {
   // timestamp to version files
   var timestamp = +new Date();
   // destination folder
