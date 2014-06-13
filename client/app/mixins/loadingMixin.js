@@ -8,7 +8,7 @@ var loadingMixin = {
 
   getInitialState: function() {
     return {
-      'loadingClass': this.loadingClass ? this.loadingClass : 'loamin',
+      'loadingClass': this.loadingClass ? this.loadingClass : 'loanim',
       'loading': true
     };
   },
@@ -29,12 +29,12 @@ var loadingMixin = {
       return;
     }
     
-    //this.$loanim.remove();
+    this.$loanim.remove();
   },
 
   componentWillUnmount: function() {
     if (this.$loanim) {
-      //this.$loanim.remove();
+      this.$loanim.remove();
     }
   }
 };
