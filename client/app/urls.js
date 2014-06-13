@@ -36,7 +36,7 @@ urls.load({
   'discussion:create': '/discussion/create/',
   'discussion:create:team': '/discussion/create/<team_slug>/',
   'discussion:detail': '/<team_slug>/<discussion_id>/<slug>/',
-  'discussion:detail:message': '/<team_slug>/<discussion_id>/<slug>/#<message_id>',
+  'discussion:detail:message': '/<team_slug>/<discussion_id>/<slug>/#m<message_id>',
   'message:reply': '/<team_slug>/<discussion_id>/<slug>/<message_id>/reply/',
   'message:edit': '/<team_slug>/<discussion_id>/<slug>/<message_id>/edit/',
   'discussion:changeTitle': '/msg/<discussion_id>/title/',
