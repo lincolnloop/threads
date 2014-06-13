@@ -174,7 +174,12 @@ gulp.task('watch', function() {
 // --------------------------
 // Deployment
 // --------------------------
-gulp.task('dist', function() {
+gulp.task('clean:dist', function() {
+  // clean dist dir
+  return gulp.src('dist', {'read': false, 'force': true})
+    .pipe(clean());
+});
+gulp.task('dist', ['clean:dist'], function() {
   // timestamp to version files
   var timestamp = +new Date();
   // destination folder
@@ -188,11 +193,6 @@ gulp.task('dist', function() {
     'js': 'threads.'+ timestamp +'.js',
     'css': 'threads.'+ timestamp +'.css'
   };
-
-  // clean dist dir
-  gulp.src('dist', {read: false})
-    .pipe(clean());
-
   //
   // javascripts
   //
