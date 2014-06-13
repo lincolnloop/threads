@@ -9,6 +9,7 @@ var store = require('../store');
 
 var SignInView = React.createClass({
   mixins: [loadingMixin],
+  loadingClass: 'tanim',
 
   //
   // Handles the sign-in/token form
