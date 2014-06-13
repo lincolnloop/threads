@@ -196,7 +196,7 @@ gulp.task('dist', ['clean'], function() {
   //
   // javascripts
   //
-  var bundler = browserify(sources.js);
+  var bundler = browserify(sources.browserify);
   bundlejs(bundler, {
     'uglify': false, // TODO: uglify is broken
     'name': filenames.js,
