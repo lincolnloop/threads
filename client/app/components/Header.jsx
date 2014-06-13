@@ -1,5 +1,6 @@
 'use strict';
 
+var Backbone = require('backbone');
 var _ = require('underscore');
 var React = require('react');
 var log = require('loglevel');
@@ -14,10 +15,16 @@ var Header = React.createClass({
     this.setState(options);
   },
 
-  historyBack: function() {
+  handleBack: function() {
+    // navigate to back page if one exists
+    if (this.props.back && this.props.back !== 'history') {
+      return Backbone.history.navigate(this.props.back, {'trigger': true});
+    }
+    // fallback to history back
     try {
       window.history.back();
     } catch(e) {
+      // when everything fails..
       // redirect to /
     }
   },
@@ -47,8 +54,7 @@ var Header = React.createClass({
   render: function () {
     var backAttrs = {
       'className': 'back',
-      'href': this.props.back !== 'history' ? this.props.back : null,
-      'onClick': this.props.back === 'history' ? this.historyBack : null,
+      'onClick': this.handleBack,
     }
     return (
       <header id="top-nav">
