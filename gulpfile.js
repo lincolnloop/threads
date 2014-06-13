@@ -17,6 +17,8 @@ var neat = require('node-neat').includePaths;
 var sass = require('gulp-sass');
 // html
 var handlebars = require('gulp-compile-handlebars');
+// local config 
+var config = require('./config/' + (process.env.NODE_ENV || 'development'));
 
 // File sources
 var sources = {
