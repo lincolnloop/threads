@@ -43,7 +43,7 @@ Backbone.ajax = function(request) {
 $(document).on('click', 'a[href]', function (event) {
   var url = $(event.currentTarget).attr('href');
   if (url.indexOf('http') !== 0) {
-    Backbone.history.navigate(url, {trigger: true});
+    Backbone.history.navigate(url, {'trigger': true});
     event.preventDefault();
   }
 });
