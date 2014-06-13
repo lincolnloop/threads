@@ -44,6 +44,32 @@
   left: -100%;
 }
 
+
+
+// fadeIn
+
+.fadeIn-enter {
+  opacity: 0;
+}
+
+.fadeIn-enter.fadeIn-enter-active {
+  opacity: 1;
+}
+
+.fadeIn-leave {
+  opacity: 1;
+}
+
+.fadeIn-leave.fadeIn-leave-active {
+  opacity: 0.8;
+}
+
+.fadeIn-enter, .fadeIn-leave {
+  @include transition(all 0.5s);
+}
+
+// slide in from top
+/*
 .top-to-bottom-enter, .top-to-bottom-leave,
 .bottom-to-top-enter, .bottom-to-top-leave {
   position: absolute;
@@ -54,7 +80,6 @@
 
 }
 
-// slide in from top
 .top-to-bottom-enter {
   top: -100%;
 }
@@ -87,3 +112,4 @@
 .bottom-to-top-leave.bottom-to-top-leave-active {
   top: -100%;
 }
+*/

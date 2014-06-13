@@ -17,7 +17,7 @@ var TeamRouter = Backbone.Router.extend({
   list: function() {
 
     return dispatcher.render({
-        'animation': 'vertical',
+        'animation': 'fadeIn',
         'navLevel': 25,
         'title': 'Notifications',
         'back': 'history'
