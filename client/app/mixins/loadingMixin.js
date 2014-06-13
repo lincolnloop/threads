@@ -8,6 +8,7 @@ var loadingMixin = {
 
   getInitialState: function() {
     return {
+      'loadingClass': this.loadingClass ? this.loadingClass : 'loamin',
       'loading': true
     };
   },
@@ -17,7 +18,7 @@ var loadingMixin = {
     if (this.state.loading !== true) {
       return;
     }
-    this.$loanim = $('<div class="loanim"><div class="loanim-icon" /></div>');
+    this.$loanim = $('<div class="'+this.state.loadingClass+'"><div class="'+this.state.loadingClass+'-icon" /></div>');
     $('#main').append(this.$loanim);
     // start the animation
   },
@@ -28,12 +29,12 @@ var loadingMixin = {
       return;
     }
     
-    this.$loanim.remove();
+    //this.$loanim.remove();
   },
 
   componentWillUnmount: function() {
     if (this.$loanim) {
-      this.$loanim.remove();
+      //this.$loanim.remove();
     }
   }
 };
