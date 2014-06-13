@@ -70,7 +70,7 @@ gulp.task('watch', function() {
   // create live reload server
   connect.server({
     'root': dest.root,
-    'port': 8000,
+    'port': process.env.PORT || 8000,
     'livereload': true,
     middleware: function(connect) {
       return [
