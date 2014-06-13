@@ -9,7 +9,7 @@
   "version": "0.1.0",
   "main": "./client/index.js",
   "scripts": {
-    "dist": "NODE_ENV=production gulp build",
+    "dist": "NODE_ENV=production gulp dist",
     "deploy": "ssh gingerhq.com 'sudo salt-call state.sls projects.threads'"
   },
   "browserify": {
