@@ -42,7 +42,7 @@ var AppView = React.createClass({
     if (contentNodes.length) {
       // scroll document to top when doing a page transition
       // TODO: Apply this to the new content page only
-      contentNodes[0].scrollTop = 0;
+      window.scrollTo(0,0);
     }
   },
 
