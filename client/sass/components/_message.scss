@@ -25,6 +25,11 @@
   border-top: 1px solid rgba(12, 13, 13, 0.1);
   color: $gray;
 
+  .anchor {
+    position: absolute;
+    top: -44px;
+  }
+
   &.message-unread {
     border-left: 5px solid $orange;
   }

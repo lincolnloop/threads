@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
+var $ = require('jquery');
 var log = require('loglevel');
 var React = require('react');
 var eventsMixin = require('../mixins/eventsMixin');
@@ -22,6 +23,17 @@ var DiscussionDetailView = React.createClass({
   // --------------------
   // Custom methods
   // --------------------
+
+  navigateToHash: function() {
+    var name = window.location.hash.replace('#', '');
+    var message = name ? $('a[name='+name+']') : null;
+    // no hash, do nothing
+    if (!name || !message.length) {
+      return;
+    }
+    // else, scroll to message
+    window.scrollTo(0, message.offset().top);
+  },
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
@@ -98,6 +110,11 @@ var DiscussionDetailView = React.createClass({
     window.onhashchange = function() {
       log.info('hashchange', window.location.hash);
     }.bind(this);
+    this.navigateToHash();
+  },
+
+  componentDidUpdate: function() {
+    this.navigateToHash();
   },
 
   componentWillUnmount: function() {
