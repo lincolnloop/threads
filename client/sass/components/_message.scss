@@ -30,6 +30,7 @@
   }
 
   .message-header {
+    position: relative;
     padding: 22px;
 
     .avatar {
@@ -58,6 +59,9 @@
     // NOTE: the collapse button with display:block
     // causes horizontal scrolling
     .collapse-button {
+      position: absolute;
+      right: 22px;
+      top: 22px;
       display: block;
       width: 33px;
       height: 33px;
@@ -69,6 +73,7 @@
       float: right;
       color: transparent;
       font-size: 0/0;
+      overflow: hidden;
       text-shadow: none;
       @include transition-duration(0.2s);
       @include transition-property (transform);
@@ -118,6 +123,7 @@
         margin-right: 10px;
         color: transparent;
         font-size: 0/0;
+        overflow: hidden;
         text-shadow: none;
         @include transition-duration(0.2s);
         @include transition-property (transform);
