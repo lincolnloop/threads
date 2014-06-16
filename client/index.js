@@ -1,4 +1,5 @@
 'use strict';
+
 var _ = require('underscore');
 var $ = require('jquery');
 var Backbone = require('backbone');
@@ -7,6 +8,7 @@ var FastClick = require('fastclick');
 var log = require('loglevel');
 var AppRouter = require('./app/AppRouter');
 var config = require('./app/utils/config');
+var urls = require('./app/urls');
 //var FPSCounter = require('./vendor/FPSCounter');
 
 var SignInView = require('./app/auth/SignIn.jsx');
@@ -46,6 +48,11 @@ $(document).on('click', 'a[href]', function (event) {
     Backbone.history.navigate(url, {'trigger': true});
     event.preventDefault();
   }
+});
+
+$(document).on('click', '.user-mention', function(event) {
+  var userId = event.currentTarget.dataset.user;
+  Backbone.history.navigate(urls.get('user:detail', userId), {'trigger': true});
 });
 
 $(document).ajaxStart(function () {
