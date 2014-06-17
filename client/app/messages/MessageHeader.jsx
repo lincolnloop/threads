@@ -18,19 +18,22 @@ var MessageHeader = React.createClass({
     if (!user) {
       user = localStorage.getItem('anonUser');
     }
+    // convert to Date applies local time zone
+    var messageTime = new Date(this.props.date);
+
     return (
       <div className="message-header">
         <div className="avatar">
           <img src={gravatar.get(user.email)} />
         </div>
         <div className="cite"></div>
-        {this.props.handleCollapse ? 
+        {this.props.handleCollapse ?
           <a className="collapse-button" onClick={this.props.handleCollapse}>Collapse</a>
         : null}
         <div className="username">{user.name}</div>
         <div className="date">
           <a href={permalink} className="permalink">
-            <time className="timeago" dateTime={this.props.date}>{moment(this.props.date).fromNow()}</time>
+            <time className="timeago" dateTime={messageTime}>{moment(messageTime).fromNow()}</time>
           </a>
         </div>
       </div>
