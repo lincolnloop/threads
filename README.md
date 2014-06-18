@@ -65,6 +65,4 @@ If you want to edit them without having to build on every change, just run:
 Production Build
 ----------------
 
-To deploy on production:
-
-    $ npm run deploy
+The Jenkins server is polling for changes to the ``master`` branch every 5 minutes. When a change is detected, a build is run. Upon successful build, a deploy to production will occur.
