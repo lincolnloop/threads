@@ -56,6 +56,8 @@ var SignInView = React.createClass({
       localStorage.setItem('apiKey', apiKey);
       // update the store headers
       store._headers.Authorization = 'Token ' + apiKey;
+      // remove the csrf token if using the api
+      delete store._headers['X-CSRFToken'];
       // fetch the initial data
       this.fetch();
     }
