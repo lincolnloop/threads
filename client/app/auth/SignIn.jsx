@@ -6,6 +6,7 @@ var log = require('loglevel');
 var config = require('../utils/config');
 var loadingMixin = require('../mixins/loadingMixin');
 var store = require('../store');
+var urls = require('../urls');
 
 var SignInView = React.createClass({
   mixins: [loadingMixin],
@@ -20,11 +21,17 @@ var SignInView = React.createClass({
   },
 
   fetchFailed: function(error) {
-    this.setState({
-      'loading': false,
-      'displayForm': true,
-      'error': error
-    })
+    var pathURL = window.location.pathname;
+    var signInURL = urls.get('signIn')
+    if (pathURL !== signInURL) {
+      window.location.href = signInURL;
+    } else {
+      this.setState({
+        'loading': false,
+        'displayForm': true,
+        'error': error
+      });
+    }
   },
 
   handleSubmit: function (evt) {

@@ -45,12 +45,13 @@ urls.load({
   'message:create': '/msg/<discussion_id>/',
   'team:detail': '/<slug>/',
   'team:edit': '/<slug>/edit/',
-  'signIn': '/sign-in/',
+  'signIn': '/accounts/login/',
   'signOut': '/sign-out/',
   'welcome': '/welcome/',
   'notifications': '/notifications/',
   'redirect': '/goto/?url=<url>',
-  'loginRedirect': '/accounts/login/?next=<next>&logged_out=1'
+  'loginRedirect': '/accounts/login/?next=<next>&logged_out=1',
+  'dashboard': '/'
   //'team:detail:limit': '<slug>/<limit>/',
 });
 
