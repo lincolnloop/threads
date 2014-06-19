@@ -44,7 +44,8 @@
     "grunt": "~0.4.5",
     "connect-pushstate": "~0.1.0",
     "gulp-rename": "~1.2.0",
-    "grunt-connect-pushstate": "^0.2.0"
+    "grunt-connect-pushstate": "^0.2.0",
+    "cookies": "^0.4.1"
   },
   "dependencies": {
     "MD5": "~1.2.0",
