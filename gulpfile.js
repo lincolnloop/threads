@@ -7,6 +7,7 @@ var clean = require('gulp-clean');
 // static server
 var connect = require('gulp-connect');
 var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
+var cookies = require('cookies');
 // javascript
 var browserify = require('browserify');
 var jshint = require('gulp-jshint');
@@ -76,6 +77,14 @@ gulp.task('watch', function() {
     'livereload': true,
     middleware: function(connect) {
       return [
+        // setup the config settings in a cookie
+        cookies.express(),
+        function (req, res, next) {
+          res.cookies.set('config', JSON.stringify(config), { httpOnly: false });
+          next();
+        },
+        // enable pushState support
+        // every url will load the root (index.html)
         pushState(),
         connect.static(dest.root)
       ];
