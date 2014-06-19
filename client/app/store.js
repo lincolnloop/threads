@@ -5,7 +5,6 @@ var fetch = require('./utils/fetch');
 var Amygdala = require('amygdala');
 var config = require('./utils/config');
 var log = require('loglevel');
-var getCookie = require('./utils/getCookie');
 
 var store = new Amygdala({
     'apiUrl': config.apiUrl,
@@ -51,8 +50,7 @@ var store = new Amygdala({
     }
   }, {
     'headers': {
-      'Authorization': 'Token ' + localStorage.apiKey,
-      'X-CSRFToken': getCookie('csrftoken')
+      'Authorization': 'Token ' + localStorage.apiKey
     }
   }
 );
