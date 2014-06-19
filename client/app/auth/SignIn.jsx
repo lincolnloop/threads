@@ -4,8 +4,10 @@ var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var config = require('../utils/config');
+var getCookie = require('../utils/getCookie');
 var loadingMixin = require('../mixins/loadingMixin');
 var store = require('../store');
+var urls = require('../urls');
 
 var SignInView = React.createClass({
   mixins: [loadingMixin],
@@ -20,11 +22,20 @@ var SignInView = React.createClass({
   },
 
   fetchFailed: function(error) {
-    this.setState({
-      'loading': false,
-      'displayForm': true,
-      'error': error
-    })
+    // update the csrf token
+    store._headers['X-CSRFToken'] = getCookie('csrftoken');
+    // redirect to sign in page
+    var pathURL = window.location.pathname;
+    var signInURL = urls.get('signIn');
+    if (pathURL !== signInURL) {
+      window.location.href = signInURL;
+    } else {
+      this.setState({
+        'loading': false,
+        'displayForm': true,
+        'error': error
+      });
+    }
   },
 
   handleSubmit: function (evt) {

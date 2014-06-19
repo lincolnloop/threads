@@ -7,6 +7,7 @@ var FastClick = require('fastclick');
 var log = require('loglevel');
 var AppRouter = require('./app/AppRouter');
 var config = require('./app/utils/config');
+var urls = require('./app/urls');
 //var FPSCounter = require('./vendor/FPSCounter');
 
 var SignInView = require('./app/auth/SignIn.jsx');
@@ -64,5 +65,12 @@ React.renderComponent(SignInView({
     Backbone.history.start({
       'pushState': true
     });
+    // check if the current url is the signIn url
+    // if it is, navigate to "homepage"
+    var pathURL = window.location.pathname;
+    var signInURL = urls.get('signIn');
+    if (pathURL === signInURL) {
+      Backbone.history.navigate(urls.get('dashboard'), {'trigger': true});
+    }
   }
 }), document.getElementById('main'));
