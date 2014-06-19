@@ -19,9 +19,9 @@
 
   @include media($tablet) {
     .btn-submit {
-      position: absolute;
-      top: 5px;
-      right: 0;
+      // position: absolute;
+      // top: 0px;
+      // right: 0;
       width: auto;
     }
   }

@@ -50,8 +50,8 @@
 
       @include media($tab-mode) {
         background-color: $tab-active-background;
-        border: $tab-border;
-        border-bottom: 1px solid $tab-active-background;
+        border: 0;
+        // border-bottom: 1px solid $tab-active-background;
         margin-bottom: -1px;
       }
 
@@ -83,7 +83,6 @@
     -webkit-box-shadow: inset 2px -2px 2px $medium-gray;
     box-shadow: inset 2px -2px 2px $medium-gray; 
 
-
     &:hover {
       opacity: 0.8;
     }
@@ -91,6 +90,11 @@
     &:focus { 
       outline: none; 
     }
+
+    @include media($tab-mode) {
+      width: 30%;
+    }
+
   }
 
   li.tab-header-and-content section {
@@ -106,13 +110,10 @@
 
 
     @include media($tab-mode) {
-      background: $tab-content-background;
-      border-bottom-left-radius: $base-border-radius;
-      border-bottom-right-radius: $base-border-radius;
-      border: $tab-border;
+      border: 0;
       float: left;
       left: 0;
-      padding: $base-line-height/2 $gutter/2;
+      // padding: $base-line-height/2 $gutter/2;
     }
   }
 }
