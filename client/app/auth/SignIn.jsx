@@ -80,7 +80,7 @@ var SignInView = React.createClass({
       {this.state.displayForm ? <form onSubmit={this.handleSubmit}>
           <label htmlFor="api-key">API Key (<a href={apiLink} target="_blank">obtain key</a>):</label>
           <input type="text" ref="apiKey" id="api-key" className={this.state.error ? "error" : ""} placeholder="Paste your API key here.." />
-          {this.state.error ? <div className="error">{this.state.error}</div> : ""}
+          {this.state.error ? <div className="error">{this.state.error.message}</div> : ""}
           <input type="submit" />
         </form> : function(){}}
       </div>
