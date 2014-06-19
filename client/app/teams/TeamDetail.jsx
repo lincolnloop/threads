@@ -78,7 +78,7 @@ var TeamDetail = React.createClass({
           <EmptyDiscussionListView teamSlug={this.props.team.slug} /> : <div>
             <DiscussionListView discussions={discussions} ref="discussions" />
             {this.state.page ?
-              <a onClick={this.handleLoadMore} className="load-more">Load more...</a>
+              <a onClick={this.handleLoadMore} className="load-more btn">Load more...</a>
             : null}
           </div>
         }
