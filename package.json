@@ -10,7 +10,7 @@
   "main": "./client/index.js",
   "scripts": {
     "dist": "NODE_ENV=production gulp dist",
-    "deploy": "ssh gingerhq.com 'sudo salt-call state.sls projects.threads'"
+    "deploy": "ssh dev.gingerhq.com 'sudo salt-call state.sls projects.threads'"
   },
   "browserify": {
     "transform": [
