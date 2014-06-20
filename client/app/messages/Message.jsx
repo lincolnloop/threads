@@ -33,8 +33,7 @@ var MessageView = React.createClass({
           this.forceUpdate();
         }.bind(this));
     } else {
-      vote = store.find('votes', vote);
-      if (vote.value === value) {
+      if (vote.value === '+1') {
         store.remove('votes', vote).then(function() {
           return store.get('messages', null, {'url': this.props.message.url});
         }.bind(this)).done(function() {
