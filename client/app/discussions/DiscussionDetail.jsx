@@ -36,6 +36,8 @@ var DiscussionDetailView = React.createClass({
     }
     // else, scroll to message
     window.scrollTo(0, message.offset().top);
+
+    this.emitter.emit('message:focus', {'id': name.replace('m', '')});
   },
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API

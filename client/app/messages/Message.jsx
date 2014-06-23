@@ -6,6 +6,7 @@ var classSet = require('react/lib/cx');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
 var React = require('react');
+var eventsMixin = require('../mixins/eventsMixin');
 var store = require('../store');
 var urls = require('../urls');
 var Attachment = require('./Attachment.jsx');
@@ -14,6 +15,15 @@ var MessageContent = require('./MessageContent.jsx');
 var VotesListView = require('./VotesList.jsx');
 
 var MessageView = React.createClass({
+  mixins: [eventsMixin],
+
+  handleFocusChange: function(info) {
+    if (this.props.message.id === parseInt(info.id)) {
+      this.setState({'focused': true});
+    } else {
+      this.setState({'focused': false});
+    }
+  },
 
   handleVote: function(value) {
     var vote =  store.find('votes', {
@@ -72,8 +82,13 @@ var MessageView = React.createClass({
 
   getInitialState: function() {
     return {
-      'expandAttachments': false
+      'expandAttachments': false,
+      'focused': false
     }
+  },
+
+  componentWillMount: function() {
+    this.emitter.on('message:focus', this.handleFocusChange);
   },
 
   render: function() {
@@ -85,7 +100,8 @@ var MessageView = React.createClass({
     // main message classes
     var classes = classSet({
       'message-container': true,
-      'message-unread': !message.read
+      'message-unread': !message.read,
+      'message-focused': this.state.focused
     });
     var urlKeys = _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs);
     // TODO: This needs to query the store, not the message
@@ -140,6 +156,10 @@ var MessageView = React.createClass({
         </div>
       </div>
     );
+  },
+
+  componentWillUnmount: function() {
+    this.emitter.off('message:focus', this.handleFocusChange);
   }
 });
 
