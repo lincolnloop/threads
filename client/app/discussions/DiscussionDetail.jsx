@@ -26,6 +26,9 @@ var DiscussionDetailView = React.createClass({
 
   navigateToHash: function() {
     var name = window.location.hash.replace('#', '');
+    if (name.charAt(0) !== 'm') {
+      name = 'm' + name;
+    }
     var message = name ? $('a[name='+name+']') : null;
     // no hash, do nothing
     if (!name || !message.length) {
