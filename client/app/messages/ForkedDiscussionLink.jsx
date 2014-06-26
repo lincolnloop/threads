@@ -3,6 +3,7 @@
 var log = require('loglevel');
 var React = require('react');
 var store = require('../store');
+var urls = require('../urls');
 
 var ForkedDiscussionLink = React.createClass({
 
@@ -18,17 +19,28 @@ var ForkedDiscussionLink = React.createClass({
   },
 
   render: function() {
+    var discussion = this.state.discussion;
+    var team = discussion ? store.find('teams', discussion.team) : null;
+    var url = discussion ? urls.get('discussion:detail', team.slug, discussion.id, discussion.slug) : null;
     return (
       <div className="forked-link">
-        {this.state.discussion ? this.state.discussion.title : null}
+        {this.state.discussion ? <a href={url}>
+          {this.state.discussion.title}
+        </a> : null}
       </div>
     );
   },
 
   componentDidMount: function() {
-    store.get('messages', {}, {'url': this.props.parent}).done(function() {
+    store.get('messages', {}, {'url': this.props.parent}).then(function() {
+      var message = store.find('messages', this.props.parent);
+      return store.get('discussions', {}, {'url': message.discussion});
+    }.bind(this)).done(function() {
+      var message = store.find('messages', this.props.parent);
+      var discussion = store.find('discussions', message.discussion);
       this.setState({
-        'message': store.find('messages', this.props.parent)
+        'message': message,
+        'discussion': discussion
       });
     }.bind(this));
   }

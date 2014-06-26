@@ -39,6 +39,7 @@ var DiscussionDetailView = React.createClass({
 
     this.emitter.emit('message:focus', {'id': name.replace('m', '')});
   },
+  
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
