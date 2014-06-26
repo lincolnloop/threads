@@ -24,6 +24,9 @@ var TeamDetail = React.createClass({
     }
     var limit = 20;
     var page = this.state.page + 1;
+    // loading animation
+    this.emitter.emit('ajax', {'loading': true});
+    // fetch next page
     store.get('discussions', {
       'team__slug': this.props.team.slug,
       'page': page
@@ -35,6 +38,8 @@ var TeamDetail = React.createClass({
       } else {
         this.setState({'page': null});
       }
+      // stop loading animation
+      this.emitter.emit('ajax', {'loading': false});
     }.bind(this), function(error) {
       // there was an error with the ajax call
       // likely ran out of pages
