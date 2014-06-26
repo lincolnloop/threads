@@ -36,7 +36,7 @@ var sources = {
   ],
   'sass': 'client/sass/app.scss',
   'html': 'templates/index.hbs',
-  'static': 'client/static/**/*',
+  'static': 'client/assets/**/*',
   'fonts': 'node_modules/font-awesome/fonts/**/*'
 };
 
@@ -66,8 +66,8 @@ gulp.task('watch', function() {
     'root': 'build/',
     'js': 'build/threads.js',
     'css': 'build/threads.css',
-    'static': 'build/static/',
-    'fonts': 'build/static/fonts'
+    'static': 'build/assets/',
+    'fonts': 'build/assets/fonts'
   };
 
   // create live reload server
@@ -194,8 +194,8 @@ gulp.task('dist', ['clean'], function() {
   // destination folder
   var dest = {
     'root': 'dist/',
-    'static': 'dist/static/',
-    'fonts': 'dist/static/fonts'
+    'static': 'dist/assets/',
+    'fonts': 'dist/assets/fonts'
   };
   // versioned filenames
   var filenames = {

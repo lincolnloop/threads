@@ -19,7 +19,7 @@ var Attachment = React.createClass({
       if (_.indexOf(['gif', 'png', 'doc', 'jpg'], fileType) === -1) {
         fileType = 'file';
       }
-      thumbnail = '/static/img/file-icons/' + fileType + '.gif';
+      thumbnail = '/assets/img/file-icons/' + fileType + '.gif';
     }
     thumbnail = 'https://gingerhq.com' + thumbnail;
     return (
