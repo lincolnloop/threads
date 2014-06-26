@@ -22,9 +22,15 @@ var ForkedMessageView = React.createClass({
   render: function() {
     var message = store.find('messages', this.props.message.url);
     var user = store.find('users', message.user);
+    var discussion = this.state.discussion;
+    var team = discussion ? store.find('teams', discussion.team) : null;
     return (
       <div className="forked-label">
-        {this.state.discussion ? <h2>{this.state.discussion.title}</h2> : <h2>&nbsp;</h2>}
+        {discussion ? <h2>
+          <a href={urls.get('discussion:detail', team.slug, discussion.id, discussion.slug)}>
+            {discussion.title}
+          </a>
+        </h2> : <h2>&nbsp;</h2>}
         <div className="message-container message-forked">
           <MessageHeader date={message.date_created} user={message.user} handleCollapse={this.props.handleCollapse} />
           <MessageContent body={message.body} />
