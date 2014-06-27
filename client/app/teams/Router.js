@@ -4,6 +4,7 @@ var Backbone = require('backbone');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
 var HeaderCreateDiscussion = require('./HeaderCreateDiscussion.jsx');
+var HeaderReloadTeams = require('./HeaderReloadTeams.jsx');
 var OrganizationList = require('./OrganizationList.jsx');
 var TeamDetailView = require('./TeamDetail.jsx');
 var teamUtils = require('./utils');
@@ -26,7 +27,8 @@ var TeamRouter = Backbone.Router.extend({
     return dispatcher.render({
         'navLevel': 0,
         'title': 'Threads',
-        'back': null
+        'back': null,
+        'headerContextView': HeaderReloadTeams()
       }, OrganizationList({'organizations': organizations})
     );
   },
