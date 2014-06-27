@@ -77,5 +77,7 @@ store.fetch = function(successCallback, errorCallback) {
   }, errorCallback).done();
 };
 
+window.store = store;
+
 // TODO: remove window.store once it is stable
 module.exports = window.store = store;
