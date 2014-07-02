@@ -52,7 +52,8 @@ var store = new Amygdala({
   }, {
     'headers': {
       'X-CSRFToken': getCookie('csrftoken')
-    }
+    },
+    'localStorage': true
   }
 );
 
@@ -62,6 +63,12 @@ store.fetch = function(successCallback, errorCallback) {
   // We handle this outside the store module itself and
   // on the store instance, because it's very app-specific.
   // Get common data using Q.all to manage multiple promises.
+  if (store.findAll('teams').length && store.findAll('users').length) {
+    log.info('fetch:cache:success');
+    successCallback();
+    successCallback = function(){};
+  }
+
   Q.all([
     fetch.userUri(), this.get('teams'), this.get('users')
   ]).then(function(results) {
@@ -76,8 +83,6 @@ store.fetch = function(successCallback, errorCallback) {
     successCallback();
   }, errorCallback).done();
 };
-
-window.store = store;
 
 // TODO: remove window.store once it is stable
 module.exports = window.store = store;
