@@ -45,6 +45,7 @@ var store = new Amygdala({
     },
     'notifications': {
       'url': '/api/v2/notifications/',
+      'orderBy': '-date_created',
       parse: function(data) {
         return data.results ? data.results : data;
       }
