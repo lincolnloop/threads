@@ -11,7 +11,8 @@ var store = new Amygdala({
     'apiUrl': config.apiUrl,
     'idAttribute': 'url',
     'teams': {
-      'url': '/api/v2/team/'
+      'url': '/api/v2/team/',
+      'orderBy': 'name'
       // TODO: Add Team members and invitations as oneToMany relations
     },
     'users': {
