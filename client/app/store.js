@@ -8,54 +8,57 @@ var log = require('loglevel');
 var getCookie = require('./utils/getCookie');
 
 var store = new Amygdala({
-    'apiUrl': config.apiUrl,
-    'idAttribute': 'url',
-    'teams': {
-      'url': '/api/v2/team/',
-      'orderBy': 'name'
-      // TODO: Add Team members and invitations as oneToMany relations
-    },
-    'users': {
-      'url': '/api/v2/user/'
-    },
-    'discussions': {
-      'url': '/api/v2/discussion/',
-      'oneToMany': {
-        'children': 'messages'
+    'config': {
+      'apiUrl': config.apiUrl,
+      'idAttribute': 'url',
+      'headers': {
+        'X-CSRFToken': getCookie('csrftoken')
       },
-      parse: function(data) {
-        return data.results ? data.results : data;
+      'localStorage': true
+    },
+    'schema': {
+      'teams': {
+        'url': '/api/v2/team/',
+        'orderBy': 'name'
+        // TODO: Add Team members and invitations as oneToMany relations
       },
-      'foreignKey': {
-        'message': 'messages',
-        'team': 'teams'
-      }
-    },
-    'messages': {
-      'url': '/api/v2/message/',
-      'oneToMany': {
-        'votes': 'votes'
+      'users': {
+        'url': '/api/v2/user/'
       },
-      'foreignKey': {
-        'user': 'users',
-        'discussion': 'discussions'
-      }
-    },
-    'votes': {
-      'url': '/api/v2/vote/'
-    },
-    'notifications': {
-      'url': '/api/v2/notifications/',
-      'orderBy': '-date_created',
-      parse: function(data) {
-        return data.results ? data.results : data;
+      'discussions': {
+        'url': '/api/v2/discussion/',
+        'oneToMany': {
+          'children': 'messages'
+        },
+        parse: function(data) {
+          return data.results ? data.results : data;
+        },
+        'foreignKey': {
+          'message': 'messages',
+          'team': 'teams'
+        }
+      },
+      'messages': {
+        'url': '/api/v2/message/',
+        'oneToMany': {
+          'votes': 'votes'
+        },
+        'foreignKey': {
+          'user': 'users',
+          'discussion': 'discussions'
+        }
+      },
+      'votes': {
+        'url': '/api/v2/vote/'
+      },
+      'notifications': {
+        'url': '/api/v2/notifications/',
+        'orderBy': '-date_created',
+        parse: function(data) {
+          return data.results ? data.results : data;
+        }
       }
     }
-  }, {
-    'headers': {
-      'X-CSRFToken': getCookie('csrftoken')
-    },
-    'localStorage': true
   }
 );
 
