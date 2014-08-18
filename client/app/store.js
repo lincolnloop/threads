@@ -23,7 +23,7 @@ var store = new Amygdala({
         // TODO: Add Team members and invitations as oneToMany relations
       },
       'users': {
-      'url': '/api/v2/user/'
+        'url': '/api/v2/user/'
       },
       'discussions': {
         'url': '/api/v2/discussion/',

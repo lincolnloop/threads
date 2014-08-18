@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "MD5": "~1.2.0",
-    "amygdala": "~0.2.1",
+    "amygdala": "~0.3.0",
     "backbone": "~1.1.2",
     "clientconfig": "~0.0.4",
     "crossing": "~0.1.4",
