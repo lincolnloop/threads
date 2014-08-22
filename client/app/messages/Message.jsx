@@ -61,6 +61,20 @@ var MessageView = React.createClass({
     }
   },
 
+  handleStarring: function(evt) {
+    var marks = store.find('marks', this.props.message.marks);
+    var starred = !this.state.starred;
+
+    // reverse the starred state
+    marks.tag = starred;
+    this.setState({'starred': starred});
+
+    // update marks
+    store.update('marks', marks);
+
+    evt.preventDefault();
+  },
+
   toggleAttachments: function() {
     this.setState({
       'expandAttachments': !this.state.expandAttachments
@@ -83,11 +97,16 @@ var MessageView = React.createClass({
   getInitialState: function() {
     return {
       'expandAttachments': false,
-      'focused': false
+      'focused': false,
+      'starred': false
     }
   },
 
   componentWillMount: function() {
+    // starring state
+    var marks = store.find('marks', this.props.message.marks);
+    this.setState({'starred': marks.tag === 'starred'});
+    // message focus
     this.emitter.on('message:focus', this.handleFocusChange);
   },
 
@@ -113,6 +132,10 @@ var MessageView = React.createClass({
       'up-vote': true,
       'up-voted': hasUpVoted
     });
+    var starClasses = classSet({
+      'star': true,
+      'active': this.state.starred
+    });
     var messageAttachmentClasses = classSet({
       'message-attachments': true,
       'expanded': !!this.state.expandAttachments,
@@ -131,7 +154,7 @@ var MessageView = React.createClass({
         <div className="message-footer">
           <div className={messageAttachmentClasses}>
             {attachments.length ? 
-              <a className="attachments-link" onClick={this.toggleAttachments}>
+              <a className="attachments-link" onClick={this.toggleAttachments} role="button">
                 <span className="attachments-count">{attachments.length}</span> Attachments: 
               </a> 
             : null}
@@ -147,10 +170,10 @@ var MessageView = React.createClass({
           </div>
           {votes.length ? VotesListView({'votes': votes}) : null}
           <div className="message-actions">
-            <a className={voteClasses} onClick={this.handleVote}>{hasUpVoted ? 'liked' : 'like'}</a>
+            <a className={voteClasses} onClick={this.handleVote} role="button">{hasUpVoted ? 'liked' : 'like'}</a>
             <a className="reply" href={urls.get('message:reply', urlKeys)}>reply</a>
-            <a className="fork" href="#">fork</a>
-            <a className="star" href="#">star</a>
+            <a className="fork" role="button">fork</a>
+            <a className={starClasses} onClick={this.handleStarring} role="button">star</a>
             {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>edit</a> : null}
           </div>
         </div>

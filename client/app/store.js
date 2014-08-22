@@ -45,8 +45,12 @@ var store = new Amygdala({
         },
         'foreignKey': {
           'user': 'users',
-          'discussion': 'discussions'
+          'discussion': 'discussions',
+          'marks': 'marks'
         }
+      },
+      'marks': {
+        'url': '/api/v2/message/mark/' // marks model actually has no list/create endpoint
       },
       'votes': {
         'url': '/api/v2/vote/'
