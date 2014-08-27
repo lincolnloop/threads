@@ -26,6 +26,9 @@ var DiscussionDetailView = React.createClass({
 
   navigateToHash: function() {
     var name = window.location.hash.replace('#', '');
+    if (name.charAt(0) !== 'm') {
+      name = 'm' + name;
+    }
     var message = name ? $('a[name='+name+']') : null;
     // no hash, do nothing
     if (!name || !message.length) {
@@ -33,7 +36,10 @@ var DiscussionDetailView = React.createClass({
     }
     // else, scroll to message
     window.scrollTo(0, message.offset().top);
+
+    this.emitter.emit('message:focus', {'id': name.replace('m', '')});
   },
+  
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.

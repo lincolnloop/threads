@@ -85,6 +85,7 @@ input[type="submit"],
 .btn {
   @extend %button;
   @include appearance(none);
+  display: block;
   background-color: $blue;
   border: none;
   color: $white;
@@ -92,22 +93,29 @@ input[type="submit"],
   cursor: pointer;
   user-select: none;
   vertical-align: middle;
+  text-align: center;
   white-space: nowrap;
+  padding-right: em(22px);
+  padding-left: em(22px);
+  -webkit-backface-visibility: hidden;
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+  -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+  -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
+  -webkit-user-select: none;     
+
   @include transition (all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
   opacity: 1;
 
+
   &:hover {
     opacity: 0.8;
+    color: $white;
   }
 
   &:active {
     background-color: $dark-blue;  
+    color: $white;
   }
 }
 
-button, .btn {
-  -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
-  -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
-  -webkit-tap-highlight-color: rgba(0,0,0,0); /* make transparent link selection, adjust last value opacity 0 to 1.0 */
-  -webkit-user-select: none;          
-}
+

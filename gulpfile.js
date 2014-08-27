@@ -7,6 +7,7 @@ var clean = require('gulp-clean');
 // static server
 var connect = require('gulp-connect');
 var pushState = require('grunt-connect-pushstate/lib/utils').pushState;
+var cookies = require('cookies');
 // javascript
 var browserify = require('browserify');
 var jshint = require('gulp-jshint');
@@ -35,7 +36,7 @@ var sources = {
   ],
   'sass': 'client/sass/app.scss',
   'html': 'templates/index.hbs',
-  'static': 'client/static/**/*',
+  'static': 'client/assets/**/*',
   'fonts': 'node_modules/font-awesome/fonts/**/*'
 };
 
@@ -65,8 +66,8 @@ gulp.task('watch', function() {
     'root': 'build/',
     'js': 'build/threads.js',
     'css': 'build/threads.css',
-    'static': 'build/static/',
-    'fonts': 'build/static/fonts'
+    'static': 'build/assets/',
+    'fonts': 'build/assets/fonts'
   };
 
   // create live reload server
@@ -76,6 +77,14 @@ gulp.task('watch', function() {
     'livereload': true,
     middleware: function(connect) {
       return [
+        // setup the config settings in a cookie
+        cookies.express(),
+        function (req, res, next) {
+          res.cookies.set('config', JSON.stringify(config), { httpOnly: false });
+          next();
+        },
+        // enable pushState support
+        // every url will load the root (index.html)
         pushState(),
         connect.static(dest.root)
       ];
@@ -185,8 +194,8 @@ gulp.task('dist', ['clean'], function() {
   // destination folder
   var dest = {
     'root': 'dist/',
-    'static': 'dist/static/',
-    'fonts': 'dist/static/fonts'
+    'static': 'dist/assets/',
+    'fonts': 'dist/assets/fonts'
   };
   // versioned filenames
   var filenames = {

@@ -34,13 +34,13 @@ making any desired changes.
     $ $EDITOR config/local.js
 
 To build the app, start a development server on port 8000, and rebuild
-automatically on changes, simply run gulp's default task:
+automatically on changes, run gulp's default task:
 
-    $ gulp
+    $ NODE_ENV=local.js gulp
     $ # for port override:
     $ PORT=8000 gulp
 
-The frontend of threads will automatically look for a backend (API) connection
+The frontend of threads will look for a backend (API) connection
 on the host specified in the `apiUrl` config parameter in your
 `config/local.js`.
 
@@ -65,6 +65,4 @@ If you want to edit them without having to build on every change, just run:
 Production Build
 ----------------
 
-To deploy on production:
-
-    $ npm run deploy
+The Jenkins server is polling for changes to the ``master`` branch every 5 minutes. When a change is detected, a build is run. Upon successful build, a deploy to production will occur.

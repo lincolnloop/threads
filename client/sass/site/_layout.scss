@@ -1,13 +1,12 @@
 body {
-    &.show-nav {
-        #nav-teams {
-            display: block;
-            width: 70%;
-        }
-        #content-main {
-            float: none;
-            margin-left: 75%;
-        }
-
+  &.show-nav {
+    #nav-teams {
+      display: block;
+      width: 70%;
     }
+    #content-main {
+      float: none;
+      margin-left: 75%;
+    }
+  }
 }

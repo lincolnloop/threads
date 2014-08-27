@@ -16,6 +16,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.25em;
   margin: 0;
   text-rendering: optimizeLegibility; // Fix the character spacing for headings
+  -webkit-backface-visibility: hidden;
 }
 
 h1 {
@@ -45,12 +46,14 @@ h6 {
 p {
   margin: 0 0 ($base-line-height * .5);
   font-size: 15px;
+  -webkit-backface-visibility: hidden;
 }
 
 a {
   color: $base-link-color;
   text-decoration: none;
   font-weight: 400;
+  -webkit-backface-visibility: hidden;
   @include transition(color 0.1s linear);
 
   &:hover {

@@ -67,4 +67,6 @@ var AppView = React.createClass({
   }
 });
 
+window.store = store;
+
 module.exports = AppView;

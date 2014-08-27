@@ -29,6 +29,10 @@
   .query {
     display: inline-block;
     width: 100%;
+
+    @include media($tablet) {
+      width: calc(100% - 140px);
+    }
   }
   .team, .titles {
     display: inline-block;

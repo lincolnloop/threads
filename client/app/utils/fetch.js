@@ -22,12 +22,12 @@ var userUri = function() {
       // Resolve the promise with the 'url' attribute of the JSON response
       deferred.resolve(JSON.parse(request.response).url);
     } else {
-      deferred.reject(Error('There was a server error fetching user data'));
+      deferred.reject(new Error('There was a server error fetching user data'));
     }
   };
 
   request.onerror = function() {
-    deferred.reject(Error('There was an error fetching user data'));
+    deferred.reject(new Error('There was an error fetching user data'));
   };
 
   request.send();

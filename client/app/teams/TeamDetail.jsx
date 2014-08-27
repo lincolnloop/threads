@@ -24,6 +24,9 @@ var TeamDetail = React.createClass({
     }
     var limit = 20;
     var page = this.state.page + 1;
+    // loading animation
+    this.emitter.emit('ajax', {'loading': true});
+    // fetch next page
     store.get('discussions', {
       'team__slug': this.props.team.slug,
       'page': page
@@ -35,6 +38,8 @@ var TeamDetail = React.createClass({
       } else {
         this.setState({'page': null});
       }
+      // stop loading animation
+      this.emitter.emit('ajax', {'loading': false});
     }.bind(this), function(error) {
       // there was an error with the ajax call
       // likely ran out of pages
@@ -71,6 +76,16 @@ var TeamDetail = React.createClass({
       team_slug: team.slug
     });
     var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
+    // Filter out discussion that have no latest_message attribute.
+    // NOTE: For some reason this happens some times
+    discussions = _.filter(discussions, function(discussion) {
+      return !!discussion.latest_message;
+    });
+    // sort by latest activity
+    discussions = _.sortBy(discussions, function(discussion) {
+      console.log(discussion);
+      return discussion.latest_message.date_latest_activity;
+    }).reverse();
     return (
       <div className="team-detail content-view">
         <h2>{team.name}</h2>
@@ -78,7 +93,7 @@ var TeamDetail = React.createClass({
           <EmptyDiscussionListView teamSlug={this.props.team.slug} /> : <div>
             <DiscussionListView discussions={discussions} ref="discussions" />
             {this.state.page ?
-              <a onClick={this.handleLoadMore} className="load-more">Load more...</a>
+              <a onClick={this.handleLoadMore} className="load-more btn">Load more...</a>
             : null}
           </div>
         }

@@ -5,52 +5,59 @@ var fetch = require('./utils/fetch');
 var Amygdala = require('amygdala');
 var config = require('./utils/config');
 var log = require('loglevel');
+var getCookie = require('./utils/getCookie');
 
 var store = new Amygdala({
-    'apiUrl': config.apiUrl,
-    'idAttribute': 'url',
-    'teams': {
-      'url': '/api/v2/team/'
-      // TODO: Add Team members and invitations as oneToMany relations
-    },
-    'users': {
-      'url': '/api/v2/user/'
-    },
-    'discussions': {
-      'url': '/api/v2/discussion/',
-      'oneToMany': {
-        'children': 'messages'
+    'config': {
+      'apiUrl': config.apiUrl,
+      'idAttribute': 'url',
+      'headers': {
+        'X-CSRFToken': getCookie('csrftoken')
       },
-      parse: function(data) {
-        return data.results ? data.results : data;
+      'localStorage': true
+    },
+    'schema': {
+      'teams': {
+        'url': '/api/v2/team/',
+        'orderBy': 'name'
+        // TODO: Add Team members and invitations as oneToMany relations
       },
-      'foreignKey': {
-        'message': 'messages',
-        'team': 'teams'
-      }
-    },
-    'messages': {
-      'url': '/api/v2/message/',
-      'oneToMany': {
-        'votes': 'votes'
+      'users': {
+        'url': '/api/v2/user/'
       },
-      'foreignKey': {
-        'user': 'users',
-        'discussion': 'discussions'
+      'discussions': {
+        'url': '/api/v2/discussion/',
+        'oneToMany': {
+          'children': 'messages'
+        },
+        parse: function(data) {
+          return data.results ? data.results : data;
+        },
+        'foreignKey': {
+          'message': 'messages',
+          'team': 'teams'
+        }
+      },
+      'messages': {
+        'url': '/api/v2/message/',
+        'oneToMany': {
+          'votes': 'votes'
+        },
+        'foreignKey': {
+          'user': 'users',
+          'discussion': 'discussions'
+        }
+      },
+      'votes': {
+        'url': '/api/v2/vote/'
+      },
+      'notifications': {
+        'url': '/api/v2/notifications/',
+        'orderBy': '-date_created',
+        parse: function(data) {
+          return data.results ? data.results : data;
+        }
       }
-    },
-    'votes': {
-      'url': '/api/v2/vote/'
-    },
-    'notifications': {
-      'url': '/api/v2/notifications/',
-      parse: function(data) {
-        return data.results ? data.results : data;
-      }
-    }
-  }, {
-    'headers': {
-      'Authorization': 'Token ' + localStorage.apiKey
     }
   }
 );
@@ -61,6 +68,12 @@ store.fetch = function(successCallback, errorCallback) {
   // We handle this outside the store module itself and
   // on the store instance, because it's very app-specific.
   // Get common data using Q.all to manage multiple promises.
+  if (store.findAll('teams').length && store.findAll('users').length) {
+    log.info('fetch:cache:success');
+    successCallback();
+    successCallback = function(){};
+  }
+
   Q.all([
     fetch.userUri(), this.get('teams'), this.get('users')
   ]).then(function(results) {

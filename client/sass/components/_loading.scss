@@ -64,7 +64,7 @@
   bottom: 50%;
   width: 160px;
   height: 160px;
-  background: url(../static/logo-icon.png) no-repeat;
+  background: url(../assets/logo-icon.png) no-repeat;
 
   @include animation(0.5s blink infinite alternate linear);
 }

@@ -4,27 +4,30 @@ var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var config = require('../utils/config');
+var getCookie = require('../utils/getCookie');
 var loadingMixin = require('../mixins/loadingMixin');
 var store = require('../store');
+var urls = require('../urls');
 
 var SignInView = React.createClass({
   mixins: [loadingMixin],
   loadingClass: 'tanim',
 
-  //
-  // Handles the sign-in/token form
-  // and stores the token in local storage.
-  //
-  fetch: function() {
-    store.fetch(this.props.success, this.fetchFailed);
-  },
-
   fetchFailed: function(error) {
-    this.setState({
-      'loading': false,
-      'displayForm': true,
-      'error': error
-    })
+    // update the csrf token
+    store._headers['X-CSRFToken'] = getCookie('csrftoken');
+    // redirect to sign in page
+    var pathURL = window.location.pathname;
+    var signInURL = urls.get('signIn');
+    if (pathURL !== signInURL) {
+      window.location.href = signInURL;
+    } else {
+      this.setState({
+        'loading': false,
+        'displayForm': true,
+        'error': error
+      });
+    }
   },
 
   handleSubmit: function (evt) {
@@ -41,14 +44,22 @@ var SignInView = React.createClass({
         'error': 'Invalid API Key'
       });
     } else {
-      // store the key in local storage
-      localStorage.setItem('apiKey', apiKey);
-      // update the store headers
-      store._headers.Authorization = 'Token ' + apiKey;
-      // fetch the initial data
-      this.fetch();
+      this.setApiKey(apiKey);
     }
     return false;
+  },
+
+  setApiKey: function(key) {
+    log.debug('setApiKey', key);
+    // store the key in local storage
+    localStorage.setItem('apiKey', key);
+    // update the store headers
+    store._headers.Authorization = 'Token ' + key;
+    // remove the csrf token if using the api
+    delete store._headers['X-CSRFToken'];
+
+    // fetch the initial data
+    store.fetch(this.props.success, this.fetchFailed);
   },
 
   getInitialState: function () {
@@ -64,12 +75,18 @@ var SignInView = React.createClass({
 
   render: function() {
     var apiLink = config.apiUrl + '/accounts/api-access/';
+    var apiKey = localStorage.getItem('apiKey');
     return (
       <div className="sign-in content">
       {this.state.displayForm ? <form onSubmit={this.handleSubmit}>
           <label htmlFor="api-key">API Key (<a href={apiLink} target="_blank">obtain key</a>):</label>
-          <input type="text" ref="apiKey" id="api-key" className={this.state.error ? "error" : ""} placeholder="Paste your API key here.." />
-          {this.state.error ? <div className="error">{this.state.error}</div> : ""}
+          <input type="text"
+                 ref="apiKey"
+                 id="api-key"
+                 className={this.state.error ? "error" : ""}
+                 placeholder="Paste your API key here.."
+                 defaultValue={apiKey} />
+          {this.state.error ? <div className="error">{this.state.error.message}</div> : ""}
           <input type="submit" />
         </form> : function(){}}
       </div>
@@ -77,7 +94,11 @@ var SignInView = React.createClass({
   },
 
   componentDidMount: function() {
-    this.fetch();
+    var key = localStorage.getItem('apiKey');
+    if (key) {
+      return this.setApiKey(key);
+    }
+    store.fetch(this.props.success, this.fetchFailed);
   }
 });
 

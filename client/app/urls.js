@@ -47,12 +47,13 @@ urls.load({
   'team:detail': '/<slug>/',
   'team:edit': '/<slug>/edit/',
   'user:detail': '/user/<user_id>/',
-  'signIn': '/sign-in/',
+  'signIn': '/accounts/login/',
   'signOut': '/sign-out/',
   'welcome': '/welcome/',
   'notifications': '/notifications/',
   'redirect': '/goto/?url=<url>',
-  'loginRedirect': '/accounts/login/?next=<next>&logged_out=1'
+  'loginRedirect': '/accounts/login/?next=<next>&logged_out=1',
+  'dashboard': '/'
   //'team:detail:limit': '<slug>/<limit>/',
 });
 
