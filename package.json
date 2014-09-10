@@ -10,8 +10,8 @@
   "main": "./client/index.js",
   "scripts": {
     "dist": "NODE_ENV=production gulp dist",
-    "prod:deploy": "ssh gingerhq.com 'sudo salt-call state.sls projects.threads'",
-    "deploy": "ssh dev.gingerhq.com 'sudo salt-call state.sls projects.threads'"
+    "prod:deploy": "rsync -avz --chmod=g+w --omit-dir-times --delete ./dist/ usethreads.com:/var/www/usethreads.com",
+    "deploy": "rsync -avz --chmod=g+w --omit-dir-times --delete ./dist/ dev.usethreads.com:/var/www/dev.usethreads.com"
   },
   "browserify": {
     "transform": [
