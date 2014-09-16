@@ -33,14 +33,10 @@ var AppView = React.createClass({
         <nav className="list-main">
           <Header title={this.props.title}
                 contextView={this.props.headerContextView} />
+          {this.props.list}
         </nav>
         <div className="content-main">
-          {this.state.transition !== null ? 
-            <CSSTransitionGroup transitionName={this.state.transition}
-                                component={React.DOM.div}>
-            {this.props.children}
-            </CSSTransitionGroup> : <div>{this.props.children}</div>
-          }
+          {this.props.main}
         </div>
       </section>
     );

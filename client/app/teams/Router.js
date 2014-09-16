@@ -1,6 +1,7 @@
 'use strict';
 
 var Backbone = require('backbone');
+var log = require('loglevel');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
 var HeaderCreateDiscussion = require('./HeaderCreateDiscussion.jsx');
@@ -21,38 +22,49 @@ var TeamRouter = Backbone.Router.extend({
   },
 
   list: function() {
+    log.info('team:list');
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
 
-    return dispatcher.render({
-        'navLevel': 0,
-        'title': 'Threads',
-        'back': null,
-        'headerContextView': HeaderReloadTeams()
-      }, OrganizationList({'organizations': organizations})
-    );
+    var organizationsListView = OrganizationList({
+      'organizations': organizations
+    });
+
+    return dispatcher.small({
+      'navLevel': 0,
+      'title': 'Threads',
+      'back': null,
+      'main': organizationsListView,
+      'headerContextView': HeaderReloadTeams()
+    }).render();
   },
 
   detail: function(teamSlug) {
+    log.info('team:detail');
     // fetch data
     var team = store.find('teams', {'slug': teamSlug});
     if (!team) {
       return;
     }
 
-    return dispatcher.render({
-        'navLevel': 5,
-        'title': team.name,
-        'back': '/',
-        'headerContextView': HeaderCreateDiscussion({
-          'team_slug': teamSlug
-        })
-      }, 
-      TeamDetailView({
-        'team': team,
-        'key': teamSlug
-      })
-    );
+    // views
+    var discussionListView = TeamDetailView({
+      'team': team,
+      'key': teamSlug
+    });
+    var headerContextView = HeaderCreateDiscussion({
+      'team_slug': teamSlug
+    });
+
+    return dispatcher.small({
+      'navLevel': 5,
+      'title': team.name,
+      'back': '/',
+      'main': discussionListView,
+      'headerContextView': headerContextView
+    }).large({
+      'list': discussionListView
+    }).render();
   }
 });
 

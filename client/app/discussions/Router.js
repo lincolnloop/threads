@@ -7,6 +7,7 @@ var urls = require('../urls');
 var dispatcher = require('../dispatcher');
 var DiscussionDetailView = require('./DiscussionDetail.jsx');
 var DiscussionCreateView = require('./DiscussionCreate.jsx');
+var TeamDetailView = require('../teams/TeamDetail.jsx');
 
 var DiscussionRouter = Backbone.Router.extend({
 
@@ -20,16 +21,20 @@ var DiscussionRouter = Backbone.Router.extend({
     log.info('DiscussionRouter:detail');
     var team = store.find('teams', {'slug': teamSlug});
     var back = urls.get('team:detail', {'slug': teamSlug});
-    return dispatcher.render({
-        'navLevel': 10,
-        'title': 'Create discussion',
-        'back': back
-      },
-      DiscussionCreateView({
-        'teamUrl': team.url,
-        'key': 'create-' + team.slug
-      })
-    );
+    // views
+    var discussionCreateView = DiscussionCreateView({
+      'teamUrl': team.url,
+      'key': 'create-' + team.slug
+    });
+    // layout setup
+    return dispatcher.small({
+      'navLevel': 10,
+      'title': 'Create discussion',
+      'back': back,
+      'main': discussionCreateView,
+    }).large({
+      'main': discussionCreateView
+    }).render();
   },
 
   detail: function(teamSlug, discussionId) {
@@ -40,18 +45,25 @@ var DiscussionRouter = Backbone.Router.extend({
     });
     var discussion = store.find('discussions', discussionUrl);
     var back = urls.get('team:detail', {'slug': teamSlug});
-    return dispatcher.render({
-        'navLevel': 15,
-        'title': discussion ? discussion.title : team.name,
-        'back': back
-      },
-      DiscussionDetailView({
+    // views
+    var discussionDetailView = DiscussionDetailView({
+      'team': team,
+      'discussion': discussion,
+      'discussionUrl': discussionUrl,
+      'key': 'discussion-detail' + discussionUrl
+    });
+    return dispatcher.small({
+      'navLevel': 15,
+      'title': discussion ? discussion.title : team.name,
+      'back': back,
+      'main': discussionDetailView
+    }).large({
+      'list': TeamDetailView({
         'team': team,
-        'discussion': discussion,
-        'discussionUrl': discussionUrl,
-        'key': 'discussion-detail' + discussionUrl
-      })
-    );
+        'key': teamSlug
+      }),
+      'main': discussionDetailView
+    }).render();
   }
 });
 
