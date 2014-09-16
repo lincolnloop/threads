@@ -3,7 +3,8 @@
 var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
-var AppView = require('./components/App.jsx');
+var SmallLayout = require('./layout/Small.jsx');
+var LargeLayout = require('./layout/Large.jsx');
 
 var dispatcher = {
   // view dispatcher, shortcut for React.renderComponent
@@ -28,6 +29,7 @@ var dispatcher = {
       'headerContextView': null,
       'animation': 'horizontal'
     };
+    var Layout = window.innerWidth > 800 ? LargeLayout : SmallLayout;
     //
     // Wrapper around React.RenderComponent.
     // > Handles unmountComponent for situations where we're rendering
@@ -40,7 +42,7 @@ var dispatcher = {
     //
     if (!this.app) {
       log.info('dispatcher.start');
-      this.app = React.renderComponent(AppView(props, children), document.getElementById('main'));
+      this.app = React.renderComponent(Layout(props, children), document.getElementById('main'));
     } else {
       log.info('dispatcher.update', props);
       if (props) {

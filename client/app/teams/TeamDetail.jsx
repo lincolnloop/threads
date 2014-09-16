@@ -7,7 +7,6 @@ var eventsMixin = require('../mixins/eventsMixin');
 var loadingMixin = require('../mixins/loadingMixin');
 var urls = require('../urls');
 var store = require('../store');
-var Header = require('../components/Header.jsx');
 var DiscussionListView = require('../discussions/DiscussionList.jsx');
 var EmptyDiscussionListView = require('../discussions/EmptyDiscussionList.jsx');
 

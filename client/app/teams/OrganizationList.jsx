@@ -3,7 +3,6 @@
 var _ = require('underscore');
 var React = require('react');
 var log = require('loglevel');
-var Header = require('../components/Header.jsx');
 var OrganizationView = require('./Organization.jsx');
 
 var OrganizationListView = React.createClass({
