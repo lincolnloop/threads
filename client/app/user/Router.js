@@ -15,13 +15,13 @@ var Router = Backbone.Router.extend({
   detail: function(id) {
     log.info('detail');
     var user = store.find('users', urls.get('api:user:detail', id));
-    return dispatcher.render({
-        'animation': 'fade',
-        'navLevel': 25,
-        'title': user.name,
-        'back': 'history'
-      }, UserDetail({'user': user})
-    );
+    return dispatcher.small({
+      'animation': 'fade',
+      'navLevel': 25,
+      'title': user.name,
+      'back': 'history',
+      'main': UserDetail({'user': user})
+    }).render();
   }
 });
 
