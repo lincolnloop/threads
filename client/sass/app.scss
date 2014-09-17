@@ -21,6 +21,7 @@ $desktop: new-breakpoint(min-width 1160px 12);
 @import "site/layout";
 @import "components/nav-top";
 @import "components/nav-bottom";
+@import "components/nav-main";
 // components
 @import "components/mentions";
 @import "components/message";
