@@ -24,8 +24,7 @@ var MessageRouter = Backbone.Router.extend({
       'title': 'Edit message',
       'back': this.getBackUrl(),
       'main': MessageEditView({
-        'message_id': messageId,
-        'navLevel': 20
+        'message_id': messageId
       })
     }).render();
   },
@@ -36,8 +35,7 @@ var MessageRouter = Backbone.Router.extend({
       'title': 'Reply to message',
       'back': this.getBackUrl(),
       'main': MessageReplyView({
-        'parent_url': urls.get('api:messageChange', {'message_id': messageId}),
-        'navLevel': 20
+        'parent_url': urls.get('api:messageChange', {'message_id': messageId})
       })
     }).render();
   }
