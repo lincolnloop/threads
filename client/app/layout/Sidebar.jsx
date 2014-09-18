@@ -15,8 +15,14 @@ var SidebarView = React.createClass({
 
   getInitialState: function() {
     return {
-      'settings-expanded': false
+      'configurationOverlay': false
     }
+  },
+
+  toggleConfigurationOverlay: function(event) {
+    this.setState({
+      'configurationOverlay': !this.state.configurationOverlay
+    });
   },
 
   render: function() {
@@ -29,6 +35,10 @@ var SidebarView = React.createClass({
       'user-notifications': true,
       'is-unread': this.state.unreadNotifications ? true : false
     });
+    var overlayClasses = classSet({
+      'configuration-overlay': true,
+      'active': this.state.configurationOverlay
+    });
 
     return (
       <nav className="nav-main">
@@ -37,9 +47,9 @@ var SidebarView = React.createClass({
           <li><a href={urls.get('notifications')} className={notificationClasses}>
             <span className="notifications">{this.state.unreadNotifications}</span>
           </a></li>
-          <li>
-            <a className="settings icon">Settings</a>
-            <div className="settings-overlay" onClick={this.props.handleLayoutClick}>
+          <li className="configuration">
+            <a className="settings icon" onClick={this.toggleConfigurationOverlay}>Settings</a>
+            <div className={overlayClasses} onClick={this.props.handleLayoutClick}>
               <a data-layout="auto">Auto</a>
               <a data-layout="compact">Compact</a>
               <a data-layout="focused">Focused</a>

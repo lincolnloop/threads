@@ -48,10 +48,10 @@ var TeamRouter = Backbone.Router.extend({
     }
 
     // views
-    var discussionListView = TeamDetailView({
+    var viewOptions = {
       'team': team,
       'key': teamSlug
-    });
+    };
     var headerContextView = HeaderCreateDiscussion({
       'team_slug': teamSlug
     });
@@ -60,12 +60,12 @@ var TeamRouter = Backbone.Router.extend({
       'navLevel': 5,
       'title': team.name,
       'back': '/',
-      'main': discussionListView,
+      'main': TeamDetailView(viewOptions),
       'headerContextView': headerContextView
     }).medium({
-      'main': discussionListView
+      'main': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.content-main'}))
     }).large({
-      'list': discussionListView
+      'list': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.list-main'}))
     }).render();
   }
 });

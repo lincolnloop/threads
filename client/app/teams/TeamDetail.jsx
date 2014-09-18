@@ -82,7 +82,6 @@ var TeamDetail = React.createClass({
     });
     // sort by latest activity
     discussions = _.sortBy(discussions, function(discussion) {
-      console.log(discussion);
       return discussion.latest_message.date_latest_activity;
     }).reverse();
     return (

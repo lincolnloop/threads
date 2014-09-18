@@ -15,11 +15,12 @@ var loadingMixin = {
 
   componentDidMount: function() {
     log.info('loadingMixin:componentDidMount');
+    var loanimSelector = this.props.loanimSelector ? this.props.loanimSelector : '#main';
     if (this.state.loading !== true) {
       return;
     }
     this.$loanim = $('<div class="'+this.state.loadingClass+'"><div class="'+this.state.loadingClass+'-icon" /></div>');
-    $('#main').append(this.$loanim);
+    $(loanimSelector).append(this.$loanim);
     // start the animation
   },
 

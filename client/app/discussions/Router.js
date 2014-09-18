@@ -48,25 +48,25 @@ var DiscussionRouter = Backbone.Router.extend({
     var discussion = store.find('discussions', discussionUrl);
     var back = urls.get('team:detail', {'slug': teamSlug});
     // views
-    var discussionDetailView = DiscussionDetailView({
+    var viewOptions = {
       'team': team,
       'discussion': discussion,
       'discussionUrl': discussionUrl,
       'key': 'discussion-detail' + discussionUrl
-    });
+    };
     return dispatcher.small({
       'navLevel': 15,
       'title': discussion ? discussion.title : team.name,
       'back': back,
-      'main': discussionDetailView
+      'main': DiscussionDetailView(viewOptions)
     }).medium({
-      'main': discussionDetailView
+      'main': DiscussionDetailView(viewOptions)
     }).large({
       'list': TeamDetailView({
         'team': team,
         'key': teamSlug
       }),
-      'main': discussionDetailView
+      'main': DiscussionDetailView(_.extend(viewOptions, {'loanimSelector': '.content-main'}))
     }).render();
   }
 });
