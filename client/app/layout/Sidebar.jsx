@@ -40,10 +40,10 @@ var SidebarView = React.createClass({
           <li>
             <a className="settings icon">Settings</a>
             <div className="settings-overlay" onClick={this.props.handleLayoutClick}>
-              <a href="#" data-layout="auto">Auto</a>
-              <a href="#" data-layout="compact">Compact</a>
-              <a href="#" data-layout="focused">Focused</a>
-              <a href="#" data-layout="full">Full</a>
+              <a data-layout="auto">Auto</a>
+              <a data-layout="compact">Compact</a>
+              <a data-layout="focused">Focused</a>
+              <a data-layout="full">Full</a>
             </div>
           </li>
         </ul>

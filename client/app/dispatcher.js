@@ -19,6 +19,8 @@ var dispatcher = {
     if (evt.target.dataset.layout) {
       this.render(evt.target.dataset.layout);
     }
+    event.preventDefault();
+    return false;
   },
 
   small: function(props) {
@@ -71,13 +73,14 @@ var dispatcher = {
     // dispatcher.render();
     //
     var settings;
+    var layout = nextLayout ? nextLayout : this.layout;
 
-    if ((window.innerWidth < 600 && (!nextLayout || nextLayout === 'auto')) || nextLayout === 'compact') {
+    if ((window.innerWidth < 600 && layout === 'auto') || layout === 'compact') {
       settings = {
         'layout': SmallLayout,
         'props': this.nextSmallProps
       };
-    } else if ((window.innerWidth > 1200 && (!nextLayout || nextLayout === 'auto')) || nextLayout === 'full') {
+    } else if ((window.innerWidth > 1200 && layout === 'auto') || layout === 'full') {
       settings = {
         'layout': LargeLayout,
         'props': this.nextLargeProps
@@ -89,7 +92,7 @@ var dispatcher = {
       };
     }
 
-    if (!this.app || (nextLayout && this.layout !== nextLayout)) {
+    if (!this.app || (nextLayout !== undefined && this.layout !== nextLayout)) {
       this.app = React.renderComponent(
         settings.layout(settings.props),
         document.getElementById('main')
@@ -97,6 +100,8 @@ var dispatcher = {
     } else {
         this.app.setProps(settings.props);
     }
+
+    this.layout = layout;
   }
 };
 
