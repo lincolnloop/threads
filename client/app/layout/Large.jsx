@@ -9,38 +9,22 @@ var store = require('../store');
 var teamUtils = require('../teams/utils');
 var urls = require('../urls');
 var Header = require('./SmallHeader.jsx');
+var Sidebar = require('./Sidebar.jsx');
 var Footer = require('./SmallFooter.jsx');
 
 var AppView = React.createClass({
 
   getInitialState: function() {
     log.info('LargeAppView:getInitialState');
-    return {}
+    return {
+      'layout': 'auto'
+    }
   },
 
   render: function() {
-
-    var teams = store.findAll('teams');
-    var organizations = teamUtils.groupByOrganizations(teams);
-    var user = store.find('users', localStorage.getItem('user'));
-    var notificationClasses = classSet({
-      'icon': true,
-      'user-notifications': true,
-      'is-unread': this.state.unreadNotifications ? true : false
-    });
-
     return (
       <section className="app large">
-        <nav className="nav-main">
-          <ul className="nav-settings">
-            <li><a href="/" className="home icon">Home</a></li>
-            <li><a href={urls.get('notifications')} className={notificationClasses}>
-              <span className="notifications">{this.state.unreadNotifications}</span>
-            </a></li>
-            <li><a className="settings icon">Settings</a></li>
-          </ul>
-          {OrganizationList({'organizations': organizations})}
-        </nav>
+        <Sidebar handleLayoutClick={this.props.handleLayoutClick} />
         <nav className="list-main">
           <Header title={this.props.title}
                 contextView={this.props.headerContextView} />

@@ -10,9 +10,16 @@ var LargeLayout = require('./layout/Large.jsx');
 var dispatcher = {
   // view dispatcher, shortcut for React.renderComponent
 
+  'layout': 'auto',
   'app': undefined,
   'nextSmallProps': undefined,
   'nextLargeProps': undefined,
+
+  handleLayoutClick: function(evt) {
+    if (evt.target.dataset.layout) {
+      this.render(evt.target.dataset.layout);
+    }
+  },
 
   small: function(props) {
     // default props. 
@@ -21,6 +28,7 @@ var dispatcher = {
     // - headerContextView > (add discussion button, unread items icon, etc..)
     // - animation > page transition for the new view
     var defaultProps = {
+      'handleLayoutClick': this.handleLayoutClick.bind(this),
       'loading': false,
       'headerContextView': null,
       'animation': 'horizontal',
@@ -35,6 +43,7 @@ var dispatcher = {
 
   medium: function(props) {
     var defaultProps = {
+      'handleLayoutClick': this.handleLayoutClick.bind(this),
       'main': null
     };
     this.nextMediumProps = _.extend(defaultProps, props);
@@ -43,13 +52,14 @@ var dispatcher = {
 
   large: function(props) {
     var defaultProps = {
+      'handleLayoutClick': this.handleLayoutClick.bind(this),
       'main': null
     };
     this.nextLargeProps = _.extend(defaultProps, props);
     return this;
   },
 
-  render: function () {
+  render: function (nextLayout) {
     //
     // Wrapper around React.RenderComponent.
     // > Handles unmountComponent for situations where we're rendering
@@ -62,12 +72,12 @@ var dispatcher = {
     //
     var settings;
 
-    if (window.innerWidth < 600) {
+    if ((window.innerWidth < 600 && (!nextLayout || nextLayout === 'auto')) || nextLayout === 'compact') {
       settings = {
         'layout': SmallLayout,
         'props': this.nextSmallProps
       };
-    } else if (window.innerWidth > 1200) {
+    } else if ((window.innerWidth > 1200 && (!nextLayout || nextLayout === 'auto')) || nextLayout === 'full') {
       settings = {
         'layout': LargeLayout,
         'props': this.nextLargeProps
@@ -79,7 +89,7 @@ var dispatcher = {
       };
     }
 
-    if (!this.app) {
+    if (!this.app || (nextLayout && this.layout !== nextLayout)) {
       this.app = React.renderComponent(
         settings.layout(settings.props),
         document.getElementById('main')

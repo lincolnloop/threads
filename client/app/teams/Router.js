@@ -36,7 +36,7 @@ var TeamRouter = Backbone.Router.extend({
       'back': null,
       'main': organizationsListView,
       'headerContextView': HeaderReloadTeams()
-    }).render();
+    }).medium().large().render();
   },
 
   detail: function(teamSlug) {
