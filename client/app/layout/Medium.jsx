@@ -4,6 +4,7 @@ var _ = require('underscore');
 var classSet = require('react/lib/cx');
 var log = require('loglevel');
 var React = require('react');
+var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 var OrganizationList = require('../teams/OrganizationList.jsx');
 var store = require('../store');
 var teamUtils = require('../teams/utils');
@@ -14,11 +15,12 @@ var Footer = require('./SmallFooter.jsx');
 var AppView = React.createClass({
 
   getInitialState: function() {
-    log.info('LargeAppView:getInitialState');
+    log.info('MediumAppView:getInitialState');
     return {}
   },
 
   render: function() {
+    log.info('AppView:render', this.state.transition);
 
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
@@ -30,7 +32,7 @@ var AppView = React.createClass({
     });
 
     return (
-      <section className="app large">
+      <section className="app medium">
         <nav className="nav-main">
           <ul className="nav-settings">
             <li><a href="/" className="home icon">Home</a></li>
@@ -40,11 +42,6 @@ var AppView = React.createClass({
             <li><a className="settings icon">Settings</a></li>
           </ul>
           {OrganizationList({'organizations': organizations})}
-        </nav>
-        <nav className="list-main">
-          <Header title={this.props.title}
-                contextView={this.props.headerContextView} />
-          {this.props.list}
         </nav>
         <div className="content-main">
           {this.props.main}

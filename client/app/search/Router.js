@@ -19,6 +19,10 @@ var Router = Backbone.Router.extend({
         'title': 'Search Threads',
         'back': '/',
         'main': Search()
+      }).medium({
+        'main': Search()
+      }).large({
+        'list': Search()
       }).render();
   }
 });

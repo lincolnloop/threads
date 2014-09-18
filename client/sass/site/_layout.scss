@@ -1,4 +1,4 @@
-.app.large {
+.app.medium, .app.large {
   position: fixed;
   top: 0;
   bottom: 0;
@@ -22,6 +22,15 @@
   }
   .content-main {
     width: 50%;
+  }
+}
+
+.app.medium {
+  .nav-main {
+    width: 30%;
+  }
+  .content-main {
+    width: 70%;
   }
 }
 

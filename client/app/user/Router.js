@@ -21,6 +21,10 @@ var Router = Backbone.Router.extend({
       'title': user.name,
       'back': 'history',
       'main': UserDetail({'user': user})
+    }).medium({
+      'main': UserDetail({'user': user})
+    }).large({
+      'main': UserDetail({'user': user})
     }).render();
   }
 });

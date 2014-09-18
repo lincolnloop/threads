@@ -4,4 +4,25 @@
   .nav-header {
     color: white;
   }
+
+  .nav-settings {
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid #555;
+    li {
+      display: inline-block;
+      list-style: none;
+      width: 33%;
+      text-align: center;
+      border-right: 1px solid #555;
+      a {
+        display: inline-block;
+        width: 100%;
+        background-size: auto 50%;
+      }
+      &:nth-child(3) {
+        border-right: none
+      }
+    }
+  }
 }

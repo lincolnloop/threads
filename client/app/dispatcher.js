@@ -4,6 +4,7 @@ var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
 var SmallLayout = require('./layout/Small.jsx');
+var MediumLayout = require('./layout/Medium.jsx');
 var LargeLayout = require('./layout/Large.jsx');
 
 var dispatcher = {
@@ -32,6 +33,14 @@ var dispatcher = {
     return this;
   },
 
+  medium: function(props) {
+    var defaultProps = {
+      'main': null
+    };
+    this.nextMediumProps = _.extend(defaultProps, props);
+    return this;
+  },
+
   large: function(props) {
     var defaultProps = {
       'main': null
@@ -51,18 +60,32 @@ var dispatcher = {
     // Usage:
     // dispatcher.render();
     //
+    var settings;
+
+    if (window.innerWidth < 600) {
+      settings = {
+        'layout': SmallLayout,
+        'props': this.nextSmallProps
+      };
+    } else if (window.innerWidth > 1200) {
+      settings = {
+        'layout': LargeLayout,
+        'props': this.nextLargeProps
+      };
+    } else {
+      settings = {
+        'layout': MediumLayout,
+        'props': this.nextMediumProps
+      };
+    }
 
     if (!this.app) {
       this.app = React.renderComponent(
-        window.innerWidth > 800 ? LargeLayout(this.nextLargeProps) : SmallLayout(this.nextSmallProps),
+        settings.layout(settings.props),
         document.getElementById('main')
       );
     } else {
-      if (window.innerWidth > 800) {
-        this.app.setProps(this.nextLargeProps);
-      } else {
-        this.app.setProps(this.nextSmallProps);
-      }
+        this.app.setProps(settings.props);
     }
   }
 };

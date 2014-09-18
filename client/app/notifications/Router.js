@@ -22,6 +22,10 @@ var TeamRouter = Backbone.Router.extend({
       'title': 'Notifications',
       'back': 'history',
       'main': NotificationList()
+    }).medium({
+      'main': NotificationList()
+    }).large({
+      'list': NotificationList()
     }).render();
   }
 });

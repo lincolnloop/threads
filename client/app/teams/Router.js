@@ -62,6 +62,8 @@ var TeamRouter = Backbone.Router.extend({
       'back': '/',
       'main': discussionListView,
       'headerContextView': headerContextView
+    }).medium({
+      'main': discussionListView
     }).large({
       'list': discussionListView
     }).render();

@@ -32,6 +32,8 @@ var DiscussionRouter = Backbone.Router.extend({
       'title': 'Create discussion',
       'back': back,
       'main': discussionCreateView,
+    }).medium({
+      'main': discussionCreateView
     }).large({
       'main': discussionCreateView
     }).render();
@@ -56,6 +58,8 @@ var DiscussionRouter = Backbone.Router.extend({
       'navLevel': 15,
       'title': discussion ? discussion.title : team.name,
       'back': back,
+      'main': discussionDetailView
+    }).medium({
       'main': discussionDetailView
     }).large({
       'list': TeamDetailView({
