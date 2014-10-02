@@ -14,11 +14,12 @@ var SignInView = React.createClass({
   loadingClass: 'tanim',
 
   fetchFailed: function(error) {
+    log.info('fetchFailed');
     // update the csrf token
     store._headers['X-CSRFToken'] = getCookie('csrftoken');
     // redirect to sign in page
     var pathURL = window.location.pathname;
-    var signInURL = urls.get('signIn');
+    var signInURL = urls.get('signIn') + '?next=' + pathURL;
     if (pathURL !== signInURL) {
       window.location.href = signInURL;
     } else {

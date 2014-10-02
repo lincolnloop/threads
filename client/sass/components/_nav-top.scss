@@ -1,3 +1,9 @@
+.app.medium, .app.large {
+  #top-nav {
+    position: absolute;
+  }
+}
+
 #top-nav {
   position: fixed;
   top: 0;
@@ -5,10 +11,6 @@
   width: 100%;
   height: 44px;
   z-index: 2;
-
-  @include media($tablet) {
-    position: absolute;
-  }
 
   padding: 0px 10px 0 10px;
   background: $blue-translucent;
