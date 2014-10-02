@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
+var zepto = require('browserify-zepto');
 var classSet = require('react/lib/cx');
 var log = require('loglevel');
 var React = require('react');
@@ -24,7 +25,7 @@ var AppView = React.createClass({
   render: function() {
     return (
       <section className="app large">
-        <Sidebar handleLayoutClick={this.props.handleLayoutClick} />
+        <Sidebar ref="sidebar" handleLayoutClick={this.props.handleLayoutClick} />
         <nav className="list-main">
           <Header title={this.props.title}
                 contextView={this.props.headerContextView} />
@@ -38,12 +39,24 @@ var AppView = React.createClass({
   },
 
   componentDidUpdate: function() {
+    var teamSlug = this.props.team ? this.props.team.slug : null;
     var contentNodes = document.getElementsByClassName('content');
     if (contentNodes.length) {
       // scroll document to top when doing a page transition
       // TODO: Apply this to the new content page only
       window.scrollTo(0,0);
     }
+    // set active team
+    // TODO: Check if the active node has changed before doing anything
+    // 1. reset current active
+    var sidebarNode = this.refs.sidebar.getDOMNode();
+    zepto('.active', sidebarNode).removeClass('active');
+    if (!teamSlug) {
+      return;
+    }
+    // 2. set active node
+    zepto('[data-slug=' + teamSlug + ']').addClass('active');
+
   }
 });
 

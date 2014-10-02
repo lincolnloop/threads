@@ -15,7 +15,7 @@ var TeamView = React.createClass({
       'unread': this.props.unread !== 0 ? true : false
     });
     return (
-      <li key={this.props.slug} className="nav-item">
+      <li key={this.props.slug} className="nav-item" data-slug={this.props.slug}>
         <a href={url}>
           <div className="item-content">{this.props.name}{' '}<span className={classes}>
               <span className="unread-count">{this.props.unread}</span>

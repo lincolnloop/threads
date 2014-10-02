@@ -46,7 +46,6 @@ var TeamRouter = Backbone.Router.extend({
     if (!team) {
       return;
     }
-
     // views
     var viewOptions = {
       'team': team,
@@ -63,8 +62,10 @@ var TeamRouter = Backbone.Router.extend({
       'main': TeamDetailView(viewOptions),
       'headerContextView': headerContextView
     }).medium({
+      'team': team,
       'main': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.content-main'}))
     }).large({
+      'team': team,
       'list': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.list-main'}))
     }).render();
   }

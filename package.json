@@ -52,8 +52,10 @@
     "MD5": "~1.2.0",
     "amygdala": "~0.3.0",
     "backbone": "~1.1.2",
+    "browserify-zepto": "^1.1.4",
     "clientconfig": "~0.0.4",
     "crossing": "~0.1.4",
+    "event-emitter": "~0.3.1",
     "fastclick": "~1.0.0",
     "jquery": "~2.1.0",
     "loglevel": "~0.6.0",
@@ -61,7 +63,6 @@
     "q": "~1.0.1",
     "react": "~0.10.0",
     "underscore": "~1.6.0",
-    "event-emitter": "~0.3.1",
     "watchify": "~0.10.2"
   }
 }

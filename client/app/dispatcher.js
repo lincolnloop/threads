@@ -45,8 +45,12 @@ var dispatcher = {
 
   medium: function(props) {
     var defaultProps = {
+      // change layout callback
       'handleLayoutClick': this.handleLayoutClick.bind(this),
-      'main': null
+      // content for the main section
+      'main': null,
+      // the active team
+      'team': null
     };
     this.nextMediumProps = _.extend(defaultProps, props);
     return this;
@@ -54,8 +58,14 @@ var dispatcher = {
 
   large: function(props) {
     var defaultProps = {
+      // change layout callback
       'handleLayoutClick': this.handleLayoutClick.bind(this),
-      'main': null
+      // content for the list section
+      'list': null,
+      // content for the main section
+      'main': null,
+      // the active team
+      'team': null
     };
     this.nextLargeProps = _.extend(defaultProps, props);
     return this;

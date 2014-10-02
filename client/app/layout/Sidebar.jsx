@@ -57,7 +57,9 @@ var SidebarView = React.createClass({
             </div>
           </li>
         </ul>
-        {OrganizationList({'organizations': organizations})}
+        {OrganizationList({
+          'organizations': organizations
+        })}
       </nav>
     );
   }
