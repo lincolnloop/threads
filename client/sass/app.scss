@@ -18,8 +18,10 @@ $desktop: new-breakpoint(min-width 1160px 12);
 // Components
 // --------------------------
 // layout
+@import "site/layout";
 @import "components/nav-top";
 @import "components/nav-bottom";
+@import "components/nav-main";
 // components
 @import "components/mentions";
 @import "components/message";
@@ -41,7 +43,7 @@ $desktop: new-breakpoint(min-width 1160px 12);
 @import "components/notification-list";
 @import "components/attachment-list";
 // page
-@import "pages/content";
+@import "pages/content-main";
 @import "pages/form-view";
 @import "pages/team-detail";
 @import "pages/discussion-detail";

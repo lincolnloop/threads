@@ -8,7 +8,6 @@ var gravatar = require('../utils/gravatar');
 var moment = require('moment');
 var urls = require('../urls');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
-var Header = require('../components/Header.jsx');
 
 var MessageReplyView = React.createClass({
 

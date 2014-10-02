@@ -43,6 +43,9 @@ var store = new Amygdala({
         'oneToMany': {
           'votes': 'votes'
         },
+        parse: function(data) {
+          return data.results ? data.results : data;
+        },
         'foreignKey': {
           'user': 'users',
           'discussion': 'discussions'

@@ -11,6 +11,7 @@ var DiscussionRouter = require('./discussions/Router');
 var MessageRouter = require('./messages/Router');
 var NotificationRouter = require('./notifications/Router');
 var SearchRouter = require('./search/Router');
+var UserRouter = require('./user/Router');
 
 var AppRouter = Backbone.Router.extend({
   /*
@@ -25,6 +26,7 @@ var AppRouter = Backbone.Router.extend({
     new MessageRouter();
     new NotificationRouter();
     new SearchRouter();
+    new UserRouter();
   }
 });
 

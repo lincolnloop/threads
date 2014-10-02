@@ -5,31 +5,31 @@ var log = require('loglevel');
 var React = require('react');
 var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
 var store = require('../store');
-var Header = require('../components/Header.jsx');
-var Footer = require('../components/Footer.jsx');
+var Header = require('./SmallHeader.jsx');
+var Footer = require('./SmallFooter.jsx');
 
 var AppView = React.createClass({
 
   getInitialState: function() {
-    log.info('AppView:getInitialState');
+    log.info('SmallAppView:getInitialState');
     return {
       'transition': 'right-to-left',
     }
   },
 
   render: function() {
-    log.info('AppView:render', this.state.transition);
+    log.info('SmallAppView:render', this.state.transition);
     return (
-      <section className="app">
+      <section className="app small">
         <Header title={this.props.title}
                 back={this.props.back}
                 contextView={this.props.headerContextView} />
-        <div className="content">
+        <div className="content-main">
           {this.state.transition !== null ? 
             <CSSTransitionGroup transitionName={this.state.transition}
                                 component={React.DOM.div}>
-            {this.props.children}
-            </CSSTransitionGroup> : <div>{this.props.children}</div>
+            {this.props.main}
+            </CSSTransitionGroup> : <div>{this.props.main}</div>
           }
         </div>
         <Footer unreadNotifications={this.state.unreadNotifications} />

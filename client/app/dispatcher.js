@@ -3,31 +3,65 @@
 var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
-var AppView = require('./components/App.jsx');
+var SmallLayout = require('./layout/Small.jsx');
+var MediumLayout = require('./layout/Medium.jsx');
+var LargeLayout = require('./layout/Large.jsx');
 
 var dispatcher = {
   // view dispatcher, shortcut for React.renderComponent
 
+  'layout': 'auto',
   'app': undefined,
+  'nextSmallProps': undefined,
+  'nextLargeProps': undefined,
 
-  setProps: function(props) {
-    if (this.app) {
-      this.app.setProps(props);
+  handleLayoutClick: function(evt) {
+    if (evt.target.dataset.layout) {
+      this.render(evt.target.dataset.layout);
     }
+    event.preventDefault();
+    return false;
   },
 
-  render: function (props, children) {
+  small: function(props) {
     // default props. 
     // these get reset on every render unless overridden.
     // - loading > header loading anim
     // - headerContextView > (add discussion button, unread items icon, etc..)
     // - animation > page transition for the new view
-
     var defaultProps = {
+      'handleLayoutClick': this.handleLayoutClick.bind(this),
       'loading': false,
       'headerContextView': null,
-      'animation': 'horizontal'
+      'animation': 'horizontal',
+      'title': '',
+      'navLevel': 0,
+      'back': null,
+      'main': null
     };
+    this.nextSmallProps = _.extend(defaultProps, props);
+    return this;
+  },
+
+  medium: function(props) {
+    var defaultProps = {
+      'handleLayoutClick': this.handleLayoutClick.bind(this),
+      'main': null
+    };
+    this.nextMediumProps = _.extend(defaultProps, props);
+    return this;
+  },
+
+  large: function(props) {
+    var defaultProps = {
+      'handleLayoutClick': this.handleLayoutClick.bind(this),
+      'main': null
+    };
+    this.nextLargeProps = _.extend(defaultProps, props);
+    return this;
+  },
+
+  render: function (nextLayout) {
     //
     // Wrapper around React.RenderComponent.
     // > Handles unmountComponent for situations where we're rendering
@@ -36,21 +70,38 @@ var dispatcher = {
     // most effective approach, since the whole data structure will change.
     //
     // Usage:
-    // dispatcher.render(MyReactView({}));
+    // dispatcher.render();
     //
-    if (!this.app) {
-      log.info('dispatcher.start');
-      this.app = React.renderComponent(AppView(props, children), document.getElementById('main'));
+    var settings;
+    var layout = nextLayout ? nextLayout : this.layout;
+
+    if ((window.innerWidth < 600 && layout === 'auto') || layout === 'compact') {
+      settings = {
+        'layout': SmallLayout,
+        'props': this.nextSmallProps
+      };
+    } else if ((window.innerWidth > 1200 && layout === 'auto') || layout === 'full') {
+      settings = {
+        'layout': LargeLayout,
+        'props': this.nextLargeProps
+      };
     } else {
-      log.info('dispatcher.update', props);
-      if (props) {
-        _.extend(defaultProps, props);
-      }
-      if (children) {
-        _.extend(defaultProps, {'children': children});
-      }
-      this.setProps(defaultProps);
+      settings = {
+        'layout': MediumLayout,
+        'props': this.nextMediumProps
+      };
     }
+
+    if (!this.app || (nextLayout !== undefined && this.layout !== nextLayout)) {
+      this.app = React.renderComponent(
+        settings.layout(settings.props),
+        document.getElementById('main')
+      );
+    } else {
+        this.app.setProps(settings.props);
+    }
+
+    this.layout = layout;
   }
 };
 

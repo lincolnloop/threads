@@ -20,17 +20,22 @@ var MessageHeader = React.createClass({
     }
     // convert to Date applies local time zone
     var messageTime = new Date(this.props.date);
-
     return (
       <div className="message-header">
         <div className="avatar">
-          <img src={gravatar.get(user.email)} />
+          <a href={urls.get('user:detail', {'user_id': user.id})}>
+            <img src={gravatar.get(user.email)} />
+          </a>
         </div>
         <div className="cite"></div>
         {this.props.handleCollapse ?
           <a className="collapse-button" onClick={this.props.handleCollapse}>Collapse</a>
         : null}
-        <div className="username">{user.name}</div>
+        <div className="username">
+          <a href={urls.get('user:detail', {'user_id': user.id})}>
+            {user.name}
+          </a>
+        </div>
         <div className="date">
           <a href={permalink} className="permalink">
             <time className="timeago" dateTime={messageTime}>{moment(messageTime).fromNow()}</time>

@@ -19,29 +19,25 @@ var MessageRouter = Backbone.Router.extend({
   },
 
   edit: function(teamSlug, discussionId, discussionSlug, messageId) {
-    return dispatcher.render({
-        'navLevel': 20,
-        'title': 'Edit message',
-        'back': this.getBackUrl()
-      },
-      MessageEditView({
-        'message_id': messageId,
-        'navLevel': 20
+    return dispatcher.small({
+      'navLevel': 20,
+      'title': 'Edit message',
+      'back': this.getBackUrl(),
+      'main': MessageEditView({
+        'message_id': messageId
       })
-    );
+    }).render();
   },
 
   reply: function(teamSlug, discussionId, discussionSlug, messageId) {
-    return dispatcher.render({
-        'navLevel': 20,
-        'title': 'Reply to message',
-        'back': this.getBackUrl()
-      },
-      MessageReplyView({
-        'parent_url': urls.get('api:messageChange', {'message_id': messageId}),
-        'navLevel': 20
+    return dispatcher.small({
+      'navLevel': 20,
+      'title': 'Reply to message',
+      'back': this.getBackUrl(),
+      'main': MessageReplyView({
+        'parent_url': urls.get('api:messageChange', {'message_id': messageId})
       })
-    );
+    }).render();
   }
 });
 

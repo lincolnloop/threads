@@ -16,13 +16,17 @@ var TeamRouter = Backbone.Router.extend({
 
   list: function() {
 
-    return dispatcher.render({
-        'animation': 'fadeIn',
-        'navLevel': 25,
-        'title': 'Notifications',
-        'back': 'history'
-      }, NotificationList()
-    );
+    return dispatcher.small({
+      'animation': 'fadeIn',
+      'navLevel': 25,
+      'title': 'Notifications',
+      'back': 'history',
+      'main': NotificationList()
+    }).medium({
+      'main': NotificationList()
+    }).large({
+      'list': NotificationList()
+    }).render();
   }
 });
 

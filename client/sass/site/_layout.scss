@@ -1,12 +1,39 @@
-body {
-  &.show-nav {
-    #nav-teams {
-      display: block;
-      width: 70%;
-    }
-    #content-main {
-      float: none;
-      margin-left: 75%;
-    }
+.app.medium, .app.large {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  .nav-main, .list-main, .content-main {
+    position: relative;
+    overflow: auto;
+    height: 100%;
+    float: left;
   }
+
+  .nav-main {
+    width: 18%;
+    border-right: 1px solid #CCC;
+  }
+  .list-main {
+    width: 32%;
+    border-right: 1px solid #CCC;
+  }
+  .content-main {
+    width: 50%;
+  }
+}
+
+.app.medium {
+  .nav-main {
+    width: 30%;
+  }
+  .content-main {
+    width: 70%;
+  }
+}
+
+.app.small {
+
 }

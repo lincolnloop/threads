@@ -13,13 +13,17 @@ var Router = Backbone.Router.extend({
 
   search: function() {
     log.info('search');
-    return dispatcher.render({
+    return dispatcher.small({
         'animation': 'fade',
         'navLevel': 25,
         'title': 'Search Threads',
-        'back': '/'
-      }, Search()
-    );
+        'back': '/',
+        'main': Search()
+      }).medium({
+        'main': Search()
+      }).large({
+        'list': Search()
+      }).render();
   }
 });
 

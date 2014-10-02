@@ -1,4 +1,5 @@
 'use strict';
+
 var _ = require('underscore');
 var $ = require('jquery');
 var Backbone = require('backbone');
@@ -47,6 +48,11 @@ $(document).on('click', 'a[href]', function (event) {
     Backbone.history.navigate(url, {'trigger': true});
     event.preventDefault();
   }
+});
+
+$(document).on('click', '.user-mention', function(event) {
+  var userId = event.currentTarget.dataset.user;
+  Backbone.history.navigate(urls.get('user:detail', userId), {'trigger': true});
 });
 
 $(document).ajaxStart(function () {

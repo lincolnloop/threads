@@ -7,7 +7,6 @@ var eventsMixin = require('../mixins/eventsMixin');
 var loadingMixin = require('../mixins/loadingMixin');
 var urls = require('../urls');
 var store = require('../store');
-var Header = require('../components/Header.jsx');
 var DiscussionListView = require('../discussions/DiscussionList.jsx');
 var EmptyDiscussionListView = require('../discussions/EmptyDiscussionList.jsx');
 
@@ -83,7 +82,6 @@ var TeamDetail = React.createClass({
     });
     // sort by latest activity
     discussions = _.sortBy(discussions, function(discussion) {
-      console.log(discussion);
       return discussion.latest_message.date_latest_activity;
     }).reverse();
     return (
