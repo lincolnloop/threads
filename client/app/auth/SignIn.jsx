@@ -19,9 +19,9 @@ var SignInView = React.createClass({
     store._headers['X-CSRFToken'] = getCookie('csrftoken');
     // redirect to sign in page
     var pathURL = window.location.pathname;
-    var signInURL = urls.get('signIn') + '?next=' + pathURL;
+    var signInURL = urls.get('signIn');
     if (pathURL !== signInURL) {
-      window.location.href = signInURL;
+      window.location.href = signInURL + '?next=' + pathURL;
     } else {
       this.setState({
         'loading': false,
