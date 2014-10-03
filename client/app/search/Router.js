@@ -27,13 +27,15 @@ var Router = Backbone.Router.extend({
       }).medium({
         'main': SearchResults({
           'query': qo.query,
-          'team': qo.team
+          'team': qo.team,
+          'loanimSelector': '.content-main'
         }),
         'team': team
       }).large({
         'list': SearchResults({
           'query': qo.query,
-          'team': qo.team
+          'team': qo.team,
+          'loanimSelector': '.list-main'
         }),
         'team': team
       }).render();

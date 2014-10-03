@@ -6,10 +6,14 @@ var moment = require('moment');
 var React = require('react');
 var log = require('loglevel');
 var config = require('../utils/config');
+var eventsMixin = require('../mixins/eventsMixin');
+var loadingMixin = require('../mixins/loadingMixin');
 var store = require('../store');
 var SearchResult = require('./SearchResult.jsx');
 
 var SearchView = React.createClass({
+  mixins: [loadingMixin],
+
   fetch: function(query, team, page) {
     // https://gingerhq.com/api/v2/searchresult/?q=test&team=&user=&start_date=&end_date=
     return $.ajax(config.apiUrl + '/api/v2/searchresult/', {
@@ -25,15 +29,10 @@ var SearchView = React.createClass({
     });
   },
   handleLoadMore: function() {
-    // don't allow a new query if still loading
-    if (this.state.loading === true) {
-      return false;
-    }
     this.setState({'loading': true});
 
     this.fetch(this.state.query, this.state.team, this.state.next).done(function(response) {
       // merge results
-      //var results = 
       this.setState({
         'loading': false,
         'count': response.count,
@@ -46,7 +45,6 @@ var SearchView = React.createClass({
 
   getInitialState: function() {
     return {
-      'loading': true,
       'query': null,
       'count': null,
       'results': null,
@@ -54,6 +52,11 @@ var SearchView = React.createClass({
       'next': null,
       'team': null
     }
+  },
+
+  componentWillMount: function() {
+    // view is always loading on the first mount
+    this.setState({'loading': true});
   },
 
   render: function() {

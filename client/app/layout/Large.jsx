@@ -37,8 +37,6 @@ var AppView = React.createClass({
   },
 
   render: function() {
-    var qo = qs.parse(location.search);
-    var query = qo.query;
     return (
       <section className="app large">
         <Sidebar ref="sidebar" handleLayoutClick={this.props.handleLayoutClick} />
@@ -51,8 +49,7 @@ var AppView = React.createClass({
               <input type="text"
                      ref="search"
                      className="list-search-input"
-                     defaultValue={query}
-                     placeholder="" />
+                     placeholder="Search" />
             </form>
           </header>
           {this.props.list}
@@ -82,7 +79,16 @@ var AppView = React.createClass({
     }
     // 2. set active node
     zepto('[data-slug=' + teamSlug + ']').addClass('active');
+  },
 
+  componentWillReceiveProps: function() {
+    var qo = qs.parse(location.search);
+    this.setState({
+      'query': qo.query
+    });
+    if (!qo.query) {
+      this.refs.search.getDOMNode().value = '';
+    }
   }
 });
 
