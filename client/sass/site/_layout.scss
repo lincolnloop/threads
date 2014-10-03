@@ -7,7 +7,6 @@
 
   .nav-main, .list-main, .content-main {
     position: relative;
-    overflow: auto;
     height: 100%;
     float: left;
   }
@@ -19,6 +18,13 @@
   .list-main {
     width: 32%;
     border-right: 1px solid #CCC;
+
+    .content-view {
+      position: relative;
+      overflow: auto;
+      height: 100%;
+      padding-top: 22px;
+    }
   }
   .content-main {
     width: 50%;

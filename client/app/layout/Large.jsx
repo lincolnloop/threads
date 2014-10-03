@@ -9,7 +9,7 @@ var OrganizationList = require('../teams/OrganizationList.jsx');
 var store = require('../store');
 var teamUtils = require('../teams/utils');
 var urls = require('../urls');
-var Header = require('./SmallHeader.jsx');
+var ListHeader = require('./ListHeader.jsx');
 var Sidebar = require('./Sidebar.jsx');
 var Footer = require('./SmallFooter.jsx');
 
@@ -27,7 +27,7 @@ var AppView = React.createClass({
       <section className="app large">
         <Sidebar ref="sidebar" handleLayoutClick={this.props.handleLayoutClick} />
         <nav className="list-main">
-          <Header title={this.props.title}
+          <ListHeader title={this.props.title}
                 contextView={this.props.headerContextView} />
           {this.props.list}
         </nav>
