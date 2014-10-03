@@ -75,15 +75,19 @@ var TeamDetail = React.createClass({
       team_slug: team.slug
     });
     var discussions = store.findAll('discussions', {'team': this.props.team.url}) || [];
-    // Filter out discussion that have no latest_message attribute.
+
+    // front-end ordering of discussions by latest message.
+    // step 1. Filter out discussion that have no latest_message attribute.
     // NOTE: For some reason this happens some times
+    /*
     discussions = _.filter(discussions, function(discussion) {
       return !!discussion.latest_message;
     });
-    // sort by latest activity
+    // step 2. sort by latest message activity
     discussions = _.sortBy(discussions, function(discussion) {
       return discussion.latest_message.date_latest_activity;
     }).reverse();
+    */
     return (
       <div className="team-detail content-view">
         <h2>{team.name}</h2>

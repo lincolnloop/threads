@@ -14,7 +14,7 @@ var store = new Amygdala({
       'headers': {
         'X-CSRFToken': getCookie('csrftoken')
       },
-      'localStorage': true
+      'localStorage': false
     },
     'schema': {
       'teams': {
