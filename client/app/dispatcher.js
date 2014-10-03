@@ -85,7 +85,7 @@ var dispatcher = {
     var settings;
     var layout = nextLayout ? nextLayout : this.layout;
 
-    if ((window.innerWidth < 600 && layout === 'auto') || layout === 'compact') {
+    if ((window.innerWidth < 800 && layout === 'auto') || layout === 'compact') {
       settings = {
         'layout': SmallLayout,
         'props': this.nextSmallProps
