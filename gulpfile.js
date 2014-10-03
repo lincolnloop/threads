@@ -31,7 +31,6 @@ var sources = {
     'client/app/**/*.js'
   ],
   'css': [
-    'client/sass/**/*.css',
     'client/sass/**/*.scss'
   ],
   'sass': 'client/sass/app.scss',
@@ -56,11 +55,25 @@ gulp.task('jshint', function() {
     .pipe(jshint.reporter(stylish));
 });
 
+gulp.task('build:sass', function() {
+  return gulp.src(sources.sass)
+    .pipe(sass({
+      'includePaths': neat,
+      'outputStyle': 'expanded',
+      'sourceComments': 'map'
+    }))
+    // error logging
+    .on('error', gutil.log)
+    // give it a file and save
+    .pipe(rename('threads.css'))
+    .pipe(gulp.dest('build/'));
+});
+
 
 // --------------------------
 // Development
 // --------------------------
-gulp.task('watch', function() {
+gulp.task('watch', ['build:sass'], function() {
   // destination directories
   var dest = {
     'root': 'build/',
@@ -118,20 +131,6 @@ gulp.task('watch', function() {
   // --------------------------
   // watch css
   // --------------------------
-
-  // initial build
-  gulp.src(sources.sass)
-    .pipe(sass({
-      'includePaths': neat,
-      'outputStyle': 'expanded',
-      'sourceComments': 'map'
-    }))
-    // error logging
-    .on('error', gutil.log)
-    // give it a file and save
-    .pipe(rename('threads.css'))
-    .pipe(gulp.dest(dest.root));
-
   // watch the build file 
   // and reload the server
   gulp.watch(dest.css, function() {
@@ -139,20 +138,7 @@ gulp.task('watch', function() {
   });
 
   // watch the sources and rebuild
-  gulp.watch(sources.css, function() {
-    gutil.log(gutil.colors.bgGreen('Rebuilding sass...'));
-    return gulp.src(sources.sass)
-      .pipe(sass({
-        'includePaths': neat,
-        'outputStyle': 'expanded',
-        'sourceComments': 'map'
-      }))
-      // error logging
-      .on('error', gutil.log)
-      // give it a file and save
-      .pipe(rename('threads.css'))
-      .pipe(gulp.dest(dest.root));
-  });
+  gulp.watch(sources.css, ['build:sass']);
 
   // --------------------------
   // Copy static files & fonts

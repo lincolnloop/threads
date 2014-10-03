@@ -44,6 +44,7 @@ var SearchView = React.createClass({
     }.bind(this));
   },
   handleSubmit: function() {
+    debugger;
     var query = this.refs.query.getDOMNode().value;
     var team = this.refs.team.getDOMNode().value;
     var page = 1;
@@ -87,7 +88,7 @@ var SearchView = React.createClass({
   render: function() {
     var teams = store.findAll('teams');
     return (
-      <form className="form-view search-view" onSubmit={this.handleSubmit}>
+      <form className="form-view search-view" method="get" onSubmit={this.handleSubmit}>
         <div className="form-view-fields">
           <input type="text" ref="query" className="query" placeholder="Search..." required />
           <select ref="team" className="team">

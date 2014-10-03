@@ -1,5 +1,6 @@
 'use strict';
 
+var _ = require('underscore');
 var Backbone = require('backbone');
 var log = require('loglevel');
 var store = require('../store');

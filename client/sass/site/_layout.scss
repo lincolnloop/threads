@@ -25,9 +25,13 @@
       height: 100%;
       padding-top: 22px;
     }
+    .form-view {
+      margin-top: 50px;
+    }
   }
   .content-main {
     width: 50%;
+    overflow: auto;
   }
 }
 

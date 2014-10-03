@@ -27,8 +27,17 @@ var AppView = React.createClass({
       <section className="app large">
         <Sidebar ref="sidebar" handleLayoutClick={this.props.handleLayoutClick} />
         <nav className="list-main">
-          <ListHeader title={this.props.title}
-                contextView={this.props.headerContextView} />
+          <header id="top-nav">
+            <div className="list-search">
+              {this.props.team ?
+                <span className="list-search-team">{this.props.team.name}</span>
+              : null}
+              <input type="text"
+                     refs="search"
+                     className="list-search-input"
+                     placeholder="" />
+            </div>
+          </header>
           {this.props.list}
         </nav>
         <div className="content-main">

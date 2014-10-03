@@ -36,6 +36,7 @@ $desktop: new-breakpoint(min-width 1160px 12);
 @import "components/load-more";
 @import "components/preview";
 @import "components/help";
+@import "components/list-search";
 // list
 @import "components/empty-list";
 @import "components/discussion-list";
