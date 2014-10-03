@@ -1,0 +1,23 @@
+.list-search {
+  display: flex;
+  flex-flow: row wrap;
+  background: #FFF;
+  text-align: left;
+
+  .list-search-input, .list-search-team {
+    width: auto;
+  }
+
+  input[type="text"] {
+    flex: 2 0px;
+    padding: 0 0.5em;
+    margin: 0;
+    border-left: none;
+    resize: none;
+    transition: none;
+  }
+  .list-search-team {
+    padding: 0.3em 0.5em 0 0.5em;
+    background: #CCC;
+  }
+}
