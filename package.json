@@ -61,6 +61,7 @@
     "loglevel": "~0.6.0",
     "moment": "~2.6.0",
     "q": "~1.0.1",
+    "query-string": "^1.0.0",
     "react": "~0.10.0",
     "underscore": "~1.6.0",
     "watchify": "~0.10.2"

@@ -2,17 +2,22 @@
 
 var Backbone = require('backbone');
 var log = require('loglevel');
+var qs = require('query-string');
 var dispatcher = require('../dispatcher');
+var store = require('../store');
 var Search = require('./Search.jsx');
+var SearchResults = require('./SearchResults.jsx');
 
 var Router = Backbone.Router.extend({
   routes: {
     'search/': 'search',
+    'search/q/': 'search',
     ':team/search/': 'search'
   },
 
   search: function() {
-    log.info('search');
+    var qo = qs.parse(location.search);
+    var team = qo.team ? store.find('teams', {'slug': qo.team}) : null;
     return dispatcher.small({
         'animation': 'fade',
         'navLevel': 25,
@@ -20,9 +25,17 @@ var Router = Backbone.Router.extend({
         'back': '/',
         'main': Search()
       }).medium({
-        'main': Search()
+        'main': SearchResults({
+          'query': qo.query,
+          'team': qo.team
+        }),
+        'team': team
       }).large({
-        'list': Search()
+        'list': SearchResults({
+          'query': qo.query,
+          'team': qo.team
+        }),
+        'team': team
       }).render();
   }
 });

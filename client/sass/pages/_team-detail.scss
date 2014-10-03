@@ -1,9 +1,16 @@
 .team-detail {
+  position: relative;
   h2 {
     display: none;
   }
   .btn-create-discussion {
     margin-right: 2.3%;
+  }
+  .discussion-list.content-view {
+    padding-top: 0!important;
+    height: auto!important;
+    position: inherit!important;
+    overflow: inherit!important;
   }
 }
 

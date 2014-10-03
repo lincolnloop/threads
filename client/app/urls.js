@@ -42,6 +42,7 @@ urls.load({
   'message:edit': '/<team_slug>/<discussion_id>/<slug>/<message_id>/edit/',
   'discussion:changeTitle': '/msg/<discussion_id>/title/',
   'search': '/search/',
+  'search:q': '/search/q/',
   'search:team': '/search/<team_slug>/',
   'message:create': '/msg/<discussion_id>/',
   'team:detail': '/<slug>/',
