@@ -68,6 +68,9 @@ var DiscussionDetailView = React.createClass({
       discussionActions.markAsRead(this.state.discussion);
 
       // update header
+      // we need to trigger to header update separately
+      // because we can't pass the list of unread messages
+      // before the discussion is fetched.
       this.emitter.emit('header:update', {
         'title': discussion.title,
         'contextView': HeaderUnread({

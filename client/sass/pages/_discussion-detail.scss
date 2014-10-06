@@ -1,3 +1,9 @@
+.app.medium, .app.large {
+  .discussion-detail .message:nth-child(1) {
+    margin-top: 0;
+  }
+}
+
 .discussion-detail {
   background:  rgba(0, 0, 0, 0.1);
 
