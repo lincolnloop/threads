@@ -1,3 +1,16 @@
+.app.small {
+  .latest {
+    display: none!important;
+  }
+}
+
 .discussion-list {
   margin: 0;
+
+  .nav-item {
+    .latest {
+      display: block;
+      font-size: 0.8em;
+    }
+  }
 }

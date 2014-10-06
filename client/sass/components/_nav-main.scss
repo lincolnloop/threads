@@ -48,16 +48,25 @@
       }
     }
   }
+  .nav-item {
+    &.active a {
+      background: #6698C8;
 
-  .nav-item a {
-    background: #303E4D;
-    .item-content {
-      color: #CCC;
-      background-image: none;
-      border: none;
+      // TODO: Get this out of .item-content
+      .item-content {
+        color: #FFF;
+      }
     }
-    &:active {
-      background-color: #599;
+    a {
+      background: #303E4D;
+      .item-content {
+        color: #CCC;
+        background-image: none;
+        border: none;
+      }
+      &:active {
+        background-color: #599;
+      }
     }
   }
 }
