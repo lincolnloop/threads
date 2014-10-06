@@ -1,5 +1,6 @@
 'use strict';
 
+var log = require('loglevel');
 var moment = require('moment');
 var React = require('react');
 var urls = require('../urls');
@@ -10,7 +11,12 @@ var DiscussionItemView = React.createClass({
   render: function() {
     var team = store.find('teams', this.props.team);
     var latest = this.props.latest_message;
-    var user = store.find('users', latest.user);
+    var latestUser;
+    // when we fetch from a discussion detail
+    // we stop having latest_message for that discussion.
+    if (latest) {
+      latestUser = store.find('users', latest.user);
+    }
     var url = urls.get('discussion:detail', {
       'team_slug': team.slug,
       'discussion_id': this.props.id,
@@ -28,13 +34,13 @@ var DiscussionItemView = React.createClass({
               <span className={classes}>
                 <span className="unread-count">{this.props.unread_count}</span>
               </span>
-              <span className="latest">
-                {latest.url === this.props.message ? "Started by "+user.name+" " :
-                user.name+" replied "}
+              {latest ? <span className="latest">
+                {latest.url === this.props.message ? "Started by "+latestUser.name+" " :
+                latestUser.name+" replied "}
                 <span className="timeago" dateTime={latest.date_created}>
                   {moment(latest.date_created).fromNow()}
                 </span>
-              </span>
+              </span> : null}
             </div>
           </a>
         </li>

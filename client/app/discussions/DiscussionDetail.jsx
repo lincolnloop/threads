@@ -93,6 +93,7 @@ var DiscussionDetailView = React.createClass({
   },
 
   render: function() {
+    log.info('DiscussionDetail:render');
     var message;
     var MessageTree;
     if (this.state.discussion) {
