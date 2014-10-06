@@ -1,4 +1,3 @@
-
 .nav-item {
 
   a {
@@ -19,7 +18,7 @@
 
     .item-content {
       position: relative;
-      width: 100%;
+      display: block;
       padding-top: 8px;
       padding-bottom: 7px;
       padding-left: 15px;
@@ -42,8 +41,9 @@
 
   .unread-item {
     position: absolute;
+    top: 50%;
     right: 27px;
-    display: inline-block;
+    margin-top: -14px;
     text-align: center;
 
     .unread-count {

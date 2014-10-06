@@ -29,7 +29,7 @@ var DiscussionItemView = React.createClass({
     return (
         <li className="nav-item" data-slug={this.props.slug}>
           <a href={url}>
-            <div className="item-content">
+            <span className="item-content">
               {this.props.title}
               <span className={classes}>
                 <span className="unread-count">{this.props.unread_count}</span>
@@ -41,7 +41,7 @@ var DiscussionItemView = React.createClass({
                   {moment(latest.date_created).fromNow()}
                 </span>
               </span> : null}
-            </div>
+            </span>
           </a>
         </li>
     );
