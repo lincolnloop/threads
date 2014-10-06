@@ -1,20 +1,24 @@
 .nav-main {
-  background: $blue-translucent;
+  background: #303E4D;
 
   .nav-header {
     color: white;
+    border-bottom: none;
   }
 
   .nav-settings {
     margin: 0;
     padding: 0;
-    border-bottom: 1px solid #555;
+    background: #2C3849;
+    .icon {
+      height: 50px;
+    }
     li {
       display: inline-block;
       list-style: none;
       width: 33%;
       text-align: center;
-      border-right: 1px solid #555;
+      //border-right: 1px solid #555;
       a {
         display: inline-block;
         width: 100%;
@@ -42,6 +46,15 @@
         background: #444;
         z-index: 3;
       }
+    }
+  }
+
+  .nav-item a {
+    background: #303E4D;
+    .item-content {
+      color: #CCC;
+      background-image: none;
+      border: none;
     }
   }
 }
