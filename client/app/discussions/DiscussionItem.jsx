@@ -27,7 +27,7 @@ var DiscussionItemView = React.createClass({
       'unread': this.props.unread_count !== 0 ? true : false
     });
     return (
-        <li className="nav-item">
+        <li className="nav-item" data-slug={this.props.slug}>
           <a href={url}>
             <div className="item-content">
               {this.props.title}

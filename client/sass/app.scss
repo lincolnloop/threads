@@ -27,7 +27,6 @@ $desktop: new-breakpoint(min-width 1160px 12);
 @import "components/message";
 @import "components/message-forked";
 @import "components/markdown-textarea";
-@import "components/nav-header";
 @import "components/nav-item";
 @import "components/loading";
 @import "refills/accordion";
@@ -37,6 +36,9 @@ $desktop: new-breakpoint(min-width 1160px 12);
 @import "components/preview";
 @import "components/help";
 @import "components/list-search";
+// headers
+@import "components/org-header";
+@import "components/col-header";
 // list
 @import "components/empty-list";
 @import "components/discussion-list";

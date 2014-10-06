@@ -57,7 +57,7 @@ var Header = React.createClass({
       'onClick': this.handleBack,
     }
     return (
-      <header id="top-nav">
+      <header id="top-nav" className="col-header">
         <div className="wrapper">
           <span className="action">
             {this.props.back ? React.DOM.a(backAttrs,

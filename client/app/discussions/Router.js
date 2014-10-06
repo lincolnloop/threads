@@ -65,6 +65,7 @@ var DiscussionRouter = Backbone.Router.extend({
       'main': DiscussionDetailView(viewOptions)
     }).large({
       'team': team,
+      'discussion': discussion,
       'list': TeamDetailView({
         'team': team,
         'key': teamSlug

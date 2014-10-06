@@ -40,8 +40,8 @@ var AppView = React.createClass({
     return (
       <section className="app large">
         <Sidebar ref="sidebar" handleLayoutClick={this.props.handleLayoutClick} />
-        <nav className="list-main">
-          <header id="top-nav">
+        <nav ref="list" className="list-main">
+          <header className="col-header">
             <form className="list-search" onSubmit={this.handleSearch}>
               {this.props.team ?
                 <span className="list-search-team">{this.props.team.name}</span>
@@ -55,6 +55,8 @@ var AppView = React.createClass({
           {this.props.list}
         </nav>
         <div className="content-main">
+          <header className="col-header">
+          </header>
           {this.props.main}
         </div>
       </section>
@@ -69,16 +71,28 @@ var AppView = React.createClass({
       // TODO: Apply this to the new content page only
       window.scrollTo(0,0);
     }
-    // set active team
+    // ---------------
+    // Active team
+    // ---------------
     // TODO: Check if the active node has changed before doing anything
     // 1. reset current active
     var sidebarNode = this.refs.sidebar.getDOMNode();
     zepto('.active', sidebarNode).removeClass('active');
-    if (!teamSlug) {
-      return;
+    if (teamSlug) {
+      // 2. set active team
+      zepto('[data-slug=' + teamSlug + ']').addClass('active');
     }
-    // 2. set active node
-    zepto('[data-slug=' + teamSlug + ']').addClass('active');
+
+    // --------------------
+    // Active discussion
+    // --------------------
+    // 1. reset current active
+    var listNode = this.refs.list.getDOMNode();
+    zepto('.active', listNode).removeClass('active');
+    if (this.props.discussion) {
+      // 2. set active node
+      zepto('[data-slug=' + this.props.discussion.slug + ']').addClass('active');
+    }
   },
 
   componentWillReceiveProps: function() {
