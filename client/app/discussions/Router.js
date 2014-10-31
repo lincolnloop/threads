@@ -70,7 +70,9 @@ var DiscussionRouter = Backbone.Router.extend({
         'team': team,
         'key': teamSlug
       }),
-      'main': DiscussionDetailView(viewOptions)
+      'main': DiscussionDetailView(_.extend(viewOptions, {
+        'loanimSelector': '.content-main'
+      }))
     }).render();
   }
 });
