@@ -18,7 +18,7 @@ var HeaderUnread = require('./HeaderUnread.jsx');
 var MessageTreeView = require('../messages/tree.jsx');
 
 var DiscussionDetailView = React.createClass({
-  mixins: [eventsMixin],
+  mixins: [loadingMixin, eventsMixin],
 
   // --------------------
   // Custom methods
