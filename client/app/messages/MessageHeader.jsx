@@ -20,6 +20,8 @@ var MessageHeader = React.createClass({
     }
     // convert to Date applies local time zone
     var messageTime = new Date(this.props.date);
+    var handleCollapse = false;
+    //var handleCollapse = this.props.handleCollapse;
     return (
       <div className="message-header">
         <div className="avatar">
@@ -28,7 +30,7 @@ var MessageHeader = React.createClass({
           </a>
         </div>
         <div className="cite"></div>
-        {this.props.handleCollapse ?
+        {handleCollapse ?
           <a className="collapse-button" onClick={this.props.handleCollapse}>Collapse</a>
         : null}
         <div className="username">

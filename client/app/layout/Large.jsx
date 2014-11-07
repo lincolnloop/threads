@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = require('Backbone');
+var Backbone = require('backbone');
 var qs = require('query-string');
 var zepto = require('browserify-zepto');
 var classSet = require('react/lib/cx');
