@@ -44,7 +44,7 @@ var MessageReplyView = React.createClass({
     var message = store.find('messages', {'id': parseInt(kwargs.message_id)});
     var author = message ? store.find('users', message.user) : null;
     return (
-      <div className="message-reply">
+      <div className="message-reply content-view">
         <form className="form-view" onSubmit={this.handleSubmit}>
           {message ? <div className="message">
 
