@@ -71,11 +71,6 @@ store.fetch = function(successCallback, errorCallback) {
   // We handle this outside the store module itself and
   // on the store instance, because it's very app-specific.
   // Get common data using Q.all to manage multiple promises.
-  if (store.findAll('teams').length && store.findAll('users').length) {
-    log.info('fetch:cache:success');
-    successCallback();
-    successCallback = function(){};
-  }
 
   Q.all([
     fetch.userUri(), this.get('teams'), this.get('users')

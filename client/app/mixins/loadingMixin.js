@@ -29,7 +29,6 @@ var loadingMixin = {
     if (this.state.loading === true || !this.$loanim) {
       return;
     }
-    
     this.$loanim.remove();
   },
 
