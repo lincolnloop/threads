@@ -9,7 +9,6 @@ var HeaderCreateDiscussion = require('./HeaderCreateDiscussion.jsx');
 var HeaderReloadTeams = require('./HeaderReloadTeams.jsx');
 var OrganizationList = require('./OrganizationList.jsx');
 var TeamDetailView = require('./TeamDetail.jsx');
-var teamUtils = require('./utils');
 
 var TeamRouter = Backbone.Router.extend({
   /*
@@ -24,18 +23,11 @@ var TeamRouter = Backbone.Router.extend({
 
   list: function() {
     log.info('team:list');
-    var teams = store.findAll('teams');
-    var organizations = teamUtils.groupByOrganizations(teams);
-
-    var organizationsListView = OrganizationList({
-      'organizations': organizations
-    });
-
     return dispatcher.small({
       'navLevel': 0,
       'title': 'Threads',
       'back': null,
-      'main': organizationsListView,
+      'main': OrganizationList(),
       'headerContextView': HeaderReloadTeams()
     }).medium().large().render();
   },

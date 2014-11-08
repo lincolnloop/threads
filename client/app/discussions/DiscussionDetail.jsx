@@ -39,7 +39,7 @@ var DiscussionDetailView = React.createClass({
 
     this.emitter.emit('message:focus', {'id': name.replace('m', '')});
   },
-  
+
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
@@ -50,7 +50,7 @@ var DiscussionDetailView = React.createClass({
     store.get('discussions', {}, {'url': this.props.discussionUrl}).done(function() {
       // stop loading animation on the header
       this.emitter.emit('ajax', {'loading': false});
-      
+
       // get the active discussion
       var discussion = store.find('discussions', this.props.discussionUrl);
       // get the discussion's message and list of replies for the discussion
