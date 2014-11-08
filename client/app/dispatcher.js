@@ -24,7 +24,7 @@ var dispatcher = {
   },
 
   small: function(props) {
-    // default props. 
+    // default props.
     // these get reset on every render unless overridden.
     // - loading > header loading anim
     // - headerContextView > (add discussion button, unread items icon, etc..)
@@ -85,8 +85,7 @@ var dispatcher = {
     var settings;
     var layout = nextLayout ? nextLayout : this.layout;
 
-    //if ((window.innerWidth < 800 && layout === 'auto') || layout === 'compact') {
-    if (true) {
+    if ((window.innerWidth < 800 && layout === 'auto') || layout === 'compact') {
         settings = {
         'layout': SmallLayout,
         'props': this.nextSmallProps

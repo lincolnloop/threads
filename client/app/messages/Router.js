@@ -3,8 +3,10 @@
 var Backbone = require('backbone');
 var dispatcher = require('../dispatcher');
 var urls = require('../urls');
+var store = require('../store');
 var MessageEditView = require('./MessageEdit.jsx');
 var MessageReplyView = require('./MessageReply.jsx');
+var TeamDetailView = require('../teams/TeamDetail.jsx');
 
 var MessageRouter = Backbone.Router.extend({
 
@@ -19,24 +21,58 @@ var MessageRouter = Backbone.Router.extend({
   },
 
   edit: function(teamSlug, discussionId, discussionSlug, messageId) {
+    var mainView = MessageEditView({
+      'message_id': messageId
+    });
+    var team = store.find('teams', {'slug': teamSlug});
+    var discussionUrl = urls.get('api:discussionChange', {
+      'discussion_id': discussionId
+    });
+    var discussion = store.find('discussions', discussionUrl);
     return dispatcher.small({
       'navLevel': 20,
       'title': 'Edit message',
       'back': this.getBackUrl(),
-      'main': MessageEditView({
-        'message_id': messageId
-      })
+      'main': mainView
+    }).medium({
+      'team': team,
+      'main': mainView
+    }).large({
+      'team': team,
+      'discussion': discussion,
+      'list': TeamDetailView({
+        'team': team,
+        'key': teamSlug
+      }),
+      'main': mainView
     }).render();
   },
 
   reply: function(teamSlug, discussionId, discussionSlug, messageId) {
+    var mainView = MessageReplyView({
+      'parent_url': urls.get('api:messageChange', {'message_id': messageId})
+    });
+    var team = store.find('teams', {'slug': teamSlug});
+    var discussionUrl = urls.get('api:discussionChange', {
+      'discussion_id': discussionId
+    });
+    var discussion = store.find('discussions', discussionUrl);
     return dispatcher.small({
       'navLevel': 20,
       'title': 'Reply to message',
       'back': this.getBackUrl(),
-      'main': MessageReplyView({
-        'parent_url': urls.get('api:messageChange', {'message_id': messageId})
-      })
+      'main': mainView
+    }).medium({
+      'team': team,
+      'main': mainView
+    }).large({
+      'team': team,
+      'discussion': discussion,
+      'list': TeamDetailView({
+        'team': team,
+        'key': teamSlug
+      }),
+      'main': mainView
     }).render();
   }
 });

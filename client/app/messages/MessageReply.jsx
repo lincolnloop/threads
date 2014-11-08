@@ -49,7 +49,7 @@ var MessageReplyView = React.createClass({
           {message ? <div className="message">
 
             <div className="message-container" onClick={this.toggleExpand}>
-            
+
             <div className="message-header">
               <a className="collapse-button expand">{!this.state.expand ? "Expand" : "Collapse"}</a>
               <div className="avatar">
