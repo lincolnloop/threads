@@ -1,7 +1,6 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = require('backbone');
 var classSet = require('react/lib/cx');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');

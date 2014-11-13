@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
+// TODO: Remove backbone dependency
 var Backbone = require('backbone');
 
 var Events = {

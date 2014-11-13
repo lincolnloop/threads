@@ -1,6 +1,6 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Router = require('ampersand-router');
 var dispatcher = require('../dispatcher');
 var urls = require('../urls');
 var store = require('../store');
@@ -8,7 +8,7 @@ var MessageEditView = require('./MessageEdit.jsx');
 var MessageReplyView = require('./MessageReply.jsx');
 var TeamDetailView = require('../teams/TeamDetail.jsx');
 
-var MessageRouter = Backbone.Router.extend({
+var MessageRouter = Router.extend({
 
   getBackUrl: function() {
     return urls.get('discussion:detail:message',

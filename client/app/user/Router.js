@@ -1,13 +1,13 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Router = require('ampersand-router');
 var log = require('loglevel');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
 var urls = require('../urls');
 var UserDetail = require('./UserDetail.jsx');
 
-var Router = Backbone.Router.extend({
+var Router = Router.extend({
   routes: {
     'user/:id/': 'detail',
   },

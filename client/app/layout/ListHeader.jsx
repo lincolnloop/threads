@@ -1,6 +1,5 @@
 'use strict';
 
-var Backbone = require('backbone');
 var _ = require('underscore');
 var React = require('react');
 var log = require('loglevel');

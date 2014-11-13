@@ -1,6 +1,6 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Router = require('ampersand-router');
 var log = require('loglevel');
 var qs = require('query-string');
 var dispatcher = require('../dispatcher');
@@ -8,7 +8,7 @@ var store = require('../store');
 var Search = require('./Search.jsx');
 var SearchResults = require('./SearchResults.jsx');
 
-var Router = Backbone.Router.extend({
+var Router = Router.extend({
   routes: {
     'search/': 'search',
     'search/q/': 'search',

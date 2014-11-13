@@ -1,8 +1,8 @@
 'use strict';
 
 var _ = require('underscore');
+var app = require('../AppRouter');
 var React = require('react');
-var Backbone = require('backbone');
 var log = require('loglevel');
 var urls = require('../urls');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
@@ -21,7 +21,7 @@ var MessageEditView = React.createClass({
       // redirect
       var kwargs = urls.resolve(window.location.pathname).kwargs;
       var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
-      Backbone.history.navigate(url, {'trigger': true});
+      app.history.navigate(url, {'trigger': true});
     }.bind(this));
     return false;
   },

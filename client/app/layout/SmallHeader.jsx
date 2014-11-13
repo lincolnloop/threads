@@ -1,7 +1,7 @@
 'use strict';
 
-var Backbone = require('backbone');
 var _ = require('underscore');
+var app = require('../AppRouter');
 var React = require('react');
 var log = require('loglevel');
 var eventsMixin = require('../mixins/eventsMixin');
@@ -18,7 +18,7 @@ var Header = React.createClass({
   handleBack: function() {
     // navigate to back page if one exists
     if (this.props.back && this.props.back !== 'history') {
-      return Backbone.history.navigate(this.props.back, {'trigger': true});
+      return app.history.navigate(this.props.back, {'trigger': true});
     }
     // fallback to history back
     try {

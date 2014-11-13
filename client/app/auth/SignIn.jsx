@@ -1,6 +1,5 @@
 'use strict';
 
-var Backbone = require('backbone');
 var React = require('react');
 var log = require('loglevel');
 var config = require('../utils/config');

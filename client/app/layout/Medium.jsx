@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = require('backbone');
+var app = require('../AppRouter');
 var classSet = require('react/lib/cx');
 var log = require('loglevel');
 var qs = require('query-string');
@@ -25,7 +25,7 @@ var AppView = React.createClass({
     if (team) {
       url += '&team=' + team;
     }
-    Backbone.history.navigate(url, {'trigger': true});
+    app.history.navigate(url, {'trigger': true});
     return false;
   },
 

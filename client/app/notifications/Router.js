@@ -1,10 +1,10 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Router = require('ampersand-router');
 var dispatcher = require('../dispatcher');
 var NotificationList = require('./NotificationList.jsx');
 
-var TeamRouter = Backbone.Router.extend({
+var TeamRouter = Router.extend({
   /*
    * Main App Router
    * Handles all route definitions, as a url:key object

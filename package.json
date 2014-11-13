@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "MD5": "~1.2.0",
+    "ampersand-router": "^1.0.6",
     "amygdala": "~0.3.0",
     "backbone": "~1.1.2",
     "browserify-zepto": "^1.1.4",

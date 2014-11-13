@@ -1,6 +1,6 @@
 'use strict';
 
-var Backbone = require('backbone');
+var app = require('../AppRouter');
 var React = require('react');
 var store = require('../store');
 var urls = require('../urls');
@@ -24,7 +24,7 @@ var DiscussionCreateView = React.createClass({
         'discussion_id': response.id,
         'slug': response.slug
       });
-      Backbone.history.navigate(url, {'trigger': true});
+      app.history.navigate(url, {'trigger': true});
     });
     return false;
   },

@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = require('backbone');
+var Router = require('ampersand-router');
 var log = require('loglevel');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
@@ -10,7 +10,7 @@ var HeaderReloadTeams = require('./HeaderReloadTeams.jsx');
 var OrganizationList = require('./OrganizationList.jsx');
 var TeamDetailView = require('./TeamDetail.jsx');
 
-var TeamRouter = Backbone.Router.extend({
+var TeamRouter = Router.extend({
   /*
    * Main App Router
    * Handles all route definitions, as a url:key object

@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = require('backbone');
+var Router = require('ampersand-router');
 var log = require('loglevel');
 var store = require('../store');
 var urls = require('../urls');
@@ -10,7 +10,7 @@ var DiscussionDetailView = require('./DiscussionDetail.jsx');
 var DiscussionCreateView = require('./DiscussionCreate.jsx');
 var TeamDetailView = require('../teams/TeamDetail.jsx');
 
-var DiscussionRouter = Backbone.Router.extend({
+var DiscussionRouter = Router.extend({
 
   routes: {
     'discussion/create/:teamSlug/': 'create',
