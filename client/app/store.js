@@ -19,11 +19,19 @@ var store = new Amygdala({
     'schema': {
       'teams': {
         'url': '/api/v2/team/',
-        'orderBy': 'name'
+        'orderBy': 'name',
+        'oneToMany': {
+          'members': 'members'
+        }
         // TODO: Add Team members and invitations as oneToMany relations
       },
       'users': {
         'url': '/api/v2/user/'
+      },
+      'members': {
+        'foreignKey': {
+          'user': 'users'
+        }
       },
       'discussions': {
         'url': '/api/v2/discussion/',

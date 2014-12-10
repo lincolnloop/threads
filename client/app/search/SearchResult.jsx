@@ -11,7 +11,6 @@ var SearchResult = React.createClass({
 
   handleResultClick: function(evt) {
     var url = evt.currentTarget.dataset.href;
-    debugger;
     app.history.navigate(url, {'trigger': true});
   },
 
