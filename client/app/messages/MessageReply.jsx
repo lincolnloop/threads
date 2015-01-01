@@ -24,6 +24,8 @@ var MessageReplyView = React.createClass({
       var kwargs = urls.resolve(window.location.pathname).kwargs;
       var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
       app.history.navigate(url, {'trigger': true});
+      //remove message from local storage
+      localStorage.removeItem('savedMessage');
     }.bind(this));
     return false;
   },
@@ -43,6 +45,7 @@ var MessageReplyView = React.createClass({
     var team = store.find('teams', {'slug': kwargs.team_slug});
     var message = store.find('messages', {'id': parseInt(kwargs.message_id)});
     var author = message ? store.find('users', message.user) : null;
+    var savedMessage = localStorage.getItem('savedMessage');
     return (
       <div className="message-reply content-view">
         <form className="form-view" onSubmit={this.handleSubmit}>
@@ -57,7 +60,7 @@ var MessageReplyView = React.createClass({
               </div>
               <div className="username">{author.name}</div>
               <div className="date">
-                <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624" 
+                <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624"
                    className="permalink">
                   <time className="timeago" datetime="2014-02-06T22:02:23.791">{moment(message.date_created).fromNow()}</time>
                 </a>
@@ -75,11 +78,17 @@ var MessageReplyView = React.createClass({
                           submitLabel="Reply"
                           teamUrl={team.url}
                           ref="comment"
+                          defaultValue={savedMessage}
+                          onChange={this.handleChange}
                           required />
           </div>
         </form>
       </div>
     );
+  },
+
+  handleChange : function() {
+      localStorage.setItem('savedMessage', this.refs.comment.getRawValue());
   }
 });
 
