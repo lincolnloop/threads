@@ -88,7 +88,7 @@ var SignInView = React.createClass({
                  defaultValue={apiKey} />
           {this.state.error ? <div className="error">{this.state.error.message}</div> : ""}
           <input type="submit" />
-        </form> : function(){}}
+        </form> : null}
       </div>
     );
   },
