@@ -32,11 +32,12 @@ var Footer = React.createClass({
       'user-notifications': true,
       'is-unread': this.state.unreadNotifications ? true : false
     });
+      console.log('small footer', this.props)
     return (
       <footer id="bottom-nav">
         <ul>
           <li><a href="/" className="home icon">Home</a></li>
-          <li><a className="settings icon">Settings</a></li>
+          <li><a className="settings icon" data-layout='auto' onClick={this.props.handleLayoutClick}>Layout</a></li>
           <li><a href={urls.get('notifications')} className={notificationClasses}>
             <span className="notifications">{this.state.unreadNotifications}</span>
           </a></li>

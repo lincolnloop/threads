@@ -32,7 +32,7 @@ var AppView = React.createClass({
               component: 'div'
             }, this.props.main) : React.createElement('div', null, this.props.main)}
         </div>
-        {React.createElement(SmallFooter, {unreadNotifications: this.state.unreadNotifications})}
+        {React.createElement(SmallFooter, {unreadNotifications: this.state.unreadNotifications, handleLayoutClick: this.props.handleLayoutClick})}
       </section>
     );
   },
