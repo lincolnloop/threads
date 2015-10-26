@@ -1,5 +1,6 @@
 .nav-item {
 
+
   a {
     display: block;
     min-height: 44px;
@@ -37,6 +38,25 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+  }
+  opacity: 0;
+  animation: nav-item-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+}
+
+@keyframes nav-item-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
