@@ -9,7 +9,8 @@ var MarkdownView = require('../components/MarkdownTextarea.jsx');
 
 var MessageEditView = React.createClass({
 
-  handleSubmit: function() {
+  handleSubmit: function(evt) {
+    evt.preventDefault();
     // handle message edit submit
     // clone the current message object
     // and extend it with the new body value
@@ -23,7 +24,6 @@ var MessageEditView = React.createClass({
       var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
       app.history.navigate(url, {'trigger': true});
     }.bind(this));
-    return false;
   },
 
   setMessage: function() {

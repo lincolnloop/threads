@@ -15,6 +15,7 @@ require('../../vendor/jquery.mentionsInput.custom');
 // component reqs
 var classnames = require('classnames');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var store = require('../store');
 var urls = require('../urls');
 var gravatar = require('../utils/gravatar');
@@ -23,7 +24,7 @@ var config = require('../utils/config');
 var MarkdownView = React.createClass({
 
   getRawValue: function() {
-    var $textarea = $(this.refs.textarea.getDOMNode());
+    var $textarea = $(ReactDOM.findDOMNode(this.refs.textarea));
     return $textarea.data('messageText');
   },
 
@@ -95,7 +96,7 @@ var MarkdownView = React.createClass({
   },
 
   componentDidMount: function() {
-    var $textarea = $(this.refs.textarea.getDOMNode());
+    var $textarea = $(ReactDOM.findDOMNode(this.refs.textarea));
     $textarea.mentionsInput({
       defaultTriggerChar: '@',
       onDataRequest: function (mode, query, callback) {

@@ -13,7 +13,7 @@ var MessageRouter = Router.extend({
 
   getBackUrl: function() {
     return urls.get('discussion:detail:message',
-          urls.resolve(window.location.pathname).kwargs);
+      urls.resolve(window.location.pathname).kwargs);
   },
 
   routes: {
