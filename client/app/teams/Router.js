@@ -56,10 +56,12 @@ var TeamRouter = Router.extend({
       'headerContextView': headerContextView
     }).medium({
       'team': team,
-      'main': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.content-main'}))
+      'main': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.content-main'})),
+      'headerContextView': headerContextView
     }).large({
       'team': team,
-      'list': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.list-main'}))
+      'list': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.list-main'})),
+      'headerContextView': headerContextView
     }).render();
   }
 });

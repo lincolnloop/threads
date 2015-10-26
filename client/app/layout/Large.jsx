@@ -55,7 +55,9 @@ var AppView = React.createClass({
           {this.props.list}
         </nav>
         <div className="content-main">
-          <header className="col-header"></header>
+          <header className="col-header">
+            {this.props.headerContextView}
+          </header>
           {this.props.main}
         </div>
       </section>
