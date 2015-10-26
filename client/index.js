@@ -16,11 +16,11 @@ var ReactDOM = require('react-dom');
 // --------------------
 //var authRoutes = require('./auth/routes');
 var TeamRouter = require('./app/teams/Router');
-// var DiscussionRouter = require('./app/discussions/Router');
-// var MessageRouter = require('./app/messages/Router');
-// var NotificationRouter = require('./app/notifications/Router');
-// var SearchRouter = require('./app/search/Router');
-// var UserRouter = require('./app/user/Router');
+var DiscussionRouter = require('./app/discussions/Router');
+var MessageRouter = require('./app/messages/Router');
+var NotificationRouter = require('./app/notifications/Router');
+var SearchRouter = require('./app/search/Router');
+var UserRouter = require('./app/user/Router');
 
 var SignInView = require('./app/auth/SignIn.jsx');
 
@@ -76,11 +76,11 @@ $(document).ajaxStart(function () {
 // ----------------
 // initialize all routers
 new TeamRouter();
-// new DiscussionRouter();
-// new MessageRouter();
-// new NotificationRouter();
-// new SearchRouter();
-// new UserRouter();
+new DiscussionRouter();
+new MessageRouter();
+new NotificationRouter();
+new SearchRouter();
+new UserRouter();
 
 ReactDOM.render(
   React.createElement(SignInView, {

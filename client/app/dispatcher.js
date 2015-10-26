@@ -109,14 +109,10 @@ var dispatcher = {
       'props': this.nextSmallProps
     };
 
-    if (!this.app || (nextLayout !== undefined && this.layout !== nextLayout)) {
-      // create app element
-      this.app = React.createElement(settings.layout, settings.props);
-      // render
-      ReactDOM.render(this.app, document.getElementById('main'));
-    } else {
-      this.app.setProps(settings.props);
-    }
+    // create app element
+    var app = React.createElement(settings.layout, settings.props);
+    // render
+    ReactDOM.render(app, document.getElementById('main'));
 
     this.layout = layout;
   }

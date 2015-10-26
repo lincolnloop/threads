@@ -1,6 +1,7 @@
 'use strict';
 
 var Router = require('ampersand-router');
+var React = require('react');
 var dispatcher = require('../dispatcher');
 var urls = require('../urls');
 var store = require('../store');
@@ -21,7 +22,7 @@ var MessageRouter = Router.extend({
   },
 
   edit: function(teamSlug, discussionId, discussionSlug, messageId) {
-    var mainView = MessageEditView({
+    var mainView = React.createElement(MessageEditView, {
       'message_id': messageId
     });
     var team = store.find('teams', {'slug': teamSlug});
@@ -40,7 +41,7 @@ var MessageRouter = Router.extend({
     }).large({
       'team': team,
       'discussion': discussion,
-      'list': TeamDetailView({
+      'list': React.createElement(TeamDetailView, {
         'team': team,
         'key': teamSlug
       }),
@@ -49,7 +50,7 @@ var MessageRouter = Router.extend({
   },
 
   reply: function(teamSlug, discussionId, discussionSlug, messageId) {
-    var mainView = MessageReplyView({
+    var mainView = React.createElement(MessageReplyView, {
       'parent_url': urls.get('api:messageChange', {'message_id': messageId})
     });
     var team = store.find('teams', {'slug': teamSlug});
@@ -68,7 +69,7 @@ var MessageRouter = Router.extend({
     }).large({
       'team': team,
       'discussion': discussion,
-      'list': TeamDetailView({
+      'list': React.createElement(TeamDetailView, {
         'team': team,
         'key': teamSlug
       }),

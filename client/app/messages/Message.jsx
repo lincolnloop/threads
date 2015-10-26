@@ -145,7 +145,7 @@ var MessageView = React.createClass({
               : null}
             </div>
           </div>
-          {votes.length ? VotesListView({'votes': votes}) : null}
+          {votes.length ? React.createElement(VotesListView,{'votes': votes}) : null}
           <div className="message-actions">
             <a className={voteClasses} onClick={this.handleVote}>{hasUpVoted ? 'liked' : 'like'}</a>
             <a className="reply" href={urls.get('message:reply', urlKeys)}>reply</a>
