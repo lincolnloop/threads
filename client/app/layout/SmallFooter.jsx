@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 var React = require('react');
 var log = require('loglevel');
 var store = require('../store');
@@ -27,7 +27,7 @@ var Footer = React.createClass({
 
   render: function () {
     var user = store.find('users', localStorage.getItem('user'));
-    var notificationClasses = classSet({
+    var notificationClasses = classnames({
       'icon': true,
       'user-notifications': true,
       'is-unread': this.state.unreadNotifications ? true : false

@@ -4,7 +4,6 @@ var _ = require('underscore');
 var app = require('../AppRouter');
 var qs = require('query-string');
 var zepto = require('browserify-zepto');
-var classSet = require('react/lib/cx');
 var log = require('loglevel');
 var React = require('react');
 var OrganizationList = require('../teams/OrganizationList.jsx');

@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 var log = require('loglevel');
 var React = require('react');
 var OrganizationList = require('../teams/OrganizationList.jsx');
@@ -30,12 +30,12 @@ var SidebarView = React.createClass({
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
     var user = store.find('users', localStorage.getItem('user'));
-    var notificationClasses = classSet({
+    var notificationClasses = classnames({
       'icon': true,
       'user-notifications': true,
       'is-unread': this.state.unreadNotifications ? true : false
     });
-    var overlayClasses = classSet({
+    var overlayClasses = classnames({
       'configuration-overlay': true,
       'active': this.state.configurationOverlay
     });

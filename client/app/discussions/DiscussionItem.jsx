@@ -5,7 +5,7 @@ var moment = require('moment');
 var React = require('react');
 var urls = require('../urls');
 var store = require('../store');
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 
 var DiscussionItemView = React.createClass({
   render: function() {
@@ -22,7 +22,7 @@ var DiscussionItemView = React.createClass({
       'discussion_id': this.props.id,
       'slug': this.props.slug
     });
-    var classes = classSet({
+    var classes = classnames({
       'unread-item': true,
       'unread': this.props.unread_count !== 0 ? true : false
     });

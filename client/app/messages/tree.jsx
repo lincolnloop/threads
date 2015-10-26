@@ -7,7 +7,6 @@ var log = require('loglevel');
 var config = require('../utils/config');
 var urls = require('../urls');
 var store = require('../store');
-var classSet = require('react/lib/cx');
 var MessageItem = require('./Message.jsx');
 var ForkedMessage = require('./ForkedMessage.jsx');
 var ForkedDiscussionLink = require('./ForkedDiscussionLink.jsx');
@@ -50,7 +49,7 @@ var MessageTreeView = React.createClass({
 
   render: function() {
     var replies = store.findAll('messages', {'parent': this.props.message.url});
-    var classes = classSet({
+    var classes = classnames({
       'message': true,
       'message-collapsed': this.state.collapsed
     });

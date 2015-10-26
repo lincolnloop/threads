@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var Backbone = require('backbone');
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
 var React = require('react');
@@ -98,7 +98,7 @@ var MessageView = React.createClass({
     var user = store.find('users', message.user);
     var attachments = message.attachments;
     // main message classes
-    var classes = classSet({
+    var classes = classnames({
       'message-container': true,
       'message-unread': !message.read,
       'message-focused': this.state.focused
@@ -109,11 +109,11 @@ var MessageView = React.createClass({
       return vote.user === localStorage.getItem('user');
     });
     var canEdit = this.props.message.user === localStorage.getItem('user');
-    var voteClasses = classSet({
+    var voteClasses = classnames({
       'up-vote': true,
       'up-voted': hasUpVoted
     });
-    var messageAttachmentClasses = classSet({
+    var messageAttachmentClasses = classnames({
       'message-attachments': true,
       'expanded': !!this.state.expandAttachments,
       'has-attachments': !!attachments.length

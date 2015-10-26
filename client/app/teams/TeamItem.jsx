@@ -2,7 +2,7 @@
 
 var React = require('react');
 var urls = require('../urls');
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 
 var TeamView = React.createClass({
   render: function () {
@@ -10,7 +10,7 @@ var TeamView = React.createClass({
     var url = urls.get('team:detail', {
       'slug': this.props.slug
     });
-    var classes = classSet({
+    var classes = classnames({
       'unread-item': true,
       'unread': this.props.unread !== 0 ? true : false
     });

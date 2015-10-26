@@ -2,7 +2,6 @@
 
 var _ = require('underscore');
 var app = require('../AppRouter');
-var classSet = require('react/lib/cx');
 var log = require('loglevel');
 var qs = require('query-string');
 var React = require('react');

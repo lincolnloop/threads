@@ -42,10 +42,8 @@
     "sinon": "~1.9.0",
     "gulp-compile-handlebars": "~0.2.0",
     "vinyl-source-stream": "~0.1.1",
-    "grunt": "~0.4.5",
     "connect-pushstate": "~0.1.0",
     "gulp-rename": "~1.2.0",
-    "grunt-connect-pushstate": "^0.2.0",
     "cookies": "^0.4.1"
   },
   "dependencies": {
@@ -54,6 +52,7 @@
     "amygdala": "~0.3.0",
     "backbone": "~1.1.2",
     "browserify-zepto": "^1.1.4",
+    "classnames": "^2.2.0",
     "clientconfig": "~0.0.4",
     "crossing": "~0.1.4",
     "event-emitter": "~0.3.1",
@@ -63,7 +62,7 @@
     "moment": "~2.6.0",
     "q": "~1.0.1",
     "query-string": "^1.0.0",
-    "react": "~0.10.0",
+    "react": "^0.14.0",
     "underscore": "~1.6.0",
     "watchify": "~0.10.2"
   }

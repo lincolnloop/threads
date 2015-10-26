@@ -13,7 +13,7 @@ require('../../vendor/jquery.elastic');
 require('../../vendor/jquery.textareaHelper');
 require('../../vendor/jquery.mentionsInput.custom');
 // component reqs
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 var React = require('react');
 var store = require('../store');
 var urls = require('../urls');
@@ -28,7 +28,7 @@ var MarkdownView = React.createClass({
   },
 
   getTabClass: function(isActive) {
-    return classSet({
+    return classnames({
       'tab-header-and-content': true,
       'is-active': !!isActive
     });
