@@ -17,7 +17,7 @@ var Footer = require('./SmallFooter.jsx');
 var AppView = React.createClass({
 
   handleSearch: function() {
-    var query = this.refs.search.getDOMNode().value;
+    var query = React.getDOMNode(this.refs.search).value;
     var team = this.props.team ? this.props.team.slug : '';
 
     var url = urls.get('search:q') + '?query=' + query;
@@ -76,7 +76,7 @@ var AppView = React.createClass({
     // ---------------
     // TODO: Check if the active node has changed before doing anything
     // 1. reset current active
-    var sidebarNode = this.refs.sidebar.getDOMNode();
+    var sidebarNode = React.getDOMNode(this.refs.sidebar);
     zepto('.active', sidebarNode).removeClass('active');
     if (teamSlug) {
       // 2. set active team
@@ -87,7 +87,7 @@ var AppView = React.createClass({
     // Active discussion
     // --------------------
     // 1. reset current active
-    var listNode = this.refs.list.getDOMNode();
+    var listNode = React.getDOMNode(this.refs.list);
     zepto('.active', listNode).removeClass('active');
     if (this.props.discussion) {
       // 2. set active node
@@ -101,7 +101,7 @@ var AppView = React.createClass({
       'query': qo.query
     });
     if (!qo.query) {
-      this.refs.search.getDOMNode().value = '';
+      React.getDOMNode(this.refs.search).value = '';
     }
   }
 });

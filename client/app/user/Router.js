@@ -1,6 +1,7 @@
 'use strict';
 
 var Router = require('ampersand-router');
+var React = require('react');
 var log = require('loglevel');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
@@ -20,11 +21,11 @@ var Router = Router.extend({
       'navLevel': 25,
       'title': user.name,
       'back': 'history',
-      'main': UserDetail({'user': user})
+      'main': React.createElement(UserDetail, {'user': user})
     }).medium({
-      'main': UserDetail({'user': user})
+      'main': React.createElement(UserDetail, {'user': user})
     }).large({
-      'main': UserDetail({'user': user})
+      'main': React.createElement(UserDetail, {'user': user})
     }).render();
   }
 });

@@ -9,17 +9,18 @@ var log = require('loglevel');
 var app = require('./app/AppRouter');
 var config = require('./app/utils/config');
 var urls = require('./app/urls');
+var ReactDOM = require('react-dom');
 //var FPSCounter = require('./vendor/FPSCounter');
 // --------------------
 // routers
 // --------------------
 //var authRoutes = require('./auth/routes');
 var TeamRouter = require('./app/teams/Router');
-var DiscussionRouter = require('./app/discussions/Router');
-var MessageRouter = require('./app/messages/Router');
-var NotificationRouter = require('./app/notifications/Router');
-var SearchRouter = require('./app/search/Router');
-var UserRouter = require('./app/user/Router');
+// var DiscussionRouter = require('./app/discussions/Router');
+// var MessageRouter = require('./app/messages/Router');
+// var NotificationRouter = require('./app/notifications/Router');
+// var SearchRouter = require('./app/search/Router');
+// var UserRouter = require('./app/user/Router');
 
 var SignInView = require('./app/auth/SignIn.jsx');
 
@@ -75,24 +76,26 @@ $(document).ajaxStart(function () {
 // ----------------
 // initialize all routers
 new TeamRouter();
-new DiscussionRouter();
-new MessageRouter();
-new NotificationRouter();
-new SearchRouter();
-new UserRouter();
+// new DiscussionRouter();
+// new MessageRouter();
+// new NotificationRouter();
+// new SearchRouter();
+// new UserRouter();
 
-React.renderComponent(SignInView({
-  success: function() {
-    log.info('signIn.fetch.done');
-    app.history.start({
-      'pushState': true
-    });
-    // check if the current url is the signIn url
-    // if it is, navigate to "homepage"
-    var pathURL = window.location.pathname;
-    var signInURL = urls.get('signIn');
-    if (pathURL === signInURL) {
-      app.history.navigate(urls.get('dashboard'), {'trigger': true});
+ReactDOM.render(
+  React.createElement(SignInView, {
+    success: function() {
+      log.info('signIn.fetch.done');
+      app.history.start({
+        'pushState': true
+      });
+      // check if the current url is the signIn url
+      // if it is, navigate to "homepage"
+      var pathURL = window.location.pathname;
+      var signInURL = urls.get('signIn');
+      if (pathURL === signInURL) {
+        app.history.navigate(urls.get('dashboard'), {'trigger': true});
+      }
     }
-  }
-}), document.getElementById('main'));
+  }), document.getElementById('main')
+);

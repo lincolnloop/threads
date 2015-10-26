@@ -9,48 +9,47 @@
   "version": "0.1.0",
   "main": "./client/index.js",
   "scripts": {
+    "watch-js": "watchify client/index.js -o build/threads.js --debug",
+    "build-js": "browserify client/index.js -o build/threads.js",
+    "build-js-dev": "browserify client/index.js -o build/threads.js --debug",
+    "browser-sync": "browser-sync start --config bs.config.js",
+    "start": "npm run watch-js & npm run browser-sync",
     "dist": "NODE_ENV=production gulp dist",
     "prod:deploy": "npm run dist && rsync -avz --chmod=g+w --omit-dir-times --delete ./dist/ usethreads.com:/var/www/usethreads.com",
     "deploy": "npm run dist && rsync -avz --chmod=g+w --omit-dir-times --delete ./dist/ dev.usethreads.com:/var/www/dev.usethreads.com"
   },
   "browserify": {
     "transform": [
-      "reactify"
+      [
+        "babelify",
+        {
+          "blacklist": [
+            "regenerator"
+          ]
+        }
+      ]
     ]
   },
   "devDependencies": {
-    "browserify": "~3.33.0",
-    "browserify-shim": "~3.3.2",
+    "browser-sync": "^2.9.11",
     "chai": "~1.9.1",
+    "connect-history-api-fallback": "^1.1.0",
+    "cookies": "^0.4.1",
     "font-awesome": "~4.0.3",
-    "gulp": "~3.8.0",
-    "gulp-browserify": "~0.5.0",
-    "gulp-clean": "~0.2.4",
-    "gulp-connect": "~2.0.5",
-    "gulp-task-listing": "~0.2.2",
-    "gulp-jshint": "~1.5.0",
-    "gulp-livereload": "~1.2.0",
-    "gulp-sass": "0.7.1",
-    "gulp-uglify": "~0.2.1",
-    "gulp-util": "~2.2.14",
     "jshint-stylish": "~0.1.5",
     "mocha": "~1.18.2",
     "node-bourbon": "~1.0.0",
     "node-neat": "~1.1.0",
-    "reactify": "~0.10.0",
     "request": "~2.34.0",
     "sinon": "~1.9.0",
-    "gulp-compile-handlebars": "~0.2.0",
-    "vinyl-source-stream": "~0.1.1",
-    "connect-pushstate": "~0.1.0",
-    "gulp-rename": "~1.2.0",
-    "cookies": "^0.4.1"
+    "watchify": "^3.5.0"
   },
   "dependencies": {
     "MD5": "~1.2.0",
-    "ampersand-router": "^1.0.6",
+    "ampersand-router": "^3.0.2",
     "amygdala": "~0.3.0",
-    "backbone": "~1.1.2",
+    "backbone": "^1.2.3",
+    "browserify": "^11.2.0",
     "browserify-zepto": "^1.1.4",
     "classnames": "^2.2.0",
     "clientconfig": "~0.0.4",
@@ -63,7 +62,9 @@
     "q": "~1.0.1",
     "query-string": "^1.0.0",
     "react": "^0.14.0",
-    "underscore": "~1.6.0",
-    "watchify": "~0.10.2"
+    "react-addons-css-transition-group": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "reactify": "^1.1.1",
+    "underscore": "~1.6.0"
   }
 }

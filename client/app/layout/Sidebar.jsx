@@ -57,14 +57,12 @@ var SidebarView = React.createClass({
             </div>
           </li>
         </ul>
-        {OrganizationList({
+        {React.createElement(OrganizationList, {
           'organizations': organizations
         })}
       </nav>
     );
   }
 });
-
-window.store = store;
 
 module.exports = SidebarView;

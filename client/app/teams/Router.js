@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
+var React = require('react');
 var Router = require('ampersand-router');
 var log = require('loglevel');
 var dispatcher = require('../dispatcher');
@@ -27,8 +28,8 @@ var TeamRouter = Router.extend({
       'navLevel': 0,
       'title': 'Threads',
       'back': null,
-      'main': OrganizationList(),
-      'headerContextView': HeaderReloadTeams()
+      'main': React.createElement(OrganizationList),
+      'headerContextView': React.createElement(HeaderReloadTeams)
     }).medium().large().render();
   },
 
@@ -44,7 +45,7 @@ var TeamRouter = Router.extend({
       'team': team,
       'key': teamSlug
     };
-    var headerContextView = HeaderCreateDiscussion({
+    var headerContextView = React.createElement(HeaderCreateDiscussion, {
       'team_slug': teamSlug
     });
 
@@ -52,15 +53,15 @@ var TeamRouter = Router.extend({
       'navLevel': 5,
       'title': team.name,
       'back': '/',
-      'main': TeamDetailView(viewOptions),
+      'main': React.createElement(TeamDetailView, viewOptions),
       'headerContextView': headerContextView
     }).medium({
       'team': team,
-      'main': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.content-main'})),
+      'main': React.createElement(TeamDetailView, _.extend(viewOptions, {'loanimSelector': '.content-main'})),
       'headerContextView': headerContextView
     }).large({
       'team': team,
-      'list': TeamDetailView(_.extend(viewOptions, {'loanimSelector': '.list-main'})),
+      'list': React.createElement(TeamDetailView, _.extend(viewOptions, {'loanimSelector': '.list-main'})),
       'headerContextView': headerContextView
     }).render();
   }

@@ -60,9 +60,9 @@ var Header = React.createClass({
       <header id="top-nav" className="col-header">
         <div className="wrapper">
           <span className="action">
-            {this.props.back ? React.DOM.a(backAttrs,
-              React.DOM.i({'className': "icon icon-back"}),
-              React.DOM.span(null, 'Back')
+            {this.props.back ? React.createElement('a', backAttrs,
+              React.createElement('i', {'className': "icon icon-back"}),
+              React.createElement('span', null, 'Back')
             ) : null}
           </span>
           <span className="title">{this.state.title}</span>
