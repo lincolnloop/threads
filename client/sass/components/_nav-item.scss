@@ -59,10 +59,23 @@
 
     &.unread .unread-count {
       background: $orange;
-      font-size: 0.7em; 
+      font-size: 0.7em;
       padding: 0 9px 0 9px;
       margin: 4px;
-      line-height: 20px; 
+      line-height: 20px;
+    }
+  }
+}
+
+// TODO: Move this in the component itself.
+.team-item {
+  a {
+    color: #ccc;
+  }
+  &.active {
+    background: rgba(255,255,255, 0.1);
+    a {
+    color: #fff;
     }
   }
 }

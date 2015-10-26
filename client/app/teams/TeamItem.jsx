@@ -10,7 +10,7 @@ var TeamView = React.createClass({
       'fontSize': '13px',
       'paddingTop': '8px',
       'paddingBottom': '8px',
-      'paddingLeft': '24px',
+      'paddingLeft': '15px',
       'height': '13px',
       'margin': '2px 0'
     }
