@@ -31,6 +31,12 @@ var store = new Amygdala({
           'children': 'messages'
         },
         parse: function(data) {
+          // data.results === true >> list
+          // data.children === true >> detail
+          if (data.children) {
+            // add latest message to response since it's not returned by the detail API
+            data.latest_message = data.children[data.children.length - 1] || data.message;
+          }
           return data.results ? data.results : data;
         },
         'foreignKey': {
