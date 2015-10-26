@@ -4,6 +4,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var moment = require('moment');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var log = require('loglevel');
 var config = require('../utils/config');
 var store = require('../store');
@@ -44,8 +45,8 @@ var SearchView = React.createClass({
     }.bind(this));
   },
   handleSubmit: function() {
-    var query = this.refs.query.getDOMNode().value;
-    var team = this.refs.team.getDOMNode().value;
+    var query = ReactDOM.findDOMNode(this.refs.query).value;
+    var team = ReactDOM.findDOMNode(this.refs.team).value;
     var page = 1;
     // reset state
     this.setState({

@@ -6,6 +6,7 @@ var qs = require('query-string');
 var zepto = require('browserify-zepto');
 var log = require('loglevel');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var OrganizationList = require('../teams/OrganizationList.jsx');
 var store = require('../store');
 var teamUtils = require('../teams/utils');
@@ -17,7 +18,7 @@ var Footer = require('./SmallFooter.jsx');
 var AppView = React.createClass({
 
   handleSearch: function() {
-    var query = React.getDOMNode(this.refs.search).value;
+    var query = ReactDOM.findDOMNode(this.refs.search).value;
     var team = this.props.team ? this.props.team.slug : '';
 
     var url = urls.get('search:q') + '?query=' + query;
@@ -76,22 +77,22 @@ var AppView = React.createClass({
     // ---------------
     // TODO: Check if the active node has changed before doing anything
     // 1. reset current active
-    var sidebarNode = React.getDOMNode(this.refs.sidebar);
+    var sidebarNode = ReactDOM.findDOMNode(this.refs.sidebar);
     zepto('.active', sidebarNode).removeClass('active');
     if (teamSlug) {
       // 2. set active team
-      zepto('[data-slug=' + teamSlug + ']').addClass('active');
+      zepto('[data-slug="' + teamSlug + '"]').addClass('active');
     }
 
     // --------------------
     // Active discussion
     // --------------------
     // 1. reset current active
-    var listNode = React.getDOMNode(this.refs.list);
+    var listNode = ReactDOM.findDOMNode(this.refs.list);
     zepto('.active', listNode).removeClass('active');
     if (this.props.discussion) {
       // 2. set active node
-      zepto('[data-slug=' + this.props.discussion.slug + ']').addClass('active');
+      zepto('[data-slug="' + this.props.discussion.slug + '"]').addClass('active');
     }
   },
 
@@ -101,7 +102,7 @@ var AppView = React.createClass({
       'query': qo.query
     });
     if (!qo.query) {
-      React.getDOMNode(this.refs.search).value = '';
+      ReactDOM.findDOMNode(this.refs.search).value = '';
     }
   }
 });

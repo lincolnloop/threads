@@ -103,12 +103,6 @@ var dispatcher = {
       };
     }
 
-    // debugging >> always use small layout
-    settings = {
-      'layout': SmallLayout,
-      'props': this.nextSmallProps
-    };
-
     // create app element
     var app = React.createElement(settings.layout, settings.props);
     // render
