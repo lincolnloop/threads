@@ -58,9 +58,9 @@ var MessageReplyView = React.createClass({
               </div>
               <div className="username">{author.name}</div>
               <div className="date">
-                <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624" 
+                <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624"
                    className="permalink">
-                  <time className="timeago" dateTime="2014-02-06T22:02:23.791">{moment(message.date_created).fromNow()}</time>
+                  <time className="timeago" dateTime="{message.date_created}">{moment.utc(message.date_created).local().fromNow()}</time>
                 </a>
               </div>
             </div>
