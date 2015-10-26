@@ -30,13 +30,12 @@ var DiscussionItemView = React.createClass({
         <li className="nav-item" data-slug={this.props.slug}>
           <a href={url}>
             <span className="item-content">
-              {this.props.title}
+              <h3>{this.props.title}</h3>
               <span className={classes}>
                 <span className="unread-count">{this.props.unread_count}</span>
               </span>
               {latest ? <span className="latest">
-                {latest.url === this.props.message ? "Started by "+latestUser.name+" " :
-                latestUser.name+" replied "}
+                {latest.url === this.props.message ? <span><span>Started by </span><span className="user-name">{latestUser.name} </span></span> : <span><span className="user-name">{latestUser.name}</span><span> replied </span></span>}
                 <span className="timeago" dateTime={latest.date_created}>
                   {moment(latest.date_created).fromNow()}
                 </span>

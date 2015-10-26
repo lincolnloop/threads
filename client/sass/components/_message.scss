@@ -1,4 +1,5 @@
 .message {
+  position: relative;
   padding-left: 0;
   margin-left: 2%;
   margin-top: 5px;
@@ -12,7 +13,30 @@
   &.first-message {
     margin-left: 0px;
   }
+  opacity: 0;
+  animation: message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
 }
+
+
+
+@keyframes message-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
 
 &.message-collapsed .message-content, &.message-collapsed .message-footer {
   display: none;
@@ -46,9 +70,12 @@
       position: relative;
       width: 32px;
       height: 32px;
-      background: #ddd;
+      // background: #ddd;
       text-align: center;
       float: left;
+      img {
+        border-radius: 30px;
+      }
     }
 
     .username, .date {
@@ -117,7 +144,7 @@
       font-size: 0.8em;
       border-bottom: 1px solid $light-gray;
     }
-    
+
     .message-actions {
       text-align: left;
       padding-bottom: 10px;
@@ -174,7 +201,7 @@
         background-position: center;
         background-repeat: no-repeat;
         float: right;
-        margin-right: 0;        
+        margin-right: 0;
       }
 
       .star {

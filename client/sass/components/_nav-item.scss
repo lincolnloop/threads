@@ -7,7 +7,7 @@
     padding: 0px;
     border-bottom: none;
     font-weight: 300;
-    background: $white;
+    background: rgb(252, 252, 252);
 
     -webkit-tap-highlight-color: rgba(0,0,0,0);
     -webkit-touch-callout: none;
@@ -19,9 +19,9 @@
     .item-content {
       position: relative;
       display: block;
-      padding-top: 8px;
-      padding-bottom: 7px;
-      padding-left: 15px;
+      padding-top: 18px;
+      padding-bottom: 17px;
+      padding-left: 25px;
       min-height: 44px;
       border-bottom: 1px solid $light-gray;
       color: $gray;
@@ -38,31 +38,49 @@
       text-overflow: ellipsis;
     }
   }
+}
 
-  .unread-item {
-    position: absolute;
-    top: 50%;
-    right: 27px;
-    margin-top: -14px;
-    text-align: center;
-
-    .unread-count {
-      display: block;
-      color: $white;
-      background: transparent;
-      @include border-top-radius(35px);
-      @include border-bottom-radius(35px);
-      @include border-left-radius(35px);
-      @include border-right-radius(35px);
-      font-size: 0em;
+// TODO: Move this in the component itself.
+.team-item {
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  a {
+    color: #ccc;
+  }
+  &.active {
+    background: rgba(255,255,255, 0.1);
+    a {
+    color: #fff;
     }
+  }
+}
 
-    &.unread .unread-count {
-      background: $orange;
-      font-size: 0.7em; 
-      padding: 0 9px 0 9px;
-      margin: 4px;
-      line-height: 20px; 
-    }
+
+.unread-item {
+  position: absolute;
+  top: 50%;
+  right: 27px;
+  margin-top: -14px;
+  text-align: center;
+
+  .unread-count {
+    display: block;
+    color: $white;
+    background: transparent;
+    @include border-top-radius(35px);
+    @include border-bottom-radius(35px);
+    @include border-left-radius(35px);
+    @include border-right-radius(35px);
+    font-size: 0em;
+  }
+
+  &.unread .unread-count {
+    background: $orange;
+    font-size: 0.7em;
+    padding: 0 9px 0 9px;
+    margin: 4px;
+    line-height: 20px;
   }
 }
