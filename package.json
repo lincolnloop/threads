@@ -15,7 +15,6 @@
     "build-js-dev": "make js debug=1",
     "watch-css": "make css watch=1",
     "build-css": "make css",
-    "build-js-dev": "make css debug=1",
     "browser-sync": "browser-sync start --config bs.config.js",
     "start": "make -j5 all watch=1 & npm run browser-sync",
     "prod:deploy": "npm run dist && rsync -avz --chmod=g+w --omit-dir-times --delete ./dist/ usethreads.com:/var/www/usethreads.com",
@@ -70,6 +69,7 @@
     "react-addons-css-transition-group": "^0.14.0",
     "react-dom": "^0.14.0",
     "reactify": "^1.1.1",
+    "uglifyjs": "^2.4.10",
     "underscore": "~1.6.0"
   }
 }
