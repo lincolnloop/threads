@@ -21,10 +21,14 @@ assets: build/assets
 # CSS
 # ====
 
+# WARNING: The autoprefixer and watch flags can not be used together.
+#   It would require an intermediate directory and is not worth the complexity.
+
 # default args to node-sass
-SASS_ARGS = --include-path client/scss
+OUTPUT_DIR = build/css
+SASS_ARGS = --include-path=client/scss --output=$(OUTPUT_DIR)
 WITH_SOURCEMAPS = --source-map=true --source-map-contents=true --source-map-embed=true
-AUTOPREFIX_CMD = $(NPM_BIN)/postcss --use autoprefixer --autoprefixer.browsers "last 2 versions"
+AUTOPREFIX_CMD = $(NPM_BIN)/postcss --use=autoprefixer --autoprefixer.browsers "last 2 versions" --dir=$(OUTPUT_DIR) $(OUTPUT_DIR)/*.css
 
 ifdef watch
 	debug = 1
@@ -32,24 +36,23 @@ ifdef watch
 endif
 
 # Default to production build
-buildcss = $(NPM_BIN)/node-sass $(1) $(SASS_ARGS) --output-style compressed \
-	   | $(AUTOPREFIX_CMD) > $(2)
+buildcss = $(NPM_BIN)/node-sass $(1) $(SASS_ARGS) --output-style compressed && $(AUTOPREFIX_CMD)
 
 ifdef debug
-buildcss = $(NPM_BIN)/node-sass $(1) $(SASS_ARGS) $(WITH_SOURCEMAPS) > $(2)
+buildcss = $(NPM_BIN)/node-sass $(1) $(SASS_ARGS) $(WITH_SOURCEMAPS)
 ifdef autoprefix
 # postcss does not support sourcemaps https://github.com/code42day/postcss-cli/issues/3
-buildcss = $(NPM_BIN)/node-sass $(1) $(SASS_ARGS) | $(AUTOPREFIX_CMD)  > $(2)
+buildcss = $(NPM_BIN)/node-sass $(1) $(SASS_ARGS) && $(AUTOPREFIX_CMD)
 endif
 endif
 
 
 
 
-build/threads.css: FORCE build
-	$(call buildcss,client/scss/app.scss,$@)
+build/css: FORCE build
+	$(call buildcss,client/scss)
 
-css: build/threads.css
+css: build/css
 
 #
 # JAVASCRIPT
