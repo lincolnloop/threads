@@ -30,7 +30,7 @@ var DiscussionItemView = React.createClass({
         <li className="nav-item" data-slug={this.props.slug}>
           <a href={url}>
             <span className="item-content">
-              {this.props.title}
+              <h3>{this.props.title}</h3>
               <span className={classes}>
                 <span className="unread-count">{this.props.unread_count}</span>
               </span>
