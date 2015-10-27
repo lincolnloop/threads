@@ -31,8 +31,8 @@ function revCssUrls(filepath) {
         if (parsedUrl.hash) {
           replacement += parsedUrl.hash;
         }
-        replacement = 'url("' + replacement + '")';
-        console.log(' * ' + match + ' -> ' + 'url(\'' + replacement + '\')');
+        replacement = 'url(' + replacement + ')';
+        console.log(' * ' + match + ' -> ' + replacement);
       } else {
         console.log(" * Could not find hashed filename for '" + parsedUrl.pathname + "'");
       }
