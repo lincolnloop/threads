@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var Router = require('ampersand-router');
+var React = require('react');
 var log = require('loglevel');
 var store = require('../store');
 var urls = require('../urls');
@@ -9,6 +10,7 @@ var dispatcher = require('../dispatcher');
 var DiscussionDetailView = require('./DiscussionDetail.jsx');
 var DiscussionCreateView = require('./DiscussionCreate.jsx');
 var TeamDetailView = require('../teams/TeamDetail.jsx');
+var DiscussionDetailHeader = require('./DiscussionDetailHeader.jsx');
 
 var DiscussionRouter = Router.extend({
 
@@ -23,7 +25,7 @@ var DiscussionRouter = Router.extend({
     var team = store.find('teams', {'slug': teamSlug});
     var back = urls.get('team:detail', {'slug': teamSlug});
     // views
-    var discussionCreateView = DiscussionCreateView({
+    var discussionCreateView = React.createElement(DiscussionCreateView, {
       'teamUrl': team.url,
       'key': 'create-' + team.slug
     });
@@ -59,20 +61,22 @@ var DiscussionRouter = Router.extend({
       'navLevel': 15,
       'title': discussion ? discussion.title : team.name,
       'back': back,
-      'main': DiscussionDetailView(viewOptions)
+      'main': React.createElement(DiscussionDetailView, viewOptions)
     }).medium({
       'team': team,
-      'main': DiscussionDetailView(viewOptions)
+      'main': React.createElement(DiscussionDetailView, viewOptions)
     }).large({
       'team': team,
       'discussion': discussion,
-      'list': TeamDetailView({
+      'list': React.createElement(TeamDetailView, {
         'team': team,
-        'key': teamSlug
+        'key': teamSlug,
+        'discussionId': discussionId
       }),
-      'main': DiscussionDetailView(_.extend(viewOptions, {
+      'main': React.createElement(DiscussionDetailView, _.extend(viewOptions, {
         'loanimSelector': '.content-main'
-      }))
+      })),
+      'headerContextView': React.createElement(DiscussionDetailHeader)
     }).render();
   }
 });

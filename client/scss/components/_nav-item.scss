@@ -1,0 +1,112 @@
+.nav-item {
+
+
+  a {
+    display: block;
+    min-height: 44px;
+
+    padding: 0px;
+    border-bottom: none;
+    font-weight: 300;
+    background: rgb(252, 252, 252);
+
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-touch-callout: none;
+
+    &:active {
+      background: $light-gray;
+    }
+
+    &:hover {
+      background: rgb(250, 250, 250);
+    }
+
+    .item-content {
+      position: relative;
+      display: block;
+      padding-top: 18px;
+      padding-bottom: 17px;
+      padding-left: 25px;
+      min-height: 44px;
+      border-bottom: 1px solid $light-gray;
+      color: $gray;
+      padding-right: 66px;
+      background: no-repeat calc(100% - 15px) center;
+      background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='%23c7c7cc'/></svg>");
+      background-size: 10px 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  opacity: 0;
+   -webkit-animation: message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Safari 4+ */
+  -moz-animation:     message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Fx 5+ */
+  -o-animation:       message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Opera 12+ */
+  animation:          message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+}
+
+@keyframes nav-item-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// TODO: Move this in the component itself.
+.team-item {
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  a {
+    color: #ccc;
+  }
+  &:hover {
+    background: #2980b9;
+  }
+  &.active {
+    background: rgba(255,255,255, 0.2);
+    a {
+    color: #fff;
+    }
+  }
+}
+
+
+.unread-item {
+  position: absolute;
+  top: 50%;
+  right: 27px;
+  margin-top: -14px;
+  text-align: center;
+
+  .unread-count {
+    display: block;
+    color: $white;
+    background: transparent;
+    @include border-top-radius(35px);
+    @include border-bottom-radius(35px);
+    @include border-left-radius(35px);
+    @include border-right-radius(35px);
+    font-size: 0em;
+  }
+
+  &.unread .unread-count {
+    background: $orange;
+    font-size: 0.7em;
+    padding: 0 9px 0 9px;
+    margin: 4px;
+    line-height: 20px;
+  }
+}

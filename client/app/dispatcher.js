@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var SmallLayout = require('./layout/Small.jsx');
 var MediumLayout = require('./layout/Medium.jsx');
 var LargeLayout = require('./layout/Large.jsx');
@@ -86,7 +87,7 @@ var dispatcher = {
     var layout = nextLayout ? nextLayout : this.layout;
 
     if ((window.innerWidth < 800 && layout === 'auto') || layout === 'compact') {
-        settings = {
+      settings = {
         'layout': SmallLayout,
         'props': this.nextSmallProps
       };
@@ -102,14 +103,10 @@ var dispatcher = {
       };
     }
 
-    if (!this.app || (nextLayout !== undefined && this.layout !== nextLayout)) {
-      this.app = React.renderComponent(
-        settings.layout(settings.props),
-        document.getElementById('main')
-      );
-    } else {
-        this.app.setProps(settings.props);
-    }
+    // create app element
+    var app = React.createElement(settings.layout, settings.props);
+    // render
+    ReactDOM.render(app, document.getElementById('main'));
 
     this.layout = layout;
   }

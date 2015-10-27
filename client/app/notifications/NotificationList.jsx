@@ -2,7 +2,6 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var classSet = require('react/lib/cx');
 var log = require('loglevel');
 var moment = require('moment');
 var React = require('react');

@@ -18,8 +18,7 @@ var MessageHeader = React.createClass({
     if (!user) {
       user = localStorage.getItem('anonUser');
     }
-    // convert to Date applies local time zone
-    var messageTime = new Date(this.props.date);
+
     var handleCollapse = false;
     //var handleCollapse = this.props.handleCollapse;
     return (
@@ -40,7 +39,7 @@ var MessageHeader = React.createClass({
         </div>
         <div className="date">
           <a href={permalink} className="permalink">
-            <time className="timeago" dateTime={messageTime}>{moment(messageTime).fromNow()}</time>
+            <time className="timeago" dateTime={this.props.date}>{moment.utc(this.props.date).local().fromNow()}</time>
           </a>
         </div>
       </div>

@@ -3,10 +3,10 @@
 var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
-var CSSTransitionGroup = require('react/lib/ReactCSSTransitionGroup');
+var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var store = require('../store');
-var Header = require('./SmallHeader.jsx');
-var Footer = require('./SmallFooter.jsx');
+var SmallHeader = require('./SmallHeader.jsx');
+var SmallFooter = require('./SmallFooter.jsx');
 
 var AppView = React.createClass({
 
@@ -21,18 +21,18 @@ var AppView = React.createClass({
     log.info('SmallAppView:render', this.state.transition);
     return (
       <section className="app small">
-        <Header title={this.props.title}
+        <SmallHeader title={this.props.title}
                 back={this.props.back}
                 contextView={this.props.headerContextView} />
         <div className="content-main">
-          {this.state.transition !== null ? 
-            <CSSTransitionGroup transitionName={this.state.transition}
-                                component={React.DOM.div}>
-            {this.props.main}
-            </CSSTransitionGroup> : <div>{this.props.main}</div>
-          }
+          {this.state.transition !== null ? React.createElement(ReactCSSTransitionGroup, {
+              transitionName: this.state.transition,
+              transitionEnterTimeout: 500,
+              transitionLeaveTimeout: 300,
+              component: 'div'
+            }, this.props.main) : React.createElement('div', null, this.props.main)}
         </div>
-        <Footer unreadNotifications={this.state.unreadNotifications} />
+        {React.createElement(SmallFooter, {unreadNotifications: this.state.unreadNotifications})}
       </section>
     );
   },
@@ -66,7 +66,5 @@ var AppView = React.createClass({
     });
   }
 });
-
-window.store = store;
 
 module.exports = AppView;

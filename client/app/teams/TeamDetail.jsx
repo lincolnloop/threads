@@ -1,6 +1,8 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
+var zepto = require('browserify-zepto');
 var log = require('loglevel');
 var dispatcher = require('../dispatcher');
 var eventsMixin = require('../mixins/eventsMixin');
@@ -12,6 +14,19 @@ var EmptyDiscussionListView = require('../discussions/EmptyDiscussionList.jsx');
 
 var TeamDetail = React.createClass({
   mixins: [loadingMixin, eventsMixin],
+
+  setActiveDiscussion: function() {
+    // --------------------
+    // Active discussion
+    // --------------------
+    // 1. reset current active
+    var listNode = ReactDOM.findDOMNode(this.refs.discussions);
+    zepto('.active', listNode).removeClass('active');
+    if (this.props.discussionId) {
+      // 2. set active node
+      zepto('[data-id="' + this.props.discussionId + '"]').addClass('active');
+    }
+  },
 
   handleLoadMore: function() {
     log.info('TeamDetail:fetchDiscussionsPagination');
@@ -106,20 +121,34 @@ var TeamDetail = React.createClass({
   componentDidMount: function() {
     // show loading animation on the header
     this.emitter.emit('ajax', {'loading': true});
-    store.get('discussions', {'team__slug': this.props.team.slug}).done(function(results) {
+    this.request = store.get('discussions', {'team__slug': this.props.team.slug}).done(function(results) {
       // stop loading animation on the header
       this.emitter.emit('ajax', {'loading': false});
       // determine if we should show "load more" button
       if (results.length && results.length === 20) {
         // there might be more than one page (not 100% sure)
-        this.setState({'page': 1});
+        try {
+          this.setState({'page': 1});
+        } catch(e) {
+          //debugger;
+        }
       } else {
         // there's only one page (100% confidence)
-        this.setState({'page': null});
+        try {
+          this.setState({'page': null});
+        } catch(e) {
+          //debugger;
+        }
       }
       // set main loading animation to false
       this.setState({'loading': false});
     }.bind(this));
+
+    this.setActiveDiscussion();
+  },
+
+  componentDidUpdate: function() {
+    this.setActiveDiscussion();
   },
 
   componentWillReceiveProps: function(nextProps) {
@@ -129,6 +158,10 @@ var TeamDetail = React.createClass({
     if (this.props.team.url !== nextProps.team.url) {
       this.fetchDiscussions();
     }
+  },
+
+  componentWillUnmount: function() {
+    log.debug('TeamDetail.unmount', this.request);
   }
 
 });

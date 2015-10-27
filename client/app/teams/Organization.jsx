@@ -13,7 +13,7 @@ var OrganizationView = React.createClass({
         React.DOM.h3({'className': 'org-header'}, this.props.name),
         React.DOM.ul({'className': 'team-list'},
           this.props.teams.map(function(team) {
-            return TeamView(_.extend({'key': team.slug}, team));
+            return React.createElement(TeamView, _.extend({'key': team.slug}, team));
           })
         )
       )

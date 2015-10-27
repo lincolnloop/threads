@@ -1,0 +1,60 @@
+// Typography
+///////////////////////////////////////////////////////////////////////////////
+$sans-serif: $helvetica;
+$serif: $georgia;
+
+$base-font-family: $sans-serif;
+$header-font-family: $base-font-family;
+
+// Sizes
+///////////////////////////////////////////////////////////////////////////////
+$base-font-size: 1em;
+$base-line-height: $base-font-size * 1.5;
+$base-border-radius: 0;
+
+// Colors
+///////////////////////////////////////////////////////////////////////////////
+
+// $blue: #477DCA;
+$blue: #2980b9;
+$light-blue: rgba(255,115,63, 1);
+$blue-translucent: rgba(41,128,185, 0.9);
+$dark-blue: #123849;
+$dark-blue-translucent: rgba(18, 56, 73, 0.9);
+$orange: rgba(255,115,63, 1);
+$green: rgba(124,190,62, 1);
+$gray: #555;
+$light-gray: #e1e0e5;
+$white: rgba(255,255,255, 1);
+
+$dark-gray: #6d6d72;
+$medium-gray: #999;
+
+$light-red: #FBE3E4;
+$light-yellow: #FFF6BF;
+$light-green: #E6EFC2;
+$darkLight: rgb(33,55,66);
+
+$grayLight: #f7f7f8;
+
+
+
+
+// Body Color
+$base-body-color: white;
+
+//  Font Colors
+$base-font-color: $dark-gray;
+$base-accent-color: $blue;
+
+//  Text Link Colors
+$base-link-color: $base-accent-color;
+$hover-link-color: $base-accent-color;
+
+// Border color
+$base-border-color: $light-gray;
+
+// Flash Colors
+$error-color: $light-red;
+$notice-color: $light-yellow;
+$success-color: $light-green;

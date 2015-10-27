@@ -5,7 +5,7 @@ var moment = require('moment');
 var React = require('react');
 var urls = require('../urls');
 var store = require('../store');
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 
 var DiscussionItemView = React.createClass({
   render: function() {
@@ -22,23 +22,22 @@ var DiscussionItemView = React.createClass({
       'discussion_id': this.props.id,
       'slug': this.props.slug
     });
-    var classes = classSet({
+    var classes = classnames({
       'unread-item': true,
       'unread': this.props.unread_count !== 0 ? true : false
     });
     return (
-        <li className="nav-item" data-slug={this.props.slug}>
+        <li className="nav-item" data-id={this.props.id}>
           <a href={url}>
             <span className="item-content">
-              {this.props.title}
+              <h3>{this.props.title}</h3>
               <span className={classes}>
                 <span className="unread-count">{this.props.unread_count}</span>
               </span>
               {latest ? <span className="latest">
-                {latest.url === this.props.message ? "Started by "+latestUser.name+" " :
-                latestUser.name+" replied "}
+                {latest.url === this.props.message ? <span><span>Started by </span><span className="user-name">{latestUser.name} </span></span> : <span><span className="user-name">{latestUser.name}</span><span> replied </span></span>}
                 <span className="timeago" dateTime={latest.date_created}>
-                  {moment(latest.date_created).fromNow()}
+                  {moment.utc(latest.date_created).local().fromNow()}
                 </span>
               </span> : null}
             </span>

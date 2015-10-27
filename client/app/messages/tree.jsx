@@ -3,11 +3,11 @@
 var _ = require('underscore');
 var Backbone = require('backbone');
 var React = require('react');
+var classnames = require('classnames');
 var log = require('loglevel');
 var config = require('../utils/config');
 var urls = require('../urls');
 var store = require('../store');
-var classSet = require('react/lib/cx');
 var MessageItem = require('./Message.jsx');
 var ForkedMessage = require('./ForkedMessage.jsx');
 var ForkedDiscussionLink = require('./ForkedDiscussionLink.jsx');
@@ -50,7 +50,7 @@ var MessageTreeView = React.createClass({
 
   render: function() {
     var replies = store.findAll('messages', {'parent': this.props.message.url});
-    var classes = classSet({
+    var classes = classnames({
       'message': true,
       'message-collapsed': this.state.collapsed
     });
@@ -60,7 +60,7 @@ var MessageTreeView = React.createClass({
       return (<span />);
     }
     if (replies && replies.length) {
-      repliesView = React.DOM.div({className: "message-children"},
+      repliesView = React.createElement('div', {className: "message-children"},
           _.map(replies, function(message) {
             var votes = _.map(this.props.message.votes, function(voteId) {
               // clone vote so we don't change the store object when doing vote.user = 'user';
@@ -70,7 +70,7 @@ var MessageTreeView = React.createClass({
               return vote;
             });
           // recursively using JSX causes issues. Falling back to regular JS.
-          return MessageTreeView({
+          return React.createElement(MessageTreeView, {
             'key': message.url,
             'message': message,
             'replies': message.children,
@@ -83,7 +83,7 @@ var MessageTreeView = React.createClass({
       React.DOM.div({'className': classes},
         this.isForked() && this.isDiscussionMessage() ? 
           <ForkedDiscussionLink parent={this.props.message.root} /> : null,
-        MessageView({
+        React.createElement(MessageView, {
           'key': this.props.discussion.url,
           'message': this.props.message,
           'discussion': this.props.discussion,
