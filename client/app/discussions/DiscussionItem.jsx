@@ -27,7 +27,7 @@ var DiscussionItemView = React.createClass({
       'unread': this.props.unread_count !== 0 ? true : false
     });
     return (
-        <li className="nav-item" data-slug={this.props.slug}>
+        <li className="nav-item" data-id={this.props.id}>
           <a href={url}>
             <span className="item-content">
               <h3>{this.props.title}</h3>
@@ -37,17 +37,13 @@ var DiscussionItemView = React.createClass({
               {latest ? <span className="latest">
                 {latest.url === this.props.message ? <span><span>Started by </span><span className="user-name">{latestUser.name} </span></span> : <span><span className="user-name">{latestUser.name}</span><span> replied </span></span>}
                 <span className="timeago" dateTime={latest.date_created}>
-                  {this.getTimeStamp(latest.date_created)}
+                  {moment.utc(latest.date_created).local().fromNow()}
                 </span>
               </span> : null}
             </span>
           </a>
         </li>
     );
-  },
-
-  getTimeStamp: function(timestamp) {
-    return moment(timestamp).fromNow();
   }
 });
 

@@ -149,7 +149,7 @@ var MessageView = React.createClass({
           <div className="message-actions">
             <a className={voteClasses} onClick={this.handleVote}>{hasUpVoted ? 'Liked' : 'Like'}</a>
             <a className="reply" href={urls.get('message:reply', urlKeys)}>Reply</a>
-            <a className="fork" href="#">Fork</a>
+            <a className="fork" href={urls.get('message:fork', urlKeys)}>fork</a>
             {false ? <a className="star" href="#">Star</a> : null}
             {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>Edit</a> : null}
           </div>

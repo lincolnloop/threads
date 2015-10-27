@@ -1,6 +1,7 @@
 'use strict';
 
 var Router = require('ampersand-router');
+var React = require('react');
 var dispatcher = require('../dispatcher');
 var NotificationList = require('./NotificationList.jsx');
 
@@ -15,17 +16,17 @@ var TeamRouter = Router.extend({
   },
 
   list: function() {
-
+    var view = React.createElement(NotificationList);
     return dispatcher.small({
       'animation': 'fadeIn',
       'navLevel': 25,
       'title': 'Notifications',
       'back': 'history',
-      'main': NotificationList()
+      'main': view
     }).medium({
-      'main': NotificationList()
+      'main': view
     }).large({
-      'list': NotificationList()
+      'list': view
     }).render();
   }
 });
