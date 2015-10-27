@@ -115,14 +115,14 @@ var TeamDetail = React.createClass({
         try {
           this.setState({'page': 1});
         } catch(e) {
-          debugger;
+          //debugger;
         }
       } else {
         // there's only one page (100% confidence)
         try {
           this.setState({'page': null});
         } catch(e) {
-          debugger;
+          //debugger;
         }
       }
       // set main loading animation to false
