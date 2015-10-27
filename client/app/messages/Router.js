@@ -80,7 +80,7 @@ var MessageRouter = Router.extend({
   },
 
   fork: function(teamSlug, discussionId, discussionSlug, messageId) {
-    var mainView = MessageForkView({
+    var mainView = React.createElement(MessageForkView, {
       'parent_url': urls.get('api:messageChange', {'message_id': messageId})
     });
     var team = store.find('teams', {'slug': teamSlug});
@@ -99,7 +99,7 @@ var MessageRouter = Router.extend({
     }).large({
       'team': team,
       'discussion': discussion,
-      'list': TeamDetailView({
+      'list': React.createElement(TeamDetailView, {
         'team': team,
         'key': teamSlug
       }),

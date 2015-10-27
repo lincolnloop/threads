@@ -11,14 +11,17 @@ var MarkdownView = require('../components/MarkdownTextarea.jsx');
 
 var MessageForkView = React.createClass({
 
-  handleSubmit: function() {
+  handleSubmit: function(evt) {
+    evt.preventDefault();
     var data = {
-      'url': this.props.parent_url + 'fork/',
-      'user': localStorage.getItem('user')
+      //'': 'overrideUrl',
+      //'url': ,
+      'title': 'test',
+      //'user': localStorage.getItem('user')
     };
     log.info(data);
-    store.add('messages', data).then(function(message) { // PUT -- POST
-      log.info('MessageFork:success2');
+    store._post(this.props.parent_url + 'fork/', data).then(function(message) { // PUT -- POST
+      log.info('MessageFork:success');
       // redirect
       //var kwargs = urls.resolve(window.location.pathname).kwargs;
       //var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
@@ -48,7 +51,6 @@ var MessageForkView = React.createClass({
             <div className="message-container" onClick={this.toggleExpand}>
 
             <div className="message-header">
-              <a className="collapse-button expand">{!this.state.expand ? "Expand" : "Collapse"}</a>
               <div className="avatar">
                 <img src={gravatar.get(author.email)} />
               </div>
@@ -60,9 +62,6 @@ var MessageForkView = React.createClass({
                 </a>
               </div>
             </div>
-              {this.state.expand ? <div className="message-content">
-                <div dangerouslySetInnerHTML={{__html: message.body}} />
-              </div> : null}
             </div>
           </div> : null}
           <button type="submit" className="btn btn-submit">Fork</button>
