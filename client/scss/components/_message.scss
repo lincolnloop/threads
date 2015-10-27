@@ -3,7 +3,7 @@
   padding-left: 0;
   margin-left: 2%;
   margin-top: 5px;
-  @include transition (margin-left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1));
+  transition: margin-left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   background:  rgba(12, 13, 13, 0.1);
 
   .message-children {
@@ -16,8 +16,6 @@
   opacity: 0;
   animation: message-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
 }
-
-
 
 @keyframes message-animation {
   0% {
@@ -35,8 +33,6 @@
     transform: translateY(0);
   }
 }
-
-
 
 &.message-collapsed .message-content, &.message-collapsed .message-footer {
   display: none;
@@ -83,7 +79,7 @@
     }
 
     .username {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
       line-height: 0.9em;
     }
@@ -121,7 +117,10 @@
   }
 
   .message-content {
-    padding: 0 22px 0 22px;
+    padding: 0 25px 25px 25px;
+    @media (min-width:768px) {
+      padding: 0px 50px 25px 71px;
+    }
     margin-top: 16px;
     padding-bottom: 50px;
     word-wrap: break-word;
@@ -144,82 +143,84 @@
       font-size: 0.8em;
       border-bottom: 1px solid $light-gray;
     }
+  }
 
-    .message-actions {
-      text-align: left;
-      padding-bottom: 10px;
-      padding-top: 20px;
-      height: 73px;
+  .message-actions {
+    text-align: left;
+    padding-bottom: 10px;
+    padding-top: 20px;
+    height: 73px;
 
-      > a {
-        display: inline-block;
-        overflow:hidden;
-        width: 33px;
-        height: 33px;
-        margin-right: 10px;
-        color: transparent;
-        font-size: 0/0;
-        overflow: hidden;
-        text-shadow: none;
-        @include transition-duration(0.2s);
-        @include transition-property (transform);
+    > a {
+      display: inline-block;
+      overflow:hidden;
+      margin-right: 10px;
+      color: $base-link-color;
+      font-size: 12px;
+      padding: 0 15px 0 15px;
+      border-radius: 2px;
+      background-color: #fff;
+      text-shadow: none;
+      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+    }
 
-        &:hover {
-          @include transform(scale(1.1));
-        }
-      }
+    .up-vote {
 
-      .up-vote {
-        background-color: $base-link-color;
-        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M14.053,7.07c-0.146-0.395,3.933-4.038,1.553-6.99c-0.557-0.691-2.446,3.305-5.128,5.115c-1.48,0.998-4.923,3.123-4.923,4.297v7.6c0,1.413,5.46,2.908,9.61,2.908c1.52,0,3.723-9.528,3.723-11.042C18.889,7.439,14.2,7.465,14.053,7.07z M4.444,7.175c-0.731,0-3.333,0.444-3.333,3.469v5.387c0,3.024,2.603,3.358,3.333,3.358c0.73,0-1.111-0.636-1.111-2.51V9.797C3.333,7.832,5.175,7.175,4.444,7.175z' fill='%23ffffff'/></svg>");
-        background-size: 50% auto;
-        background-position: center;
-        background-repeat: no-repeat;
+      // background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M14.053,7.07c-0.146-0.395,3.933-4.038,1.553-6.99c-0.557-0.691-2.446,3.305-5.128,5.115c-1.48,0.998-4.923,3.123-4.923,4.297v7.6c0,1.413,5.46,2.908,9.61,2.908c1.52,0,3.723-9.528,3.723-11.042C18.889,7.439,14.2,7.465,14.053,7.07z M4.444,7.175c-0.731,0-3.333,0.444-3.333,3.469v5.387c0,3.024,2.603,3.358,3.333,3.358c0.73,0-1.111-0.636-1.111-2.51V9.797C3.333,7.832,5.175,7.175,4.444,7.175z' fill='%23ffffff'/></svg>");
+      // background-size: 50% auto;
+      // background-position: center;
+      // background-repeat: no-repeat;
 
-        &.up-voted {
-          background-color: $orange;
-        }
-      }
-
-      &.up-vote .up-vote,
-      &.down-vote .down-vote {
-        font-weight: bold;
-      }
-
-      .reply {
-        background-color: $base-link-color;
-        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M20.191,18.029c0,0-2.222-10.815-11.972-10.815V2.918L0.191,10.09l8.028,7.434v-4.842C13.511,12.683,17.432,13.152,20.191,18.029z' fill='%23ffffff'/></svg>");
-        background-size: 50% auto;
-        background-position: center;
-        background-repeat: no-repeat;
-      }
-
-      .fork {
-        background-color: $base-link-color;
-        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path fill='%23ffffff' d='M12.4,8.2h8.8v2.9l8.3-4.8l-8.3-4.8v2.8H8.2C9.9,5.4,11.2,6.8,12.4,8.2z M21.2,19.6c-0.7-0.2-1.5-0.8-2.5-1.7c-2-1.9-4.1-5.1-6.3-7.9c-2.2-2.7-4.5-5.4-8.1-5.6H0.5v3.8h3.8c0.7,0,1.8,0.5,3.1,1.8c2,1.9,4.1,5.1,6.3,7.9c2.1,2.5,4.3,5.1,7.5,5.5v3l8.3-4.8l-8.3-4.8L21.2,19.6L21.2,19.6z'/></svg>");
-        background-size: 50% auto;
-        background-position: center;
-        background-repeat: no-repeat;
-        float: right;
-        margin-right: 0;
-      }
-
-      .star {
+      &.up-voted {
         background-color: $orange;
-        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><polygon fill='%23ffffff' points='15,0.9 18.4,11.4 29.4,11.4 20.5,17.8 23.9,28.3 15,21.8 6.1,28.3 9.5,17.8 0.6,11.4 11.6,11.4 '/></svg>");
-        background-size: 50% auto;
-        background-position: center;
-        background-repeat: no-repeat;
-        float: right;
       }
+    }
 
-      .edit {
+    &.up-vote .up-vote,
+    &.down-vote .down-vote {
+      font-weight: bold;
+    }
+
+    .reply {
+      // background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M20.191,18.029c0,0-2.222-10.815-11.972-10.815V2.918L0.191,10.09l8.028,7.434v-4.842C13.511,12.683,17.432,13.152,20.191,18.029z' fill='%23ffffff'/></svg>");
+      // background-size: 50% auto;
+      // background-position: center;
+      // background-repeat: no-repeat;
+    }
+
+    .fork {
+      // background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path fill='%23ffffff' d='M12.4,8.2h8.8v2.9l8.3-4.8l-8.3-4.8v2.8H8.2C9.9,5.4,11.2,6.8,12.4,8.2z M21.2,19.6c-0.7-0.2-1.5-0.8-2.5-1.7c-2-1.9-4.1-5.1-6.3-7.9c-2.2-2.7-4.5-5.4-8.1-5.6H0.5v3.8h3.8c0.7,0,1.8,0.5,3.1,1.8c2,1.9,4.1,5.1,6.3,7.9c2.1,2.5,4.3,5.1,7.5,5.5v3l8.3-4.8l-8.3-4.8L21.2,19.6L21.2,19.6z'/></svg>");
+      // background-size: 50% auto;
+      // background-position: center;
+      // background-repeat: no-repeat;
+      float: right;
+      margin-right: 0;
+    }
+
+    .star {
+      background-color: $orange;
+      // background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><polygon fill='%23ffffff' points='15,0.9 18.4,11.4 29.4,11.4 20.5,17.8 23.9,28.3 15,21.8 6.1,28.3 9.5,17.8 0.6,11.4 11.6,11.4 '/></svg>");
+      // background-size: 50% auto;
+      // background-position: center;
+      // background-repeat: no-repeat;
+      float: right;
+    }
+
+    .edit {
+      // background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path fill='%23ffffff' d='M5.9,18l6,6L26.5,9.6l-6-6L5.9,18z M21.6,7.2L9.5,19.2L8.3,18L20.4,6L21.6,7.2z M26.5,2.3l1.2,1.2 C29,4.9,29,7,27.7,8.4l-6-6C23,1,25.1,1,26.5,2.3z M10.3,24.8l-8.9,3.9l3.9-8.9L10.3,24.8z'/></svg>");
+      // background-size: 50% auto;
+      // background-position: center;
+      // background-repeat: no-repeat;
+    }
+  }
+
+  &:hover {
+    .message-actions {
+      > a {
         background-color: $base-link-color;
-        background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'><path fill='%23ffffff' d='M5.9,18l6,6L26.5,9.6l-6-6L5.9,18z M21.6,7.2L9.5,19.2L8.3,18L20.4,6L21.6,7.2z M26.5,2.3l1.2,1.2 C29,4.9,29,7,27.7,8.4l-6-6C23,1,25.1,1,26.5,2.3z M10.3,24.8l-8.9,3.9l3.9-8.9L10.3,24.8z'/></svg>");
-        background-size: 50% auto;
-        background-position: center;
-        background-repeat: no-repeat;
+        color: #fff;
       }
     }
   }
+
 }
