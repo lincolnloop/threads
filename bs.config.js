@@ -13,7 +13,7 @@ module.exports = {
     "!build/**.map"
   ],
   server: {
-    baseDir: ["build", "templates"],
+    baseDir: ["build"],
     index: "index.html",
     middleware: [historyApiFallback()]
   }

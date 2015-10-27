@@ -17,8 +17,8 @@
     "build-css": "make css",
     "browser-sync": "browser-sync start --config bs.config.js",
     "start": "make -j5 all watch=1 & npm run browser-sync",
-    "prod:deploy": "npm run dist && rsync -avz --chmod=g+w --omit-dir-times --delete ./dist/ usethreads.com:/var/www/usethreads.com",
-    "deploy": "npm run dist && rsync -avz --chmod=g+w --omit-dir-times --delete ./dist/ dev.usethreads.com:/var/www/dev.usethreads.com"
+    "prod:deploy": "make deploy prod=1",
+    "deploy": "make deploy"
   },
   "browserify": {
     "transform": [
