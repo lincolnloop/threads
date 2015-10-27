@@ -27,7 +27,7 @@ var MessageReplyView = React.createClass({
       var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
       app.history.navigate(url, {'trigger': true});
       //remove message from local storage
-      localStorage.removeItem('savedMessage');
+      localStorage.removeItem(this.getDraftId(this.state.team, this.state.message));
     }.bind(this));
   },
 
@@ -41,12 +41,44 @@ var MessageReplyView = React.createClass({
     }
   },
 
-  render: function() {
+  getDraftId: function (team, message) {
+    return 'draft-' + team.slug + '-' + message.id
+  },
+
+  handleChange : function() {
+      localStorage.setItem(this.getDraftId(this.state.team, this.state.message), this.refs.comment.getRawValue())
+  },
+
+  componentDidMount: function () {
+
     var kwargs = urls.resolve(window.location.pathname).kwargs;
     var team = store.find('teams', {'slug': kwargs.team_slug});
     var message = store.find('messages', {'id': parseInt(kwargs.message_id)});
     var author = message ? store.find('users', message.user) : null;
-    var savedMessage = localStorage.getItem('savedMessage');
+
+    var draftId = this.getDraftId(team, message);
+    var draft = draftId? localStorage.getItem(draftId) : null;
+
+    this.setState({
+      team: team,
+      message: message,
+      author: author,
+      draft: draft
+    });
+  },
+
+  render: function() {
+    var kwargs = urls.resolve(window.location.pathname).kwargs;
+    var message = store.find('messages', {'id': parseInt(kwargs.message_id)});
+
+    var author = this.state.author;
+    var message = this.state.message;
+    var team = this.state.team;
+    var draft = this.state.draft;
+
+    if (! this.state.team) {
+      return <div>loading</div>
+    }
     return (
       <div className="message-reply content-view">
         <form className="form-view" onSubmit={this.handleSubmit}>
@@ -79,17 +111,13 @@ var MessageReplyView = React.createClass({
                           submitLabel="Reply"
                           teamUrl={team.url}
                           ref="comment"
-                          defaultValue={savedMessage}
+                          defaultValue={draft}
                           onChange={this.handleChange}
                           required />
           </div>
         </form>
       </div>
     );
-  },
-
-  handleChange : function() {
-      localStorage.setItem('savedMessage', this.refs.comment.getRawValue());
   }
 });
 
