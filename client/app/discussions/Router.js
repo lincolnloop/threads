@@ -72,6 +72,7 @@ var DiscussionRouter = Router.extend({
       'back': back,
       'main': discussionCreateView,
     }).medium({
+      'list': React.createElement(TeamDiscussions, _.extend(viewOptions, {'loanimSelector': '.list-main'})),
       'main': discussionCreateView
     }).large({
       'main': discussionCreateView

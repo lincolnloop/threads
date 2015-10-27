@@ -27,8 +27,8 @@ var AppView = React.createClass({
         <div className="content-main">
           {this.state.transition !== null ? React.createElement(ReactCSSTransitionGroup, {
               transitionName: this.state.transition,
-              transitionEnterTimeout: 500,
-              transitionLeaveTimeout: 300,
+              transitionEnterTimeout: 2000,
+              transitionLeaveTimeout: 2000,
               component: 'div'
             }, this.props.main) : React.createElement('div', null, this.props.main)}
         </div>

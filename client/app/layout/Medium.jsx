@@ -17,7 +17,8 @@ var Footer = require('./SmallFooter.jsx');
 
 var AppView = React.createClass({
 
-  handleSearch: function() {
+  handleSearch: function(evt) {
+    evt.preventDefault();
     var query = ReactDOM.findDOMNode(this.refs.search).value;
     var team = this.props.team ? this.props.team.slug : '';
 
@@ -26,7 +27,6 @@ var AppView = React.createClass({
       url += '&team=' + team;
     }
     app.history.navigate(url, {'trigger': true});
-    return false;
   },
 
   getInitialState: function() {
