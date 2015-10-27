@@ -37,7 +37,7 @@ var DiscussionItemView = React.createClass({
               {latest ? <span className="latest">
                 {latest.url === this.props.message ? <span><span>Started by </span><span className="user-name">{latestUser.name} </span></span> : <span><span className="user-name">{latestUser.name}</span><span> replied </span></span>}
                 <span className="timeago" dateTime={latest.date_created}>
-                  {this.getTimeStamp(latest.date_created)}
+                  {moment.utc(latest.date_created).local().fromNow()}
                 </span>
               </span> : null}
             </span>
