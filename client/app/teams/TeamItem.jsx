@@ -8,10 +8,8 @@ var TeamView = React.createClass({
   render: function () {
     var linkStyle = {
       'fontSize': '13px',
-      'paddingTop': '8px',
-      'paddingBottom': '8px',
+      'display': 'block',
       'paddingLeft': '15px',
-      'height': '13px',
       'margin': '2px 0'
     }
     var unread = this.props.unread ? this.props.unread : '';

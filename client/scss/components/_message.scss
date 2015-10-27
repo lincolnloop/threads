@@ -112,12 +112,6 @@
       font-size: 0/0;
       overflow: hidden;
       text-shadow: none;
-      @include transition-duration(0.2s);
-      @include transition-property (transform);
-
-      &:hover {
-        @include transform(scale(1.1));
-      }
     }
   }
 
@@ -167,8 +161,8 @@
       border-radius: 2px;
       background: #fff;
       text-shadow: none;
-      // transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-      transition: background 200ms, border 200ms, box-shadow 200ms, color 200ms, bottom 200ms;
+      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      // transition: background 200ms, border 200ms, box-shadow 200ms, color 200ms, bottom 200ms;
       &:hover {
         background: #02ceff;
         border-color: #02ceff;
