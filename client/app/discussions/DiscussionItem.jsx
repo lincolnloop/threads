@@ -44,10 +44,6 @@ var DiscussionItemView = React.createClass({
           </a>
         </li>
     );
-  },
-
-  getTimeStamp: function(timestamp) {
-    return moment(timestamp).fromNow();
   }
 });
 
