@@ -10,6 +10,7 @@ var dispatcher = require('../dispatcher');
 var DiscussionDetailView = require('./DiscussionDetail.jsx');
 var DiscussionCreateView = require('./DiscussionCreate.jsx');
 var TeamDetailView = require('../teams/TeamDetail.jsx');
+var DiscussionDetailHeader = require('./DiscussionDetailHeader.jsx');
 
 var DiscussionRouter = Router.extend({
 
@@ -74,7 +75,8 @@ var DiscussionRouter = Router.extend({
       }),
       'main': React.createElement(DiscussionDetailView, _.extend(viewOptions, {
         'loanimSelector': '.content-main'
-      }))
+      })),
+      'headerContextView': React.createElement(DiscussionDetailHeader)
     }).render();
   }
 });

@@ -9,7 +9,7 @@ var HeaderCreateDiscussion = React.createClass({
     var url = urls.get('discussion:create:team', {'team_slug': this.props.team_slug});
     return (
       <span className="actions">
-        <a href={url} className="create">+</a>
+        <a href={url} className="create">create discussion</a>
       </span>
     );
   }
