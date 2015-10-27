@@ -41,7 +41,8 @@ var DiscussionRouter = Router.extend({
     });
 
     var discussionIntro = React.createElement(DiscussionIntro, {
-      'teamname': team.name
+      'teamname': team.name,
+      'team_slug': teamSlug
     });
 
     return dispatcher.small({
