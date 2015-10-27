@@ -14,7 +14,7 @@
     margin-left: 0px;
   }
   opacity: 0;
-  animation: message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+  animation: message-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
 }
 
 
@@ -22,7 +22,7 @@
 @keyframes message-animation {
   0% {
     opacity: 0;
-    transform: translateY(-100px);
+    transform: translateY(-10px);
   }
 
   70% {
