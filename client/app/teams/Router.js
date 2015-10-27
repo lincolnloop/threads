@@ -1,15 +1,12 @@
 'use strict';
 
-var _ = require('underscore');
 var React = require('react');
 var Router = require('ampersand-router');
 var log = require('loglevel');
 var dispatcher = require('../dispatcher');
 var store = require('../store');
-var HeaderCreateDiscussion = require('./HeaderCreateDiscussion.jsx');
 var HeaderReloadTeams = require('./HeaderReloadTeams.jsx');
 var OrganizationList = require('./OrganizationList.jsx');
-var TeamDetailView = require('./TeamDetail.jsx');
 
 var TeamRouter = Router.extend({
   /*
@@ -18,8 +15,7 @@ var TeamRouter = Router.extend({
    * No routes are handled here directly, but on the AppView instead.
   */
   routes: {
-    '': 'list',
-    ':team/': 'detail'
+    '': 'list'
   },
 
   list: function() {
@@ -31,39 +27,6 @@ var TeamRouter = Router.extend({
       'main': React.createElement(OrganizationList),
       'headerContextView': React.createElement(HeaderReloadTeams)
     }).medium().large().render();
-  },
-
-  detail: function(teamSlug) {
-    log.info('team:detail');
-    // fetch data
-    var team = store.find('teams', {'slug': teamSlug});
-    if (!team) {
-      return;
-    }
-    // views
-    var viewOptions = {
-      'team': team,
-      'key': teamSlug
-    };
-    var headerContextView = React.createElement(HeaderCreateDiscussion, {
-      'team_slug': teamSlug
-    });
-
-    return dispatcher.small({
-      'navLevel': 5,
-      'title': team.name,
-      'back': '/',
-      'main': React.createElement(TeamDetailView, viewOptions),
-      'headerContextView': headerContextView
-    }).medium({
-      'team': team,
-      'main': React.createElement(TeamDetailView, _.extend(viewOptions, {'loanimSelector': '.content-main'})),
-      'headerContextView': headerContextView
-    }).large({
-      'team': team,
-      'list': React.createElement(TeamDetailView, _.extend(viewOptions, {'loanimSelector': '.list-main'})),
-      'headerContextView': headerContextView
-    }).render();
   }
 });
 

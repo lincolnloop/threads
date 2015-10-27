@@ -12,7 +12,7 @@ var HeaderUnread = React.createClass({
     this.setState({
       'unreads': _.rest(this.state.unreads)
     });
-    return false;
+    evt.preventDefault();
   },
 
   getInitialState: function() {
