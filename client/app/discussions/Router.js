@@ -10,6 +10,7 @@ var dispatcher = require('../dispatcher');
 var DiscussionDetailView = require('./DiscussionDetail.jsx');
 var DiscussionCreateView = require('./DiscussionCreate.jsx');
 var TeamDiscussions = require('./TeamDiscussions.jsx');
+var DiscussionIntro = require('./DiscussionIntro.jsx');
 // headers
 var HeaderCreateDiscussion = require('./HeaderCreateDiscussion.jsx');
 var DiscussionDetailHeader = require('./DiscussionDetailHeader.jsx');
@@ -39,6 +40,10 @@ var DiscussionRouter = Router.extend({
       'team_slug': teamSlug
     });
 
+    var discussionIntro = React.createElement(DiscussionIntro, {
+      'teamname': team.name
+    });
+
     return dispatcher.small({
       'navLevel': 5,
       'title': team.name,
@@ -52,7 +57,8 @@ var DiscussionRouter = Router.extend({
     }).large({
       'team': team,
       'list': React.createElement(TeamDiscussions, _.extend(viewOptions, {'loanimSelector': '.list-main'})),
-      'headerContextView': headerContextView
+      'headerContextView': headerContextView,
+      'discussionIntro': discussionIntro
     }).render();
   },
 

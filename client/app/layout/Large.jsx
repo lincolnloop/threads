@@ -58,6 +58,7 @@ var AppView = React.createClass({
           <header className="col-header">
             {this.props.headerContextView}
           </header>
+          {this.props.discussionIntro}
           {this.props.main}
         </div>
       </section>
