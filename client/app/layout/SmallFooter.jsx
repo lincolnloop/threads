@@ -6,6 +6,7 @@ var React = require('react');
 var log = require('loglevel');
 var store = require('../store');
 var urls = require('../urls');
+var SelectorOverlay = require('./SelectorOverlay.jsx')
 
 var Footer = React.createClass({
 
@@ -37,7 +38,7 @@ var Footer = React.createClass({
       <footer id="bottom-nav">
         <ul>
           <li><a href="/" className="home icon">Home</a></li>
-          <li><a className="settings icon" data-layout='auto' onClick={this.props.handleLayoutClick}>Layout</a></li>
+          <SelectorOverlay handleLayoutClick={this.props.handleLayoutClick}/>
           <li><a href={urls.get('notifications')} className={notificationClasses}>
             <span className="notifications">{this.state.unreadNotifications}</span>
           </a></li>
