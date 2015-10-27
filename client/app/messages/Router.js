@@ -46,7 +46,7 @@ var MessageRouter = Router.extend({
       'list': React.createElement(TeamDetailView, {
         'team': team,
         'key': teamSlug,
-        'discussion': discussion
+        'discussionId': discussionId
       }),
       'main': mainView
     }).render();
@@ -74,7 +74,8 @@ var MessageRouter = Router.extend({
       'discussion': discussion,
       'list': React.createElement(TeamDetailView, {
         'team': team,
-        'key': teamSlug
+        'key': teamSlug,
+        'discussionId': discussionId
       }),
       'main': mainView
     }).render();
@@ -102,7 +103,8 @@ var MessageRouter = Router.extend({
       'discussion': discussion,
       'list': React.createElement(TeamDetailView, {
         'team': team,
-        'key': teamSlug
+        'key': teamSlug,
+        'discussionId': discussionId
       }),
       'main': mainView
     }).render();

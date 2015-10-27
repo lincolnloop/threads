@@ -1,6 +1,8 @@
 'use strict';
 
 var React = require('react');
+var ReactDOM = require('react-dom');
+var zepto = require('browserify-zepto');
 var log = require('loglevel');
 var dispatcher = require('../dispatcher');
 var eventsMixin = require('../mixins/eventsMixin');
@@ -20,9 +22,9 @@ var TeamDetail = React.createClass({
     // 1. reset current active
     var listNode = ReactDOM.findDOMNode(this.refs.discussions);
     zepto('.active', listNode).removeClass('active');
-    if (this.props.discussion) {
+    if (this.props.discussionId) {
       // 2. set active node
-      zepto('[data-slug="' + this.props.discussion.slug + '"]').addClass('active');
+      zepto('[data-id="' + this.props.discussionId + '"]').addClass('active');
     }
   },
 
@@ -145,7 +147,7 @@ var TeamDetail = React.createClass({
     this.setActiveDiscussion();
   },
 
-  componentWillUpdate: function() {
+  componentDidUpdate: function() {
     this.setActiveDiscussion();
   },
 

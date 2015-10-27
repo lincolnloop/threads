@@ -69,7 +69,8 @@ var DiscussionRouter = Router.extend({
       'discussion': discussion,
       'list': React.createElement(TeamDetailView, {
         'team': team,
-        'key': teamSlug
+        'key': teamSlug,
+        'discussionId': discussionId
       }),
       'main': React.createElement(DiscussionDetailView, _.extend(viewOptions, {
         'loanimSelector': '.content-main'
