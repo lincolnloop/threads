@@ -8,7 +8,7 @@ var store = require('../store');
 var MessageEditView = require('./MessageEdit.jsx');
 var MessageReplyView = require('./MessageReply.jsx');
 var MessageForkView = require('./MessageFork.jsx');
-var TeamDetailView = require('../teams/TeamDetail.jsx');
+var TeamDiscussions = require('../discussions/TeamDiscussions.jsx');
 
 var MessageRouter = Router.extend({
 
@@ -43,7 +43,7 @@ var MessageRouter = Router.extend({
     }).large({
       'team': team,
       'discussion': discussion,
-      'list': React.createElement(TeamDetailView, {
+      'list': React.createElement(TeamDiscussions, {
         'team': team,
         'key': teamSlug,
         'discussionId': discussionId
@@ -72,7 +72,7 @@ var MessageRouter = Router.extend({
     }).large({
       'team': team,
       'discussion': discussion,
-      'list': React.createElement(TeamDetailView, {
+      'list': React.createElement(TeamDiscussions, {
         'team': team,
         'key': teamSlug,
         'discussionId': discussionId
@@ -101,7 +101,7 @@ var MessageRouter = Router.extend({
     }).large({
       'team': team,
       'discussion': discussion,
-      'list': React.createElement(TeamDetailView, {
+      'list': React.createElement(TeamDiscussions, {
         'team': team,
         'key': teamSlug,
         'discussionId': discussionId

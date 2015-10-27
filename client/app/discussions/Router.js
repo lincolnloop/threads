@@ -9,15 +9,51 @@ var urls = require('../urls');
 var dispatcher = require('../dispatcher');
 var DiscussionDetailView = require('./DiscussionDetail.jsx');
 var DiscussionCreateView = require('./DiscussionCreate.jsx');
-var TeamDetailView = require('../teams/TeamDetail.jsx');
+var TeamDiscussions = require('./TeamDiscussions.jsx');
+// headers
+var HeaderCreateDiscussion = require('./HeaderCreateDiscussion.jsx');
 var DiscussionDetailHeader = require('./DiscussionDetailHeader.jsx');
 
 var DiscussionRouter = Router.extend({
 
   routes: {
+    ':team/': 'list',
     'discussion/create/:teamSlug/': 'create',
     ':teamSlug/:discussionId/:discussionSlug/': 'detail',
     ':teamSlug/:discussionId/:discussionSlug/#:messageId': 'detail'
+  },
+
+  list: function(teamSlug) {
+    log.info('discussion:detail');
+    // fetch data
+    var team = store.find('teams', {'slug': teamSlug});
+    if (!team) {
+      return;
+    }
+    // views
+    var viewOptions = {
+      'team': team,
+      'key': teamSlug
+    };
+    var headerContextView = React.createElement(HeaderCreateDiscussion, {
+      'team_slug': teamSlug
+    });
+
+    return dispatcher.small({
+      'navLevel': 5,
+      'title': team.name,
+      'back': '/',
+      'main': React.createElement(TeamDiscussions, viewOptions),
+      'headerContextView': headerContextView
+    }).medium({
+      'team': team,
+      'main': React.createElement(TeamDiscussions, _.extend(viewOptions, {'loanimSelector': '.content-main'})),
+      'headerContextView': headerContextView
+    }).large({
+      'team': team,
+      'list': React.createElement(TeamDiscussions, _.extend(viewOptions, {'loanimSelector': '.list-main'})),
+      'headerContextView': headerContextView
+    }).render();
   },
 
   create: function(teamSlug) {
@@ -68,7 +104,7 @@ var DiscussionRouter = Router.extend({
     }).large({
       'team': team,
       'discussion': discussion,
-      'list': React.createElement(TeamDetailView, {
+      'list': React.createElement(TeamDiscussions, {
         'team': team,
         'key': teamSlug,
         'discussionId': discussionId

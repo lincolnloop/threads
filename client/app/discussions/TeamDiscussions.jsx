@@ -12,7 +12,7 @@ var store = require('../store');
 var DiscussionListView = require('../discussions/DiscussionList.jsx');
 var EmptyDiscussionListView = require('../discussions/EmptyDiscussionList.jsx');
 
-var TeamDetail = React.createClass({
+var TeamDiscussions = React.createClass({
   mixins: [loadingMixin, eventsMixin],
 
   setActiveDiscussion: function() {
@@ -29,7 +29,7 @@ var TeamDetail = React.createClass({
   },
 
   handleLoadMore: function() {
-    log.info('TeamDetail:fetchDiscussionsPagination');
+    log.info('TeamDiscussions:fetchDiscussionsPagination');
     // fetch paginated discussions from the remote API
     // and update component state
     if (!this.state.page) {
@@ -84,7 +84,7 @@ var TeamDetail = React.createClass({
   },
 
   render: function() {
-    log.info('TeamDetail:render');
+    log.info('TeamDiscussions:render');
     var team = this.props.team;
     var createDiscussionUrl = urls.get('discussion:create:team', {
       team_slug: team.slug
@@ -161,9 +161,9 @@ var TeamDetail = React.createClass({
   },
 
   componentWillUnmount: function() {
-    log.debug('TeamDetail.unmount', this.request);
+    log.debug('TeamDiscussions.unmount', this.request);
   }
 
 });
 
-module.exports = TeamDetail;
+module.exports = TeamDiscussions;
