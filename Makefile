@@ -11,7 +11,7 @@ build:
 
 build/assets: build
 	# Just symlink them. No processing necessary
-	ln -sf ../client/assets $@
+	ln -s ../client/assets $@
 
 assets: build/assets
 
