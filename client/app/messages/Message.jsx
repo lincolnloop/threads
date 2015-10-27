@@ -105,7 +105,7 @@ var MessageView = React.createClass({
     });
     var urlKeys = _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs);
     // TODO: This needs to query the store, not the message
-    var hasUpVoted = _.find(votes, function(vote) { 
+    var hasUpVoted = _.find(votes, function(vote) {
       return vote.user === localStorage.getItem('user');
     });
     var canEdit = this.props.message.user === localStorage.getItem('user');
@@ -122,21 +122,21 @@ var MessageView = React.createClass({
       <div className={classes}>
         <a name={'m' + message.id} className="anchor" />
 
-        <MessageHeader date={message.date_created} 
+        <MessageHeader date={message.date_created}
                        messageId={message.id}
-                       user={message.user} 
+                       user={message.user}
                        handleCollapse={this.props.handleCollapse} />
         <MessageContent body={message.body} />
 
         <div className="message-footer">
           <div className={messageAttachmentClasses}>
-            {attachments.length ? 
+            {attachments.length ?
               <a className="attachments-link" onClick={this.toggleAttachments}>
-                <span className="attachments-count">{attachments.length}</span> Attachments: 
-              </a> 
+                <span className="attachments-count">{attachments.length}</span> Attachments:
+              </a>
             : null}
             <div className="message-attachments-list">
-              {this.state.expandAttachments ? 
+              {this.state.expandAttachments ?
                 <ul className="attachment-list">
                   {_.map(attachments, function(attachment) {
                     return <Attachment attachment={attachment} />
@@ -147,11 +147,11 @@ var MessageView = React.createClass({
           </div>
           {votes.length ? React.createElement(VotesListView,{'votes': votes}) : null}
           <div className="message-actions">
-            <a className={voteClasses} onClick={this.handleVote}>{hasUpVoted ? 'liked' : 'like'}</a>
-            <a className="reply" href={urls.get('message:reply', urlKeys)}>reply</a>
-            <a className="fork" href="#">fork</a>
-            {false ? <a className="star" href="#">star</a> : null}
-            {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>edit</a> : null}
+            <a className={voteClasses} onClick={this.handleVote}>{hasUpVoted ? 'Liked' : 'Like'}</a>
+            <a className="reply" href={urls.get('message:reply', urlKeys)}>Reply</a>
+            <a className="fork" href={urls.get('message:fork', urlKeys)}>fork</a>
+            {false ? <a className="star" href="#">Star</a> : null}
+            {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>Edit</a> : null}
           </div>
         </div>
       </div>

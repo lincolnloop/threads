@@ -13,6 +13,19 @@ var EmptyDiscussionListView = require('../discussions/EmptyDiscussionList.jsx');
 var TeamDetail = React.createClass({
   mixins: [loadingMixin, eventsMixin],
 
+  setActiveDiscussion: function() {
+    // --------------------
+    // Active discussion
+    // --------------------
+    // 1. reset current active
+    var listNode = ReactDOM.findDOMNode(this.refs.discussions);
+    zepto('.active', listNode).removeClass('active');
+    if (this.props.discussion) {
+      // 2. set active node
+      zepto('[data-slug="' + this.props.discussion.slug + '"]').addClass('active');
+    }
+  },
+
   handleLoadMore: function() {
     log.info('TeamDetail:fetchDiscussionsPagination');
     // fetch paginated discussions from the remote API
@@ -115,19 +128,25 @@ var TeamDetail = React.createClass({
         try {
           this.setState({'page': 1});
         } catch(e) {
-          debugger;
+          //debugger;
         }
       } else {
         // there's only one page (100% confidence)
         try {
           this.setState({'page': null});
         } catch(e) {
-          debugger;
+          //debugger;
         }
       }
       // set main loading animation to false
       this.setState({'loading': false});
     }.bind(this));
+
+    this.setActiveDiscussion();
+  },
+
+  componentWillUpdate: function() {
+    this.setActiveDiscussion();
   },
 
   componentWillReceiveProps: function(nextProps) {

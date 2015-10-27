@@ -1,5 +1,6 @@
 .nav-item {
 
+
   a {
     display: block;
     min-height: 44px;
@@ -16,6 +17,10 @@
       background: $light-gray;
     }
 
+    &:hover {
+      background: rgb(250, 250, 250);
+    }
+
     .item-content {
       position: relative;
       display: block;
@@ -25,18 +30,36 @@
       min-height: 44px;
       border-bottom: 1px solid $light-gray;
       color: $gray;
-
       padding-right: 66px;
-      // background: no-repeat -webkit-calc(100% - 15px) center;
-      // background: no-repeat -moz-calc(100% - 15px) center;
       background: no-repeat calc(100% - 15px) center;
-      //@include calcNoRepeat(background, '100% - 15px');
       background-image: url("data:image/svg+xml;charset=utf-8,<svg viewBox='0 0 60 120' xmlns='http://www.w3.org/2000/svg'><path d='m60 61.5-38.25 38.25-9.75-9.75 29.25-28.5-29.25-28.5 9.75-9.75z' fill='%23c7c7cc'/></svg>");
       background-size: 10px 20px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
+  }
+  opacity: 0;
+   -webkit-animation: message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Safari 4+ */
+  -moz-animation:     message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Fx 5+ */
+  -o-animation:       message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Opera 12+ */
+  animation:          message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+}
+
+@keyframes nav-item-animation {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  70% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -49,8 +72,11 @@
   a {
     color: #ccc;
   }
+  &:hover {
+    background: #2980b9;
+  }
   &.active {
-    background: rgba(255,255,255, 0.1);
+    background: rgba(255,255,255, 0.2);
     a {
     color: #fff;
     }

@@ -83,17 +83,6 @@ var AppView = React.createClass({
       // 2. set active team
       zepto('[data-slug="' + teamSlug + '"]').addClass('active');
     }
-
-    // --------------------
-    // Active discussion
-    // --------------------
-    // 1. reset current active
-    var listNode = ReactDOM.findDOMNode(this.refs.list);
-    zepto('.active', listNode).removeClass('active');
-    if (this.props.discussion) {
-      // 2. set active node
-      zepto('[data-slug="' + this.props.discussion.slug + '"]').addClass('active');
-    }
   },
 
   componentWillReceiveProps: function() {
