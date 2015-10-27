@@ -9,29 +9,14 @@
   right: 0;
   width: 100%;
   height: 100%;
-
   background: #fff url(../assets/spinner.svg) no-repeat center;
-  // transition: all .5s cubic-bezier(0.250,0.460,0.450,0.940);
-  //  -webkit-animation: loading-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Safari 4+ */
-  // -moz-animation:     loading-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Fx 5+ */
-  // -o-animation:       loading-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Opera 12+ */
-  // animation:          loading-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
-
+  transition: all .5s cubic-bezier(0.250,0.460,0.450,0.940);
 }
 
-
 @keyframes loading-animation {
-    0% {
-      opacity: 1;
-    }
-
-    70% {
-      opacity: 0;
-    }
-
-    100% {
-      opacity: 0;
-    }
+  0% { opacity: 1; }
+  70% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
 // threads icon
@@ -59,7 +44,6 @@
   50% { opacity: 0.6; }
   100% { opacity: 1; }
 }
-
 
 // loading header animated border style
 .loading-header {

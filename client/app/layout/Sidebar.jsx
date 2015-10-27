@@ -8,21 +8,14 @@ var OrganizationList = require('../teams/OrganizationList.jsx');
 var store = require('../store');
 var teamUtils = require('../teams/utils');
 var urls = require('../urls');
-var Header = require('./SmallHeader.jsx');
-var Footer = require('./SmallFooter.jsx');
+var SelectorOverlay = require('./SelectorOverlay.jsx');
 
 var SidebarView = React.createClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
-      'configurationOverlay': false
+      unreadNotifications: false
     }
-  },
-
-  toggleConfigurationOverlay: function(event) {
-    this.setState({
-      'configurationOverlay': !this.state.configurationOverlay
-    });
   },
 
   render: function() {
@@ -35,27 +28,18 @@ var SidebarView = React.createClass({
       'user-notifications': true,
       'is-unread': this.state.unreadNotifications ? true : false
     });
-    var overlayClasses = classnames({
-      'configuration-overlay': true,
-      'active': this.state.configurationOverlay
-    });
 
     return (
       <nav className="nav-main">
         <ul className="nav-settings">
           <li><a href="/" className="home icon">Home</a></li>
-          <li><a href={urls.get('notifications')} className={notificationClasses}>
-            <span className="notifications">{this.state.unreadNotifications}</span>
-          </a></li>
-          <li className="configuration">
-            <a className="settings icon" onClick={this.toggleConfigurationOverlay}>Settings</a>
-            <div className={overlayClasses} onClick={this.props.handleLayoutClick}>
-              <a data-layout="auto">Auto</a>
-              <a data-layout="compact">Compact</a>
-              <a data-layout="focused">Focused</a>
-              <a data-layout="full">Full</a>
-            </div>
+          <li>
+            <a href={urls.get('notifications')} className={notificationClasses}>
+              <span className="notifications">{this.state.unreadNotifications}</span>
+            </a>
+
           </li>
+          <SelectorOverlay handleLayoutClick={this.props.handleLayoutClick} />
         </ul>
         {React.createElement(OrganizationList, {
           'organizations': organizations

@@ -65,3 +65,25 @@
     }
   }
 }
+
+
+footer#bottom-nav {
+    .configuration {
+      position: relative;
+
+      .configuration-overlay {
+        display: none;
+      }
+
+      .configuration-overlay.active {
+        display: block;
+        position: absolute;
+        left: -40%;
+        top: -40px;
+        width: 140%;
+        height: auto;
+        background: #444;
+        z-index: 3;
+      }
+    }
+}
