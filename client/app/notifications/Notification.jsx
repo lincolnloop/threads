@@ -33,7 +33,7 @@ var NotificationView = React.createClass({
         <span className="notification-title">{notification.title} </span>
         <div className="notification-meta" >
           <span className="notification-type"></span>
-          <span className="date">{moment(new Date(notification.date_created)).fromNow()}.</span>
+          <span className="date">{moment.utc(notification.date_created).local().fromNow()}.</span>
         </div>
       </div></a>
     </li>
