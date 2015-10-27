@@ -25,9 +25,10 @@ var SearchView = React.createClass({
       }
     });
   },
-  handleLoadMore: function() {
+  handleLoadMore: function(evt) {
     // don't allow a new query if still loading
     if (this.state.loading === true) {
+      evt.preventDefault();
       return false;
     }
     this.setState({'loading': true});
@@ -44,7 +45,8 @@ var SearchView = React.createClass({
       });
     }.bind(this));
   },
-  handleSubmit: function() {
+  handleSubmit: function(evt) {
+    evt.preventDefault();
     var query = ReactDOM.findDOMNode(this.refs.query).value;
     var team = ReactDOM.findDOMNode(this.refs.team).value;
     var page = 1;
@@ -70,7 +72,6 @@ var SearchView = React.createClass({
         'page': response.page
       });
     }.bind(this));
-    return false;
   },
 
   getInitialState: function() {

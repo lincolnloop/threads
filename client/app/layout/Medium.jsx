@@ -11,13 +11,14 @@ var OrganizationList = require('../teams/OrganizationList.jsx');
 var store = require('../store');
 var teamUtils = require('../teams/utils');
 var urls = require('../urls');
-var Header = require('./SmallHeader.jsx');
 var Sidebar = require('./Sidebar.jsx');
+var Header = require('./Header.jsx');
 var Footer = require('./SmallFooter.jsx');
 
 var AppView = React.createClass({
 
-  handleSearch: function() {
+  handleSearch: function(evt) {
+    evt.preventDefault();
     var query = ReactDOM.findDOMNode(this.refs.search).value;
     var team = this.props.team ? this.props.team.slug : '';
 
@@ -26,7 +27,6 @@ var AppView = React.createClass({
       url += '&team=' + team;
     }
     app.history.navigate(url, {'trigger': true});
-    return false;
   },
 
   getInitialState: function() {
@@ -41,18 +41,8 @@ var AppView = React.createClass({
       <section className="app medium">
         <Sidebar handleLayoutClick={this.props.handleLayoutClick} />
         <div className="content-main">
-          <header id="top-nav">
-            <form className="list-search" onSubmit={this.handleSearch}>
-              {this.props.team ?
-                <span className="list-search-team">{this.props.team.name}</span>
-              : null}
-              <input type="text"
-                     ref="search"
-                     className="list-search-input"
-                     defaultValue={query}
-                     placeholder="" />
-            </form>
-          </header>
+          <Header title={this.props.title}
+                  contextView={this.props.headerContextView} />
           {this.props.main}
         </div>
       </section>

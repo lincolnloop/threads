@@ -1,6 +1,7 @@
 'use strict';
 
 var Router = require('ampersand-router');
+var React = require('react');
 var log = require('loglevel');
 var qs = require('query-string');
 var dispatcher = require('../dispatcher');
@@ -23,16 +24,16 @@ var Router = Router.extend({
         'navLevel': 25,
         'title': 'Search Threads',
         'back': '/',
-        'main': Search()
+        'main': React.createElement(Search)
       }).medium({
-        'main': SearchResults({
+        'main': React.createElement(SearchResults, {
           'query': qo.query,
           'team': qo.team,
           'loanimSelector': '.content-main'
         }),
         'team': team
       }).large({
-        'list': SearchResults({
+        'list': React.createElement(SearchResults, {
           'query': qo.query,
           'team': qo.team,
           'loanimSelector': '.list-main'

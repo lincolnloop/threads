@@ -71,6 +71,11 @@ var DiscussionRouter = Router.extend({
       'teamUrl': team.url,
       'key': 'create-' + team.slug
     });
+    // views
+    var viewOptions = {
+      'team': team,
+      'key': teamSlug
+    };
     // layout setup
     return dispatcher.small({
       'navLevel': 10,
@@ -80,6 +85,7 @@ var DiscussionRouter = Router.extend({
     }).medium({
       'main': discussionCreateView
     }).large({
+      'list': React.createElement(TeamDiscussions, _.extend(viewOptions, {'loanimSelector': '.list-main'})),
       'main': discussionCreateView
     }).render();
   },
