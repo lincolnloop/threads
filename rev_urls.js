@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 
-/* Rewrites CSS URLs in build/versioned based on manifest.txt */
+/* Rewrites CSS URLs in dist based on manifest.txt */
 
 var fs = require('fs');
 var path = require('path');
 var url = require('url');
-var BASEPATH = 'build/versioned';
+var BASEPATH = 'dist';
 var manifestPath = path.join(BASEPATH, 'manifest.txt');
+var htmlPath = path.join(BASEPATH, 'index.html');
 
 function revCssUrls(filepath) {
   /* Search for url(...) in CSS and try to replace with versioned filename */
@@ -53,6 +54,8 @@ manifestContent.split('\n').forEach(function (line) {
   }
 });
 
+var html = fs.readFileSync(htmlPath, 'utf8');
+
 // iterate over manifest, updating files in place
 Object.keys(manifest).forEach(function (sourceFile) {
   if (sourceFile.endsWith('.css')) {
@@ -63,4 +66,9 @@ Object.keys(manifest).forEach(function (sourceFile) {
       console.log("Saved '" + manifest[sourceFile] + "'");
     });
   }
+
+  html = html.replace(sourceFile, manifest[sourceFile]);
 });
+
+fs.writeFileSync(htmlPath, html);
+console.log("Saved '" + htmlPath + "'");

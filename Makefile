@@ -1,5 +1,7 @@
 NPM_BIN := $(shell pwd)/node_modules/.bin
+SRC_DIR = client
 BUILD_DIR = build
+DIST_DIR = dist
 
 
 $(BUILD_DIR):
@@ -10,12 +12,19 @@ $(BUILD_DIR):
 # ASSETS
 # ======
 
-$(BUILD_DIR)/assets: $(BUILD_DIR)
-	rsync -av client/assets/ $@
+$(BUILD_DIR)/assets: $(SRC_DIR)/assets $(BUILD_DIR)
+	rsync -av $</ $@
 
 assets: $(BUILD_DIR)/assets
 
+#
+# HTML
+# ======
 
+$(BUILD_DIR)/index.html: $(SRC_DIR)/index.html $(BUILD_DIR)
+	cp -f $< $@
+
+html: $(BUILD_DIR)/index.html
 
 #
 # CSS
@@ -26,7 +35,7 @@ assets: $(BUILD_DIR)/assets
 
 # default args to node-sass
 OUTPUT_DIR = $(BUILD_DIR)/css
-SASS_ARGS = --include-path=client/scss --output=$(OUTPUT_DIR)
+SASS_ARGS = --include-path=$(SRC_DIR)/scss --output=$(OUTPUT_DIR)
 WITH_SOURCEMAPS = --source-map=true --source-map-contents=true --source-map-embed=true
 AUTOPREFIX_CMD = $(NPM_BIN)/postcss --use=autoprefixer --autoprefixer.browsers "last 2 versions" --replace $(OUTPUT_DIR)/*.css
 
@@ -50,7 +59,7 @@ endif
 
 
 $(BUILD_DIR)/css: FORCE $(BUILD_DIR)
-	$(call buildcss,client/scss)
+	$(call buildcss,$(SRC_DIR)/scss)
 
 css: $(BUILD_DIR)/css
 
@@ -71,40 +80,57 @@ endif
 
 
 $(BUILD_DIR)/threads.js: FORCE build
-	$(call buildjs,client/index.js,$@)
+	$(call buildjs,$(SRC_DIR)/index.js,$@)
 
 js: $(BUILD_DIR)/threads.js
 
 
 clean:
 	rm -rf $(BUILD_DIR)/*
+	rm -rf $(DIST_DIR)/*
 
 all: assets css js html
 
-VERSION_DIR = $(BUILD_DIR)/versioned
-MANIFEST = $(VERSION_DIR)/manifest.txt
+MANIFEST = $(DIST_DIR)/manifest.txt
 
 # Create versioned directory, sync build into it and create an empty manifest
-$(VERSION_DIR): FORCE
+$(DIST_DIR): FORCE
 	mkdir -p $@
-	rsync -av --exclude=versioned $(BUILD_DIR)/ $@
+	rsync -av $(BUILD_DIR)/ $@
 	/bin/echo -n > $(MANIFEST)
 
 # Create copies of the files with MD5 hashes
 #     The `rev` trickery allows us to search for the last "."
 #     in the file name as if it were the first.
-$(VERSION_DIR)/%: $(VERSION_DIR) FORCE
+$(DIST_DIR)/%: $(DIST_DIR) FORCE
 	$(eval VERSIONED := $(shell echo $@ | rev | sed "s/\./.$$( md5 -q $@ | cut -c -10 | rev)./" | rev))
 	cp $@ $(VERSIONED)
-	@echo "$$(echo $@ | cut -d'/' -f3-),$$(echo $(VERSIONED) | cut -d'/' -f3-)" >> $(MANIFEST)
+	@echo "$$(echo $@ | cut -d'/' -f2-),$$(echo $(VERSIONED) | cut -d'/' -f2-)" >> $(MANIFEST)
 
 
-# Get a list of all files that are in `build` but not `build/versioned`
-FILES_TO_VERSION := $(shell find ${BUILD_DIR} -type file -not -path "${BUILD_DIR}/versioned/*")
+# Get a list of all files that are in `build`
+BUILT_FILES := $(shell find ${BUILD_DIR} -type file)
 
-# Convert build/file.ext -> build/versioned/file.ext
-version: $(patsubst $(BUILD_DIR)/%,$(VERSION_DIR)/%,$(FILES_TO_VERSION))
-	node rev_css_urls.js
+
+# Convert build/file.ext -> dist/file.ext
+distribute: $(patsubst $(BUILD_DIR)/%,$(DIST_DIR)/%,$(BUILT_FILES))
+	node rev_urls.js
+
+
+ifdef prod
+SERVER = usethreads.com
+else
+SERVER = dev.usethreads.com
+endif
+
+upload:
+	rsync -avz --chmod=g+w --omit-dir-times --delete ./$(DIST_DIR)/ $(SERVER):/var/www/$(SERVER)
+
+deploy:
+	$(MAKE) clean
+	$(MAKE) -j5 all
+	$(MAKE) distribute
+	$(MAKE) upload
 
 
 
