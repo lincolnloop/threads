@@ -43,7 +43,8 @@ var MessageRouter = Router.extend({
       'discussion': discussion,
       'list': React.createElement(TeamDetailView, {
         'team': team,
-        'key': teamSlug
+        'key': teamSlug,
+        'discussion': discussion
       }),
       'main': mainView
     }).render();
