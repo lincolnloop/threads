@@ -1,7 +1,7 @@
 .message {
   position: relative;
   padding-left: 0;
-  margin-left: 2%;
+  margin-left: 10px;
   margin-top: 5px;
   transition: margin-left 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   background:  rgba(12, 13, 13, 0.1);
@@ -14,7 +14,11 @@
     margin-left: 0px;
   }
   opacity: 0;
-  animation: message-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+
+  -webkit-animation: message-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Safari 4+ */
+  -moz-animation:    message-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Fx 5+ */
+  -o-animation:      message-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Opera 12+ */
+  animation:         message-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
 }
 
 @keyframes message-animation {
@@ -64,13 +68,14 @@
 
     .avatar {
       position: relative;
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
       // background: #ddd;
       text-align: center;
       float: left;
       img {
-        border-radius: 30px;
+        border-radius: 50%;
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
       }
     }
 
@@ -133,8 +138,8 @@
 
   .message-footer {
     border-top: 1px solid $light-gray;
-    padding-left: 22px;
-    padding-right: 22px;
+    padding-left: 35px;
+    padding-right: 35px;
 
     .votes-list {
       display: inline-block;
@@ -150,6 +155,7 @@
     padding-bottom: 10px;
     padding-top: 20px;
     height: 73px;
+    margin-left: -10px;
 
     > a {
       display: inline-block;
@@ -159,27 +165,31 @@
       font-size: 12px;
       padding: 0 15px 0 15px;
       border-radius: 2px;
-      background-color: #fff;
+      background: #fff;
       text-shadow: none;
-      transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      // transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+      transition: background 200ms, border 200ms, box-shadow 200ms, color 200ms, bottom 200ms;
+      &:hover {
+        background: #02ceff;
+        border-color: #02ceff;
+        box-shadow: 0 0 0 3px #80E6FF;
+      }
+      &.up-voted {
+        background-color: #fff;
+        color: $orange;
+        &:hover {
+          border-color: $orange;
+          box-shadow: 0 0 0 3px #80E6FF;
+        }
+      }
     }
 
-    .up-vote {
+
 
       // background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M14.053,7.07c-0.146-0.395,3.933-4.038,1.553-6.99c-0.557-0.691-2.446,3.305-5.128,5.115c-1.48,0.998-4.923,3.123-4.923,4.297v7.6c0,1.413,5.46,2.908,9.61,2.908c1.52,0,3.723-9.528,3.723-11.042C18.889,7.439,14.2,7.465,14.053,7.07z M4.444,7.175c-0.731,0-3.333,0.444-3.333,3.469v5.387c0,3.024,2.603,3.358,3.333,3.358c0.73,0-1.111-0.636-1.111-2.51V9.797C3.333,7.832,5.175,7.175,4.444,7.175z' fill='%23ffffff'/></svg>");
       // background-size: 50% auto;
       // background-position: center;
       // background-repeat: no-repeat;
-
-      &.up-voted {
-        background-color: $orange;
-      }
-    }
-
-    &.up-vote .up-vote,
-    &.down-vote .down-vote {
-      font-weight: bold;
-    }
 
     .reply {
       // background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path d='M20.191,18.029c0,0-2.222-10.815-11.972-10.815V2.918L0.191,10.09l8.028,7.434v-4.842C13.511,12.683,17.432,13.152,20.191,18.029z' fill='%23ffffff'/></svg>");
@@ -219,8 +229,10 @@
       > a {
         background-color: $base-link-color;
         color: #fff;
+        &.up-voted {
+          background-color: $orange;
+        }
       }
     }
   }
-
 }

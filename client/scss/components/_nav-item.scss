@@ -40,7 +40,10 @@
     }
   }
   opacity: 0;
-  animation: nav-item-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+   -webkit-animation: message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Safari 4+ */
+  -moz-animation:     message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Fx 5+ */
+  -o-animation:       message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Opera 12+ */
+  animation:          message-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
 }
 
 @keyframes nav-item-animation {
@@ -69,8 +72,11 @@
   a {
     color: #ccc;
   }
+  &:hover {
+    background: #2980b9;
+  }
   &.active {
-    background: rgba(255,255,255, 0.1);
+    background: rgba(255,255,255, 0.2);
     a {
     color: #fff;
     }

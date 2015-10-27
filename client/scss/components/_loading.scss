@@ -12,8 +12,11 @@
 
   background: #fff url(../assets/spinner.svg) no-repeat center;
   transition: all .5s cubic-bezier(0.250,0.460,0.450,0.940);
-  animation:
-    loading-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+   -webkit-animation: loading-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Safari 4+ */
+  -moz-animation:     loading-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Fx 5+ */
+  -o-animation:       loading-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Opera 12+ */
+  animation:          loading-animation .5s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+
 }
 
 
