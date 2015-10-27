@@ -75,7 +75,7 @@ var DiscussionDetailView = React.createClass({
       // we need to update the title.
       this.emitter.emit('header:update', {
         'title': discussion.title,
-        'contextView': HeaderUnread({
+        'contextView': React.createElement(HeaderUnread, {
           'unreads': unreads
         })
       });
@@ -103,7 +103,7 @@ var DiscussionDetailView = React.createClass({
     var MessageTree;
     if (this.state.discussion) {
       message = store.find('messages', this.state.discussion.message);
-      MessageTree = MessageTreeView({
+      MessageTree = React.createElement(MessageTreeView, {
         'key': message ? message.cid : 'empty-message',
         'message': message,
         'discussion': this.state.discussion

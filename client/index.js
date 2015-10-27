@@ -9,6 +9,7 @@ var log = require('loglevel');
 var app = require('./app/AppRouter');
 var config = require('./app/utils/config');
 var urls = require('./app/urls');
+var ReactDOM = require('react-dom');
 //var FPSCounter = require('./vendor/FPSCounter');
 // --------------------
 // routers
@@ -81,18 +82,20 @@ new NotificationRouter();
 new SearchRouter();
 new UserRouter();
 
-React.renderComponent(SignInView({
-  success: function() {
-    log.info('signIn.fetch.done');
-    app.history.start({
-      'pushState': true
-    });
-    // check if the current url is the signIn url
-    // if it is, navigate to "homepage"
-    var pathURL = window.location.pathname;
-    var signInURL = urls.get('signIn');
-    if (pathURL === signInURL) {
-      app.history.navigate(urls.get('dashboard'), {'trigger': true});
+ReactDOM.render(
+  React.createElement(SignInView, {
+    success: function() {
+      log.info('signIn.fetch.done');
+      app.history.start({
+        'pushState': true
+      });
+      // check if the current url is the signIn url
+      // if it is, navigate to "homepage"
+      var pathURL = window.location.pathname;
+      var signInURL = urls.get('signIn');
+      if (pathURL === signInURL) {
+        app.history.navigate(urls.get('dashboard'), {'trigger': true});
+      }
     }
-  }
-}), document.getElementById('main'));
+  }), document.getElementById('main')
+);

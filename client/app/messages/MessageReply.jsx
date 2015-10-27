@@ -7,11 +7,13 @@ var log = require('loglevel');
 var gravatar = require('../utils/gravatar');
 var moment = require('moment');
 var urls = require('../urls');
+var store = require('../store');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
 
 var MessageReplyView = React.createClass({
 
-  handleSubmit: function() {
+  handleSubmit: function(evt) {
+    evt.preventDefault();
     var data = {
       'raw_body': this.refs.comment.getRawValue(),
       'parent': this.props.parent_url,
@@ -25,7 +27,6 @@ var MessageReplyView = React.createClass({
       var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
       app.history.navigate(url, {'trigger': true});
     }.bind(this));
-    return false;
   },
 
   toggleExpand: function() {
@@ -57,9 +58,9 @@ var MessageReplyView = React.createClass({
               </div>
               <div className="username">{author.name}</div>
               <div className="date">
-                <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624" 
+                <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624"
                    className="permalink">
-                  <time className="timeago" datetime="2014-02-06T22:02:23.791">{moment(message.date_created).fromNow()}</time>
+                  <time className="timeago" dateTime="{message.date_created}">{moment.utc(message.date_created).local().fromNow()}</time>
                 </a>
               </div>
             </div>

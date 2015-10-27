@@ -2,6 +2,7 @@
 
 var app = require('../AppRouter');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var store = require('../store');
 var urls = require('../urls');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
@@ -9,7 +10,8 @@ var MarkdownView = require('../components/MarkdownTextarea.jsx');
 var DiscussionCreateView = React.createClass({
 
   handleSubmit: function(evt) {
-    var title = this.refs.title.getDOMNode().value;
+    evt.preventDefault();
+    var title = ReactDOM.findDOMNode(this.refs.title).value;
     store.add('discussions', {
       'title': title,
       'message': {
@@ -26,7 +28,6 @@ var DiscussionCreateView = React.createClass({
       });
       app.history.navigate(url, {'trigger': true});
     });
-    return false;
   },
 
   render: function () {

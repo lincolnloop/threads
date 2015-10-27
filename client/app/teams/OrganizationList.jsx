@@ -27,7 +27,7 @@ var OrganizationListView = React.createClass({
     return (
       <div className="content-view">
         {this.state.organizations.map(function(org) {
-          return OrganizationView(_.extend({'key': org.name}, org));
+          return React.createElement(OrganizationView, _.extend({'key': org.name}, org));
         })}
       </div>
     );

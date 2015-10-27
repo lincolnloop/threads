@@ -9,7 +9,7 @@ var DiscussionListView = React.createClass({
     return (
       React.DOM.ul({'className': 'discussion-list content-view', 'ref': 'list'},
         _.map(this.props.discussions, function(discussion) {
-          return DiscussionItem(_.extend({'key': discussion.url}, discussion));
+          return React.createElement(DiscussionItem, _.extend({'key': discussion.url}, discussion));
         })
       )
     );

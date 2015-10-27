@@ -2,7 +2,6 @@
 
 var _ = require('underscore');
 var React = require('react');
-var classSet = require('react/lib/cx');
 var truncate = require('../utils/truncate');
 
 var Attachment = React.createClass({

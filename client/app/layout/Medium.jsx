@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var app = require('../AppRouter');
-var classSet = require('react/lib/cx');
+var ReactDOM = require('react-dom');
 var log = require('loglevel');
 var qs = require('query-string');
 var React = require('react');
@@ -18,7 +18,7 @@ var Footer = require('./SmallFooter.jsx');
 var AppView = React.createClass({
 
   handleSearch: function() {
-    var query = this.refs.search.getDOMNode().value;
+    var query = ReactDOM.findDOMNode(this.refs.search).value;
     var team = this.props.team ? this.props.team.slug : '';
 
     var url = urls.get('search:q') + '?query=' + query;
