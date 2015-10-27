@@ -13,6 +13,7 @@ var teamUtils = require('../teams/utils');
 var urls = require('../urls');
 var ListHeader = require('./ListHeader.jsx');
 var Sidebar = require('./Sidebar.jsx');
+var Header = require('./Header.jsx');
 var Footer = require('./SmallFooter.jsx');
 
 var AppView = React.createClass({
@@ -55,9 +56,8 @@ var AppView = React.createClass({
           {this.props.list}
         </nav>
         <div className="content-main">
-          <header className="col-header">
-            {this.props.headerContextView}
-          </header>
+          <Header title={this.props.title}
+                  contextView={this.props.headerContextView} />
           {this.props.main}
         </div>
       </section>

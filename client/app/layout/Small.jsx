@@ -5,7 +5,7 @@ var log = require('loglevel');
 var React = require('react');
 var ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 var store = require('../store');
-var SmallHeader = require('./SmallHeader.jsx');
+var Header = require('./Header.jsx');
 var SmallFooter = require('./SmallFooter.jsx');
 
 var AppView = React.createClass({
@@ -21,7 +21,7 @@ var AppView = React.createClass({
     log.info('SmallAppView:render', this.state.transition);
     return (
       <section className="app small">
-        <SmallHeader title={this.props.title}
+        <Header title={this.props.title}
                 back={this.props.back}
                 contextView={this.props.headerContextView} />
         <div className="content-main">
