@@ -47,7 +47,7 @@
     "MD5": "~1.2.0",
     "alt": "^0.17.6",
     "ampersand-router": "^3.0.2",
-    "amygdala": "~0.3.0",
+    "amygdala": "~0.5.0",
     "autoprefixer": "^6.0.3",
     "babelify": "^6.4.0",
     "backbone": "^1.2.3",
