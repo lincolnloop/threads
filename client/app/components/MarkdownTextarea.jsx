@@ -36,14 +36,14 @@ var MarkdownView = React.createClass({
       'type': 'POST',
       'url': config.apiUrl + urls.get('api:message:preview'),
       'contentType': 'application/json',
-      'data': JSON.stringify({'raw_body': this.state.draft}),
+      'data': JSON.stringify({'raw_body': this.props.value}),
       'headers': {
         'Authorization': 'Token ' + localStorage.apiKey
       },
       success: function (evt) {
         // TODO: Fix the API.
         // It's returning an array for the body.
-        this.setState({'previewValue': evt.body[0], 'rawValue': this.getRawValue()});
+        this.setState({'previewValue': evt.body[0]});
       }.bind(this)
     });
   },
@@ -60,7 +60,6 @@ var MarkdownView = React.createClass({
 
   render: function() {
     // render preview and textarea separately.
-    var defaultValue = this.props.data && this.props.data.raw_body;
     var submitLabel = this.props.submitLabel ? this.props.submitLabel : 'Submit';
     return (
       <div className="markdown-textarea">
