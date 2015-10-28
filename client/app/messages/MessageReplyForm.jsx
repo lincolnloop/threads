@@ -12,18 +12,19 @@ var MarkdownView = require('../components/MarkdownTextarea.jsx');
 
 var MessageReplyForm = React.createClass({
 
-
   getInitialState: function () {
     return {draft: false};
   },
 
   componentDidMount: function () {
-    console.log('MRF:cdM', this.state, this.props)
+    var kwargs = urls.resolve(window.location.pathname).kwargs;
+    var team = store.find('teams', {'slug': kwargs.team_slug});
     var draft = localStorage.getItem(this.getDraftId());
-    console.log(this.getDraftId(), draft)
     if (draft) {
-      console.log('setState')
-      this.setState({draft: draft});
+      this.setState({
+        draft: draft,
+        team: team
+      });
     }
   },
 
@@ -38,11 +39,10 @@ var MessageReplyForm = React.createClass({
     store.add('messages', data).then(function(message) {
       log.info('MessageReply:success');
 
-
-      var kwargs = urls.resolve(window.location.pathname).kwargs;
-      console.log('removing draft', this.getDraftId())
       localStorage.removeItem(this.getDraftId());
+
       // redirect to discussion detail
+      var kwargs = urls.resolve(window.location.pathname).kwargs;
       var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
       app.history.navigate(url, {'trigger': true});
     }.bind(this));
@@ -66,18 +66,16 @@ var MessageReplyForm = React.createClass({
   },
 
   render: function() {
-    console.log('form render', this.state)
-    var kwargs = urls.resolve(window.location.pathname).kwargs;
 
-    //TODO
-    var team = store.find('teams', {'slug': kwargs.team_slug});
+    if (this.state.team) {
+
     return (
       <div className="message-reply content-view">
         <form className="form-view" onSubmit={this.handleSubmit}>
           <div className="form-view-fields">
           <MarkdownView placeholder="Comment.."
                         submitLabel="Reply"
-                        teamUrl={team.url}
+                        teamUrl={this.state.team.url}
                         ref="comment"
                         value={this.state.draft? this.state.draft : null}
                         onChange={this.updateDraft}
@@ -87,6 +85,8 @@ var MessageReplyForm = React.createClass({
       </div>
     );
   }
+  return <div>Loading</div>;
+}
 });
 
 module.exports = MessageReplyForm;

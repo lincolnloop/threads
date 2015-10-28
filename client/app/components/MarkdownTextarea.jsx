@@ -23,12 +23,6 @@ var config = require('../utils/config');
 
 var MarkdownView = React.createClass({
 
-  getRawValue: function() {
-    //TODO
-    var $textarea = $(ReactDOM.findDOMNode(this.refs.textarea));
-    return $textarea.data('messageText');
-  },
-
   getTabClass: function(isActive) {
     return classnames({
       'tab-header-and-content': true,
@@ -42,7 +36,7 @@ var MarkdownView = React.createClass({
       'type': 'POST',
       'url': config.apiUrl + urls.get('api:message:preview'),
       'contentType': 'application/json',
-      'data': JSON.stringify({'raw_body': this.getRawValue()}),
+      'data': JSON.stringify({'raw_body': this.state.draft}),
       'headers': {
         'Authorization': 'Token ' + localStorage.apiKey
       },
@@ -59,20 +53,12 @@ var MarkdownView = React.createClass({
   },
 
   getInitialState: function() {
-    console.log('MT getInitialState', this.props)
     return {
-      //rawValue: this.props.defaultValue? this.props.defaultValue : null,
       'previewValue': null
     };
   },
-  // handleChange: function (event) {
-  //     console.log('handlechange')
-  //     this.setState({rawValue: event.target.value})
-  //     this.props.onChange(event)
-  // },
 
   render: function() {
-    console.log('MT render', this.props, this.state)
     // render preview and textarea separately.
     var defaultValue = this.props.data && this.props.data.raw_body;
     var submitLabel = this.props.submitLabel ? this.props.submitLabel : 'Submit';
