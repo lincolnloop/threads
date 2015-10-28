@@ -14,19 +14,16 @@ var MessageForkView = React.createClass({
   handleSubmit: function(evt) {
     evt.preventDefault();
     var data = {
-      //'': 'overrideUrl',
-      //'url': ,
-      'title': 'test',
-      //'user': localStorage.getItem('user')
+      'title': this.refs.title.value,
     };
-    log.info(data);
     store._post(this.props.parent_url + 'fork/', data).then(function(message) { // PUT -- POST
       log.info('MessageFork:success');
       // redirect
-      //var kwargs = urls.resolve(window.location.pathname).kwargs;
-      //var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
-      //app.history.navigate(url, {'trigger': true});
-      log.info(message);
+      var kwargs = urls.resolve(window.location.pathname).kwargs;
+      delete kwargs.message_id
+      kwargs['discussion_id'] = urls.resolve(JSON.parse(message).url).kwargs.discussion_id
+      var url = urls.get('discussion:detail', kwargs);
+      app.history.navigate(url, {'trigger': true});
     }.bind(this));
     return false;
   },
@@ -42,6 +39,7 @@ var MessageForkView = React.createClass({
           <div className="form-view-actions">
             <div className="form-view-fields">
               <input type="text"
+                     ref="title"
                      placeholder="New Title"/>
             </div>
           </div>
