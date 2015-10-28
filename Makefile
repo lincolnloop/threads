@@ -4,16 +4,16 @@ BUILD_DIR = build
 DIST_DIR = dist
 
 
+# Make build directory
 $(BUILD_DIR):
-	# Make build directory
 	mkdir -p $@
 
 #
 # ASSETS
 # ======
 
-$(BUILD_DIR)/assets: $(SRC_DIR)/assets $(BUILD_DIR)
-	rsync -av $</ $@
+$(BUILD_DIR)/assets: $(BUILD_DIR)
+	rsync -av $(SRC_DIR)/assets/ $@
 
 assets: $(BUILD_DIR)/assets
 
@@ -34,10 +34,10 @@ html: $(BUILD_DIR)/index.html
 #   It would require an intermediate directory and is not worth the complexity.
 
 # default args to node-sass
-OUTPUT_DIR = $(BUILD_DIR)/css
-SASS_ARGS = --include-path=$(SRC_DIR)/scss --output=$(OUTPUT_DIR)
+CSS_DIR = $(BUILD_DIR)/css
+SASS_ARGS = --include-path=$(SRC_DIR)/scss --output=$(CSS_DIR)
 WITH_SOURCEMAPS = --source-map=true --source-map-contents=true --source-map-embed=true
-AUTOPREFIX_CMD = $(NPM_BIN)/postcss --use=autoprefixer --autoprefixer.browsers "last 2 versions" --replace $(OUTPUT_DIR)/*.css
+AUTOPREFIX_CMD = $(NPM_BIN)/postcss --use=autoprefixer --autoprefixer.browsers "last 2 versions" --replace $(CSS_DIR)/*.css
 
 ifdef watch
 	debug = 1
@@ -58,7 +58,7 @@ endif
 
 
 
-$(BUILD_DIR)/css: FORCE $(BUILD_DIR)
+$(CSS_DIR): FORCE $(BUILD_DIR)
 	$(call buildcss,$(SRC_DIR)/scss)
 
 css: $(BUILD_DIR)/css
@@ -84,17 +84,10 @@ $(BUILD_DIR)/threads.js: FORCE build
 
 js: $(BUILD_DIR)/threads.js
 
-
-clean:
-	rm -rf $(BUILD_DIR)/*
-	rm -rf $(DIST_DIR)/*
-
-all: assets css js html
-
 MANIFEST = $(DIST_DIR)/manifest.txt
 
 # Create versioned directory, sync build into it and create an empty manifest
-$(DIST_DIR): FORCE
+$(DIST_DIR):
 	mkdir -p $@
 	rsync -av $(BUILD_DIR)/ $@
 	/bin/echo -n > $(MANIFEST)
@@ -102,7 +95,7 @@ $(DIST_DIR): FORCE
 # Create copies of the files with MD5 hashes
 #     The `rev` trickery allows us to search for the last "."
 #     in the file name as if it were the first.
-$(DIST_DIR)/%: $(DIST_DIR) FORCE
+$(DIST_DIR)/%: $(DIST_DIR)
 	$(eval VERSIONED := $(shell echo $@ | rev | sed "s/\./.$$( md5 -q $@ | cut -c -10 | rev)./" | rev))
 	cp $@ $(VERSIONED)
 	@echo "$$(echo $@ | cut -d'/' -f2-),$$(echo $(VERSIONED) | cut -d'/' -f2-)" >> $(MANIFEST)
@@ -113,7 +106,7 @@ BUILT_FILES := $(shell find ${BUILD_DIR} -type file)
 
 
 # Convert build/file.ext -> dist/file.ext
-distribute: $(patsubst $(BUILD_DIR)/%,$(DIST_DIR)/%,$(BUILT_FILES))
+version: $(patsubst $(BUILD_DIR)/%,$(DIST_DIR)/%,$(BUILT_FILES))
 	node rev_urls.js
 
 
@@ -124,19 +117,26 @@ SERVER = dev.usethreads.com
 endif
 
 upload:
-	rsync -avz --chmod=g+w --omit-dir-times --delete ./$(DIST_DIR)/ $(SERVER):/var/www/$(SERVER)
+	rsync -avz --chmod=g+w --omit-dir-times --delete \
+	$(DIST_DIR)/ $(SERVER):/var/www/$(SERVER)
 
 deploy:
 	$(MAKE) clean
 	$(MAKE) -j5 all
-	$(MAKE) distribute
+	$(MAKE) version
 	$(MAKE) upload
 
 
+
+clean:
+	rm -rf $(BUILD_DIR)/*
+	rm -rf $(DIST_DIR)/*
+
+all: assets css js html
 
 
 # Will always trigger a rebuild.
 # Needed since a single target can be built multiple ways (debug, watch, etc.)
 FORCE:
 
-.PHONY: all clean css js html assets build/versioned
+.PHONY: all clean css js html assets $(DIST_DIR)

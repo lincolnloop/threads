@@ -1,5 +1,4 @@
 'use strict';
-
 var _ = require('underscore');
 var Backbone = require('backbone');
 var classnames = require('classnames');
@@ -7,6 +6,7 @@ var clientconfig = require('clientconfig');
 var log = require('loglevel');
 var React = require('react');
 var eventsMixin = require('../mixins/eventsMixin');
+var app = require('../AppRouter');
 var store = require('../store');
 var urls = require('../urls');
 var Attachment = require('./Attachment.jsx');
@@ -16,6 +16,13 @@ var VotesListView = require('./VotesList.jsx');
 
 var MessageView = React.createClass({
   mixins: [eventsMixin],
+
+  handleReply: function(evt) {
+    evt.preventDefault();
+    var message = store.find('messages', this.props.message.url);
+    var url = urls.get('message:reply', _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs));
+    //app.history.navigate(url, {'trigger': true});
+  },
 
   handleFocusChange: function(info) {
     if (this.props.message.id === parseInt(info.id)) {
@@ -83,7 +90,8 @@ var MessageView = React.createClass({
   getInitialState: function() {
     return {
       'expandAttachments': false,
-      'focused': false
+      'focused': false,
+      'reply': false
     }
   },
 
@@ -148,7 +156,7 @@ var MessageView = React.createClass({
           {votes.length ? React.createElement(VotesListView,{'votes': votes}) : null}
           <div className="message-actions">
             <a className={voteClasses} onClick={this.handleVote}>{hasUpVoted ? 'Liked' : 'Like'}</a>
-            <a className="reply" href={urls.get('message:reply', urlKeys)}>Reply</a>
+            <a className="reply" onClick={this.handleReply}>Reply</a>
             <a className="fork" href={urls.get('message:fork', urlKeys)}>fork</a>
             {false ? <a className="star" href="#">Star</a> : null}
             {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>Edit</a> : null}

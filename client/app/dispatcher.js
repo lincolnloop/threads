@@ -7,6 +7,7 @@ var ReactDOM = require('react-dom');
 var SmallLayout = require('./layout/Small.jsx');
 var MediumLayout = require('./layout/Medium.jsx');
 var LargeLayout = require('./layout/Large.jsx');
+var LayoutStore = require('./layout/LayoutStore');
 
 var dispatcher = {
   // view dispatcher, shortcut for React.renderComponent
@@ -16,14 +17,6 @@ var dispatcher = {
   'nextSmallProps': undefined,
   'nextLargeProps': undefined,
 
-  handleLayoutClick: function(evt) {
-    if (evt.target.dataset.layout) {
-      this.render(evt.target.dataset.layout);
-    }
-    event.preventDefault();
-    return false;
-  },
-
   small: function(props) {
     // default props.
     // these get reset on every render unless overridden.
@@ -31,7 +24,6 @@ var dispatcher = {
     // - headerContextView > (add discussion button, unread items icon, etc..)
     // - animation > page transition for the new view
     var defaultProps = {
-      'handleLayoutClick': this.handleLayoutClick.bind(this),
       'loading': false,
       'headerContextView': null,
       'animation': 'horizontal',
@@ -46,8 +38,6 @@ var dispatcher = {
 
   medium: function(props) {
     var defaultProps = {
-      // change layout callback
-      'handleLayoutClick': this.handleLayoutClick.bind(this),
       // content for the main section
       'main': null,
       // the active team
@@ -59,8 +49,6 @@ var dispatcher = {
 
   large: function(props) {
     var defaultProps = {
-      // change layout callback
-      'handleLayoutClick': this.handleLayoutClick.bind(this),
       // content for the list section
       'list': null,
       // content for the main section
@@ -72,7 +60,7 @@ var dispatcher = {
     return this;
   },
 
-  render: function (nextLayout) {
+  render: function () {
     //
     // Wrapper around React.RenderComponent.
     // > Handles unmountComponent for situations where we're rendering
@@ -83,15 +71,16 @@ var dispatcher = {
     // Usage:
     // dispatcher.render();
     //
-    var settings;
-    var layout = nextLayout ? nextLayout : this.layout;
 
-    if ((window.innerWidth < 800 && layout === 'auto') || layout === 'compact') {
+    var settings;
+    var layoutState = LayoutStore.getState();
+
+    if (layoutState.mode === 'compact') {
       settings = {
         'layout': SmallLayout,
         'props': this.nextSmallProps
       };
-    } else if ((window.innerWidth > 1200 && layout === 'auto') || layout === 'full') {
+    } else if (layoutState.mode === 'full') {
       settings = {
         'layout': LargeLayout,
         'props': this.nextLargeProps
@@ -107,9 +96,9 @@ var dispatcher = {
     var app = React.createElement(settings.layout, settings.props);
     // render
     ReactDOM.render(app, document.getElementById('main'));
-
-    this.layout = layout;
   }
 };
+
+LayoutStore.listen(dispatcher.render.bind(dispatcher));
 
 module.exports = dispatcher;
