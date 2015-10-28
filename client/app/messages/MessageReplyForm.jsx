@@ -19,11 +19,13 @@ var MessageReplyForm = React.createClass({
   componentDidMount: function () {
     var kwargs = urls.resolve(window.location.pathname).kwargs;
     var team = store.find('teams', {'slug': kwargs.team_slug});
+    this.setState({
+      team: team,
+    });
     var draft = localStorage.getItem(this.getDraftId());
     if (draft) {
       this.setState({
         draft: draft,
-        team: team
       });
     }
   },
