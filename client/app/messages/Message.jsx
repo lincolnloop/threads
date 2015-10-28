@@ -13,6 +13,7 @@ var Attachment = require('./Attachment.jsx');
 var MessageHeader = require('./MessageHeader.jsx');
 var MessageContent = require('./MessageContent.jsx');
 var VotesListView = require('./VotesList.jsx');
+var LayoutStore = require('../layout/LayoutStore');
 
 var MessageView = React.createClass({
   mixins: [eventsMixin],
@@ -21,7 +22,15 @@ var MessageView = React.createClass({
     evt.preventDefault();
     var message = store.find('messages', this.props.message.url);
     var url = urls.get('message:reply', _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs));
-    //app.history.navigate(url, {'trigger': true});
+    // inline reply
+    var mode = LayoutStore.getState().mode;
+    // mobile answer
+    if (mode === 'compact') {
+      app.history.navigate(url, {'trigger': true});
+    } else {
+      log.debug('display message reply inline');
+      app.history.navigate(url, {'trigger': true});
+    }
   },
 
   handleFocusChange: function(info) {
