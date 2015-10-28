@@ -58,12 +58,13 @@ var MarkdownView = React.createClass({
   },
 
   getInitialState: function() {
+    console.log('MT getInitialState', this.props)
     return {
-      'previewValue': null,
-      'rawValue': this.props.defaultValue ? this.props.defaultValue : null
+      'previewValue': null
     };
   },
   render: function() {
+    console.log('MT render', this.props, this.state)
     // render preview and textarea separately.
     var defaultValue = this.props.data && this.props.data.raw_body;
     var submitLabel = this.props.submitLabel ? this.props.submitLabel : 'Submit';
@@ -76,7 +77,7 @@ var MarkdownView = React.createClass({
             {this.props.pre ? this.props.pre : null}
               <textarea ref="textarea"
                         placeholder={this.props.placeholder}
-                        defaultValue={this.state.rawValue}
+                        defaultValue={this.props.defaultValue}
                         onChange={this.props.onChange}
                         required={!!this.props.required} />
             {this.props.post ? this.props.post : null}

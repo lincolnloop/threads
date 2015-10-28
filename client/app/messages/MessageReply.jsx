@@ -17,13 +17,6 @@ var MessageReplyView = React.createClass({
     }
   },
 
-  getDraftId: function (team, message) {
-    return 'draft-' + team.slug + '-' + message.id
-  },
-
-  handleChange : function() {
-      localStorage.setItem(this.getDraftId(this.state.team, this.state.message), this.refs.comment.getRawValue())
-  },
 
   componentDidMount: function () {
 
@@ -31,7 +24,7 @@ var MessageReplyView = React.createClass({
     var team = store.find('teams', {'slug': kwargs.team_slug});
     var message = store.find('messages', {'id': parseInt(kwargs.message_id)});
     var author = message ? store.find('users', message.user) : null;
-
+    console.log('cdm', kwargs, team, message, author)
     var draftId = this.getDraftId(team, message);
     var draft = draftId? localStorage.getItem(draftId) : null;
 
