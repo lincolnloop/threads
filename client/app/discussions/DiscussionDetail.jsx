@@ -23,6 +23,9 @@ var DiscussionDetailView = React.createClass({
   // --------------------
   // Custom methods
   // --------------------
+  handleNewMessage: function() {
+    this.forceUpdate();
+  },
 
   navigateToHash: function() {
     var name = window.location.hash.replace('#', '');
@@ -85,16 +88,18 @@ var DiscussionDetailView = React.createClass({
   // --------------------
   // React lifecycle
   // --------------------
-  getInitialState: function() {
-    return {
-      'discussion': {}
-    };
-  },
-
   componentWillMount: function() {
     this.setState({
       'discussion': this.props.discussion
     });
+    // TODO: Rework this, maybe enable this event in the store
+    this.emitter.on('message:add', this.handleNewMessage);
+  },
+
+  getInitialState: function() {
+    return {
+      'discussion': {}
+    };
   },
 
   render: function() {
@@ -132,6 +137,8 @@ var DiscussionDetailView = React.createClass({
   componentWillUnmount: function() {
     log.info('DiscussionDetailView:componentWillUnmount');
     window.onhashchange = null;
+    // unbind message add handler
+    this.emitter.off('message:add', this.handleNewMessage);
   }
 });
 

@@ -5,8 +5,15 @@
     margin: 0;
     padding: 0;
     background: #2C3849;
+    position: absolute;
+    height: 46px;
+    width: 100%;
+
     .icon {
       height: 50px;
+    }
+    ul {
+      padding: 0;
     }
     li {
       display: inline-block;

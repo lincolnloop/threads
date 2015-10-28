@@ -9,17 +9,28 @@
 }
 
 .hint {
-  // align-items: flex-start;
-  // justify-content: flex-start;
-  // flex-direction: row;
-  // text-align: center;
   svg {
     width: 100px;
   }
 }
 
+.logo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  margin-left: 6px;
+  svg {
+    width: 140px;
+  }
+}
+
 .welcome-message {
   margin-bottom: 40px;
+  .salutation {
+    font-size: 18px;
+  }
 }
 
 .create-btn {

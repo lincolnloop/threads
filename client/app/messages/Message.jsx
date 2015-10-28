@@ -37,6 +37,13 @@ var MessageView = React.createClass({
     }
   },
 
+  handleReplySuccess: function() {
+    // hide reply box
+    this.setState({
+      'reply': false
+    });
+  },
+
   handleFocusChange: function(info) {
     if (this.props.message.id === parseInt(info.id)) {
       this.setState({'focused': true});
@@ -175,7 +182,8 @@ var MessageView = React.createClass({
             {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>Edit</a> : null}
           </div>
         </div>
-        {this.state.reply ? <MessageReplyForm parent_url={urls.get('api:messageChange', {'message_id': message.id})} /> : null}
+        {this.state.reply ? <MessageReplyForm parent_url={urls.get('api:messageChange', {'message_id': message.id})}
+                                              callback={this.handleReplySuccess} /> : null}
       </div>
     );
   },

@@ -28,11 +28,11 @@
     line-height: 17px;
     color: $gray;
     font-weight: 400;
+    min-height: 44px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
-
-    // white-space: nowrap;
-    // overflow: hidden;
-    // text-overflow: ellipsis;
     .username {
       font-weight: 600;
     }
@@ -41,8 +41,6 @@
       font-weight: 600;
       color: $base-link-color;
     }
-
-
 
     .notification-type {
       display: inline-block;
@@ -66,7 +64,6 @@
 
   }
 
-
   .avatar {
     position: relative;
     top: 0;
@@ -74,7 +71,6 @@
     bottom: 0;
     width: 32px;
     height: 32px;
-    // background: #ddd;
     text-align: center;
     img {
       border-radius: 30px;
