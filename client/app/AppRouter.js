@@ -1,13 +1,15 @@
 'use strict';
-
+var Alt = require('alt');
 var Router = require('ampersand-router');
 
-var AppRouter = Router.extend({
-  /*
-   * Main App Router
-   * No routes are handled here directly, 
-   * but on app routers initialized on index.js instead
-  */
-});
+/*
+ * Main App Router
+ * No routes are handled here directly, 
+ * but on app routers initialized on index.js instead
+*/
+var AppRouter = new Router();
 
-module.exports = new AppRouter();
+// alt
+AppRouter.alt = new Alt();
+
+module.exports = AppRouter;

@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "MD5": "~1.2.0",
+    "alt": "^0.17.6",
     "ampersand-router": "^3.0.2",
     "amygdala": "~0.3.0",
     "autoprefixer": "^6.0.3",

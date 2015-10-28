@@ -1,11 +1,15 @@
 var React = require('react');
 var classnames = require('classnames');
+var LayoutStore = require('./LayoutStore');
+var layoutActions = require('./actions');
 
 var SelectorOverlay = React.createClass({
 
-  getInitialState: function() {
-    return {
-      showOverlay: false
+  handleLayoutClick: function(evt) {
+    evt.preventDefault();
+    var layout = evt.target.dataset.layout;
+    if (layout) {
+      layoutActions.changeMode(layout);
     }
   },
 
@@ -15,17 +19,21 @@ var SelectorOverlay = React.createClass({
     });
   },
 
-  render: function() {
+  getInitialState: function() {
+    return {
+      showOverlay: false
+    }
+  },
 
+  render: function() {
     var overlayClasses = classnames({
       'configuration-overlay': true,
       'active': this.state.showOverlay
     });
-
     return (
         <li className="configuration">
           <a className="settings icon" onClick={this.toggleConfigurationOverlay}>Settings</a>
-          <div className={overlayClasses} onClick={this.props.handleLayoutClick}>
+          <div className={overlayClasses} onClick={this.handleLayoutClick}>
             <a data-layout="auto">Auto</a>
             <a data-layout="compact">Compact</a>
             <a data-layout="focused">Focused</a>
