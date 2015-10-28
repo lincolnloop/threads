@@ -77,6 +77,7 @@ var MarkdownView = React.createClass({
               <textarea ref="textarea"
                         placeholder={this.props.placeholder}
                         defaultValue={this.state.rawValue}
+                        onChange={this.props.onChange}
                         required={!!this.props.required} />
             {this.props.post ? this.props.post : null}
             </section>
