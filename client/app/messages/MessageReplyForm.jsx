@@ -30,7 +30,7 @@ var MessageReplyForm = React.createClass({
   handleSubmit: function(evt) {
     evt.preventDefault();
     var data = {
-      'raw_body': this.refs.comment.getRawValue(),
+      'raw_body': this.state.draft,
       'parent': this.props.parent_url,
       'read': true,
       'user': localStorage.getItem('user')
@@ -53,15 +53,16 @@ var MessageReplyForm = React.createClass({
     return 'draft-' + kwargs.team_slug + '-' + kwargs.discussion_id;
   },
 
-  updateDraft: function() {
+  updateDraft: function(event) {
     var kwargs = urls.resolve(window.location.pathname).kwargs;
     console.log('updateDraft', kwargs)
     localStorage.setItem(
       this.getDraftId(
         kwargs.team_slug,
         kwargs.discussion_id),
-      this.refs.comment.getRawValue()
+      event.target.value
     )
+    this.setState({draft: event.target.value})
   },
 
   render: function() {
@@ -78,7 +79,7 @@ var MessageReplyForm = React.createClass({
                         submitLabel="Reply"
                         teamUrl={team.url}
                         ref="comment"
-                        defaultValue={this.state.draft? this.state.draft : null}
+                        value={this.state.draft? this.state.draft : null}
                         onChange={this.updateDraft}
                         required />
           </div>
