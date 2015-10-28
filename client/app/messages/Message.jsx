@@ -182,8 +182,10 @@ var MessageView = React.createClass({
             {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>Edit</a> : null}
           </div>
         </div>
-        {this.state.reply ? <MessageReplyForm parent_url={urls.get('api:messageChange', {'message_id': message.id})}
-                                              callback={this.handleReplySuccess} /> : null}
+        {this.state.reply && (<MessageReplyForm
+          messageId={message.id}
+          parent_url={urls.get('api:messageChange', {'message_id': message.id})}
+          callback={this.handleReplySuccess} />)}
       </div>
     );
   },

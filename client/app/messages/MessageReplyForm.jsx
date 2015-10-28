@@ -59,7 +59,7 @@ var MessageReplyForm = React.createClass({
 
   getDraftId: function () {
     var kwargs = urls.resolve(window.location.pathname).kwargs;
-    return 'draft-' + kwargs.team_slug + '-' + kwargs.discussion_id;
+    return 'draft:team:' + kwargs.team_slug + ':discussion:' + kwargs.discussion_id + ':msg:' + this.props.messageId;
   },
 
   updateDraft: function(event) {
