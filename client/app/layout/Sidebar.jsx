@@ -9,7 +9,7 @@ var store = require('../store');
 var teamUtils = require('../teams/utils');
 var urls = require('../urls');
 var SelectorOverlay = require('./SelectorOverlay.jsx');
-
+var Logo = require('../components/Logo.jsx');
 var SidebarView = React.createClass({
 
   getInitialState: function () {
@@ -30,13 +30,14 @@ var SidebarView = React.createClass({
     });
 
     return (
-      <nav className="nav-main">
-        <header className="nav-settings">
+      <nav className='nav-main'>
+        <Logo />
+        <header className='nav-settings'>
         <ul>
-          <li><a href="/" className="home icon">Home</a></li>
+          <li><a href='/' className='home icon'>Home</a></li>
           <li>
             <a href={urls.get('notifications')} className={notificationClasses}>
-              <span className="notifications">{this.state.unreadNotifications}</span>
+              <span className='notifications'>{this.state.unreadNotifications}</span>
             </a>
 
           </li>

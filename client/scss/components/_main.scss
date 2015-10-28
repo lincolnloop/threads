@@ -9,12 +9,19 @@
 }
 
 .hint {
-  // align-items: flex-start;
-  // justify-content: flex-start;
-  // flex-direction: row;
-  // text-align: center;
   svg {
     width: 100px;
+  }
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  svg {
+    width: 140px;
   }
 }
 
