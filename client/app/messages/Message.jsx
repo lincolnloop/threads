@@ -12,6 +12,7 @@ var urls = require('../urls');
 var Attachment = require('./Attachment.jsx');
 var MessageHeader = require('./MessageHeader.jsx');
 var MessageContent = require('./MessageContent.jsx');
+var MessageReplyForm = require('./MessageReplyForm.jsx');
 var VotesListView = require('./VotesList.jsx');
 var LayoutStore = require('../layout/LayoutStore');
 
@@ -29,7 +30,10 @@ var MessageView = React.createClass({
       app.history.navigate(url, {'trigger': true});
     } else {
       log.debug('display message reply inline');
-      app.history.navigate(url, {'trigger': true});
+      //app.history.navigate(url, {'trigger': true});
+      this.setState({
+        'reply': true
+      });
     }
   },
 
@@ -171,6 +175,7 @@ var MessageView = React.createClass({
             {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>Edit</a> : null}
           </div>
         </div>
+        {this.state.reply ? <MessageReplyForm parent_url={urls.get('api:messageChange', {'message_id': message.id})} /> : null}
       </div>
     );
   },
