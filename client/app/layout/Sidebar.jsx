@@ -34,7 +34,6 @@ var SidebarView = React.createClass({
         <Logo />
         <header className='nav-settings'>
         <ul>
-          <li><a href='/' className='home icon'>Home</a></li>
           <li>
             <a href={urls.get('notifications')} className={notificationClasses}>
               <span className='notifications'>{this.state.unreadNotifications}</span>
