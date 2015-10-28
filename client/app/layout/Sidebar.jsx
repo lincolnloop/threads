@@ -31,7 +31,8 @@ var SidebarView = React.createClass({
 
     return (
       <nav className="nav-main">
-        <ul className="nav-settings">
+        <header className="nav-settings">
+        <ul>
           <li><a href="/" className="home icon">Home</a></li>
           <li>
             <a href={urls.get('notifications')} className={notificationClasses}>
@@ -41,6 +42,7 @@ var SidebarView = React.createClass({
           </li>
           <SelectorOverlay handleLayoutClick={this.props.handleLayoutClick} />
         </ul>
+        </header>
         {React.createElement(OrganizationList, {
           'organizations': organizations
         })}

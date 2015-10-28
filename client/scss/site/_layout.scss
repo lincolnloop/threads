@@ -22,12 +22,12 @@
   .content-main {
     width: 50%;
   }
-  .list-main, .content-main {
+  .list-main, .content-main, .nav-main {
     .content-view {
       position: relative;
       overflow: auto;
       height: 100%;
-      padding-top: 44px;
+      top: 44px;
     }
     .form-view {
       margin-top: 50px;

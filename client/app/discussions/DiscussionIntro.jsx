@@ -10,6 +10,7 @@ var DiscussionIntro = React.createClass({
   render: function () {
 
     var url = urls.get('discussion:create:team', {'team_slug': this.props.team_slug});
+    var user = store.find('users', localStorage.getItem('user'));
 
     var viewClasses = classnames({
       'intro-view': true,
@@ -19,7 +20,8 @@ var DiscussionIntro = React.createClass({
     return (
       <div className={viewClasses}>
         <span className='welcome-message'>
-          <h1>Hello and welcome to {this.props.teamname} !</h1>
+          <h2 className='salutation'>Hi {user.name}</h2>
+          <h3>and welcome to {this.props.teamname} !</h3>
           <p>Lorem ipsum dolor sit</p>
         </span>
         <GenericButton url={url} />
