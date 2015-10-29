@@ -14,7 +14,7 @@ var urls = require('../urls');
 var ListHeader = require('./ListHeader.jsx');
 var Sidebar = require('./Sidebar.jsx');
 var Header = require('./Header.jsx');
-var Footer = require('./SmallFooter.jsx');
+var Footer = require('./Footer.jsx');
 
 var AppView = React.createClass({
 

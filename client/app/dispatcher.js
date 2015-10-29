@@ -4,9 +4,8 @@ var _ = require('underscore');
 var log = require('loglevel');
 var React = require('react');
 var ReactDOM = require('react-dom');
-var SmallLayout = require('./layout/Small.jsx');
-var MediumLayout = require('./layout/Medium.jsx');
-var LargeLayout = require('./layout/Large.jsx');
+var CompactLayout = require('./layout/Compact.jsx');
+var FullLayout = require('./layout/Full.jsx');
 var LayoutStore = require('./layout/LayoutStore');
 
 var dispatcher = {
@@ -14,40 +13,21 @@ var dispatcher = {
 
   'layout': 'auto',
   'app': undefined,
-  'nextSmallProps': undefined,
-  'nextLargeProps': undefined,
+  'nextCompactProps': undefined,
+  'nextFullProps': undefined,
 
-  small: function(props) {
-    // default props.
-    // these get reset on every render unless overridden.
-    // - loading > header loading anim
-    // - headerContextView > (add discussion button, unread items icon, etc..)
-    // - animation > page transition for the new view
-    var defaultProps = {
-      'loading': false,
-      'headerContextView': null,
-      'animation': 'horizontal',
-      'title': '',
-      'navLevel': 0,
-      'back': null,
-      'main': null
-    };
-    this.nextSmallProps = _.extend(defaultProps, props);
-    return this;
-  },
-
-  medium: function(props) {
+  compact: function(props) {
     var defaultProps = {
       // content for the main section
       'main': null,
       // the active team
       'team': null
     };
-    this.nextMediumProps = _.extend(defaultProps, props);
+    this.nextCompactProps = _.extend(defaultProps, props);
     return this;
   },
 
-  large: function(props) {
+  full: function(props) {
     var defaultProps = {
       // content for the list section
       'list': null,
@@ -56,7 +36,7 @@ var dispatcher = {
       // the active team
       'team': null
     };
-    this.nextLargeProps = _.extend(defaultProps, props);
+    this.nextFullProps = _.extend(defaultProps, props);
     return this;
   },
 
@@ -75,20 +55,15 @@ var dispatcher = {
     var settings;
     var layoutState = LayoutStore.getState();
 
-    if (layoutState.mode === 'compact') {
+    if (layoutState.mode === 'full') {
       settings = {
-        'layout': SmallLayout,
-        'props': this.nextSmallProps
-      };
-    } else if (layoutState.mode === 'full') {
-      settings = {
-        'layout': LargeLayout,
-        'props': this.nextLargeProps
+        'layout': FullLayout,
+        'props': this.nextFullProps
       };
     } else {
       settings = {
-        'layout': MediumLayout,
-        'props': this.nextMediumProps
+        'layout': CompactLayout,
+        'props': this.nextCompactProps
       };
     }
 

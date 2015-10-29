@@ -43,17 +43,11 @@ var DiscussionRouter = Router.extend({
 
     var discussionIntro = React.createElement(DiscussionIntro, {'team': team});
 
-    return dispatcher.small({
-      'navLevel': 5,
-      'title': team.name,
-      'back': '/',
-      'main': React.createElement(TeamDiscussions, viewOptions),
-      'headerContextView': headerContextView
-    }).medium({
+    return dispatcher.compact({
       'team': team,
       'main': React.createElement(TeamDiscussions, _.extend(viewOptions, {'loanimSelector': '.content-main'})),
       'headerContextView': headerContextView
-    }).large({
+    }).full({
       'team': team,
       'list': React.createElement(TeamDiscussions, _.extend(viewOptions, {'loanimSelector': '.list-main'})),
       'headerContextView': headerContextView,
@@ -76,14 +70,9 @@ var DiscussionRouter = Router.extend({
       'key': teamSlug
     };
     // layout setup
-    return dispatcher.small({
-      'navLevel': 10,
-      'title': 'Create discussion',
-      'back': back,
-      'main': discussionCreateView,
-    }).medium({
+    return dispatcher.compact({
       'main': discussionCreateView
-    }).large({
+    }).full({
       'list': React.createElement(TeamDiscussions, _.extend(viewOptions, {'loanimSelector': '.list-main'})),
       'main': discussionCreateView
     }).render();
@@ -98,21 +87,17 @@ var DiscussionRouter = Router.extend({
     });
     var back = urls.get('team:detail', {'team_slug': team.slug});
     // views
-    var viewOptions = {
+    var mainView = React.createElement(DiscussionDetailView, {
       'team': team,
       'discussion': discussion,
       'discussionUrl': discussionUrl,
-      'key': 'discussion-detail' + discussionUrl
-    };
-    return dispatcher.small({
-      'navLevel': 15,
-      'title': discussion ? discussion.title : team.name,
-      'back': back,
-      'main': React.createElement(DiscussionDetailView, viewOptions)
-    }).medium({
+      'key': 'discussion-detail' + discussionUrl,
+      'loanimSelector': '.content-main'
+    });
+    return dispatcher.compact({
       'team': team,
-      'main': React.createElement(DiscussionDetailView, viewOptions)
-    }).large({
+      'main': mainView
+    }).full({
       'team': team,
       'discussion': discussion,
       'list': React.createElement(TeamDiscussions, {
@@ -120,9 +105,7 @@ var DiscussionRouter = Router.extend({
         'key': teamSlug,
         'discussionId': discussionId
       }),
-      'main': React.createElement(DiscussionDetailView, _.extend(viewOptions, {
-        'loanimSelector': '.content-main'
-      })),
+      'main': mainView,
       'headerContextView': React.createElement(DiscussionDetailHeader)
     }).render();
   }

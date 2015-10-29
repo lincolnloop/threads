@@ -17,15 +17,9 @@ var TeamRouter = Router.extend({
 
   list: function() {
     var view = React.createElement(NotificationList);
-    return dispatcher.small({
-      'animation': 'fadeIn',
-      'navLevel': 25,
-      'title': 'Notifications',
-      'back': 'history',
+    return dispatcher.compact({
       'main': view
-    }).medium({
-      'main': view
-    }).large({
+    }).full({
       'list': view
     }).render();
   }
