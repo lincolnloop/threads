@@ -6,6 +6,7 @@ var dispatcher = require('../dispatcher');
 var urls = require('../urls');
 var store = require('../store');
 var MessageEditView = require('./MessageEdit.jsx');
+var MessageReplyCompact = require('./MessageReplyCompact.jsx');
 var MessageForkView = require('./MessageFork.jsx');
 var TeamDiscussions = require('../discussions/TeamDiscussions.jsx');
 
@@ -34,6 +35,36 @@ var MessageRouter = Router.extend({
     return dispatcher.small({
       'navLevel': 20,
       'title': 'Edit message',
+      'back': this.getBackUrl(),
+      'main': mainView
+    }).medium({
+      'team': team,
+      'main': mainView
+    }).large({
+      'team': team,
+      'discussion': discussion,
+      'list': React.createElement(TeamDiscussions, {
+        'team': team,
+        'key': teamSlug,
+        'discussionId': discussionId
+      }),
+      'main': mainView
+    }).render();
+  },
+
+  reply: function(teamSlug, discussionId, discussionSlug, messageId) {
+    var team = store.find('teams', {'slug': teamSlug});
+    var discussionUrl = urls.get('api:discussionChange', {
+      'discussion_id': discussionId
+    });
+    var discussion = store.find('discussions', discussionUrl);
+    // main view/MessageReplyCompact
+    var mainView = React.createElement(MessageReplyCompact, {
+      'parent_url': urls.get('api:messageChange', {'message_id': messageId})
+    });
+    return dispatcher.small({
+      'navLevel': 20,
+      'title': 'Reply to message',
       'back': this.getBackUrl(),
       'main': mainView
     }).medium({
