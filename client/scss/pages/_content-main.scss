@@ -1,0 +1,23 @@
+.app.medium, .app.large {
+
+  .content-main {
+    padding-top: 0;
+  }
+}
+
+.content-main {
+  // required for animations
+  padding-bottom: 44px;
+  padding-top: 44px;
+  -webkit-overflow-scrolling: touch;
+  -webkit-transform:translateZ(0);
+  // background-image: url('../assets/light-grey-pattern.jpg');
+  min-height: 100%;
+
+  .content-view {
+    min-height: 100%;
+    width: 100%;
+    background: #f3f3f3;
+    -webkit-transform:translateZ(0);
+  }
+}

@@ -23,6 +23,9 @@ var DiscussionDetailView = React.createClass({
   // --------------------
   // Custom methods
   // --------------------
+  handleNewMessage: function() {
+    this.forceUpdate();
+  },
 
   navigateToHash: function() {
     var name = window.location.hash.replace('#', '');
@@ -39,7 +42,7 @@ var DiscussionDetailView = React.createClass({
 
     this.emitter.emit('message:focus', {'id': name.replace('m', '')});
   },
-  
+
   fetchDiscussion: function() {
     // Fetches discussion data from the remote API
     // and updates the component state.
@@ -50,7 +53,7 @@ var DiscussionDetailView = React.createClass({
     store.get('discussions', {}, {'url': this.props.discussionUrl}).done(function() {
       // stop loading animation on the header
       this.emitter.emit('ajax', {'loading': false});
-      
+
       // get the active discussion
       var discussion = store.find('discussions', this.props.discussionUrl);
       // get the discussion's message and list of replies for the discussion
@@ -67,10 +70,15 @@ var DiscussionDetailView = React.createClass({
       // mark as read
       discussionActions.markAsRead(this.state.discussion);
 
-      // update header
+      // trigger update header
+      // we need to trigger the header update separately
+      // because we can't pass the list of unread messages
+      // before the discussion is fetched.
+      // also, if we're fetching this page for the first time
+      // we need to update the title.
       this.emitter.emit('header:update', {
         'title': discussion.title,
-        'contextView': HeaderUnread({
+        'contextView': React.createElement(HeaderUnread, {
           'unreads': unreads
         })
       });
@@ -80,24 +88,27 @@ var DiscussionDetailView = React.createClass({
   // --------------------
   // React lifecycle
   // --------------------
+  componentWillMount: function() {
+    this.setState({
+      'discussion': this.props.discussion
+    });
+    // TODO: Rework this, maybe enable this event in the store
+    this.emitter.on('message:add', this.handleNewMessage);
+  },
+
   getInitialState: function() {
     return {
       'discussion': {}
     };
   },
 
-  componentWillMount: function() {
-    this.setState({
-      'discussion': this.props.discussion
-    });
-  },
-
   render: function() {
+    log.info('DiscussionDetail:render');
     var message;
     var MessageTree;
     if (this.state.discussion) {
       message = store.find('messages', this.state.discussion.message);
-      MessageTree = MessageTreeView({
+      MessageTree = React.createElement(MessageTreeView, {
         'key': message ? message.cid : 'empty-message',
         'message': message,
         'discussion': this.state.discussion
@@ -126,6 +137,8 @@ var DiscussionDetailView = React.createClass({
   componentWillUnmount: function() {
     log.info('DiscussionDetailView:componentWillUnmount');
     window.onhashchange = null;
+    // unbind message add handler
+    this.emitter.off('message:add', this.handleNewMessage);
   }
 });
 

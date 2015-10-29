@@ -1,7 +1,7 @@
 'use strict';
 
 var _ = require('underscore');
-var Backbone = require('backbone');
+var app = require('../AppRouter');
 var moment = require('moment');
 var React = require('react');
 var MessageHeader = require('../messages/MessageHeader.jsx');
@@ -11,7 +11,7 @@ var SearchResult = React.createClass({
 
   handleResultClick: function(evt) {
     var url = evt.currentTarget.dataset.href;
-    Backbone.history.navigate(url, {'trigger': true});
+    app.history.navigate(url, {'trigger': true});
   },
 
   render: function() {

@@ -1,14 +1,26 @@
 'use strict';
+
 var _ = require('underscore');
 var $ = require('jquery');
 var Backbone = require('backbone');
 var React = require('react');
 var FastClick = require('fastclick');
 var log = require('loglevel');
-var AppRouter = require('./app/AppRouter');
+var app = require('./app/AppRouter');
 var config = require('./app/utils/config');
 var urls = require('./app/urls');
+var ReactDOM = require('react-dom');
 //var FPSCounter = require('./vendor/FPSCounter');
+// --------------------
+// routers
+// --------------------
+//var authRoutes = require('./auth/routes');
+var TeamRouter = require('./app/teams/Router');
+var DiscussionRouter = require('./app/discussions/Router');
+var MessageRouter = require('./app/messages/Router');
+var NotificationRouter = require('./app/notifications/Router');
+var SearchRouter = require('./app/search/Router');
+var UserRouter = require('./app/user/Router');
 
 var SignInView = require('./app/auth/SignIn.jsx');
 
@@ -44,9 +56,14 @@ Backbone.ajax = function(request) {
 $(document).on('click', 'a[href]', function (event) {
   var url = $(event.currentTarget).attr('href');
   if (url.indexOf('http') !== 0) {
-    Backbone.history.navigate(url, {'trigger': true});
+    app.history.navigate(url, {'trigger': true});
     event.preventDefault();
   }
+});
+
+$(document).on('click', '.user-mention', function(event) {
+  var userId = event.currentTarget.dataset.user;
+  app.history.navigate(urls.get('user:detail', userId), {'trigger': true});
 });
 
 $(document).ajaxStart(function () {
@@ -55,22 +72,30 @@ $(document).ajaxStart(function () {
   $('body').removeClass('loading');
 });
 
-
 // Kick off the app
 // ----------------
-new AppRouter();
-React.renderComponent(SignInView({
-  success: function() {
-    log.info('signIn.fetch.done');
-    Backbone.history.start({
-      'pushState': true
-    });
-    // check if the current url is the signIn url
-    // if it is, navigate to "homepage"
-    var pathURL = window.location.pathname;
-    var signInURL = urls.get('signIn');
-    if (pathURL === signInURL) {
-      Backbone.history.navigate(urls.get('dashboard'), {'trigger': true});
+// initialize all routers
+new TeamRouter();
+new DiscussionRouter();
+new MessageRouter();
+new NotificationRouter();
+new SearchRouter();
+new UserRouter();
+
+ReactDOM.render(
+  React.createElement(SignInView, {
+    success: function() {
+      log.info('signIn.fetch.done');
+      app.history.start({
+        'pushState': true
+      });
+      // check if the current url is the signIn url
+      // if it is, navigate to "homepage"
+      var pathURL = window.location.pathname;
+      var signInURL = urls.get('signIn');
+      if (pathURL === signInURL) {
+        app.history.navigate(urls.get('dashboard'), {'trigger': true});
+      }
     }
-  }
-}), document.getElementById('main'));
+  }), document.getElementById('main')
+);

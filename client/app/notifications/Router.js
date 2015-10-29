@@ -1,10 +1,11 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Router = require('ampersand-router');
+var React = require('react');
 var dispatcher = require('../dispatcher');
 var NotificationList = require('./NotificationList.jsx');
 
-var TeamRouter = Backbone.Router.extend({
+var TeamRouter = Router.extend({
   /*
    * Main App Router
    * Handles all route definitions, as a url:key object
@@ -15,14 +16,18 @@ var TeamRouter = Backbone.Router.extend({
   },
 
   list: function() {
-
-    return dispatcher.render({
-        'animation': 'fadeIn',
-        'navLevel': 25,
-        'title': 'Notifications',
-        'back': 'history'
-      }, NotificationList()
-    );
+    var view = React.createElement(NotificationList);
+    return dispatcher.small({
+      'animation': 'fadeIn',
+      'navLevel': 25,
+      'title': 'Notifications',
+      'back': 'history',
+      'main': view
+    }).medium({
+      'main': view
+    }).large({
+      'list': view
+    }).render();
   }
 });
 

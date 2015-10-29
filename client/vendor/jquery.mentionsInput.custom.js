@@ -381,7 +381,7 @@
       _.each(results, function (item, index) {
         var itemUid = _.uniqueId('mention_');
 
-        triggerChar = item.trigger ? item.trigger : settings.defaultTriggerChar;
+        var triggerChar = item.trigger ? item.trigger : settings.defaultTriggerChar;
         autocompleteItemCollection[itemUid] = _.extend({}, item, {value: triggerChar+item.name});
 
         var elmListItem = $(settings.templates.autocompleteListItem({

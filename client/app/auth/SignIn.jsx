@@ -1,7 +1,7 @@
 'use strict';
 
-var Backbone = require('backbone');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var log = require('loglevel');
 var config = require('../utils/config');
 var getCookie = require('../utils/getCookie');
@@ -14,13 +14,14 @@ var SignInView = React.createClass({
   loadingClass: 'tanim',
 
   fetchFailed: function(error) {
+    log.info('fetchFailed');
     // update the csrf token
     store._headers['X-CSRFToken'] = getCookie('csrftoken');
     // redirect to sign in page
     var pathURL = window.location.pathname;
     var signInURL = urls.get('signIn');
     if (pathURL !== signInURL) {
-      window.location.href = signInURL;
+      window.location.href = signInURL + '?next=' + pathURL;
     } else {
       this.setState({
         'loading': false,
@@ -36,8 +37,8 @@ var SignInView = React.createClass({
     // Store the API key in local storage,
     // and attempt to fetch initial data
     //
-    var apiKey = this.refs.apiKey.getDOMNode().value;
-    log.debug('SignIn:apiKey', this.refs.apiKey.getDOMNode(), apiKey);
+    var apiKey = ReactDOM.findDOMNode(this.refs.apiKey).value;
+    log.debug('SignIn:apiKey', ReactDOM.findDOMNode(this.refs.apiKey), apiKey);
     if (apiKey.length !== 40) {
       this.setState({
         'displayForm': true,

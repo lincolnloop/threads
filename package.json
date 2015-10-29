@@ -9,59 +9,67 @@
   "version": "0.1.0",
   "main": "./client/index.js",
   "scripts": {
-    "dist": "NODE_ENV=production gulp dist",
-    "prod:deploy": "ssh gingerhq.com 'sudo salt-call state.sls projects.threads'",
-    "deploy": "ssh dev.gingerhq.com 'sudo salt-call state.sls projects.threads'"
+    "postinstall": "make -j5 all autoprefix=1",
+    "watch-js": "make js watch=1",
+    "build-js": "make js",
+    "build-js-dev": "make js debug=1",
+    "watch-css": "make css watch=1",
+    "build-css": "make css",
+    "browser-sync": "browser-sync start --config bs.config.js",
+    "start": "make -j5 all watch=1 & npm run browser-sync",
+    "prod:deploy": "make deploy prod=1",
+    "deploy": "make deploy"
   },
   "browserify": {
     "transform": [
-      "reactify"
+      [
+        "babelify",
+        {
+          "blacklist": [
+            "regenerator"
+          ]
+        }
+      ]
     ]
   },
   "devDependencies": {
-    "browserify": "~3.33.0",
-    "browserify-shim": "~3.3.2",
+    "browser-sync": "^2.9.11",
     "chai": "~1.9.1",
-    "font-awesome": "~4.0.3",
-    "gulp": "~3.8.0",
-    "gulp-browserify": "~0.5.0",
-    "gulp-clean": "~0.2.4",
-    "gulp-connect": "~2.0.5",
-    "gulp-task-listing": "~0.2.2",
-    "gulp-jshint": "~1.5.0",
-    "gulp-livereload": "~1.2.0",
-    "gulp-sass": "0.7.1",
-    "gulp-uglify": "~0.2.1",
-    "gulp-util": "~2.2.14",
+    "connect-history-api-fallback": "^1.1.0",
+    "cookies": "^0.4.1",
     "jshint-stylish": "~0.1.5",
     "mocha": "~1.18.2",
-    "node-bourbon": "~1.0.0",
-    "node-neat": "~1.1.0",
-    "reactify": "~0.10.0",
     "request": "~2.34.0",
     "sinon": "~1.9.0",
-    "gulp-compile-handlebars": "~0.2.0",
-    "vinyl-source-stream": "~0.1.1",
-    "grunt": "~0.4.5",
-    "connect-pushstate": "~0.1.0",
-    "gulp-rename": "~1.2.0",
-    "grunt-connect-pushstate": "^0.2.0",
-    "cookies": "^0.4.1"
+    "watchify": "^3.5.0"
   },
   "dependencies": {
     "MD5": "~1.2.0",
-    "amygdala": "~0.3.0",
-    "backbone": "~1.1.2",
+    "alt": "^0.17.6",
+    "ampersand-router": "^3.0.2",
+    "amygdala": "~0.5.0",
+    "autoprefixer": "^6.0.3",
+    "babelify": "^6.4.0",
+    "backbone": "^1.2.3",
+    "browserify": "^11.2.0",
+    "browserify-zepto": "^1.1.4",
+    "classnames": "^2.2.0",
     "clientconfig": "~0.0.4",
     "crossing": "~0.1.4",
+    "event-emitter": "~0.3.1",
     "fastclick": "~1.0.0",
     "jquery": "~2.1.0",
     "loglevel": "~0.6.0",
     "moment": "~2.6.0",
+    "node-sass": "^3.4.0",
+    "postcss-cli": "^2.3.1",
     "q": "~1.0.1",
-    "react": "~0.10.0",
-    "underscore": "~1.6.0",
-    "event-emitter": "~0.3.1",
-    "watchify": "~0.10.2"
+    "query-string": "^1.0.0",
+    "react": "^0.14.0",
+    "react-addons-css-transition-group": "^0.14.0",
+    "react-dom": "^0.14.0",
+    "reactify": "^1.1.1",
+    "uglifyjs": "^2.4.10",
+    "underscore": "~1.6.0"
   }
 }

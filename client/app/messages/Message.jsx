@@ -1,21 +1,49 @@
 'use strict';
-
 var _ = require('underscore');
 var Backbone = require('backbone');
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 var clientconfig = require('clientconfig');
 var log = require('loglevel');
 var React = require('react');
 var eventsMixin = require('../mixins/eventsMixin');
+var app = require('../AppRouter');
 var store = require('../store');
 var urls = require('../urls');
+var shortcuts = require('../utils/shortcuts');
 var Attachment = require('./Attachment.jsx');
 var MessageHeader = require('./MessageHeader.jsx');
 var MessageContent = require('./MessageContent.jsx');
+var MessageReplyForm = require('./MessageReplyForm.jsx');
 var VotesListView = require('./VotesList.jsx');
+var LayoutStore = require('../layout/LayoutStore');
 
 var MessageView = React.createClass({
   mixins: [eventsMixin],
+
+  handleReply: function(evt) {
+    evt.preventDefault();
+    var message = store.find('messages', this.props.message.url);
+    var url = urls.get('message:reply', _.extend({'message_id': message.id}, shortcuts.getURIArgs()));
+    // inline reply
+    var mode = LayoutStore.getState().mode;
+    // mobile answer
+    if (mode === 'compact') {
+      app.history.navigate(url, {'trigger': true});
+    } else {
+      log.debug('display message reply inline');
+      //app.history.navigate(url, {'trigger': true});
+      this.setState({
+        'reply': true
+      });
+    }
+  },
+
+  handleReplySuccess: function() {
+    // hide reply box
+    this.setState({
+      'reply': false
+    });
+  },
 
   handleFocusChange: function(info) {
     if (this.props.message.id === parseInt(info.id)) {
@@ -98,7 +126,8 @@ var MessageView = React.createClass({
     return {
       'expandAttachments': false,
       'focused': false,
-      'starred': false
+      'starred': false,
+      'reply': false
     }
   },
 
@@ -117,26 +146,26 @@ var MessageView = React.createClass({
     var user = store.find('users', message.user);
     var attachments = message.attachments;
     // main message classes
-    var classes = classSet({
+    var classes = classnames({
       'message-container': true,
       'message-unread': !message.read,
       'message-focused': this.state.focused
     });
-    var urlKeys = _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs);
+    var urlKeys = _.extend({'message_id': message.id}, shortcuts.getURIArgs());
     // TODO: This needs to query the store, not the message
-    var hasUpVoted = _.find(votes, function(vote) { 
+    var hasUpVoted = _.find(votes, function(vote) {
       return vote.user === localStorage.getItem('user');
     });
     var canEdit = this.props.message.user === localStorage.getItem('user');
-    var voteClasses = classSet({
+    var voteClasses = classnames({
       'up-vote': true,
       'up-voted': hasUpVoted
     });
-    var starClasses = classSet({
+    var starClasses = classnames({
       'star': true,
       'active': this.state.starred
     });
-    var messageAttachmentClasses = classSet({
+    var messageAttachmentClasses = classnames({
       'message-attachments': true,
       'expanded': !!this.state.expandAttachments,
       'has-attachments': !!attachments.length
@@ -145,21 +174,21 @@ var MessageView = React.createClass({
       <div className={classes}>
         <a name={'m' + message.id} className="anchor" />
 
-        <MessageHeader date={message.date_created} 
+        <MessageHeader date={message.date_created}
                        messageId={message.id}
-                       user={message.user} 
+                       user={message.user}
                        handleCollapse={this.props.handleCollapse} />
         <MessageContent body={message.body} />
 
         <div className="message-footer">
           <div className={messageAttachmentClasses}>
-            {attachments.length ? 
-              <a className="attachments-link" onClick={this.toggleAttachments} role="button">
-                <span className="attachments-count">{attachments.length}</span> Attachments: 
-              </a> 
+            {attachments.length ?
+              <a className="attachments-link" onClick={this.toggleAttachments}>
+                <span className="attachments-count">{attachments.length}</span> Attachments:
+              </a>
             : null}
             <div className="message-attachments-list">
-              {this.state.expandAttachments ? 
+              {this.state.expandAttachments ?
                 <ul className="attachment-list">
                   {_.map(attachments, function(attachment) {
                     return <Attachment attachment={attachment} />
@@ -168,15 +197,19 @@ var MessageView = React.createClass({
               : null}
             </div>
           </div>
-          {votes.length ? VotesListView({'votes': votes}) : null}
+          {votes.length ? React.createElement(VotesListView,{'votes': votes}) : null}
           <div className="message-actions">
-            <a className={voteClasses} onClick={this.handleVote} role="button">{hasUpVoted ? 'liked' : 'like'}</a>
-            <a className="reply" href={urls.get('message:reply', urlKeys)}>reply</a>
-            <a className="fork" role="button">fork</a>
+            <a className={voteClasses} onClick={this.handleVote}>{hasUpVoted ? 'Liked' : 'Like'}</a>
+            <a className="reply" onClick={this.handleReply}>Reply</a>
+            <a className="fork" href={urls.get('message:fork', urlKeys)}>fork</a>
             <a className={starClasses} onClick={this.handleStarring} role="button">star</a>
-            {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>edit</a> : null}
+            {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>Edit</a> : null}
           </div>
         </div>
+        {this.state.reply && (<MessageReplyForm
+          messageId={message.id}
+          parent_url={urls.get('api:messageChange', {'message_id': message.id})}
+          callback={this.handleReplySuccess} />)}
       </div>
     );
   },

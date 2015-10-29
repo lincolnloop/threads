@@ -13,8 +13,9 @@ require('../../vendor/jquery.elastic');
 require('../../vendor/jquery.textareaHelper');
 require('../../vendor/jquery.mentionsInput.custom');
 // component reqs
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var store = require('../store');
 var urls = require('../urls');
 var gravatar = require('../utils/gravatar');
@@ -23,12 +24,14 @@ var config = require('../utils/config');
 var MarkdownView = React.createClass({
 
   getRawValue: function() {
-    var $textarea = $(this.refs.textarea.getDOMNode());
+    // stores mentions in a data attribute for the textarea
+    // this is what we need to send to the server
+    var $textarea = $(ReactDOM.findDOMNode(this.refs.textarea));
     return $textarea.data('messageText');
   },
 
   getTabClass: function(isActive) {
-    return classSet({
+    return classnames({
       'tab-header-and-content': true,
       'is-active': !!isActive
     });
@@ -59,12 +62,12 @@ var MarkdownView = React.createClass({
   getInitialState: function() {
     return {
       'previewValue': null,
-      'rawValue': this.props.defaultValue ? this.props.defaultValue : null
+      'rawValue': this.props.value ? this.props.value : null
     };
   },
+
   render: function() {
     // render preview and textarea separately.
-    var defaultValue = this.props.data && this.props.data.raw_body;
     var submitLabel = this.props.submitLabel ? this.props.submitLabel : 'Submit';
     return (
       <div className="markdown-textarea">
@@ -76,6 +79,7 @@ var MarkdownView = React.createClass({
               <textarea ref="textarea"
                         placeholder={this.props.placeholder}
                         defaultValue={this.state.rawValue}
+                        onChange={this.props.onChange}
                         required={!!this.props.required} />
             {this.props.post ? this.props.post : null}
             </section>
@@ -95,7 +99,7 @@ var MarkdownView = React.createClass({
   },
 
   componentDidMount: function() {
-    var $textarea = $(this.refs.textarea.getDOMNode());
+    var $textarea = $(ReactDOM.findDOMNode(this.refs.textarea));
     $textarea.mentionsInput({
       defaultTriggerChar: '@',
       onDataRequest: function (mode, query, callback) {

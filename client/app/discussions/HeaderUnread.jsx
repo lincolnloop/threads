@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var React = require('react');
 var urls = require('../urls');
+var shortcuts = require('../utils/shortcuts');
 
 var HeaderUnread = React.createClass({
 
@@ -12,7 +13,7 @@ var HeaderUnread = React.createClass({
     this.setState({
       'unreads': _.rest(this.state.unreads)
     });
-    return false;
+    evt.preventDefault();
   },
 
   getInitialState: function() {
@@ -29,7 +30,7 @@ var HeaderUnread = React.createClass({
 
   render: function () {
     var first = _.first(this.state.unreads);
-    var kwargs = urls.resolve(window.location.pathname).kwargs;
+    var kwargs = shortcuts.getURIArgs();
     var url;
     if (first) {
       kwargs.message_id = first.id;

@@ -1,0 +1,16 @@
+// medium/large only
+.nav-main .org-header {
+  color: white;
+  border-bottom: none;
+}
+
+.org-header {
+  display: block;
+  padding: 34px 10px 10px 15px;
+  border-bottom: 1px solid $light-gray;
+  font-weight: bold;
+  font-size: 14px;
+  background: transparent;
+  line-height: 1;
+  color: #6d6d72;
+}

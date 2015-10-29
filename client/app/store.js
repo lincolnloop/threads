@@ -14,7 +14,7 @@ var store = new Amygdala({
       'headers': {
         'X-CSRFToken': getCookie('csrftoken')
       },
-      'localStorage': true
+      'localStorage': false
     },
     'schema': {
       'teams': {
@@ -31,6 +31,12 @@ var store = new Amygdala({
           'children': 'messages'
         },
         parse: function(data) {
+          // data.results === true >> list
+          // data.children === true >> detail
+          if (data.children) {
+            // add latest message to response since it's not returned by the detail API
+            data.latest_message = data.children[data.children.length - 1] || data.message;
+          }
           return data.results ? data.results : data;
         },
         'foreignKey': {
@@ -42,6 +48,9 @@ var store = new Amygdala({
         'url': '/api/v2/message/',
         'oneToMany': {
           'votes': 'votes'
+        },
+        parse: function(data) {
+          return data.results ? data.results : data;
         },
         'foreignKey': {
           'user': 'users',
@@ -72,11 +81,6 @@ store.fetch = function(successCallback, errorCallback) {
   // We handle this outside the store module itself and
   // on the store instance, because it's very app-specific.
   // Get common data using Q.all to manage multiple promises.
-  if (store.findAll('teams').length && store.findAll('users').length) {
-    log.info('fetch:cache:success');
-    successCallback();
-    successCallback = function(){};
-  }
 
   Q.all([
     fetch.userUri(), this.get('teams'), this.get('users')

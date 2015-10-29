@@ -4,6 +4,7 @@ var $ = require('jquery');
 var _ = require('underscore');
 var moment = require('moment');
 var React = require('react');
+var ReactDOM = require('react-dom');
 var log = require('loglevel');
 var config = require('../utils/config');
 var store = require('../store');
@@ -24,9 +25,10 @@ var SearchView = React.createClass({
       }
     });
   },
-  handleLoadMore: function() {
+  handleLoadMore: function(evt) {
     // don't allow a new query if still loading
     if (this.state.loading === true) {
+      evt.preventDefault();
       return false;
     }
     this.setState({'loading': true});
@@ -43,9 +45,10 @@ var SearchView = React.createClass({
       });
     }.bind(this));
   },
-  handleSubmit: function() {
-    var query = this.refs.query.getDOMNode().value;
-    var team = this.refs.team.getDOMNode().value;
+  handleSubmit: function(evt) {
+    evt.preventDefault();
+    var query = ReactDOM.findDOMNode(this.refs.query).value;
+    var team = ReactDOM.findDOMNode(this.refs.team).value;
     var page = 1;
     // reset state
     this.setState({
@@ -69,7 +72,6 @@ var SearchView = React.createClass({
         'page': response.page
       });
     }.bind(this));
-    return false;
   },
 
   getInitialState: function() {

@@ -2,7 +2,7 @@
 
 var $ = require('jquery');
 var _ = require('underscore');
-var classSet = require('react/lib/cx');
+var classnames = require('classnames');
 var log = require('loglevel');
 var moment = require('moment');
 var React = require('react');
@@ -25,7 +25,7 @@ var NotificationView = React.createClass({
     classList[notificationType] = true;
 
     return (
-      <li className={classSet(classList)}>
+      <li className={classnames(classList)}>
       <a href={notification.link}><div className="avatar" ><img src={avatar} /></div>
       <div className="notification-content">
         <span className="username">{user.name} </span>
@@ -33,7 +33,7 @@ var NotificationView = React.createClass({
         <span className="notification-title">{notification.title} </span>
         <div className="notification-meta" >
           <span className="notification-type"></span>
-          <span className="date">{moment(new Date(notification.date_created)).fromNow()}.</span>
+          <span className="date">{moment.utc(notification.date_created).local().fromNow()}.</span>
         </div>
       </div></a>
     </li>

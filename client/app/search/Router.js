@@ -1,25 +1,45 @@
 'use strict';
 
-var Backbone = require('backbone');
+var Router = require('ampersand-router');
+var React = require('react');
 var log = require('loglevel');
+var qs = require('query-string');
 var dispatcher = require('../dispatcher');
+var store = require('../store');
 var Search = require('./Search.jsx');
+var SearchResults = require('./SearchResults.jsx');
 
-var Router = Backbone.Router.extend({
+var Router = Router.extend({
   routes: {
     'search/': 'search',
+    'search/q/': 'search',
     ':team/search/': 'search'
   },
 
   search: function() {
-    log.info('search');
-    return dispatcher.render({
+    var qo = qs.parse(location.search);
+    var team = qo.team ? store.find('teams', {'slug': qo.team}) : null;
+    return dispatcher.small({
         'animation': 'fade',
         'navLevel': 25,
         'title': 'Search Threads',
-        'back': '/'
-      }, Search()
-    );
+        'back': '/',
+        'main': React.createElement(Search)
+      }).medium({
+        'main': React.createElement(SearchResults, {
+          'query': qo.query,
+          'team': qo.team,
+          'loanimSelector': '.content-main'
+        }),
+        'team': team
+      }).large({
+        'list': React.createElement(SearchResults, {
+          'query': qo.query,
+          'team': qo.team,
+          'loanimSelector': '.list-main'
+        }),
+        'team': team
+      }).render();
   }
 });
 

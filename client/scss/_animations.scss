@@ -1,0 +1,130 @@
+//
+// animations
+//
+.left-to-right-enter, .left-to-right-leave,
+.right-to-left-enter, .right-to-left-leave {
+  position: absolute;
+  top: 44px;
+  width: 100%;
+  // transition: all 0.5s;
+  -webkit-transform:translateZ(0);
+  @include transition(all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1));
+
+}
+
+// back animation enter
+.left-to-right-enter {
+  left: -100%;
+}
+.left-to-right-enter.left-to-right-enter-active {
+  left: 0;
+}
+
+// back animation leave
+.left-to-right-leave {
+  left: 0;
+}
+.left-to-right-leave.left-to-right-leave-active {
+  left: 100%;
+}
+
+// forward animation enter
+.right-to-left-enter {
+  left: 100%;
+}
+.right-to-left-enter.right-to-left-enter-active {
+  left: 0;
+}
+
+// forward animation leave
+.right-to-left-leave {
+  left: 0;
+}
+.right-to-left-leave.right-to-left-leave-active {
+  left: -100%;
+}
+
+
+
+// fadeIn
+
+.fadeIn-enter {
+  opacity: 0;
+}
+
+.fadeIn-enter.fadeIn-enter-active {
+  opacity: 1;
+}
+
+.fadeIn-leave {
+  opacity: 1;
+}
+
+.fadeIn-leave.fadeIn-leave-active {
+  opacity: 0.8;
+}
+
+.fadeIn-enter, .fadeIn-leave {
+  @include transition(all 0.5s);
+}
+
+
+.fade-in {
+  opacity: 0;
+  -webkit-animation: fade-in-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Safari 4+ */
+  -moz-animation:    fade-in-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Fx 5+ */
+  -o-animation:      fade-in-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards; /* Opera 12+ */
+  animation:         fade-in-animation .6s .3s cubic-bezier(.14,.25,.52,1.56) forwards;
+}
+
+@keyframes fade-in-animation {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+// slide in from top
+/*
+.top-to-bottom-enter, .top-to-bottom-leave,
+.bottom-to-top-enter, .bottom-to-top-leave {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  -webkit-transform:translateZ(0);
+  @include transition(all  0.5s cubic-bezier(0.25, 0.1, 0.25, 1));
+
+}
+
+.top-to-bottom-enter {
+  top: -100%;
+}
+
+.top-to-bottom-enter.top-to-bottom-enter-active {
+  top: 0;
+}
+
+.top-to-bottom-leave {
+  top: 0;
+}
+
+.top-to-bottom-leave.top-to-bottom-leave-active {
+  top: 100%;
+}
+
+// slide in from bottom
+.bottom-to-top-enter {
+  top: 100%;
+}
+
+.bottom-to-top-enter.bottom-to-top-enter-active {
+  top: 0;
+}
+
+.bottom-to-top-leave {
+  top: 0;
+}
+
+.bottom-to-top-leave.bottom-to-top-leave-active {
+  top: -100%;
+}
+*/
