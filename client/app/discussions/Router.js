@@ -7,6 +7,7 @@ var log = require('loglevel');
 var store = require('../store');
 var urls = require('../urls');
 var dispatcher = require('../dispatcher');
+var shortcuts = require('../utils/shortcuts');
 var DiscussionDetailView = require('./DiscussionDetail.jsx');
 var DiscussionCreateView = require('./DiscussionCreate.jsx');
 var TeamDiscussions = require('./TeamDiscussions.jsx');
@@ -25,9 +26,9 @@ var DiscussionRouter = Router.extend({
   },
 
   list: function(teamSlug) {
-    log.info('discussion:detail');
+    log.info('discussion:list');
     // fetch data
-    var team = store.find('teams', {'slug': teamSlug});
+    var team = shortcuts.getActiveTeam();
     if (!team) {
       return;
     }
@@ -65,8 +66,8 @@ var DiscussionRouter = Router.extend({
 
   create: function(teamSlug) {
     log.info('DiscussionRouter:detail');
-    var team = store.find('teams', {'slug': teamSlug});
-    var back = urls.get('team:detail', {'slug': teamSlug});
+    var team = shortcuts.getActiveTeam();
+    var back = urls.get('team:detail', {'team_slug': team.slug});
     // views
     var discussionCreateView = React.createElement(DiscussionCreateView, {
       'teamUrl': team.url,
@@ -93,12 +94,12 @@ var DiscussionRouter = Router.extend({
 
   detail: function(teamSlug, discussionId) {
     log.info('DiscussionRouter:detail');
-    var team = store.find('teams', {'slug': teamSlug});
+    var team = shortcuts.getActiveTeam();
+    var discussion = shortcuts.getActiveDiscussion();
     var discussionUrl = urls.get('api:discussionChange', {
       'discussion_id': discussionId
     });
-    var discussion = store.find('discussions', discussionUrl);
-    var back = urls.get('team:detail', {'slug': teamSlug});
+    var back = urls.get('team:detail', {'team_slug': team.slug});
     // views
     var viewOptions = {
       'team': team,

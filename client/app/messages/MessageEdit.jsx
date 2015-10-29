@@ -5,6 +5,7 @@ var app = require('../AppRouter');
 var React = require('react');
 var log = require('loglevel');
 var urls = require('../urls');
+var shortcuts = require('../utils/shortcuts');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
 
 var MessageEditView = React.createClass({
@@ -20,8 +21,7 @@ var MessageEditView = React.createClass({
     store.update('messages', data).then(function(message) {
       log.info('MessageEdit:success');
       // redirect
-      var kwargs = urls.resolve(window.location.pathname).kwargs;
-      var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
+      var url = urls.get('discussion:detail:message', _.extend(shortcuts.getURIArgs(), {'message_id': message.id}));
       app.history.navigate(url, {'trigger': true});
     }.bind(this));
   },
@@ -51,8 +51,7 @@ var MessageEditView = React.createClass({
         <div>loading..</div>
       )
     }
-    var teamSlug = urls.resolve(window.location.pathname).kwargs.team_slug;
-    var team = store.find('teams', {'slug': teamSlug});
+    var team = shortcuts.getActiveTeam();
     return (
       <div className="message-reply">
         <form className="form-view" onSubmit={this.handleSubmit}>

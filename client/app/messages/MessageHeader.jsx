@@ -6,13 +6,14 @@ var React = require('react');
 var store = require('../store');
 var gravatar = require('../utils/gravatar');
 var urls = require('../urls');
+var shortcuts = require('../utils/shortcuts');
 
 var MessageHeader = React.createClass({
 
   render: function() {
     var user = store.find('users', this.props.user);
     // generate permalink
-    var kwargs = urls.resolve(window.location.pathname).kwargs;
+    var kwargs = shortcuts.getURIArgs();
     kwargs.message_id = this.props.messageId;
     var permalink = urls.get('discussion:detail:message', kwargs);
     if (!user) {

@@ -8,6 +8,7 @@ var gravatar = require('../utils/gravatar');
 var moment = require('moment');
 var urls = require('../urls');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
+var shortcuts = require('../utils/shortcuts');
 
 var MessageForkView = React.createClass({
 
@@ -19,7 +20,7 @@ var MessageForkView = React.createClass({
     store._post(this.props.parent_url + 'fork/', data).then(function(message) { // PUT -- POST
       log.info('MessageFork:success');
       // redirect
-      var kwargs = urls.resolve(window.location.pathname).kwargs;
+      var kwargs = shortcuts.getURIArgs();
       delete kwargs.message_id
       kwargs['discussion_id'] = urls.resolve(JSON.parse(message).url).kwargs.discussion_id
       var url = urls.get('discussion:detail', kwargs);
@@ -29,9 +30,8 @@ var MessageForkView = React.createClass({
   },
 
   render: function() {
-    var kwargs = urls.resolve(window.location.pathname).kwargs;
-    var team = store.find('teams', {'slug': kwargs.team_slug});
-    var message = store.find('messages', {'id': parseInt(kwargs.message_id)});
+    var team = shortcuts.getActiveTeam();
+    var message = shortcuts.getActiveMessage();
     var author = message ? store.find('users', message.user) : null;
     return (
       <div className="message-fork content-view">

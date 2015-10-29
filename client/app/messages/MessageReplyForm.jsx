@@ -10,16 +10,15 @@ var moment = require('moment');
 var urls = require('../urls');
 var store = require('../store');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
+var shortcuts = require('../utils/shortcuts');
 
 var MessageReplyForm = React.createClass({
   mixins: [eventsMixin],
 
   getInitialState: function () {
-    var kwargs = urls.resolve(window.location.pathname).kwargs;
-    var team = store.find('teams', {'slug': kwargs.team_slug});
     return {
       draft: false,
-      team: team
+      team: shortcuts.getActiveTeam()
     };
   },
 
@@ -50,20 +49,19 @@ var MessageReplyForm = React.createClass({
         this.props.callback();
       } else {
         // redirect to discussion detail
-        var kwargs = urls.resolve(window.location.pathname).kwargs;
-        var url = urls.get('discussion:detail:message', _.extend(kwargs, {'message_id': message.id}));
+        var url = urls.get('discussion:detail:message', _.extend(shortcuts.getURIArgs(), {'message_id': message.id}));
         app.history.navigate(url, {'trigger': true});
       }
     }.bind(this));
   },
 
   getDraftId: function () {
-    var kwargs = urls.resolve(window.location.pathname).kwargs;
+    var kwargs = shortcuts.getURIArgs();
     return 'draft:team:' + kwargs.team_slug + ':discussion:' + kwargs.discussion_id + ':msg:' + this.props.messageId;
   },
 
   updateDraft: function(event) {
-    var kwargs = urls.resolve(window.location.pathname).kwargs;
+    var kwargs = shortcuts.getURIArgs();
     console.log('updateDraft', kwargs)
     localStorage.setItem(
       this.getDraftId(

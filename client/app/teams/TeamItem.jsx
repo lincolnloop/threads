@@ -14,7 +14,7 @@ var TeamView = React.createClass({
     }
     var unread = this.props.unread ? this.props.unread : '';
     var url = urls.get('team:detail', {
-      'slug': this.props.slug
+      'team_slug': this.props.slug
     });
     var classes = classnames({
       'unread-item': true,

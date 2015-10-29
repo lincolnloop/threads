@@ -9,6 +9,7 @@ var eventsMixin = require('../mixins/eventsMixin');
 var app = require('../AppRouter');
 var store = require('../store');
 var urls = require('../urls');
+var shortcuts = require('../utils/shortcuts');
 var Attachment = require('./Attachment.jsx');
 var MessageHeader = require('./MessageHeader.jsx');
 var MessageContent = require('./MessageContent.jsx');
@@ -22,7 +23,7 @@ var MessageView = React.createClass({
   handleReply: function(evt) {
     evt.preventDefault();
     var message = store.find('messages', this.props.message.url);
-    var url = urls.get('message:reply', _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs));
+    var url = urls.get('message:reply', _.extend({'message_id': message.id}, shortcuts.getURIArgs()));
     // inline reply
     var mode = LayoutStore.getState().mode;
     // mobile answer
@@ -131,7 +132,7 @@ var MessageView = React.createClass({
       'message-unread': !message.read,
       'message-focused': this.state.focused
     });
-    var urlKeys = _.extend({'message_id': message.id}, urls.resolve(window.location.pathname).kwargs);
+    var urlKeys = _.extend({'message_id': message.id}, shortcuts.getURIArgs());
     // TODO: This needs to query the store, not the message
     var hasUpVoted = _.find(votes, function(vote) {
       return vote.user === localStorage.getItem('user');

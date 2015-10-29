@@ -9,6 +9,7 @@ var moment = require('moment');
 var urls = require('../urls');
 var store = require('../store');
 var MessageReplyForm = require('./MessageReplyForm.jsx');
+var shortcuts = require('../utils/shortcuts');
 // message components
 var MessageHeader = require('./MessageHeader.jsx');
 var MessageContent = require('./MessageContent.jsx');
@@ -22,7 +23,7 @@ var MessageReplyCompact = React.createClass({
   },
 
   componentWillMount: function () {
-    var kwargs = urls.resolve(window.location.pathname).kwargs;
+    var kwargs = shortcuts.getURIArgs();
     var message = store.find('messages', {'id': parseInt(kwargs.message_id)});
     var author = message ? store.find('users', message.user) : null;
 
