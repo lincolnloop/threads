@@ -11,6 +11,8 @@ var urls = require('../urls');
 var store = require('../store');
 var MarkdownView = require('../components/MarkdownTextarea.jsx');
 var shortcuts = require('../utils/shortcuts');
+var cookies = require('../utils/cookies');
+var config = require('../utils/config');
 
 var MessageReplyForm = React.createClass({
   mixins: [eventsMixin],
@@ -18,7 +20,8 @@ var MessageReplyForm = React.createClass({
   getInitialState: function () {
     return {
       draft: false,
-      team: shortcuts.getActiveTeam()
+      team: shortcuts.getActiveTeam(),
+      addedAttachments: []
     };
   },
 
@@ -39,6 +42,14 @@ var MessageReplyForm = React.createClass({
       'read': true,
       'user': localStorage.getItem('user')
     };
+
+    if (this.state.addedAttachments.length) {
+      data['attachments'] = [];
+      for (var i = 0; i < this.state.addedAttachments.length; i++) {
+        data['attachments'].push(this.state.addedAttachments[i].url)
+      }
+    }
+
     store.add('messages', data).then(function(response) {
       log.info('MessageReply:success');
 
@@ -72,6 +83,38 @@ var MessageReplyForm = React.createClass({
     return 'draft:team:' + kwargs.team_slug + ':discussion:' + kwargs.discussion_id + ':msg:' + this.props.messageId;
   },
 
+  handleFileInput: function (event) {
+    console.log('file input',event.target.files)
+
+    //POST file
+    var uploadIframe = window.frames.uploadFileIframe,
+        data = new FormData();
+
+    uploadIframe.xhr = new XMLHttpRequest();
+    var xhr = uploadIframe.xhr;
+
+    data.append('attachment', event.target.files[0]);
+
+    //xhr.upload.addEventListener('progress', this.uploadProgress, false);
+    xhr.addEventListener('load', this.uploadSuccess, false);
+
+    //TODO get API URL
+    var uploadUrl = config.apiUrl + urls.get('api:fileUpload') + '?format=json';
+    xhr.open('POST', uploadUrl, true);
+    xhr.setRequestHeader('X-CSRFToken', cookies.getItem('csrftoken'));
+    xhr.setRequestHeader('Authorization', 'Token ' + localStorage.getItem('apiKey'));
+    xhr.send(data);
+  },
+
+  uploadSuccess: function (event) {
+    console.log('success!', event.target.responseText)
+
+    var response = JSON.parse(event.target.responseText)
+    var attachments = this.state.addedAttachments;
+    attachments.push(response);
+    this.setState({addedAttachments: attachments})
+  },
+
   updateDraft: function(event) {
     var kwargs = shortcuts.getURIArgs();
     console.log('updateDraft', kwargs)
@@ -85,9 +128,18 @@ var MessageReplyForm = React.createClass({
   },
 
   render: function() {
+    console.log('render form', this.props, this.state)
     if (this.state.team) {
       return (
+
         <div className="message-reply content-view">
+            <div>
+              <iframe id="uploadFileIframe" name="uploadFileIframe"><html><body></body></html></iframe>
+              <input type='file' onChange={this.handleFileInput}/>
+              {this.state.addedAttachments.map(function (attachment, idx) {
+                return <img src={"http://localhost:8000" + attachment.thumbnail}/>;
+              })}
+            </div>
           <form className="form-view" onSubmit={this.handleSubmit}>
             <div className="form-view-fields">
               <MarkdownView placeholder="Comment.."
