@@ -122,7 +122,6 @@ var MessageView = React.createClass({
 
   render: function() {
     // shortcuts
-    log.debug('render', this.state)
     var message = store.find('messages', this.props.message.url);
     var votes = store.findAll('votes', {'message': message.url, 'value': '+1'});
     var user = store.find('users', message.user);
