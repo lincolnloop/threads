@@ -84,9 +84,6 @@ var MessageReplyForm = React.createClass({
   },
 
   handleFileInput: function (event) {
-    console.log('file input',event.target.files)
-
-    //POST file
     var uploadIframe = window.frames.uploadFileIframe,
         data = new FormData();
 
@@ -98,7 +95,6 @@ var MessageReplyForm = React.createClass({
     //xhr.upload.addEventListener('progress', this.uploadProgress, false);
     xhr.addEventListener('load', this.uploadSuccess, false);
 
-    //TODO get API URL
     var uploadUrl = config.apiUrl + urls.get('api:fileUpload') + '?format=json';
     xhr.open('POST', uploadUrl, true);
     xhr.setRequestHeader('X-CSRFToken', cookies.getItem('csrftoken'));
@@ -107,8 +103,6 @@ var MessageReplyForm = React.createClass({
   },
 
   uploadSuccess: function (event) {
-    console.log('success!', event.target.responseText)
-
     var response = JSON.parse(event.target.responseText)
     var attachments = this.state.addedAttachments;
     attachments.push(response);
@@ -128,13 +122,10 @@ var MessageReplyForm = React.createClass({
   },
 
   render: function() {
-    console.log('render form', this.props, this.state)
     if (this.state.team) {
       return (
-
         <div className="message-reply content-view">
             <div>
-              <iframe id="uploadFileIframe" name="uploadFileIframe"><html><body></body></html></iframe>
               <input type='file' onChange={this.handleFileInput}/>
               {this.state.addedAttachments.map(function (attachment, idx) {
                 return <img src={"http://localhost:8000" + attachment.thumbnail}/>;
