@@ -95,6 +95,7 @@ var DiscussionRouter = Router.extend({
       'loanimSelector': '.content-main'
     });
     return dispatcher.compact({
+      'back': back,
       'team': team,
       'main': mainView
     }).full({
