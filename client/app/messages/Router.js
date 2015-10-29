@@ -6,7 +6,7 @@ var dispatcher = require('../dispatcher');
 var urls = require('../urls');
 var store = require('../store');
 var MessageEditView = require('./MessageEdit.jsx');
-var MessageReplyView = require('./MessageReply.jsx');
+var MessageReplyCompact = require('./MessageReplyCompact.jsx');
 var MessageForkView = require('./MessageFork.jsx');
 var TeamDiscussions = require('../discussions/TeamDiscussions.jsx');
 
@@ -53,14 +53,15 @@ var MessageRouter = Router.extend({
   },
 
   reply: function(teamSlug, discussionId, discussionSlug, messageId) {
-    var mainView = React.createElement(MessageReplyView, {
-      'parent_url': urls.get('api:messageChange', {'message_id': messageId})
-    });
     var team = store.find('teams', {'slug': teamSlug});
     var discussionUrl = urls.get('api:discussionChange', {
       'discussion_id': discussionId
     });
     var discussion = store.find('discussions', discussionUrl);
+    // main view/MessageReplyCompact
+    var mainView = React.createElement(MessageReplyCompact, {
+      'parent_url': urls.get('api:messageChange', {'message_id': messageId})
+    });
     return dispatcher.small({
       'navLevel': 20,
       'title': 'Reply to message',

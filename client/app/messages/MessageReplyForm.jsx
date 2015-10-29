@@ -15,17 +15,19 @@ var MessageReplyForm = React.createClass({
   mixins: [eventsMixin],
 
   getInitialState: function () {
-    return {draft: false};
+    var kwargs = urls.resolve(window.location.pathname).kwargs;
+    var team = store.find('teams', {'slug': kwargs.team_slug});
+    return {
+      draft: false,
+      team: team
+    };
   },
 
   componentDidMount: function () {
-    var kwargs = urls.resolve(window.location.pathname).kwargs;
-    var team = store.find('teams', {'slug': kwargs.team_slug});
     var draft = localStorage.getItem(this.getDraftId());
     if (draft) {
       this.setState({
-        draft: draft,
-        team: team
+        draft: draft
       });
     }
   },
@@ -73,27 +75,25 @@ var MessageReplyForm = React.createClass({
   },
 
   render: function() {
-
     if (this.state.team) {
-
-    return (
-      <div className="message-reply content-view">
-        <form className="form-view" onSubmit={this.handleSubmit}>
-          <div className="form-view-fields">
-          <MarkdownView placeholder="Comment.."
-                        submitLabel="Reply"
-                        teamUrl={this.state.team.url}
-                        ref="comment"
-                        value={this.state.draft? this.state.draft : null}
-                        onChange={this.updateDraft}
-                        required />
-          </div>
-        </form>
-      </div>
-    );
+      return (
+        <div className="message-reply content-view">
+          <form className="form-view" onSubmit={this.handleSubmit}>
+            <div className="form-view-fields">
+            <MarkdownView placeholder="Comment.."
+                          submitLabel="Reply"
+                          teamUrl={this.state.team.url}
+                          ref="comment"
+                          value={this.state.draft? this.state.draft : null}
+                          onChange={this.updateDraft}
+                          required />
+            </div>
+          </form>
+        </div>
+      );
+    }
+    return <div>Loading</div>;
   }
-  return <div>Loading</div>;
-}
 });
 
 module.exports = MessageReplyForm;
