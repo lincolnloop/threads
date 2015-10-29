@@ -120,8 +120,13 @@ var MessageView = React.createClass({
     this.emitter.on('message:focus', this.handleFocusChange);
   },
 
+  handleFileInput: function (event) {
+    console.log('file input',event.target.files)
+  },
+
   render: function() {
     // shortcuts
+    log.debug('render', this.state)
     var message = store.find('messages', this.props.message.url);
     var votes = store.findAll('votes', {'message': message.url, 'value': '+1'});
     var user = store.find('users', message.user);
@@ -183,10 +188,17 @@ var MessageView = React.createClass({
             {canEdit ? <a className="edit" href={urls.get('message:edit', urlKeys)}>Edit</a> : null}
           </div>
         </div>
-        {this.state.reply && (<MessageReplyForm
-          messageId={message.id}
-          parent_url={urls.get('api:messageChange', {'message_id': message.id})}
-          callback={this.handleReplySuccess} />)}
+        {this.state.reply && (
+          <div>
+            <div>
+              <input type='file' onChange={this.handleFileInput}/>
+            </div>
+            <MessageReplyForm
+              messageId={message.id}
+              parent_url={urls.get('api:messageChange', {'message_id': message.id})}
+              callback={this.handleReplySuccess} />
+          </div>
+        )}
       </div>
     );
   },

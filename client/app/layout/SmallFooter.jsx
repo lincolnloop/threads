@@ -33,7 +33,6 @@ var Footer = React.createClass({
       'user-notifications': true,
       'is-unread': this.state.unreadNotifications ? true : false
     });
-      console.log('small footer', this.props)
     return (
       <footer id="bottom-nav">
         <ul>

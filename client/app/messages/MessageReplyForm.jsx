@@ -90,19 +90,20 @@ var MessageReplyForm = React.createClass({
         <div className="message-reply content-view">
           <form className="form-view" onSubmit={this.handleSubmit}>
             <div className="form-view-fields">
-            <MarkdownView placeholder="Comment.."
-                          submitLabel="Reply"
-                          teamUrl={this.state.team.url}
-                          ref="comment"
-                          value={this.state.draft ? this.state.draft : null}
-                          onChange={this.updateDraft}
-                          required />
+              <MarkdownView placeholder="Comment.."
+                            submitLabel="Reply"
+                            teamUrl={this.state.team.url}
+                            ref="comment"
+                            value={this.state.draft? this.state.draft : null}
+                            onChange={this.updateDraft}
+                            required />
             </div>
           </form>
         </div>
       );
+    } else {
+      return <div>Loading</div>;
     }
-    return <div>Loading</div>;
   }
 });
 
