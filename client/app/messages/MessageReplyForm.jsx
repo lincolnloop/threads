@@ -22,7 +22,7 @@ var MessageReplyForm = React.createClass({
     };
   },
 
-  componentDidMount: function () {
+  componentWillMount: function () {
     var draft = localStorage.getItem(this.getDraftId());
     if (draft) {
       this.setState({
@@ -69,7 +69,7 @@ var MessageReplyForm = React.createClass({
         kwargs.discussion_id),
       event.target.value
     )
-    this.setState({draft: event.target.value})
+    this.setState({draft: this.refs.comment.getRawValue()})
   },
 
   render: function() {
@@ -82,7 +82,7 @@ var MessageReplyForm = React.createClass({
                           submitLabel="Reply"
                           teamUrl={this.state.team.url}
                           ref="comment"
-                          value={this.state.draft? this.state.draft : null}
+                          value={this.state.draft ? this.state.draft : null}
                           onChange={this.updateDraft}
                           required />
             </div>

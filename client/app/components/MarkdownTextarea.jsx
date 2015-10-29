@@ -23,6 +23,13 @@ var config = require('../utils/config');
 
 var MarkdownView = React.createClass({
 
+  getRawValue: function() {
+    // stores mentions in a data attribute for the textarea
+    // this is what we need to send to the server
+    var $textarea = $(ReactDOM.findDOMNode(this.refs.textarea));
+    return $textarea.data('messageText');
+  },
+
   getTabClass: function(isActive) {
     return classnames({
       'tab-header-and-content': true,
@@ -36,14 +43,14 @@ var MarkdownView = React.createClass({
       'type': 'POST',
       'url': config.apiUrl + urls.get('api:message:preview'),
       'contentType': 'application/json',
-      'data': JSON.stringify({'raw_body': this.props.value}),
+      'data': JSON.stringify({'raw_body': this.getRawValue()}),
       'headers': {
         'Authorization': 'Token ' + localStorage.apiKey
       },
       success: function (evt) {
         // TODO: Fix the API.
         // It's returning an array for the body.
-        this.setState({'previewValue': evt.body[0]});
+        this.setState({'previewValue': evt.body[0], 'rawValue': this.getRawValue()});
       }.bind(this)
     });
   },
@@ -54,7 +61,8 @@ var MarkdownView = React.createClass({
 
   getInitialState: function() {
     return {
-      'previewValue': null
+      'previewValue': null,
+      'rawValue': this.props.value ? this.props.value : null
     };
   },
 
@@ -70,7 +78,7 @@ var MarkdownView = React.createClass({
             {this.props.pre ? this.props.pre : null}
               <textarea ref="textarea"
                         placeholder={this.props.placeholder}
-                        value={this.props.value}
+                        defaultValue={this.state.rawValue}
                         onChange={this.props.onChange}
                         required={!!this.props.required} />
             {this.props.post ? this.props.post : null}
