@@ -39,10 +39,22 @@ var MessageReplyForm = React.createClass({
       'read': true,
       'user': localStorage.getItem('user')
     };
-    store.add('messages', data).then(function(message) {
+    store.add('messages', data).then(function(response) {
       log.info('MessageReply:success');
 
+      // remove draft
       localStorage.removeItem(this.getDraftId());
+
+      // update discussion last message manually
+      var root = store.find('messages', response[0].root);
+      var discussion;
+      if (root) {
+        discussion = store.find('discussions', root.discussion);
+        if (discussion) {
+          // update discussion
+          discussion.latest_message = _.clone(root);
+        }
+      }
 
       if (this.props.callback) {
         this.emitter.emit('message:add');

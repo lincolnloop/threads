@@ -25,7 +25,7 @@ var Router = Router.extend({
     }).medium({
       'main': React.createElement(UserDetail, {'user': user})
     }).large({
-      'main': React.createElement(UserDetail, {'user': user})
+      'list': React.createElement(UserDetail, {'user': user})
     }).render();
   }
 });

@@ -24,7 +24,7 @@ var MessageHeader = React.createClass({
     //var handleCollapse = this.props.handleCollapse;
     return (
       <div className="message-header">
-        <div className="avatar">
+        <div className="user-thumbnail avatar">
           <a href={urls.get('user:detail', {'user_id': user.id})}>
             <img src={gravatar.get(user.email)} />
           </a>
