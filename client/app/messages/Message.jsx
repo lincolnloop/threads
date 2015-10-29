@@ -16,6 +16,8 @@ var MessageContent = require('./MessageContent.jsx');
 var MessageReplyForm = require('./MessageReplyForm.jsx');
 var VotesListView = require('./VotesList.jsx');
 var LayoutStore = require('../layout/LayoutStore');
+var cookies = require('../utils/cookies');
+var config = require('../utils/config');
 
 var MessageView = React.createClass({
   mixins: [eventsMixin],
@@ -122,6 +124,30 @@ var MessageView = React.createClass({
 
   handleFileInput: function (event) {
     console.log('file input',event.target.files)
+
+    //POST file
+    var uploadIframe = window.frames.uploadFileIframe,
+        data = new FormData();
+
+    uploadIframe.xhr = new XMLHttpRequest();
+    var xhr = uploadIframe.xhr;
+
+    var message = store.find('messages', this.props.message.url);
+    data.append('attachment', event.target.files[0]);
+
+    //xhr.upload.addEventListener('progress', this.uploadProgress, false);
+    xhr.addEventListener('load', this.uploadSuccess, false);
+
+    //TODO get API URL
+    var uploadUrl = config.apiUrl + urls.get('api:fileUpload') + '?format=json';
+    xhr.open('POST', uploadUrl, true);
+    xhr.setRequestHeader('X-CSRFToken', cookies.getItem('csrftoken'));
+    xhr.setRequestHeader('Authorization', 'Token ' + localStorage.getItem('apiKey'));
+    xhr.send(data);
+  },
+
+  uploadSuccess: function () {
+    console.log('success!')
   },
 
   render: function() {
@@ -191,6 +217,7 @@ var MessageView = React.createClass({
         {this.state.reply && (
           <div>
             <div>
+              <iframe id="uploadFileIframe" name="uploadFileIframe"><html><body></body></html></iframe>
               <input type='file' onChange={this.handleFileInput}/>
             </div>
             <MessageReplyForm
