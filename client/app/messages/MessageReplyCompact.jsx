@@ -9,6 +9,9 @@ var moment = require('moment');
 var urls = require('../urls');
 var store = require('../store');
 var MessageReplyForm = require('./MessageReplyForm.jsx');
+// message components
+var MessageHeader = require('./MessageHeader.jsx');
+var MessageContent = require('./MessageContent.jsx');
 
 // This is only used on the single pane/compact/mobile view
 var MessageReplyCompact = React.createClass({
@@ -30,30 +33,20 @@ var MessageReplyCompact = React.createClass({
   },
 
   render: function() {
+    // TODO: Refactor Message, so we can replace the hard-coded data
+    // TODO: Missing footer and attachments
+    var message = this.state.message;
     return (
       <div className="message-reply content-view">
-        {this.state.message ? <div className="message">
-          <div className="message-container" onClick={this.toggleExpand}>
-
-          <div className="message-header">
-            <a className="collapse-button expand">{!this.state.expand ? "Expand" : "Collapse"}</a>
-            <div className="avatar">
-              <img src={gravatar.get(this.state.author.email)} />
-            </div>
-            <div className="username">{this.state.author.name}</div>
-            <div className="date">
-              <a href="/lincoln-loop/12461/potential-project-united-nations-world-food-programme-wfp/#89624"
-                 className="permalink">
-                <time className="timeago" dateTime="{message.date_created}">{moment.utc(this.state.message.date_created).local().fromNow()}</time>
-              </a>
-            </div>
-          </div>
-            {this.state.expand ? <div className="message-content">
-              <div dangerouslySetInnerHTML={{__html: this.state.message.body}} />
-            </div> : null}
-          </div>
+        {this.state.message ? <div className="message-container">
+          <MessageHeader date={message.date_created}
+                       messageId={message.id}
+                       user={message.user}
+                       handleCollapse={this.props.handleCollapse} />
+          <MessageContent body={message.body} /> 
         </div> : null}
-        <MessageReplyForm parent_url={this.props.parent_url} />
+
+          <MessageReplyForm parent_url={this.props.parent_url} />
       </div>
     );
   }
