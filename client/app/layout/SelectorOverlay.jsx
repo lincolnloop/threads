@@ -36,7 +36,6 @@ var SelectorOverlay = React.createClass({
           <div className={overlayClasses} onClick={this.handleLayoutClick}>
             <a data-layout="auto">Auto</a>
             <a data-layout="compact">Compact</a>
-            <a data-layout="focused">Focused</a>
             <a data-layout="full">Full</a>
           </div>
         </li>

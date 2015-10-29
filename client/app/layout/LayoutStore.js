@@ -6,7 +6,7 @@ var layoutActions = require('./actions');
 class LayoutStore {
   constructor() {
     // list of available mode options
-    this.availableModes = ['compact', 'focused', 'full'];
+    this.availableModes = ['compact', 'full'];
     // bind layout change actions
     this.bindActions(layoutActions);
     // check if a localStorage mode is enabled
@@ -18,12 +18,10 @@ class LayoutStore {
 
     // if no localStorage mode is defined
     // choose one as default
-    if (window.innerWidth < 800) {
-      this.mode = 'compact';
-    } else if (window.innerWidth > 1200 ) {
+    if (window.innerWidth > 1200) {
       this.mode = 'full';
     } else {
-      this.mode = 'focused';
+      this.mode = 'compact';
     }
   }
 
