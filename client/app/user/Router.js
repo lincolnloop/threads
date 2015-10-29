@@ -16,15 +16,9 @@ var Router = Router.extend({
   detail: function(id) {
     log.info('detail');
     var user = store.find('users', urls.get('api:user:detail', id));
-    return dispatcher.small({
-      'animation': 'fade',
-      'navLevel': 25,
-      'title': user.name,
-      'back': 'history',
+    return dispatcher.compact({
       'main': React.createElement(UserDetail, {'user': user})
-    }).medium({
-      'main': React.createElement(UserDetail, {'user': user})
-    }).large({
+    }).full({
       'list': React.createElement(UserDetail, {'user': user})
     }).render();
   }

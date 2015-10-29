@@ -19,20 +19,14 @@ var Router = Router.extend({
   search: function() {
     var qo = qs.parse(location.search);
     var team = qo.team ? store.find('teams', {'slug': qo.team}) : null;
-    return dispatcher.small({
-        'animation': 'fade',
-        'navLevel': 25,
-        'title': 'Search Threads',
-        'back': '/',
-        'main': React.createElement(Search)
-      }).medium({
+    return dispatcher.compact({
         'main': React.createElement(SearchResults, {
           'query': qo.query,
           'team': qo.team,
           'loanimSelector': '.content-main'
         }),
         'team': team
-      }).large({
+      }).full({
         'list': React.createElement(SearchResults, {
           'query': qo.query,
           'team': qo.team,

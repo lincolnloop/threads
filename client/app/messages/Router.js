@@ -29,15 +29,10 @@ var MessageRouter = Router.extend({
     });
     var team = shortcuts.getActiveTeam();
     var discussion = shortcuts.getActiveDiscussion();
-    return dispatcher.small({
-      'navLevel': 20,
-      'title': 'Edit message',
-      'back': this.getBackUrl(),
-      'main': mainView
-    }).medium({
+    return dispatcher.compact({
       'team': team,
       'main': mainView
-    }).large({
+    }).full({
       'team': team,
       'discussion': discussion,
       'list': React.createElement(TeamDiscussions, {
@@ -56,15 +51,10 @@ var MessageRouter = Router.extend({
     var mainView = React.createElement(MessageReplyCompact, {
       'parent_url': urls.get('api:messageChange', {'message_id': messageId})
     });
-    return dispatcher.small({
-      'navLevel': 20,
-      'title': 'Reply to message',
-      'back': this.getBackUrl(),
-      'main': mainView
-    }).medium({
+    return dispatcher.compact({
       'team': team,
       'main': mainView
-    }).large({
+    }).full({
       'team': team,
       'discussion': discussion,
       'list': React.createElement(TeamDiscussions, {
@@ -82,15 +72,10 @@ var MessageRouter = Router.extend({
     });
     var team = shortcuts.getActiveTeam();
     var discussion = shortcuts.getActiveDiscussion();
-    return dispatcher.small({
-      'navLevel': 20,
-      'title': 'Reply to message',
-      'back': this.getBackUrl(),
-      'main': mainView
-    }).medium({
+    return dispatcher.compact({
       'team': team,
       'main': mainView
-    }).large({
+    }).full({
       'team': team,
       'discussion': discussion,
       'list': React.createElement(TeamDiscussions, {

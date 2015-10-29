@@ -20,13 +20,8 @@ var TeamRouter = Router.extend({
 
   list: function() {
     log.info('team:list');
-    return dispatcher.small({
-      'navLevel': 0,
-      'title': 'Threads',
-      'back': null,
-      'main': React.createElement(OrganizationList),
-      'headerContextView': React.createElement(HeaderReloadTeams)
-    }).medium().large().render();
+    // no settings yet
+    return dispatcher.compact().full().render();
   }
 });
 
