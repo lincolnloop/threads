@@ -44,6 +44,10 @@ var MarkdownView = React.createClass({
         // TODO: Fix the API.
         // It's returning an array for the body.
         this.setState({'previewValue': evt.body[0]});
+      }.bind(this),
+      error: function (error) {
+        this.setState({'errormsg': error.responseJSON.raw_body});
+        console.log(error);
       }.bind(this)
     });
   },
@@ -54,37 +58,49 @@ var MarkdownView = React.createClass({
 
   getInitialState: function() {
     return {
-      'previewValue': null
+      'previewValue': null,
+      'errormsg': null
     };
   },
 
   render: function() {
+
+
+    if (!this.state.previewValue) {
+      var contentArea = <section>{this.props.pre ? this.props.pre : null}
+                          <textarea ref="textarea"
+                                    placeholder={this.props.placeholder}
+                                    value={this.props.value}
+                                    onChange={this.props.onChange}
+                                    required={!!this.props.required} />
+                          {this.props.post ? this.props.post : null}
+
+                            <a onClick={this.preview} className="preview-link">Preview</a>
+
+                        </section>
+    } else {
+      var contentArea = <section>
+                          <div className="preview-content"
+                            dangerouslySetInnerHTML={{'__html': this.state.previewValue}}>
+                          </div>
+
+
+                            <a onClick={this.stopPreview} className="preview-link">Back to edit</a>
+
+                        </section>
+    }
+
+    var errorArea ;
+
+    if(this.state.errormsg) {
+      errorArea = <div>{this.state.errormsg}</div>
+    }
     // render preview and textarea separately.
     var submitLabel = this.props.submitLabel ? this.props.submitLabel : 'Submit';
     return (
       <div className="markdown-textarea">
-        <ul className="accordion-tabs">
-          <li className={this.getTabClass(!this.state.previewValue)}>
-            <a onClick={this.stopPreview} className="tab-link">Write</a>
-            <section>
-            {this.props.pre ? this.props.pre : null}
-              <textarea ref="textarea"
-                        placeholder={this.props.placeholder}
-                        value={this.props.value}
-                        onChange={this.props.onChange}
-                        required={!!this.props.required} />
-            {this.props.post ? this.props.post : null}
-            </section>
-          </li>
-          <li className={this.getTabClass(this.state.previewValue)}>
-            <a onClick={this.preview} className="tab-link">Preview</a>
-            <section>
-              <div className="preview-content"
-                   dangerouslySetInnerHTML={{'__html': this.state.previewValue}}>
-              </div>
-            </section>
-          </li>
-        </ul>
+        {contentArea}
+        {errorArea}
         <button type="submit" className="btn btn-submit">{submitLabel}</button>
       </div>
     )

@@ -24,9 +24,9 @@ var ForkedDiscussionLink = React.createClass({
     var url = discussion ? urls.get('discussion:detail', team.slug, discussion.id, discussion.slug) : null;
     return (
       <div className="forked-link">
-        {this.state.discussion ? <a href={url}>
+        {this.state.discussion ? <span><span>Forked from: </span><a href={url}>
           {this.state.discussion.title}
-        </a> : null}
+        </a></span> : null}
       </div>
     );
   },

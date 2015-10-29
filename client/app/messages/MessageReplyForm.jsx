@@ -75,7 +75,7 @@ var MessageReplyForm = React.createClass({
   render: function() {
     if (this.state.team) {
       return (
-        <div className="message-reply content-view">
+        <div className="message-reply">
           <form className="form-view" onSubmit={this.handleSubmit}>
             <div className="form-view-fields">
             <MarkdownView placeholder="Comment.."

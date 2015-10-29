@@ -1,15 +1,70 @@
+.message-reply {
+  background: #f3f3f3;
+  // border-top: 1px solid #e1e0e5;
+  margin-bottom: 10px;
+  box-shadow: inset 0px 7px 3px -3px rgba(3, 3, 3, 0.2);
+
+  animation:
+      openspace .5s cubic-bezier(.14,.25,.52,1.56),
+
+}
+
+@keyframes openspace {
+    to {
+        max-height: 200px;
+    }
+}
+
+
+
+::-webkit-input-placeholder {
+  font-size: 12px;
+}
+:-moz-placeholder {
+  font-size: 12px;
+}
+::-moz-placeholder {
+  font-size: 12px;
+}
+:-ms-input-placeholder {
+  font-size: 12px;
+}
+
 .markdown-textarea {
   position: relative;
-
+  li,ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
   input {
     border-left: none;
     border-right: none;
   }
 
   textarea {
-    height: 400px;
     border-radius: 0;
     border: none;
+  }
+
+  .preview-link {
+    float: right;
+    display: inline-block;
+    overflow:hidden;
+    margin-right: 10px;
+    color: #fff;
+    font-size: 12px;
+    padding: 0 15px 0 15px;
+    border-radius: 2px;
+    background: $base-link-color;
+    text-shadow: none;
+    transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+
+    &:hover {
+      background: $base-link-color;
+      border-color: #02ceff;
+      box-shadow: 0 0 0 3px #80E6FF;
+    }
   }
 
   .btn-submit {
@@ -19,9 +74,6 @@
 
   @include media($tablet) {
     .btn-submit {
-      // position: absolute;
-      // top: 0px;
-      // right: 0;
       width: auto;
     }
   }
