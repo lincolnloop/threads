@@ -8,7 +8,6 @@ var config = require('../utils/config');
 var Attachment = React.createClass({
 
   render: function() {
-    console.log('render attachment', config.apiUrl)
     var att = this.props.attachment;
     var filename = truncate(att.filename, 23);
     var thumbnail = att.thumbnail;
