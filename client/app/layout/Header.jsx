@@ -15,6 +15,10 @@ var Header = React.createClass({
     this.setState(options);
   },
 
+  handleToggleNav: function() {
+    // trigger action
+  },
+
   handleBack: function() {
     // navigate to back page if one exists
     if (this.props.back && this.props.back !== 'history') {
@@ -58,19 +62,18 @@ var Header = React.createClass({
     }
     return (
       <header id="top-nav" className="col-header">
-        <div className="wrapper">
-          <span className="action">
-            {this.props.back ? React.createElement('a', backAttrs,
-              React.createElement('i', {'className': "icon icon-back"}),
-              React.createElement('span', null, 'Back')
-            ) : null}
-          </span>
-          <span className="title">{this.state.title}</span>
-          {this.state.loading ? <div className="loading-header">
-            <div className="loading-header-progress" />
-          </div> : null}
-          {this.state.contextView}
-        </div>
+        <span className="nav">
+          {this.props.nav ? <a onClick={this.handleToggleNav}>NAV</a> : null}
+          {this.props.back ? <a className="back" onClick={this.handleBack}>
+            <i className="icon icon-back" />
+            <span className="back-label">Back</span>
+          </a> : null}
+        </span>
+        <span className="title">{this.state.title}</span>
+        {this.state.loading ? <div className="loading-header">
+          <div className="loading-header-progress" />
+        </div> : null}
+        {this.state.contextView}
       </header>
     );
   },
