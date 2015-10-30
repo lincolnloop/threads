@@ -53,17 +53,18 @@ var MessageView = React.createClass({
     }
   },
 
-  handleVote: function(value) {
+  handleVote: function(evt) {
     var vote =  store.find('votes', {
-        'message': this.props.message.url,
-        'user': localStorage.getItem('user')
-      });
+      'message': this.props.message.url,
+      'user': localStorage.getItem('user')
+    });
+    var voteValue = evt.currentTarget.dataset.vote;
 
     if (!vote) {
       // create a new vote
       vote = {
         'message': this.props.message.url,
-        'value': '+1'
+        'value': voteValue
       }
       store.add('votes', vote).then(function() {
           return store.get('messages', null, {'url': this.props.message.url});
@@ -71,7 +72,7 @@ var MessageView = React.createClass({
           this.forceUpdate();
         }.bind(this));
     } else {
-      if (vote.value === '+1') {
+      if (vote.value === voteValue) {
         store.remove('votes', vote).then(function() {
           return store.get('messages', null, {'url': this.props.message.url});
         }.bind(this)).done(function() {
@@ -81,7 +82,7 @@ var MessageView = React.createClass({
         // update current vote
         store.update('votes', {
           'url': vote.url,
-          'value': value
+          'vote': voteValue
         }).done(function() {
           this.forceUpdate();
         }.bind(this));
@@ -123,7 +124,8 @@ var MessageView = React.createClass({
   render: function() {
     // shortcuts
     var message = store.find('messages', this.props.message.url);
-    var votes = store.findAll('votes', {'message': message.url, 'value': '+1'});
+    var upVotes = store.findAll('votes', {'message': message.url, 'value': '+1'});
+    var downVotes = store.findAll('votes', {'message': message.url, 'value': '-1'});
     var user = store.find('users', message.user);
     var attachments = message.attachments;
     // main message classes
@@ -134,13 +136,20 @@ var MessageView = React.createClass({
     });
     var urlKeys = _.extend({'message_id': message.id}, shortcuts.getURIArgs());
     // TODO: This needs to query the store, not the message
-    var hasUpVoted = _.find(votes, function(vote) {
-      return vote.user === localStorage.getItem('user');
+    var hasUpVoted = _.find(upVotes, function(vote) {
+      return vote.user === localStorage.getItem('user') && vote.value === '+1';
+    });
+    var hasDownVoted = _.find(downVotes, function(vote) {
+      return vote.user === localStorage.getItem('user') && vote.value === '-1';
     });
     var canEdit = this.props.message.user === localStorage.getItem('user');
-    var voteClasses = classnames({
-      'up-vote': true,
-      'up-voted': hasUpVoted
+    var upVoteClasses = classnames({
+      'vote': true,
+      'voted': hasUpVoted
+    });
+    var downVoteClasses = classnames({
+      'vote': true,
+      'voted': hasDownVoted
     });
     var messageAttachmentClasses = classnames({
       'message-attachments': true,
@@ -174,9 +183,10 @@ var MessageView = React.createClass({
               : null}
             </div>
           </div>
-          {votes.length ? React.createElement(VotesListView,{'votes': votes}) : null}
+          <VotesListView upVotes={upVotes} downVotes={downVotes} />
           <div className="message-actions">
-            <a className={voteClasses} onClick={this.handleVote}>{hasUpVoted ? 'Liked' : 'Like'}</a>
+            <a className={upVoteClasses} onClick={this.handleVote} data-vote="+1">{hasUpVoted ? 'Liked' : 'Like'}</a>
+            <a className={downVoteClasses} onClick={this.handleVote} data-vote="-1">{hasDownVoted ? 'Yanned' : 'Yann'}</a>
             <a className="reply" onClick={this.handleReply}>Reply</a>
             <a className="fork" href={urls.get('message:fork', urlKeys)}>fork</a>
             {false ? <a className="star" href="#">Star</a> : null}

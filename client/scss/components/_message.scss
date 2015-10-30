@@ -168,7 +168,7 @@
         border-color: #02ceff;
         box-shadow: 0 0 0 3px #80E6FF;
       }
-      &.up-voted {
+      &.voted {
         background-color: #fff;
         color: $orange;
         &:hover {
@@ -223,7 +223,7 @@
       > a {
         background-color: $base-link-color;
         color: #fff;
-        &.up-voted {
+        &.voted {
           background-color: $orange;
         }
       }
