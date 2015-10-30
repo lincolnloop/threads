@@ -67,7 +67,7 @@
     "query-string": "^1.0.0",
     "react": "^0.14.0",
     "react-addons-css-transition-group": "^0.14.0",
-    "react-canvas-progress-meter": "^1.0.0",
+    "react-canvas-progress-meter": "^1.0.1",
     "react-dom": "^0.14.0",
     "reactify": "^1.1.1",
     "uglifyjs": "^2.4.10",
