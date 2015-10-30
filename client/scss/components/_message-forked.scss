@@ -10,6 +10,10 @@
     border-bottom: 2px solid rgba(41, 128, 185, 0.9);
     box-shadow: inset 0px 7px 3px -3px rgba(3, 3, 3, 0.2);
     a {
+      display: block;
+      width: 20%;
+      line-height: 22px;
+      background-color: #ededed;
       color: #fff;
       font-weight: bold;
       white-space: nowrap;

@@ -72,10 +72,14 @@ var MarkdownView = React.createClass({
 
   render: function() {
 
+    var textareaStyles = {
+      'borderBottom': this.state.errormsg ? '2px solid #ff733f' : ''
+    }
 
     if (!this.state.previewValue) {
       var contentArea = <section>{this.props.pre ? this.props.pre : null}
                           <textarea ref="textarea"
+                                    style={textareaStyles}
                                     placeholder={this.props.placeholder}
                                     defaultValue={this.state.rawValue}
                                     onChange={this.props.onChange}
