@@ -107,7 +107,6 @@ var MessageReplyForm = React.createClass({
       if (event.total !== 0) {
         progress = parseInt((event.loaded / event.total)  * 100)
       }
-      console.log('progress', progress)
       this.setState({
         uploading: true,
         percentComplete: progress
@@ -126,7 +125,6 @@ var MessageReplyForm = React.createClass({
 
   updateDraft: function(event) {
     var kwargs = shortcuts.getURIArgs();
-    console.log('updateDraft', kwargs)
     localStorage.setItem(
       this.getDraftId(
         kwargs.team_slug,
