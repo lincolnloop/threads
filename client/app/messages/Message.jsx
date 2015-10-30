@@ -82,7 +82,8 @@ var MessageView = React.createClass({
         // update current vote
         store.update('votes', {
           'url': vote.url,
-          'vote': voteValue
+          'value': voteValue,
+          'message': this.props.message.url
         }).done(function() {
           this.forceUpdate();
         }.bind(this));
