@@ -13,6 +13,7 @@ var MarkdownView = require('../components/MarkdownTextarea.jsx');
 var shortcuts = require('../utils/shortcuts');
 var cookies = require('../utils/cookies');
 var config = require('../utils/config');
+var ProgressMeter = require('react-canvas-progress-meter');
 
 var MessageReplyForm = React.createClass({
   mixins: [eventsMixin],
@@ -21,7 +22,8 @@ var MessageReplyForm = React.createClass({
     return {
       draft: false,
       team: shortcuts.getActiveTeam(),
-      addedAttachments: []
+      addedAttachments: [],
+      uploading: false
     };
   },
 
@@ -89,24 +91,37 @@ var MessageReplyForm = React.createClass({
 
     uploadIframe.xhr = new XMLHttpRequest();
     var xhr = uploadIframe.xhr;
-
     data.append('attachment', event.target.files[0]);
-
-    //xhr.upload.addEventListener('progress', this.uploadProgress, false);
-    xhr.addEventListener('load', this.uploadSuccess, false);
-
     var uploadUrl = config.apiUrl + urls.get('api:fileUpload') + '?format=json';
+
+    xhr.upload.addEventListener('progress', this.uploadProgress, false);
+    xhr.addEventListener('load', this.uploadSuccess, false);
     xhr.open('POST', uploadUrl, true);
     xhr.setRequestHeader('X-CSRFToken', cookies.getItem('csrftoken'));
     xhr.setRequestHeader('Authorization', 'Token ' + localStorage.getItem('apiKey'));
     xhr.send(data);
   },
 
+  uploadProgress: function (event) {
+      var progress = 0;
+      if (event.total !== 0) {
+        progress = parseInt((event.loaded / event.total)  * 100)
+      }
+      console.log('progress', progress)
+      this.setState({
+        uploading: true,
+        percentComplete: progress
+      });
+  },
+
   uploadSuccess: function (event) {
     var response = JSON.parse(event.target.responseText)
     var attachments = this.state.addedAttachments;
     attachments.push(response);
-    this.setState({addedAttachments: attachments})
+    this.setState({
+      addedAttachments: attachments,
+      uploading: false
+    })
   },
 
   updateDraft: function(event) {
@@ -130,6 +145,7 @@ var MessageReplyForm = React.createClass({
               {this.state.addedAttachments.map(function (attachment, idx) {
                 return <img src={"http://localhost:8000" + attachment.thumbnail}/>;
               })}
+              {this.state.uploading && <ProgressMeter size="100" backgroundColor='#049' barColor='#6D6D72' percent={this.state.percentComplete} />}
             </div>
           <form className="form-view" onSubmit={this.handleSubmit}>
             <div className="form-view-fields">
