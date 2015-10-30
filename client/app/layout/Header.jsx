@@ -5,6 +5,7 @@ var app = require('../AppRouter');
 var React = require('react');
 var log = require('loglevel');
 var eventsMixin = require('../mixins/eventsMixin');
+var layoutActions = require('../layout/actions');
 var urls = require('../urls');
 
 var Header = React.createClass({
@@ -15,8 +16,9 @@ var Header = React.createClass({
     this.setState(options);
   },
 
-  handleToggleNav: function() {
+  openNav: function() {
     // trigger action
+    layoutActions.openNav();
   },
 
   handleBack: function() {
@@ -63,7 +65,7 @@ var Header = React.createClass({
     return (
       <header id="top-nav" className="col-header">
         <span className="nav">
-          {this.props.nav ? <a onClick={this.handleToggleNav}>NAV</a> : null}
+          {this.props.nav ? <a onClick={this.openNav}>NAV</a> : null}
           {this.props.back ? <a className="back" onClick={this.handleBack}>
             <i className="icon icon-back" />
             <span className="back-label">Back</span>

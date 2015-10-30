@@ -1,10 +1,13 @@
 'use strict';
 
+var log = require('loglevel');
 var app = require('../AppRouter');
 var layoutActions = require('./actions');
 
 class LayoutStore {
   constructor() {
+    // nav status (open by default)
+    this.showNav = true;
     // list of available mode options
     this.availableModes = ['compact', 'full'];
     // bind layout change actions
@@ -31,6 +34,16 @@ class LayoutStore {
       this.mode = mode;
       localStorage.setItem('layoutMode', mode);
     }
+  }
+
+  openNav() {
+    log.info('openNav');
+    this.showNav = true;
+  }
+
+  closeNav() {
+    log.info('closeNav');
+    this.showNav = false;
   }
 }
 
