@@ -35,8 +35,8 @@ var SidebarView = React.createClass({
 
     return (
       <nav className='nav-main'>
+        {this.props.closeNav ? <a className="nav-main-close" onClick={this.handleClose}>X</a> : null}
         <Logo />
-        <a onClick={this.handleClose}>X</a>
         <header className='nav-settings'>
           <ul>
             <li>

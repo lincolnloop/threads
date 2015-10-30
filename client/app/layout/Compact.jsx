@@ -52,10 +52,10 @@ var AppView = React.createClass({
     });
     return (
       <section className={layoutClasses}>
-        <Sidebar handleLayoutClick={this.props.handleLayoutClick} />
+        <Sidebar closeNav={true} handleLayoutClick={this.props.handleLayoutClick} />
         <div className="content-main">
           <Header title={this.props.title}
-                  nav={this.props.nav}
+                  nav={true}
                   back={this.props.back}
                   contextView={this.props.headerContextView} />
           {this.props.main}
