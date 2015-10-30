@@ -12,22 +12,24 @@ var MessageHeader = React.createClass({
 
   render: function() {
     var user = store.find('users', this.props.user);
-    // generate permalink
-    var kwargs = shortcuts.getURIArgs();
-    kwargs.message_id = this.props.messageId;
-    var permalink = urls.get('discussion:detail:message', kwargs);
-    if (!user) {
-      user = localStorage.getItem('anonUser');
+    if (!this.props.permalink) {
+      // if permalink is not set in props
+      // generate permalink from current url
+      var kwargs = shortcuts.getURIArgs();
+      kwargs.message_id = this.props.messageId;
+      var permalink = urls.get('discussion:detail:message', kwargs);
     }
-
+    if (!user) {
+      user = store.anonUser;
+    }
     var handleCollapse = false;
-    //var handleCollapse = this.props.handleCollapse;
+    // TODO: add an icon for the deleted user
     return (
       <div className="message-header">
         <div className="user-thumbnail avatar">
-          <a href={urls.get('user:detail', {'user_id': user.id})}>
+          {user.id ? <a href={urls.get('user:detail', {'user_id': user.id})}>
             <img src={gravatar.get(user.email)} />
-          </a>
+          </a> : <span>Deleted User</span>}
         </div>
         <div className="cite"></div>
         {handleCollapse ?

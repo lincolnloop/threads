@@ -97,6 +97,7 @@ var DiscussionRouter = Router.extend({
     return dispatcher.compact({
       'back': back,
       'team': team,
+      'nav': true,
       'main': mainView
     }).full({
       'team': team,

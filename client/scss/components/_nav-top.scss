@@ -1,48 +1,45 @@
 #top-nav {
   position: fixed;
-  height: 44px;
   background: $blue-translucent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-  padding: 0px 10px 0 10px;
+  padding: 0px 10px 0 0;
   text-align: center;
   border-bottom: none;
 
-  .back {
-    position: absolute;
-    line-height: 44px;
-    left: 15px;
-    font-size: 17px;
-    color: #fff;
-    -webkit-touch-callout: none;                
-    -webkit-text-size-adjust: none;            
-    -webkit-tap-highlight-color: rgba(0,0,0,0);
-    -webkit-user-select: none;          
-
-    span {
+  .nav, .title, .actions {
+    display: flex;
+    align-items: center;
+    height: 44px;
+  }
+  .nav {
+    flex: 0 0 120px;
+    a {
       margin-left: 8px;
+      font-size: 17px;
+      color: #fff;
+      -webkit-touch-callout: none;
+      -webkit-text-size-adjust: none;
+      -webkit-tap-highlight-color: rgba(0,0,0,0);
+      -webkit-user-select: none;
+    }
+    .back-label {
+      margin-left: 10px;
     }
   }
 
   .title {
-    position: absolute;
-    left: 80px;
-    right: 80px;
-    height: 44px;
-    line-height: 44px;
     text-align: center;
     font-size: 17px;
     color: #fff;
     font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .actions {
-    position: absolute;
-    right: 10px;
+    flex: 0 0 auto;
     color: #FFF;
-    height: 44px;
 
     .unreads, .create, .reload {
       display: inline-block;

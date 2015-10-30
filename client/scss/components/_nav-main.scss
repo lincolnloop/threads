@@ -71,7 +71,13 @@
     }
   }
 }
-
+.nav-main-close {
+  float: right;
+  padding: 3px 10px;
+  background-color: #2C3849;
+  border-radius: 50px;
+  color: #FFF;
+}
 
 footer#bottom-nav {
     .configuration {

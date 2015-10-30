@@ -33,12 +33,29 @@
 }
 
 .app.medium {
+  .nav-main, .content-main {
+    @include transition(all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1));
+  }
   .nav-main {
     width: 30%;
+    left: -30%;
   }
   .content-main {
-    width: 70%;
+    position: absolute;
+    width: auto;
+    right: 0;
+    left: 0;
   }
+  // nav/close
+  &.medium-nav {
+    .nav-main {
+      left: 0;
+    }
+    .content-main {
+      left: 30%;
+    }
+  }
+
 }
 
 .app.small {

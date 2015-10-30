@@ -11,25 +11,27 @@ var SearchResult = React.createClass({
 
   handleResultClick: function(evt) {
     var url = evt.currentTarget.dataset.href;
-    debugger;
     app.history.navigate(url, {'trigger': true});
   },
 
   render: function() {
-    var result = this.props.result;
     return (
-      <div className="search-result" onClick={this.handleResultClick} data-href={result.permalink}>
-        <time className="time-ago" dateTime={result.date}>{moment(result.date).fromNow()}</time>
+      <div className="search-result" onClick={this.handleResultClick} data-href={this.props.permalink}>
+        <time className="time-ago" dateTime={this.props.date}>{moment(this.props.date).fromNow()}</time>
         <div className="result-header">
-          <span className="team">{result.team} ></span>
-          <a href={result.permalink} dangerouslySetInnerHTML={{__html: result.title}} />
+          <span className="team">{this.props.team} ></span>
+          <a href={this.props.permalink} dangerouslySetInnerHTML={{__html: this.props.title}} />
         </div>
         <ul>
-          {_.map(result.messages, function(message) {
-            return (<a href={message.permalink}><div className="message-container">
-              <MessageHeader user={message.user} date={message.date} />
-              <MessageContent body={message.text} />
-            </div></a>)
+          {_.map(this.props.messages, function(message) {
+            return (<li key={message.permalink}>
+              <span href={message.permalink}>
+                <div className="message-container">
+                  <MessageHeader {...message} />
+                  <MessageContent body={message.text} />
+                </div>
+              </span>
+            </li>)
           }.bind(this))}
         </ul>
       </div>

@@ -5,6 +5,7 @@ var app = require('../AppRouter');
 var React = require('react');
 var log = require('loglevel');
 var eventsMixin = require('../mixins/eventsMixin');
+var layoutActions = require('../layout/actions');
 var urls = require('../urls');
 
 var Header = React.createClass({
@@ -13,6 +14,11 @@ var Header = React.createClass({
   ajaxChange: function(options) {
     // {'loading': true/false}
     this.setState(options);
+  },
+
+  openNav: function() {
+    // trigger action
+    layoutActions.openNav();
   },
 
   handleBack: function() {
@@ -58,19 +64,18 @@ var Header = React.createClass({
     }
     return (
       <header id="top-nav" className="col-header">
-        <div className="wrapper">
-          <span className="action">
-            {this.props.back ? React.createElement('a', backAttrs,
-              React.createElement('i', {'className': "icon icon-back"}),
-              React.createElement('span', null, 'Back')
-            ) : null}
-          </span>
-          <span className="title">{this.state.title}</span>
-          {this.state.loading ? <div className="loading-header">
-            <div className="loading-header-progress" />
-          </div> : null}
-          {this.state.contextView}
-        </div>
+        <span className="nav">
+          {this.props.nav ? <a onClick={this.openNav}>NAV</a> : null}
+          {this.props.back ? <a className="back" onClick={this.handleBack}>
+            <i className="icon icon-back" />
+            <span className="back-label">Back</span>
+          </a> : null}
+        </span>
+        <span className="title">{this.state.title}</span>
+        {this.state.loading ? <div className="loading-header">
+          <div className="loading-header-progress" />
+        </div> : null}
+        {this.state.contextView}
       </header>
     );
   },

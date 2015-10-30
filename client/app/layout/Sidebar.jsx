@@ -6,20 +6,24 @@ var log = require('loglevel');
 var React = require('react');
 var OrganizationList = require('../teams/OrganizationList.jsx');
 var store = require('../store');
+var layoutActions = require('../layout/actions');
 var teamUtils = require('../teams/utils');
 var urls = require('../urls');
 var SelectorOverlay = require('./SelectorOverlay.jsx');
 var Logo = require('../components/Logo.jsx');
 var SidebarView = React.createClass({
 
-  getInitialState: function () {
+  handleClose() {
+    layoutActions.closeNav();
+  },
+
+  getInitialState() {
     return {
       unreadNotifications: false
     }
   },
 
-  render: function() {
-
+  render() {
     var teams = store.findAll('teams');
     var organizations = teamUtils.groupByOrganizations(teams);
     var user = store.find('users', localStorage.getItem('user'));
@@ -31,17 +35,18 @@ var SidebarView = React.createClass({
 
     return (
       <nav className='nav-main'>
+        {this.props.closeNav ? <a className="nav-main-close" onClick={this.handleClose}>X</a> : null}
         <Logo />
         <header className='nav-settings'>
-        <ul>
-          <li>
-            <a href={urls.get('notifications')} className={notificationClasses}>
-              <span className='notifications'>{this.state.unreadNotifications}</span>
-            </a>
+          <ul>
+            <li>
+              <a href={urls.get('notifications')} className={notificationClasses}>
+                <span className='notifications'>{this.state.unreadNotifications}</span>
+              </a>
 
-          </li>
-          <SelectorOverlay handleLayoutClick={this.props.handleLayoutClick} />
-        </ul>
+            </li>
+            <SelectorOverlay handleLayoutClick={this.props.handleLayoutClick} />
+          </ul>
         </header>
         {React.createElement(OrganizationList, {
           'organizations': organizations

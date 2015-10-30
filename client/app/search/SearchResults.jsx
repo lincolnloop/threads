@@ -14,13 +14,13 @@ var SearchResult = require('./SearchResult.jsx');
 var SearchView = React.createClass({
   mixins: [loadingMixin],
 
-  fetch: function(query, team, page) {
+  fetch: function(query, teamSlug, page) {
     // https://gingerhq.com/api/v2/searchresult/?q=test&team=&user=&start_date=&end_date=
     return $.ajax(config.apiUrl + '/api/v2/searchresult/', {
       'dataType': 'json',
       'data': {
         'q': query,
-        'team': team,
+        'team': teamSlug,
         'page': page
       },
       'headers': {
@@ -68,7 +68,7 @@ var SearchView = React.createClass({
         : null}
         {this.state.results !== null ? <div className="search-list">
           {_.map(this.state.results, function(result, key) {
-            return (<SearchResult key={'result-' + key} result={result} />);
+            return (<SearchResult key={'result-' + key} {...result} />);
           }.bind(this))}
         </div> : this.state.results == 0 ? <div className="search-list empty">
           <h2>No results</h2>
