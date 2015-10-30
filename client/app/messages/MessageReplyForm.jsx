@@ -124,7 +124,7 @@ var MessageReplyForm = React.createClass({
   render: function() {
     if (this.state.team) {
       return (
-        <div className="message-reply content-view">
+        <div className="message-reply">
             <div>
               <input type='file' onChange={this.handleFileInput}/>
               {this.state.addedAttachments.map(function (attachment, idx) {

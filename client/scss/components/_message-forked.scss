@@ -1,5 +1,26 @@
 .message {
-  
+  .forked-link {
+    height: 44px;
+    background: rgba(41, 128, 185, 0.9);
+    padding: 0px 10px 0 10px;
+    background-image: url("data:image/svg+xml;charset=utf-8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><polygon fill='%23e1e1e1' points='14.1,0 20,0 0,20 0,17 0,14 '/><polygon fill='%23e1e1e1' points='20,14 14,20 20,20 '/></svg>");
+    background-size: 20px 20px;
+    font-size: 17px;
+    line-height: 44px;
+    border-bottom: 2px solid rgba(41, 128, 185, 0.9);
+    box-shadow: inset 0px 7px 3px -3px rgba(3, 3, 3, 0.2);
+    a {
+      display: block;
+      width: 20%;
+      line-height: 22px;
+      background-color: #ededed;
+      color: #fff;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
   .forked-label {
     position: relative;
     padding: 20px;
@@ -11,6 +32,7 @@
     background-color: #ededed;
 
     .forked-link {
+
       position: absolute;
       display: inline-block;
       right: 54px;
@@ -40,7 +62,7 @@
     background-position: calc(100% - 10px) 24px;
     background-repeat: no-repeat;
     color: $light-gray;
-    
+
     .avatar {
       opacity: 0.3;
     }
@@ -60,6 +82,6 @@
 
     a {
       color: $light-gray;
-    }  
+    }
   }
 }
